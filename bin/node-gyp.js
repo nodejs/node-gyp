@@ -17,9 +17,15 @@ var gyp = require('../lib/node-gyp')
  */
 
 var prog = gyp()
-prog.run(process.argv, function (err) {
+prog.parseArgv(process.argv)
+if (!prog.command) {
+  return prog.usageAndExit()
+}
+
+prog.commands[prog.command](prog.argv, function (err) {
   if (err) throw err
 })
+
 prog.on('spawn', function (command, args, proc) {
   //console.error('spawn', command, args)
   proc.stdout.pipe(process.stdout, { end: false })
