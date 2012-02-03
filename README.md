@@ -40,7 +40,7 @@ that:
 $ node-gyp configure --target=0.7
 ```
 
-After that command you will have either a `Makefile` (on Unix platforms) or a
+Now you will have either a `Makefile` (on Unix platforms) or a
 `vcxproj` file (on Windows) in the current directory. Next invoke the `build`
 step:
 
