@@ -6,9 +6,11 @@
 , "repository": { "type": "git", "url": "git://github.com/TooTallNate/node-gyp.git" }
 , "preferGlobal": true
 , "bin": "./bin/node-gyp.js"
+, "main": "./lib/node-gyp.js"
 , "dependencies": {
       "ansi": "0.0.x"
     , "minimatch": "~0.1.4"
+    , "mkdirp": "0.3.0"
     , "nopt": "1"
     , "request": "2.9.x"
     , "which": "1"
