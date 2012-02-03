@@ -65,7 +65,10 @@ if (!prog.command) {
   return prog.usageAndExit()
 }
 
+prog.info('it worked if it ends with', 'ok')
+
 prog.commands[prog.command](prog.argv, function (err) {
   if (err) throw err
+  prog.info('', 'ok')
 })
 
