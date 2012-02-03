@@ -16,4 +16,4 @@ var gyp = require('../lib/node-gyp')()
  * Process and execute the selected command.
  */
 
-gyp.run(process.argv)
+gyp.run(process.argv, function () {})
