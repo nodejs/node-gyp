@@ -62,7 +62,7 @@ $ node-gyp copy
 ```
 
 So for example, if you are on a 64-bit OS X machine and your target node version
-is `0.7`, then the `copy` command above would move the bindings from
+is `0.7`, then the `copy` command above would copy the bindings from
 `out/Release/bindings.gyp` to `compiled/0.7/darwin/x64/bindings.node`.
 
 
