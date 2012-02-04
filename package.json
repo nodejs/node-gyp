@@ -14,8 +14,9 @@
     , "mkdirp": "0.3.0"
     , "nopt": "1"
     , "request": "2.9.x"
-    , "which": "1"
+    , "rimraf": "2"
     , "tar": "~0.1.12"
+    , "which": "1"
   }
 , "engines": { "node": ">= 0.6.0" }
 }
