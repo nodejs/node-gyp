@@ -84,8 +84,9 @@ Commands
 
 `node-gyp` responds to the following commands:
 
- * `configure` - Generates project build files for the current platform
  * `build` - Invokes `make`/`msbuild.exe` and builds the native addon
+ * `clean` - Removes any generated project files and the `out` dir
+ * `configure` - Generates project build files for the current platform
  * `copy` - Copies a compiled bindings to an appropriate dir for runtime detection
  * `install` - Installs node developmenet files for the given version
 
