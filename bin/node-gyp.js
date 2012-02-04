@@ -77,7 +77,7 @@ prog.commands[prog.command](prog.argv, function (err) {
           .fg.reset().write('not ok\n')
     process.exit(1)
   } else {
-    prog.info('', 'ok')
+    prog.info('done', 'ok')
   }
 })
 
