@@ -17,14 +17,27 @@ downloads the necessary development files for the target version).
  * Supports multiple target versions of Node
 
 
-How to Use
-----------
+Installation
+------------
 
-The first step is to install. With `npm`, invoke:
+To install with `npm`, invoke:
 
 ``` bash
 $ npm install -g node-gyp
 ```
+
+You will also need:
+
+  * Unix
+    * `python`
+    * `make`
+    * A proper C/C++ compiler toolchain, like GCC
+  * Windows
+    * [Python][windows-python]
+    * Microsoft Visual C++ ([Express][msvc] version works well)
+
+How to Use
+----------
 
 To compile your native addon, first go to its root directory:
 
@@ -104,4 +117,6 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+[windows-python]: http://www.python.org/getit/windows
+[msvc]: http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
 [node-bindings]: https://github.com/TooTallNate/node-bindings
