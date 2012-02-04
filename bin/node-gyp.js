@@ -67,7 +67,9 @@ if (!prog.command) {
 
 prog.info('it worked if it ends with', 'ok')
 
+var completed = false
 prog.commands[prog.command](prog.argv, function (err) {
+  completed = true
   if (err) {
     cursor.fg.red().write('ERR!! ')
           .fg.reset().write(err.message + '\n')
@@ -79,3 +81,14 @@ prog.commands[prog.command](prog.argv, function (err) {
   }
 })
 
+process.on('exit', function (code) {
+  if (!completed && !code) {
+    cursor.fg.red().write('ERR! ')
+          .fg.reset().write('Completion callback never invoked!\n')
+    cursor.fg.red().write('ERR! ')
+          .fg.reset().write('This is a bug in `node-gyp`. Please open an Issue.\n')
+    cursor.fg.red().write('ERR! ')
+          .fg.reset().write('not ok\n')
+    process.exit(6)
+  }
+})
