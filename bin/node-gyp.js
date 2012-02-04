@@ -27,7 +27,7 @@ prog.parseArgv(process.argv)
  */
 
 prog.on('info', function () {
-  cursor.fg.green().write('info ')
+  cursor.fg.green().write('info  ')
         .fg.grey().write(arguments[0] + ' ')
         .reset()
   for (var i=1, l=arguments.length; i<l; i++) {
@@ -38,7 +38,7 @@ prog.on('info', function () {
 
 if (prog.opts.verbose) {
   prog.on('verbose', function () {
-    cursor.fg.blue().write('verbose ')
+    cursor.fg.blue().write('verb  ')
           .fg.grey().write(arguments[0] + ' ')
           .reset()
     for (var i=1, l=arguments.length; i<l; i++) {
@@ -68,7 +68,14 @@ if (!prog.command) {
 prog.info('it worked if it ends with', 'ok')
 
 prog.commands[prog.command](prog.argv, function (err) {
-  if (err) throw err
-  prog.info('', 'ok')
+  if (err) {
+    cursor.fg.red().write('ERR!! ')
+          .fg.reset().write(err.message + '\n')
+    cursor.fg.red().write('ERR!! ')
+          .fg.reset().write('not ok\n')
+    process.exit(1)
+  } else {
+    prog.info('', 'ok')
+  }
 })
 
