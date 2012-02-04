@@ -28,11 +28,11 @@ $ npm install -g node-gyp
 
 You will also need:
 
-  * Unix
+  * On Unix
     * `python`
     * `make`
     * A proper C/C++ compiler toolchain, like GCC
-  * Windows
+  * On Windows
     * [Python][windows-python]
     * Microsoft Visual C++ ([Express][msvc] version works well)
 
