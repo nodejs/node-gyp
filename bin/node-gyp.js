@@ -71,13 +71,21 @@ if (!prog.command) {
 
 prog.info('it worked if it ends with', 'ok')
 
+if (typeof prog.commands[prog.command] != 'function') {
+  cursor.fg.red().write('ERR! ')
+        .fg.reset().write('Unknown command "' + prog.command + '"\n')
+  cursor.fg.red().write('ERR! ')
+        .fg.reset().write('not ok\n')
+  process.exit(1)
+}
+
 var completed = false
 prog.commands[prog.command](prog.argv, function (err) {
   completed = true
   if (err) {
-    cursor.fg.red().write('ERR!! ')
+    cursor.fg.red().write('ERR! ')
           .fg.reset().write(err.message + '\n')
-    cursor.fg.red().write('ERR!! ')
+    cursor.fg.red().write('ERR! ')
           .fg.reset().write('not ok\n')
     process.exit(1)
   } else {
