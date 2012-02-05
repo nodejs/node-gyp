@@ -26,7 +26,7 @@ To install with `npm`, invoke:
 $ npm install -g node-gyp
 ```
 
-You will also need:
+You will also need to install:
 
   * On Unix
     * `python`
