@@ -89,8 +89,8 @@ prog.commands[prog.command](prog.argv, function (err, rtn) {
           .fg.reset().write('not ok\n')
     process.exit(1)
   } else {
-    if (rtn) {
-      console.log(rtn)
+    if (arguments.length >= 2) {
+      console.log.apply(console, [].slice.call(arguments, 1))
     }
     prog.info('done', 'ok')
   }
