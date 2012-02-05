@@ -90,7 +90,7 @@ prog.commands[prog.command](prog.argv, function (err) {
       , current = arguments[2]
     versions.forEach(function (version) {
       if (version == current) {
-        cursor.green().write(' o ').reset()
+        cursor.green().write(' \u2022 ').reset()
       } else {
         cursor.write('   ')
       }
