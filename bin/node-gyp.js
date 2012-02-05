@@ -26,10 +26,6 @@ prog.parseArgv(process.argv)
  * Set up logging handlers.
  */
 
-prog.on('log', function () {
-  console.log.apply(console, arguments)
-})
-
 prog.on('info', function () {
   cursor.fg.green().write('info ')
         .fg.grey().write(arguments[0] + ' ')
