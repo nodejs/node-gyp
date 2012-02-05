@@ -80,20 +80,30 @@ if (typeof prog.commands[prog.command] != 'function') {
 }
 
 var completed = false
-prog.commands[prog.command](prog.argv, function (err, rtn) {
+prog.commands[prog.command](prog.argv, function (err) {
   completed = true
   if (err) {
     cursor.fg.red().write('ERR! ')
           .fg.reset().write(err.message + '\n')
     cursor.fg.red().write('ERR! ')
           .fg.reset().write('not ok\n')
-    process.exit(1)
-  } else {
-    if (arguments.length >= 2) {
-      console.log.apply(console, [].slice.call(arguments, 1))
-    }
-    prog.info('done', 'ok')
+    return process.exit(1)
   }
+  if (prog.command == 'list') {
+    var versions = arguments[1]
+      , current = arguments[2]
+    versions.forEach(function (version) {
+      if (version == current) {
+        cursor.green().write(' o ').reset()
+      } else {
+        cursor.write('   ')
+      }
+      cursor.write(version + '\n')
+    })
+  } else if (arguments.length >= 2) {
+    console.log.apply(console, [].slice.call(arguments, 1))
+  }
+  prog.info('done', 'ok')
 })
 
 process.on('exit', function (code) {
