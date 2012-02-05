@@ -80,7 +80,7 @@ if (typeof prog.commands[prog.command] != 'function') {
 }
 
 var completed = false
-prog.commands[prog.command](prog.argv, function (err) {
+prog.commands[prog.command](prog.argv, function (err, rtn) {
   completed = true
   if (err) {
     cursor.fg.red().write('ERR! ')
@@ -89,6 +89,9 @@ prog.commands[prog.command](prog.argv, function (err) {
           .fg.reset().write('not ok\n')
     process.exit(1)
   } else {
+    if (rtn) {
+      console.log(rtn)
+    }
     prog.info('done', 'ok')
   }
 })
