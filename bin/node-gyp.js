@@ -31,7 +31,7 @@ prog.on('log', function () {
 })
 
 prog.on('info', function () {
-  cursor.fg.green().write('info  ')
+  cursor.fg.green().write('info ')
         .fg.grey().write(arguments[0] + ' ')
         .reset()
   for (var i=1, l=arguments.length; i<l; i++) {
@@ -42,7 +42,7 @@ prog.on('info', function () {
 
 if (prog.opts.verbose) {
   prog.on('verbose', function () {
-    cursor.fg.blue().write('verb  ')
+    cursor.fg.cyan().write('verb ')
           .fg.grey().write(arguments[0] + ' ')
           .reset()
     for (var i=1, l=arguments.length; i<l; i++) {
