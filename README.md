@@ -106,7 +106,7 @@ building a node addon looks like:
 
 Some additional resources:
 
- * [Hello World node addon example](https://github.com/joyent/node/tree/master/test/addons/hello-world)
+ * ["Hello World" node addon example](https://github.com/joyent/node/tree/master/test/addons/hello-world)
  * [gyp user documentation](http://code.google.com/p/gyp/wiki/GypUserDocumentation)
  * [gyp input format reference](http://code.google.com/p/gyp/wiki/InputFormatReference)
 
