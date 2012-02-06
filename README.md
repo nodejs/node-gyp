@@ -4,7 +4,10 @@ node-gyp
 
 `node-gyp` is a cross-platform command-line tool written in Node.js for compiling
 native addon modules for Node.js, which takes away the pain of dealing with the
-various differences in build platforms.
+various differences in build platforms. It is the replacement to the `node-waf`
+program which is removed for node `v0.8`. If you have a native addon for node that
+still has a `wscript` file, then it's time to start adding a `bindings.gyp` file
+to complement it.
 
 Multiple target versions of node are supported (i.e. `0.7`, `0.8`, `1.0`, etc.),
 regardless of what version of node is actually installed on your system
