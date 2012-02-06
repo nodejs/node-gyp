@@ -53,6 +53,9 @@ that:
 $ node-gyp configure --target=0.7
 ```
 
+__Note__: The `configure` step looks for the first `.gyp` file to processs. See
+below for instructions on the `.gyp` file.
+
 Now you will have either a `Makefile` (on Unix platforms) or a
 `vcxproj` file (on Windows) in the current directory. Next invoke the `build`
 step:
@@ -64,6 +67,9 @@ $ node-gyp build
 Now you have your compiled `.node` bindings file! The compiled bindings end up in
 `out/Debug` or `out/Release`, depending on the build mode. At this point you can
 require the `.node` file with Node and run your tests!
+
+__Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
+`-d`) switch to `build`.
 
 -------------------
 
@@ -77,6 +83,32 @@ $ node-gyp copy
 So for example, if you are on a 64-bit OS X machine and your target node version
 is `0.7`, then the `copy` command above would copy the bindings from
 `out/Release/bindings.node` to `compiled/0.7/darwin/x64/bindings.node`.
+
+
+The "gyp" file
+--------------
+
+Previously when node had `node-waf` you had to write a `wscript` file. The
+replacement for that is the `bindings.gyp` file, which describes the configuration
+to build your module in a JSON-like format. A barebones `gyp` file appropriate for
+building a node addon looks like:
+
+``` json
+{
+  'targets': [
+    {
+      'target_name': 'bindings',
+      'sources': [ 'src/bindings.cc' ]
+    }
+  ]
+}
+```
+
+Some additional resources:
+
+ * [Hello World node addon example](https://github.com/joyent/node/tree/master/test/addons/hello-world)
+ * [gyp user documentation](http://code.google.com/p/gyp/wiki/GypUserDocumentation)
+ * [gyp input format reference](http://code.google.com/p/gyp/wiki/InputFormatReference)
 
 
 Commands
