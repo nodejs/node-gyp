@@ -53,8 +53,8 @@ that:
 $ node-gyp configure --target=0.7
 ```
 
-__Note__: The `configure` step looks for the first `.gyp` file to processs. See
-below for instructions on the `.gyp` file.
+__Note__: The `configure` step looks for the first `.gyp` file in the current
+directory to processs. See below for instructions on creating the `.gyp` file.
 
 Now you will have either a `Makefile` (on Unix platforms) or a
 `vcxproj` file (on Windows) in the current directory. Next invoke the `build`
