@@ -7,8 +7,8 @@ native addon modules for Node.js, which takes away the pain of dealing with the
 various differences in build platforms.
 
 Multiple target versions of node are supported (i.e. `0.7`, `0.8`, `1.0`, etc.),
-even if those versions of node are not installed on your system (`node-gyp`
-downloads the necessary development files for the target version).
+regardless of what version of node is actually installed on your system
+(`node-gyp` downloads the necessary development files for the target version).
 
 #### Features:
 
