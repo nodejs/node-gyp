@@ -87,18 +87,12 @@ prog.commands[prog.command](prog.argv, function (err) {
   }
   if (prog.command == 'list') {
     var versions = arguments[1]
-      , current = arguments[2]
     if (versions.length > 0) {
       versions.forEach(function (version) {
-        if (version == current) {
-          cursor.green().write(' \u2022 ').reset()
-        } else {
-          cursor.write('   ')
-        }
-        cursor.write(version + '\n')
+        cursor.write('   ' + version + '\n')
       })
     } else {
-      prog.info('No node development files installed. Use `node-gyp use x.x` to install a version.')
+      prog.info('No node development files installed. Use `node-gyp install` to install a version.')
     }
   } else if (arguments.length >= 2) {
     console.log.apply(console, [].slice.call(arguments, 1))
