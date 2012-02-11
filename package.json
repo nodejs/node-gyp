@@ -18,5 +18,16 @@
     , "tar": "~0.1.12"
     , "which": "1"
   }
+, "bundleDependencies": [
+      "ansi"
+    , "glob"
+    , "minimatch"
+    , "mkdirp"
+    , "nopt"
+    , "request"
+    , "rimraf"
+    , "tar"
+    , "which"
+  ]
 , "engines": { "node": ">= 0.6.0" }
 }
