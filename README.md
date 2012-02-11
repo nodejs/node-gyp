@@ -53,7 +53,7 @@ the appropriate project build files for the current platform. Use `configure` fo
 that:
 
 ``` bash
-$ node-gyp configure --target=0.7
+$ node-gyp configure
 ```
 
 __Note__: The `configure` step looks for the first `.gyp` file in the current
@@ -124,6 +124,8 @@ Commands
  * `configure` - Generates project build files for the current platform
  * `copy` - Copies a compiled bindings to an appropriate dir for runtime detection
  * `install` - Installs node development files for the given version
+ * `list` - Lists the currently installed node development file versions
+ * `remove` - Removes a node development files for a given version
 
 
 License
