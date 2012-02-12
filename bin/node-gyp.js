@@ -113,3 +113,17 @@ process.on('exit', function (code) {
     process.exit(6)
   }
 })
+
+process.on('uncaughtException', function (err) {
+  cursor.fg.red().write('ERR! ')
+        .fg.reset().write('UNCAUGHT EXCEPTION:\n')
+  cursor.fg.red().write('ERR! ')
+        .fg.reset().write(err.stack + '\n')
+  cursor.fg.red().write('ERR! ')
+        .fg.reset().write('This is a bug in `node-gyp`. Please open an Issue:\n')
+  cursor.fg.red().write('ERR! ')
+        .fg.reset().write('  https://github.com/TooTallNate/node-gyp/issues\n')
+  cursor.fg.red().write('ERR! ')
+        .fg.reset().write('not ok\n')
+  process.exit(1)
+})
