@@ -13,7 +13,7 @@ process.title = 'node-gyp'
 var gyp = require('../lib/node-gyp')
   , inspect = require('util').inspect
   , ansi = require('ansi')
-  , cursor = ansi(process.stdout)
+  , cursor = ansi(process.stderr)
 
 /**
  * Process and execute the selected command.
@@ -89,7 +89,7 @@ prog.commands[prog.command](prog.argv, function (err) {
     var versions = arguments[1]
     if (versions.length > 0) {
       versions.forEach(function (version) {
-        cursor.write('   ' + version + '\n')
+        console.log(version)
       })
     } else {
       prog.info('No node development files installed. Use `node-gyp install` to install a version.')
