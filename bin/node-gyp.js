@@ -80,7 +80,7 @@ prog.commands[prog.command](prog.argv, function (err) {
   completed = true
   if (err) {
     cursor.fg.red().write('ERR! ')
-          .fg.reset().write(err.message + '\n')
+          .fg.reset().write(err.stack + '\n')
     cursor.fg.red().write('ERR! ')
           .fg.reset().write('not ok\n')
     return process.exit(1)
