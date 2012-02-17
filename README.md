@@ -123,7 +123,7 @@ Commands
  * `clean` - Removes any generated project files and the `out` dir
  * `configure` - Generates project build files for the current platform
  * `copy` - Copies a compiled bindings to an appropriate dir for runtime detection
- * `install` - Installs node development files for the given version
+ * `install` - Installs node development files for the given version.  Respects http_proxy/HTTP_PROXY and --proxy=<proxyurl> when downloading.
  * `list` - Lists the currently installed node development file versions
  * `remove` - Removes a node development files for a given version
 
