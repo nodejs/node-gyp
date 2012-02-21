@@ -23,7 +23,7 @@ regardless of what version of node is actually installed on your system
 Installation
 ------------
 
-To install with `npm`, invoke:
+You can install with `npm`:
 
 ``` bash
 $ npm install -g node-gyp
@@ -48,9 +48,8 @@ To compile your native addon, first go to its root directory:
 $ cd my_node_addon
 ```
 
-From here, you can invoke the `node-gyp` executable. The next step is to generate
-the appropriate project build files for the current platform. Use `configure` for
-that:
+The next step is to generate the appropriate project build files for the current
+platform. Use `configure` for that:
 
 ``` bash
 $ node-gyp configure
