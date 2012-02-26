@@ -52,9 +52,6 @@ prog.on('spawn', function (command, args, proc) {
   cursor.fg.magenta().write('spawn ')
         .fg.grey().write(command + ' ')
         .reset().write(inspect(args) + '\n')
-
-  proc.stdout.pipe(process.stdout, { end: false })
-  proc.stderr.pipe(process.stderr, { end: false })
 })
 
 /**
