@@ -2,7 +2,7 @@ var BlockStream = require("../block-stream.js")
 
 var blockSizes = [16]
   , writeSizes = [15, 16, 17]
-  , writeCounts = [1, 10, 100]
+  , writeCounts = [1, 10]//, 100]
   , tap = require("tap")
 
 writeCounts.forEach(function (writeCount) {

@@ -1,8 +1,8 @@
 var BlockStream = require("../block-stream.js")
 
-var blockSizes = [16, 25, 1024]
-  , writeSizes = [4, 8, 15, 16, 17, 64, 100]
-  , writeCounts = [1, 10, 100]
+var blockSizes = [16]//, 25]//, 1024]
+  , writeSizes = [4, 15, 16, 17, 64 ]//, 64, 100]
+  , writeCounts = [1, 10]//, 100]
   , tap = require("tap")
 
 writeCounts.forEach(function (writeCount) {
