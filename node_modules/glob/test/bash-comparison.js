@@ -5,7 +5,8 @@ var tap = require("tap")
 
 // put more patterns here.
 , globs =
-  ["test/a/*/+(c|g)/./d"
+  [
+  "test/a/*/+(c|g)/./d"
   ,"test/a/**/[cg]/../[cg]"
   ,"test/a/{b,c,d,e,f}/**/g"
   ,"test/a/b/**"
@@ -64,12 +65,20 @@ globs.forEach(function (pattern) {
         }).sort(alphasort).reduce(function (set, f) {
           if (f !== set[set.length - 1]) set.push(f)
           return set
-        }, [])
+        }, []).sort(alphasort)
       }
       next()
     })
 
     glob(pattern, function (er, matches) {
+      // sort and unpark, just to match the shell results
+      matches = matches.map(function (m) {
+        return m.replace(/\/+/g, "/").replace(/\/$/, "")
+      }).sort(alphasort).reduce(function (set, f) {
+        if (f !== set[set.length - 1]) set.push(f)
+        return set
+      }, []).sort(alphasort)
+
       t.ifError(er, pattern + " should not error")
       globResult = matches
       next()
@@ -84,7 +93,14 @@ globs.forEach(function (pattern) {
   })
 
   tap.test(pattern + " sync", function (t) {
-    t.deepEqual(glob.sync(pattern), echoOutput, "should match shell")
+    var matches = glob.sync(pattern).map(function (m) {
+        return m.replace(/\/+/g, "/").replace(/\/$/, "")
+      }).sort(alphasort).reduce(function (set, f) {
+        if (f !== set[set.length - 1]) set.push(f)
+        return set
+      }, []).sort(alphasort)
+
+    t.deepEqual(matches, echoOutput, "should match shell")
     t.end()
   })
 })
