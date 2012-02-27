@@ -1,7 +1,7 @@
 { "name": "ansi"
 , "description": "Advanced ANSI formatting tool for Node.js"
 , "keywords": [ "ansi", "formatting", "cursor", "color", "terminal", "rgb", "256", "stream" ]
-, "version": "0.0.3"
+, "version": "0.0.4"
 , "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)"
 , "repository": { "type": "git", "url": "git://github.com/TooTallNate/ansi.js.git" }
 , "main": "./lib/ansi.js"

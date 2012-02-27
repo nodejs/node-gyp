@@ -185,6 +185,17 @@ Cursor.prototype.beep = function () {
 }
 
 /**
+ * Moves cursor to specific position
+ */
+
+Cursor.prototype.goto = function (x, y) {
+  x = ~~x;
+  y = ~~y;
+  this.write(prefix + y + ';' + x + 'H');
+  return this;
+}
+
+/**
  * Reset the foreground color.
  */
 
