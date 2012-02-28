@@ -11,7 +11,7 @@
 , "dependencies": {
       "ansi": "0.0.x"
     , "glob": "3"
-    , "fstream": "0.1.x"
+    , "fstream": "~0.1.13"
     , "minimatch": "~0.1.4"
     , "mkdirp": "0.3.0"
     , "nopt": "1"
