@@ -36,7 +36,7 @@ You will also need to install:
     * `make`
     * A proper C/C++ compiler toolchain, like GCC
   * On Windows:
-    * [Python][windows-python]
+    * [Python][windows-python] ([`v2.7.2`][windows-python-v2.7.2] recommended, `v3.x.x` not yet supported)
     * Microsoft Visual C++ ([Express][msvc] version works well)
 
 How to Use
@@ -155,5 +155,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 [windows-python]: http://www.python.org/getit/windows
+[windows-python-v2.7.2]: http://www.python.org/download/releases/2.7.2#download
 [msvc]: http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
 [node-bindings]: https://github.com/TooTallNate/node-bindings
