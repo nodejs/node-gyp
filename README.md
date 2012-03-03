@@ -71,7 +71,7 @@ Now you have your compiled `.node` bindings file! The compiled bindings end up i
 require the `.node` file with Node and run your tests!
 
 __Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
-`-d`) switch to `build`.
+`-d`) switch when running the `build` command.
 
 
 The "gyp" file
