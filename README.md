@@ -73,19 +73,6 @@ require the `.node` file with Node and run your tests!
 __Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
 `-d`) switch to `build`.
 
--------------------
-
-__(Optional)__ Copy the compiled bindings into an appropriate directory for
-runtime loading detection (with [node-bindings][]), using the `copy` command:
-
-``` bash
-$ node-gyp copy
-```
-
-So for example, if you are on a 64-bit OS X machine and your target node version
-is `0.7`, then the `copy` command above would copy the bindings from
-`out/Release/bindings.node` to `compiled/0.7/darwin/x64/bindings.node`.
-
 
 The "gyp" file
 --------------
@@ -121,7 +108,6 @@ Commands
  * `build` - Invokes `make`/`msbuild.exe` and builds the native addon
  * `clean` - Removes any generated project files and the `out` dir
  * `configure` - Generates project build files for the current platform
- * `copy` - Copies a compiled bindings to an appropriate dir for runtime detection
  * `install` - Installs node development files for the given version.  Respects http_proxy/HTTP_PROXY and --proxy=<proxyurl> when downloading.
  * `list` - Lists the currently installed node development file versions
  * `remove` - Removes a node development files for a given version
