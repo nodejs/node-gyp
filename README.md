@@ -67,7 +67,7 @@ $ node-gyp build
 ```
 
 Now you have your compiled `.node` bindings file! The compiled bindings end up in
-`out/Debug` or `out/Release`, depending on the build mode. At this point you can
+`build/Debug` or `buld/Release`, depending on the build mode. At this point you can
 require the `.node` file with Node and run your tests!
 
 __Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
