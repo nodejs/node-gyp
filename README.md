@@ -143,4 +143,3 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [windows-python]: http://www.python.org/getit/windows
 [windows-python-v2.7.2]: http://www.python.org/download/releases/2.7.2#download
 [msvc]: http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
-[node-bindings]: https://github.com/TooTallNate/node-bindings
