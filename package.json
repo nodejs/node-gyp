@@ -17,6 +17,7 @@
     , "nopt": "1"
     , "request": "2.9.x"
     , "rimraf": "2"
+    , "semver": "1"
     , "tar": "~0.1.12"
     , "which": "1"
   }
