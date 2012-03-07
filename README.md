@@ -6,7 +6,7 @@ node-gyp
 native addon modules for Node.js, which takes away the pain of dealing with the
 various differences in build platforms. It is the replacement to the `node-waf`
 program which is removed for node `v0.8`. If you have a native addon for node that
-still has a `wscript` file, then you should definitely add a `bindings.gyp` file
+still has a `wscript` file, then you should definitely add a `binding.gyp` file
 to support the latest versions of node.
 
 Multiple target versions of node are supported (i.e. `0.6`, `0.7`,..., `1.0`,
@@ -78,7 +78,7 @@ The "gyp" file
 --------------
 
 Previously when node had `node-waf` you had to write a `wscript` file. The
-replacement for that is the `bindings.gyp` file, which describes the configuration
+replacement for that is the `binding.gyp` file, which describes the configuration
 to build your module in a JSON-like format. A barebones `gyp` file appropriate for
 building a node addon looks like:
 
@@ -86,8 +86,8 @@ building a node addon looks like:
 {
   'targets': [
     {
-      'target_name': 'bindings',
-      'sources': [ 'src/bindings.cc' ]
+      'target_name': 'binding',
+      'sources': [ 'src/binding.cc' ]
     }
   ]
 }
