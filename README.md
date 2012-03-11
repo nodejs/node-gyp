@@ -55,12 +55,11 @@ platform. Use `configure` for that:
 $ node-gyp configure
 ```
 
-__Note__: The `configure` step looks for the first `.gyp` file in the current
-directory to processs. See below for instructions on creating the `.gyp` file.
+__Note__: The `configure` step looks for the `binding.gyp` file in the current
+directory to processs. See below for instructions on creating the `binding.gyp` file.
 
-Now you will have either a `Makefile` (on Unix platforms) or a
-`vcxproj` file (on Windows) in the current directory. Next invoke the `build`
-step:
+Now you will have either a `Makefile` (on Unix platforms) or a `vcxproj` file
+(on Windows) in the `build/` directory. Next invoke the `build` command:
 
 ``` bash
 $ node-gyp build
@@ -71,7 +70,7 @@ Now you have your compiled `.node` bindings file! The compiled bindings end up i
 require the `.node` file with Node and run your tests!
 
 __Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
-`-d`) switch when running the `build` command.
+`-d`) switch when running the `configure` or `build` command.
 
 
 The "gyp" file
