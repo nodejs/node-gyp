@@ -70,7 +70,7 @@ in `build/Debug/` or `buld/Release/`, depending on the build mode. At this point
 you can require the `.node` file with Node and run your tests!
 
 __Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
-`-d`) switch when running the `configure` or `build` command.
+`-d`) switch when running the either `configure` or `build` command.
 
 
 The "gyp" file
