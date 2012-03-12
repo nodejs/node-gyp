@@ -43,7 +43,7 @@ var fs = require("graceful-fs")
 , EE = require("events").EventEmitter
 , path = require("path")
 , isDir = {}
-, assert = require("assert")
+, assert = require("assert").ok
 
 function glob (pattern, options, cb) {
   if (typeof options === "function") cb = options, options = {}

@@ -4,7 +4,7 @@ var origCwd = process.cwd()
 process.chdir(__dirname)
 
 tap.test("changing root and searching for /b*/**", function (t) {
-  var glob = require('glob')
+  var glob = require('../')
   var path = require('path')
   t.test('.', function (t) {
     glob('/b*/**', { globDebug: true, root: '.' }, function (er, matches) {
