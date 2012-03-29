@@ -9,4 +9,6 @@ Usage:
     cache.set("key", "value")
     cache.get("key") // "value"
 
+    cache.reset()    // empty the cache
+
 RTFS for more info.

@@ -13,7 +13,7 @@
     , "glob": "3"
     , "graceful-fs": "1"
     , "fstream": "~0.1.13"
-    , "minimatch": "~0.1.4"
+    , "minimatch": "0.2.x"
     , "mkdirp": "0.3.0"
     , "nopt": "1"
     , "request": "2.9.x"

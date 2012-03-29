@@ -49,6 +49,12 @@ function LRUCache (maxLength) {
     length = 0
   }
 
+  // Provided for debugging/dev purposes only. No promises whatsoever that
+  // this API stays stable.
+  this.dump = function () {
+    return cache
+  }
+
   this.set = function (key, value) {
     if (hOP(cache, key)) {
       this.get(key)
