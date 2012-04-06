@@ -2,7 +2,7 @@
 , "description": "Node.js native addon build tool"
 , "keywords": [ "native", "addon", "module", "c", "c++", "bindings", "gyp" ]
 , "version": "0.3.10"
-, "installVersion": 6
+, "installVersion": 7
 , "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)"
 , "repository": { "type": "git", "url": "git://github.com/TooTallNate/node-gyp.git" }
 , "preferGlobal": true
