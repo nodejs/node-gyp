@@ -76,6 +76,27 @@ if (!prog.command) {
 
 prog.info('it worked if it ends with', 'ok')
 
+/**
+ * Change dir if -C/--directory was passed.
+ */
+
+var dir = prog.opts.directory
+if (dir) {
+  var fs = require('fs')
+  try {
+    var stat = fs.statSync(dir)
+    if (stat.isDirectory()) {
+      prog.info('chdir:', dir)
+      process.chdir(dir)
+    } else {
+      prog.warn(dir + ' is not a directory')
+    }
+  } catch (e) {
+    prog.warn('directory:', e.message)
+  }
+}
+
+
 if (typeof prog.commands[prog.command] != 'function') {
   cursor.fg.red().write('ERR! ')
         .fg.reset().write('Unknown command "' + prog.command + '"\n')
