@@ -36,6 +36,18 @@ prog.on('info', function () {
   cursor.write('\n')
 })
 
+prog.on('warn', function () {
+  cursor.fg.yellow().bg.red().write('warn')
+        .fg.reset().bg.reset().write(' ')
+        .fg.grey().write(arguments[0])
+        .write(' ')
+        .reset()
+  for (var i=1, l=arguments.length; i<l; i++) {
+    cursor.write(arguments[i] + ' ')
+  }
+  cursor.write('\n')
+})
+
 if (prog.opts.verbose) {
   prog.on('verbose', function () {
     cursor.fg.cyan().write('verb ')
