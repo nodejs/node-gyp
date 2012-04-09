@@ -16,11 +16,16 @@ var gyp = require('../')
   , cursor = ansi(process.stderr)
 
 /**
- * Process and execute the selected command.
+ * Process and execute the selected commands.
  */
 
 var prog = gyp()
 prog.parseArgv(process.argv)
+
+if (prog.todo.length === 0) {
+  return prog.usageAndExit()
+}
+
 
 /**
  * Set up logging handlers.
@@ -66,14 +71,6 @@ prog.on('spawn', function (command, args, proc) {
         .reset().write(inspect(args) + '\n')
 })
 
-/**
- * Process and execute the selected command.
- */
-
-if (!prog.command) {
-  return prog.usageAndExit()
-}
-
 prog.info('it worked if it ends with', 'ok')
 
 /**
@@ -96,39 +93,41 @@ if (dir) {
   }
 }
 
-
-if (typeof prog.commands[prog.command] != 'function') {
-  cursor.fg.red().write('ERR! ')
-        .fg.reset().write('Unknown command "' + prog.command + '"\n')
-  cursor.fg.red().write('ERR! ')
-        .fg.reset().write('not ok\n')
-  process.exit(1)
-}
-
+// start running the given commands!
 var completed = false
-prog.commands[prog.command](prog.argv, function (err) {
-  completed = true
-  if (err) {
-    cursor.fg.red().write('ERR! ')
-          .fg.reset().write(err.stack + '\n')
-    cursor.fg.red().write('ERR! ')
-          .fg.reset().write('not ok\n')
-    return process.exit(1)
+run()
+
+function run () {
+  if (prog.todo.length === 0) {
+    // done!
+    completed = true
+    prog.info('done', 'ok')
+    return
   }
-  if (prog.command == 'list') {
-    var versions = arguments[1]
-    if (versions.length > 0) {
-      versions.forEach(function (version) {
-        console.log(version)
-      })
-    } else {
-      prog.info('No node development files installed. Use `node-gyp install` to install a version.')
+  var command = prog.todo.shift()
+  prog.commands[command](prog.argv.slice(), function (err) {
+    if (err) {
+      cursor.fg.red().write('ERR! ')
+            .fg.reset().write(err.stack + '\n')
+      cursor.fg.red().write('ERR! ')
+            .fg.reset().write('not ok\n')
+      return process.exit(1)
     }
-  } else if (arguments.length >= 2) {
-    console.log.apply(console, [].slice.call(arguments, 1))
-  }
-  prog.info('done', 'ok')
-})
+    if (prog.command == 'list') {
+      var versions = arguments[1]
+      if (versions.length > 0) {
+        versions.forEach(function (version) {
+          console.log(version)
+        })
+      } else {
+        prog.info('No node development files installed. Use `node-gyp install` to install a version.')
+      }
+    } else if (arguments.length >= 2) {
+      console.log.apply(console, [].slice.call(arguments, 1))
+    }
+    process.nextTick(run)
+  })
+}
 
 process.on('exit', function (code) {
   if (!completed && !code) {
