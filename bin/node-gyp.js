@@ -113,7 +113,7 @@ function run () {
             .fg.reset().write('not ok\n')
       return process.exit(1)
     }
-    if (prog.command == 'list') {
+    if (command == 'list') {
       var versions = arguments[1]
       if (versions.length > 0) {
         versions.forEach(function (version) {
