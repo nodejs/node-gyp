@@ -9,7 +9,7 @@
 , "bin": "./bin/node-gyp.js"
 , "main": "./lib/node-gyp.js"
 , "dependencies": {
-      "ansi": "0.0.x"
+      "ansi": "0.x"
     , "glob": "3"
     , "graceful-fs": "1"
     , "fstream": "~0.1.13"
