@@ -17,7 +17,7 @@
     , "mkdirp": "0.3"
     , "nopt": "1"
     , "npmlog": "0"
-    , "request": "2.9.x"
+    , "request": "2.9"
     , "rimraf": "2"
     , "semver": "1"
     , "tar": "~0.1.12"
