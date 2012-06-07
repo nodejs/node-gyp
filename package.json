@@ -16,6 +16,7 @@
     , "minimatch": "0.2.x"
     , "mkdirp": "0.3"
     , "nopt": "1"
+    , "npmlog": "0"
     , "request": "2.9.x"
     , "rimraf": "2"
     , "semver": "1"
