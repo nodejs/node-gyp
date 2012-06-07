@@ -48,7 +48,7 @@ if (dir) {
     if (e.code === 'ENOENT') {
       log.warn('chdir', dir + ' is not a directory')
     } else {
-      log.warn('chdir', 'unknown error during chdir()', e.message)
+      log.warn('chdir', 'error during chdir() "%s"', e.message)
     }
   }
 }
