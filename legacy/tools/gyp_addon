@@ -2,6 +2,15 @@
 import os
 import sys
 
+if sys.version_info > (3, ):
+    sys.stderr.write("""
+***********************************************************************
+gyp does not work with Python 3. You should set the PYTHON environment
+variable or pass --python=<python> to point to a Python 2 executable
+***********************************************************************
+    """)
+    sys.exit(1)
+
 script_dir = os.path.dirname(__file__)
 node_root  = os.path.abspath(os.path.join(script_dir, os.pardir))
 module_root = os.getcwd()
@@ -37,6 +46,6 @@ if __name__ == '__main__':
   gyp_args = list(args)
   rc = gyp.main(gyp_args)
   if rc != 0:
-    print 'Error running GYP'
+    print('Error running GYP')
     sys.exit(rc)
 
