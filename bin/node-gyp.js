@@ -65,6 +65,12 @@ function run () {
     return
   }
   var command = prog.todo.shift()
+
+  // is this an alias?
+  if (command in prog.aliases) {
+    command = prog.aliases[command]
+  }
+
   prog.commands[command](prog.argv.slice(), function (err) {
     if (err) {
       log.error(command + ' error', err.stack)
