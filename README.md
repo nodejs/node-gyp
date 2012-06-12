@@ -79,7 +79,8 @@ The "binding.gyp" file
 
 Previously when node had `node-waf` you had to write a `wscript` file. The
 replacement for that is the `binding.gyp` file, which describes the configuration
-to build your module in a JSON-like format.
+to build your module in a JSON-like format. This file gets placed in the root of
+your package, alongside the `package.json` file.
 
 A barebones `gyp` file appropriate for building a node addon looks like:
 
@@ -94,7 +95,7 @@ A barebones `gyp` file appropriate for building a node addon looks like:
 }
 ```
 
-Some additional resources:
+Some additional resources for writing `gyp` files:
 
  * ["Hello World" node addon example](https://github.com/joyent/node/tree/master/test/addons/hello-world)
  * [gyp user documentation](http://code.google.com/p/gyp/wiki/GypUserDocumentation)
