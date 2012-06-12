@@ -74,13 +74,14 @@ __Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
 `-d`) switch when running the either `configure` or `build` command.
 
 
-The "gyp" file
---------------
+The "binding.gyp" file
+----------------------
 
 Previously when node had `node-waf` you had to write a `wscript` file. The
 replacement for that is the `binding.gyp` file, which describes the configuration
-to build your module in a JSON-like format. A barebones `gyp` file appropriate for
-building a node addon looks like:
+to build your module in a JSON-like format.
+
+A barebones `gyp` file appropriate for building a node addon looks like:
 
 ``` json
 {
