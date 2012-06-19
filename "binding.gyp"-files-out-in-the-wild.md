@@ -6,7 +6,7 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [node-buffertools](https://github.com/bnoordhuis/node-buffertools/blob/master/binding.gyp)
  * [node-ffi](https://github.com/rbranson/node-ffi/blob/master/binding.gyp)
  * [node-time](https://github.com/TooTallNate/node-time/blob/master/binding.gyp)
- * [node-serialport](https://github.com/voodootikigod/node-serialport/blob/master/binding.gyp)
+ * [node-serialport](https://github.com/voodootikigod/node-serialport/blob/master/bindings.gyp)
  * [node-serialport2](https://github.com/joeferner/node-serialport2/blob/master/binding.gyp)
  * [node-weak](https://github.com/TooTallNate/node-weak/blob/master/binding.gyp)
  * [pty.js](https://github.com/chjj/pty.js/blob/master/binding.gyp)
