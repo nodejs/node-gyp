@@ -61,7 +61,7 @@ function run () {
   if (prog.todo.length === 0) {
     // done!
     completed = true
-    log.info('done', 'ok')
+    log.info('ok')
     return
   }
   var command = prog.todo.shift()
