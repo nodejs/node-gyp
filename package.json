@@ -16,6 +16,7 @@
     , "mkdirp": "0.3"
     , "nopt": "1"
     , "npmlog": "0"
+    , "osenv": "0"
     , "request": "2.9"
     , "rimraf": "2"
     , "semver": "1"
