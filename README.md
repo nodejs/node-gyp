@@ -108,13 +108,15 @@ Commands
 
 `node-gyp` responds to the following commands:
 
- * `build` - Invokes `make`/`msbuild.exe` and builds the native addon
- * `clean` - Removes any generated project files and the `out` dir
- * `configure` - Generates project build files for the current platform
- * `rebuild` - Runs "clean", "configure" and "build" all at once
- * `install` - Installs node development files for the given version.
- * `list` - Lists the currently installed node development file versions
- * `remove` - Removes a node development files for a given version
+| **Command**   | **Description**
+|:--------------|:---------------------------------------------------------------
+| `build`       | Invokes `make`/`msbuild.exe` and builds the native addon
+| `clean`       | Removes any the `build` dir if it exists
+| `configure`   | Generates project build files for the current platform
+| `rebuild`     | Runs "clean", "configure" and "build" all in a row
+| `install`     | Installs node development header files for the given version
+| `list`        | Lists the currently installed node development file versions
+| `remove`      | Removes the node development header files for the given version
 
 
 License
