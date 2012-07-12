@@ -100,7 +100,7 @@ Some additional resources for writing `gyp` files:
  * ["Hello World" node addon example](https://github.com/joyent/node/tree/master/test/addons/hello-world)
  * [gyp user documentation](http://code.google.com/p/gyp/wiki/GypUserDocumentation)
  * [gyp input format reference](http://code.google.com/p/gyp/wiki/InputFormatReference)
- * ["binding.gyp" files out in the wild' wiki page](https://github.com/TooTallNate/node-gyp/wiki/%22binding.gyp%22-files-out-in-the-wild)
+ * [`"binding.gyp" files out in the wild` wiki page](https://github.com/TooTallNate/node-gyp/wiki/%22binding.gyp%22-files-out-in-the-wild)
 
 
 Commands
