@@ -18,6 +18,7 @@ var log = require('npmlog')
  */
 
 var prog = gyp()
+var completed = false
 prog.parseArgv(process.argv)
 
 if (prog.todo.length === 0) {
@@ -55,28 +56,23 @@ if (dir) {
 }
 
 function run () {
-  if (prog.todo.length === 0) {
+  var command = prog.todo.shift()
+  if (!command) {
     // done!
     completed = true
     log.info('ok')
     return
   }
-  var command = prog.todo.shift()
 
-  // is this an alias?
-  if (command in prog.aliases) {
-    command = prog.aliases[command]
-  }
-
-  prog.commands[command](prog.argv.slice(), function (err) {
+  prog.commands[command.name](command.args, function (err) {
     if (err) {
-      log.error(command + ' error')
+      log.error(command.name + ' error')
       log.error('stack', err.stack)
       errorMessage()
       log.error('not ok')
       return process.exit(1)
     }
-    if (command == 'list') {
+    if (command.name == 'list') {
       var versions = arguments[1]
       if (versions.length > 0) {
         versions.forEach(function (version) {
@@ -129,5 +125,4 @@ function issueMessage () {
 }
 
 // start running the given commands!
-var completed = false
 run()
