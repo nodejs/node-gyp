@@ -70,7 +70,9 @@ function run () {
 
   prog.commands[command](prog.argv.slice(), function (err) {
     if (err) {
-      log.error(command + ' error', err.stack)
+      log.error(command + ' error')
+      log.error('stack', err.stack)
+      errorMessage()
       log.error('not ok')
       return process.exit(1)
     }
@@ -101,17 +103,29 @@ process.on('exit', function (code) {
 })
 
 process.on('uncaughtException', function (err) {
-  log.error('UNCAUGHT EXCEPTION', err.stack)
+  log.error('UNCAUGHT EXCEPTION')
+  log.error('stack', err.stack)
   issueMessage()
   process.exit(7)
 })
 
+function errorMessage () {
+  // copied from npm's lib/util/error-handler.js
+  var os = require('os')
+  log.error('System', os.type() + ' ' + os.release())
+  log.error('command', process.argv
+            .map(JSON.stringify).join(' '))
+  log.error('cwd', process.cwd())
+  log.error('node -v', process.version)
+  log.error('node-gyp -v', 'v' + prog.package.version)
+}
+
 function issueMessage () {
+  errorMessage()
   log.error('', [ 'This is a bug in `node-gyp`.'
                 , 'Please file an Issue:'
                 , '    <https://github.com/TooTallNate/node-gyp/issues>'
                 ].join('\n'))
-  log.error('not ok')
 }
 
 // start running the given commands!
