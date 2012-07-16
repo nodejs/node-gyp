@@ -99,17 +99,21 @@ function run () {
 process.on('exit', function (code) {
   if (!completed && !code) {
     log.error('Completion callback never invoked!')
-    log.error('This is a bug in `node-gyp`, please file an Issue:')
-    log.error('', '    https://github.com/TooTallNate/node-gyp/issues')
-    log.error('not ok')
+    issueMessage()
     process.exit(6)
   }
 })
 
 process.on('uncaughtException', function (err) {
   log.error('UNCAUGHT EXCEPTION', err.stack)
-  log.error('This is a bug in `node-gyp`, please file an Issue:')
-  log.error('', '    https://github.com/TooTallNate/node-gyp/issues')
-  log.error('not ok')
+  issueMessage()
   process.exit(7)
 })
+
+function issueMessage () {
+  log.error('', [ 'This is a bug in `node-gyp`.'
+                , 'Please file an Issue:'
+                , '    <https://github.com/TooTallNate/node-gyp/issues>'
+                ].join('\n'))
+  log.error('not ok')
+}
