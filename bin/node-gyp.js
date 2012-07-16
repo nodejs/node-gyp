@@ -54,10 +54,6 @@ if (dir) {
   }
 }
 
-// start running the given commands!
-var completed = false
-run()
-
 function run () {
   if (prog.todo.length === 0) {
     // done!
@@ -117,3 +113,7 @@ function issueMessage () {
                 ].join('\n'))
   log.error('not ok')
 }
+
+// start running the given commands!
+var completed = false
+run()
