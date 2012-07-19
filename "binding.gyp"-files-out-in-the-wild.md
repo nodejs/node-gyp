@@ -11,3 +11,4 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [pty.js](https://github.com/chjj/pty.js/blob/master/binding.gyp)
  * [ref](https://github.com/TooTallNate/ref/blob/master/binding.gyp)
  * [appjs](https://github.com/milani/appjs/blob/master/binding.gyp)
+ * [nwm](https://github.com/mixu/nwm/blob/master/binding.gyp)
