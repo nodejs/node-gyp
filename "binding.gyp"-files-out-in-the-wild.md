@@ -15,3 +15,4 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [bcrypt](https://github.com/ncb000gt/node.bcrypt.js/blob/master/binding.gyp)
  * [node-memwatch](https://github.com/lloyd/node-memwatch/blob/master/binding.gyp)
  * [node-ip2location](https://github.com/bolgovr/node-ip2location/blob/master/binding.gyp)
+ * [node-midi](https://github.com/justinlatimer/node-midi/blob/master/binding.gyp)
