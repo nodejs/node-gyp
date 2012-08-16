@@ -25,3 +25,4 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [v8-profiler](https://github.com/c4milo/v8-profiler/blob/master/binding.gyp)
  * [airtunes](https://github.com/radioline/node_airtunes/blob/master/binding.gyp)
  * [node-fann](https://github.com/c4milo/node-fann/blob/master/binding.gyp)
+ * [node-talib](https://github.com/oransel/node-talib/blob/master/binding.gyp)
