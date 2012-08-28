@@ -36,7 +36,7 @@ You will also need to install:
     * `make`
     * A proper C/C++ compiler toolchain, like GCC
   * On Windows:
-    * [Python][windows-python] ([`v2.7.2`][windows-python-v2.7.2] recommended, `v3.x.x` not yet supported)
+    * [Python][windows-python] ([`v2.7.2`][windows-python-v2.7.2] recommended, `v3.x.x` is not supported)
     * Microsoft Visual C++ ([Express][msvc] version works well)
       * For 64-bit builds of node and native modules you will _also_ need the [Windows 7 64-bit SDK][win7sdk]
 
