@@ -68,9 +68,6 @@
             'EnableIntrinsicFunctions': 'true',
             'RuntimeTypeInfo': 'false',
             'ExceptionHandling': '0',
-            'AdditionalOptions': [
-              '/MP', # compile across multiple CPUs
-            ],
           },
           'VCLibrarianTool': {
             'AdditionalOptions': [
