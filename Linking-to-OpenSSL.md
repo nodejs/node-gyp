@@ -23,6 +23,17 @@ Good native addons should account for both scenarios. It's recommended that you 
           # header files that were used when building node.
           'include_dirs': [
             '<(node_root_dir)/deps/openssl/openssl/include'
+          ],
+          "conditions" : [
+            ["target_arch=='ia32'", {
+              "include_dirs": [ "<(node_root_dir)/deps/openssl/config/piii" ]
+            }],
+            ["target_arch=='x64'", {
+              "include_dirs": [ "<(node_root_dir)/deps/openssl/config/k8" ]
+            }],
+            ["target_arch=='arm'", {
+              "include_dirs": [ "<(node_root_dir)/deps/openssl/config/arm" ]
+            }]
           ]
         }]
       ]
