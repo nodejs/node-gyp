@@ -1,12 +1,17 @@
 {
   'target_defaults': {
     'type': 'loadable_module',
-    'product_extension': 'node',
     'product_prefix': '',
     'include_dirs': [
       '<(node_root_dir)/src',
       '<(node_root_dir)/deps/uv/include',
       '<(node_root_dir)/deps/v8/include'
+    ],
+
+    'target_conditions': [
+      ['_type=="loadable_module"', {
+        'product_extension': 'node',
+      }]
     ],
 
     'conditions': [
