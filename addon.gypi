@@ -17,6 +17,9 @@
     'conditions': [
       [ 'OS=="mac"', {
         'libraries': [ '-undefined dynamic_lookup' ],
+        'xcode_settings': {
+          'DYLIB_INSTALL_NAME_BASE': '@loader_path'
+        },
       }],
       [ 'OS=="win"', {
         'libraries': [ '-l<(node_root_dir)/$(Configuration)/node.lib' ],
