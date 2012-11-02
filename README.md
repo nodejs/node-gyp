@@ -38,8 +38,8 @@ You will also need to install:
   * On Windows:
     * [Python][windows-python] ([`v2.7.3`][windows-python-v2.7.3] recommended, `v3.x.x` is not supported)
     * Microsoft Visual C++ ([Express][msvc] version works well)
-      * For 64-bit builds of node and native modules you will _also_ need the [Windows 7 64-bit SDK][win7sdk]
-        * If you get errors that the 64 bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1]
+      * For 64-bit builds of node and native modules you will _**also**_ need the [Windows 7 64-bit SDK][win7sdk]
+      * If you get errors that the 64 bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1]
 
 How to Use
 ----------
