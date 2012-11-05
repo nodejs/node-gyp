@@ -17,7 +17,7 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [node-memwatch](https://github.com/lloyd/node-memwatch/blob/master/binding.gyp)
  * [node-ip2location](https://github.com/bolgovr/node-ip2location/blob/master/binding.gyp)
  * [node-midi](https://github.com/justinlatimer/node-midi/blob/master/binding.gyp)
- * [node-sqlite3](https://github.com/developmentseed/node-sqlite3/blob/master/binding.gyp)
+ * [node-sqlite3](https://github.com/developmentseed/node-sqlite3/blob/master/binding.gyp) + [libsqlite3](https://github.com/developmentseed/node-sqlite3/blob/master/deps/sqlite3/binding.gyp)
  * [node-srs](https://github.com/springmeyer/node-srs/blob/master/build.gyp)
  * [node-zipfile](https://github.com/springmeyer/node-zipfile/blob/master/build.gyp)
  * [node-mapnik](https://github.com/mapnik/node-mapnik/blob/master/build.gyp)
