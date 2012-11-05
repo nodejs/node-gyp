@@ -27,3 +27,4 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [node-fann](https://github.com/c4milo/node-fann/blob/master/binding.gyp)
  * [node-talib](https://github.com/oransel/node-talib/blob/master/binding.gyp)
  * [node-levelup](https://github.com/rvagg/node-levelup/blob/master/binding.gyp) + [leveldb.gyp](https://github.com/rvagg/node-levelup/blob/master/deps/leveldb/leveldb.gyp) + [snappy.gyp](https://github.com/rvagg/node-levelup/blob/master/deps/snappy/snappy.gyp)
+ * [node-expat](https://github.com/astro/node-expat/blob/master/binding.gyp) + [libexpat](https://github.com/astro/node-expat/blob/master/deps/libexpat/libexpat.gyp)
