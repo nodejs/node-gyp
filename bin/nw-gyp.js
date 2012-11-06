@@ -4,7 +4,7 @@
  * Set the title.
  */
 
-process.title = 'node-gyp'
+process.title = 'nw-gyp'
 
 /**
  * Module dependencies.
@@ -32,7 +32,7 @@ if (prog.todo.length === 0) {
 
 log.info('it worked if it ends with', 'ok')
 log.verbose('cli', process.argv)
-log.info('using', 'node-gyp@%s', prog.version)
+log.info('using', 'nw-gyp@%s', prog.version)
 log.info('using', 'node@%s | %s | %s', process.versions.node, process.platform, process.arch)
 
 
@@ -84,7 +84,7 @@ function run () {
           console.log(version)
         })
       } else {
-        console.log('No node development files installed. Use `node-gyp install` to install a version.')
+        console.log('No node development files installed. Use `nw-gyp install` to install a version.')
       }
     } else if (arguments.length >= 2) {
       console.log.apply(console, [].slice.call(arguments, 1))
@@ -118,14 +118,14 @@ function errorMessage () {
             .map(JSON.stringify).join(' '))
   log.error('cwd', process.cwd())
   log.error('node -v', process.version)
-  log.error('node-gyp -v', 'v' + prog.package.version)
+  log.error('nw-gyp -v', 'v' + prog.package.version)
 }
 
 function issueMessage () {
   errorMessage()
-  log.error('', [ 'This is a bug in `node-gyp`.'
+  log.error('', [ 'This is a bug in `nw-gyp`.'
                 , 'Please file an Issue:'
-                , '    <https://github.com/TooTallNate/node-gyp/issues>'
+                , '    <https://github.com/rogerwang/nw-gyp/issues>'
                 ].join('\n'))
 }
 

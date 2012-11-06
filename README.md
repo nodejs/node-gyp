@@ -1,17 +1,13 @@
-node-gyp
+nw-gyp
 =========
-### Node.js native addon build tool
+### Native addon build tool for node-webkit
 
-`node-gyp` is a cross-platform command-line tool written in Node.js for compiling
-native addon modules for Node.js, which takes away the pain of dealing with the
-various differences in build platforms. It is the replacement to the `node-waf`
-program which is removed for node `v0.8`. If you have a native addon for node that
-still has a `wscript` file, then you should definitely add a `binding.gyp` file
-to support the latest versions of node.
+`nw-gyp` is a hack on `node-gyp` to build native modules for node-webkit. We are
+trying to provide a smooth way for developers rather than specifying a lot of 
+command line arguments.
 
-Multiple target versions of node are supported (i.e. `0.6`, `0.7`,..., `1.0`,
-etc.), regardless of what version of node is actually installed on your system
-(`node-gyp` downloads the necessary development files for the target version).
+It supports node-webkit starts from v0.3.2 and users need to manually specify the
+version of node-webkit currently.
 
 #### Features:
 
@@ -26,7 +22,7 @@ Installation
 You can install with `npm`:
 
 ``` bash
-$ npm install -g node-gyp
+$ npm install -g nw-gyp
 ```
 
 You will also need to install:
@@ -54,7 +50,7 @@ The next step is to generate the appropriate project build files for the current
 platform. Use `configure` for that:
 
 ``` bash
-$ node-gyp configure
+$ nw-gyp configure
 ```
 
 __Note__: The `configure` step looks for the `binding.gyp` file in the current
@@ -64,7 +60,7 @@ Now you will have either a `Makefile` (on Unix platforms) or a `vcxproj` file
 (on Windows) in the `build/` directory. Next invoke the `build` command:
 
 ``` bash
-$ node-gyp build
+$ nw-gyp build
 ```
 
 Now you have your compiled `.node` bindings file! The compiled bindings end up
@@ -107,7 +103,7 @@ Some additional resources for writing `gyp` files:
 Commands
 --------
 
-`node-gyp` responds to the following commands:
+`nw-gyp` responds to the following commands:
 
 | **Command**   | **Description**
 |:--------------|:---------------------------------------------------------------
