@@ -6,8 +6,8 @@ nw-gyp
 trying to provide a smooth way for developers rather than specifying a lot of 
 command line arguments.
 
-It supports node-webkit starts from v0.3.2 and users need to manually specify the
-version of node-webkit currently.
+It supports node-webkit starts from v0.3.2 and **users need to manually specify the
+version of node-webkit currently**.
 
 #### Features:
 
@@ -58,7 +58,7 @@ The next step is to generate the appropriate project build files for the current
 platform. Use `configure` for that:
 
 ``` bash
-$ nw-gyp configure
+$ nw-gyp configure --target=<0.3.2 or other nw version>
 ```
 
 __Note__: The `configure` step looks for the `binding.gyp` file in the current
