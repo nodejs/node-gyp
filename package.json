@@ -1,6 +1,6 @@
 {
-  "name": "node-gyp",
-  "description": "Node.js native addon build tool",
+  "name": "nw-gyp",
+  "description": "node-webkit native addon build tool",
   "keywords": [
     "native",
     "addon",
@@ -12,14 +12,11 @@
   ],
   "version": "0.10.9",
   "installVersion": 9,
-  "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/TooTallNate/node-gyp.git"
-  },
+  "author": "Roger Wang <wenrui@gmail.com> (based on node-gyp)",
+  "repository": { "type": "git", "url": "https://github.com/rogerwang/nw-gyp.git" },
   "preferGlobal": true,
-  "bin": "./bin/node-gyp.js",
-  "main": "./lib/node-gyp.js",
+  "bin": "./bin/nw-gyp.js",
+  "main": "./lib/nw-gyp.js",
   "dependencies": {
     "glob": "3",
     "graceful-fs": "2",
