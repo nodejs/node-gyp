@@ -1883,11 +1883,13 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
     """Returns the location of the final output for an installable target."""
     # Xcode puts shared_library results into PRODUCT_DIR, and some gyp files
     # rely on this. Emulate this behavior for mac.
-    if (self.type == 'shared_library' and
-        (self.flavor != 'mac' or self.toolset != 'target')):
-      # Install all shared libs into a common directory (per toolset) for
-      # convenient access with LD_LIBRARY_PATH.
-      return '$(builddir)/lib.%s/%s' % (self.toolset, self.alias)
+
+    # XXX(TooTallNate): disabling this code since we don't want this behavior...
+    #if (self.type == 'shared_library' and
+    #    (self.flavor != 'mac' or self.toolset != 'target')):
+    #  # Install all shared libs into a common directory (per toolset) for
+    #  # convenient access with LD_LIBRARY_PATH.
+    #  return '$(builddir)/lib.%s/%s' % (self.toolset, self.alias)
     return '$(builddir)/' + self.alias
 
 
