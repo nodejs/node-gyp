@@ -2651,6 +2651,9 @@ def _GetMSBuildAttributes(spec, config, build_file):
     product_name = spec.get('product_name', '$(ProjectName)')
     target_name = prefix + product_name
     msbuild_attributes['TargetName'] = target_name
+  if 'TargetExt' not in msbuild_attributes and 'product_extension' in spec:
+    ext = spec.get('product_extension')
+    msbuild_attributes['TargetExt'] = '.' + ext
 
   if spec.get('msvs_external_builder'):
     external_out_dir = spec.get('msvs_external_builder_out_dir', '.')
@@ -2704,6 +2707,9 @@ def _GetMSBuildConfigurationGlobalProperties(spec, configurations, build_file):
                             attributes['OutputDirectory'])
     _AddConditionalProperty(properties, condition, 'TargetName',
                             attributes['TargetName'])
+    if 'TargetExt' in attributes:
+      _AddConditionalProperty(properties, condition, 'TargetExt',
+                              attributes['TargetExt'])
 
     if attributes.get('TargetPath'):
       _AddConditionalProperty(properties, condition, 'TargetPath',
