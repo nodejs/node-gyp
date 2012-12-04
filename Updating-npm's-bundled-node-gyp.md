@@ -6,7 +6,7 @@ Sometimes, you may need to update npm's internal node-gyp to a newer version tha
 
 So instead:
 
-### Linux, Mac OS X, Solaris, etc.
+## Linux, Mac OS X, Solaris, etc.
 
 Unix is easy. Just run the following command. Use `sudo` if necessary.
 
@@ -14,7 +14,7 @@ Unix is easy. Just run the following command. Use `sudo` if necessary.
 $ [sudo] npm explore npm -g -- npm install node-gyp
 ```
 
-### Windows
+## Windows
 
 Windows is a bit tricker, since `npm` gets installed to the "Program Files" directory, which needs admin privileges in order to modify on current Windows. Therefore, run the following commands __inside a `cmd.exe` started with "Run as Administrator"__:
 
