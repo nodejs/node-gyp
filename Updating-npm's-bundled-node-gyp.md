@@ -11,7 +11,7 @@ So instead:
 Unix is easy. Just run the following command. Use `sudo` if necessary.
 
 ``` bash
-$ [sudo] npm explore npm -g -- npm install node-gyp
+$ [sudo] npm explore npm -g -- npm install node-gyp@latest
 ```
 
 ## Windows
@@ -34,5 +34,5 @@ $ cd "C:\Program Files\nodejs\node_modules\npm"
 Now you can finally run:
 
 ``` bash
-$ npm install node-gyp
+$ npm install node-gyp@latest
 ```
