@@ -44,6 +44,10 @@ You will also need to install:
     * Windows 8:
       * Microsoft Visual Studio C++ 2012 for Windows Desktop ([Express][msvc2012] version works well)
 
+Note that OS X is just a flavour of Unix and so needs `python`, `make`, and C/C++.
+An easy way to obtain these is to install XCode from Apple,
+and then use it to install the command line tools (under Preferences -> Downloads).
+
 How to Use
 ----------
 
