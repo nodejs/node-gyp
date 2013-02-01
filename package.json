@@ -1,7 +1,7 @@
 { "name": "nw-gyp"
 , "description": "Native addon build tool for node-webkit"
 , "keywords": [ "native", "addon", "module", "c", "c++", "bindings", "gyp" ]
-, "version": "0.7.3-3"
+, "version": "0.7.3-4"
 , "installVersion": 1
 , "author": "Roger Wang <wenrui@gmail.com> (based on node-gyp)"
 , "repository": { "type": "git", "url": "https://github.com/rogerwang/nw-gyp.git" }
