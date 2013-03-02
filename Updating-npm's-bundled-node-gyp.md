@@ -25,6 +25,12 @@ $ npm install -g which
 $ which node
 ```
 
+As an alternative to the above, those on Windows Server 2003 and later (this includes Windows 7) can run:
+
+``` bash
+$ where node
+```
+
 Now `cd` to the directory that `node.exe` is contained in, and with `node_modules\npm` at the end. i.e.:
 
 ``` bash
