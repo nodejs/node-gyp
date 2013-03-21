@@ -2,7 +2,7 @@ var tar = require("../tar.js")
   , fs = require("fs")
 
 fs.createReadStream(__dirname + "/../test/fixtures/c.tar")
-  .pipe(tar.Reader())
+  .pipe(tar.Parse())
   .on("extendedHeader", function (e) {
     console.error("extended pax header", e.props)
     e.on("end", function () {
