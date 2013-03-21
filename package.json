@@ -11,16 +11,16 @@
 , "dependencies": {
       "glob": "3"
     , "graceful-fs": "1"
-    , "fstream": "~0.1.13"
-    , "minimatch": "0.2"
-    , "mkdirp": "0.3"
+    , "fstream": "0"
+    , "minimatch": "0"
+    , "mkdirp": "0"
     , "nopt": "2"
     , "npmlog": "0"
     , "osenv": "0"
-    , "request": "2.9"
+    , "request": "2"
     , "rimraf": "2"
     , "semver": "1"
-    , "tar": "~0.1.12"
+    , "tar": "0"
     , "which": "1"
   }
 , "engines": { "node": ">= 0.6.0" }
