@@ -42,7 +42,7 @@ You will also need to install:
       * For 64-bit builds of node and native modules you will _**also**_ need the [Windows 7 64-bit SDK][win7sdk]
         * If the install fails, try uninstalling any C++ 2010 x64&x86 Redistributable that you have installed first.
       * If you get errors that the 64-bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1]
-    * Windows 8:
+    * Windows 7/8:
       * Microsoft Visual Studio C++ 2012 for Windows Desktop ([Express][msvc2012] version works well)
 
 Note that OS X is just a flavour of Unix and so needs `python`, `make`, and C/C++.
