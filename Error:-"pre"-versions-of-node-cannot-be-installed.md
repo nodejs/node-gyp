@@ -56,7 +56,12 @@ The main error here is:
 Error: "pre" versions of node cannot be installed, use the --nodedir flag instead
 ```
 
-This error is caused when you attempt to compile a native addon using a version of node.js with `-pre` at the end of the version number.
+This error is caused when you attempt to compile a native addon using a version of node.js with `-pre` at the end of the version number:
+
+``` bash
+$ node -v
+v0.10.4-pre
+```
 
 ## How to avoid (the short answer)
 
@@ -66,3 +71,24 @@ To avoid this error completely just use a stable release of node.js. i.e. `v0.10
 
 This error happens because `node-gyp` does not know what header files were used to compile your "pre" version of node, and therefore it needs you to specify the node source code directory path using the `--nodedir` flag.
 
+For example, if I compiled my development ("pre") version of node.js using the source code in `/Users/nrajlich/node`, then I could invoke `node-gyp` like:
+
+``` bash
+$ node-gyp rebuild --nodedir=/Users/nrajlich/node
+```
+
+Or install an native addon through `npm` like:
+
+``` bash
+$ npm install bcrypt --nodedir=/Users/nrajlich/node
+```
+
+### Always use `--nodedir`
+
+__Note:__ This is for advanced users who use `-pre` versions of node more often than tagged releases.
+
+If you're invoking `node-gyp` through `npm`, then you can leverage `npm`'s configuration system and not have to specify the `--nodedir` flag all the time:
+
+``` bash
+$ npm config set nodedir /Users/nrajlich/node
+```
