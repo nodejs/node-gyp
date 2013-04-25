@@ -4,3 +4,4 @@ Welcome to the node-gyp wiki!
  * [[Linking to OpenSSL]]
  * [[Common Issues]]
  * [[Updating npm's bundled node-gyp]]
+ * [[Error: "pre" versions of node cannot be installed]]
