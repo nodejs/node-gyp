@@ -32,7 +32,7 @@ $ npm install -g node-gyp
 You will also need to install:
 
   * On Unix:
-    * `python`
+    * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported)
     * `make`
     * A proper C/C++ compiler toolchain, like GCC
   * On Windows:
