@@ -93,7 +93,7 @@ your package, alongside the `package.json` file.
 
 A barebones `gyp` file appropriate for building a node addon looks like:
 
-``` json
+``` python
 {
   "targets": [
     {
