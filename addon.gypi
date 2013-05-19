@@ -29,7 +29,7 @@
         },
       }],
       [ 'OS=="win"', {
-        'libraries': [ '-l<(node_root_dir)/$(Configuration)/node.lib' ],
+        'libraries': [ '-l"<(node_root_dir)/$(ConfigurationName)/node.lib"' ],
         # warning C4251: 'node::ObjectWrap::handle_' : class 'v8::Persistent<T>'
         # needs to have dll-interface to be used by clients of class 'node::ObjectWrap'
         'msvs_disabled_warnings': [ 4251 ],
