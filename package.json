@@ -17,7 +17,7 @@
     , "nopt": "2"
     , "npmlog": "0"
     , "osenv": "0"
-    , "request": ">= 2 && <= 2.14"
+    , "request": "2"
     , "rimraf": "2"
     , "semver": "1"
     , "tar": "0"
