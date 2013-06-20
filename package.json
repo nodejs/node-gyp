@@ -19,7 +19,7 @@
     , "osenv": "0"
     , "request": "2"
     , "rimraf": "2"
-    , "semver": "1"
+    , "semver": "~2.0.7"
     , "tar": "0"
     , "which": "1"
   }
