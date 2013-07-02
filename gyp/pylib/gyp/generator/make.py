@@ -365,7 +365,7 @@ cmd_touch = touch $@
 
 quiet_cmd_copy = COPY $@
 # send stderr to /dev/null to ignore messages when linking directories.
-cmd_copy = ln -f "$<" "$@" 2>/dev/null || (rm -rf "$@" && cp %(copy_archive_args)s "$<" "$@")
+cmd_copy = rm -rf "$@" && cp %(copy_archive_args)s "$<" "$@"
 
 %(link_commands)s
 """
