@@ -1,27 +1,41 @@
-{ "name": "node-gyp"
-, "description": "Node.js native addon build tool"
-, "keywords": [ "native", "addon", "module", "c", "c++", "bindings", "gyp" ]
-, "version": "0.10.5"
-, "installVersion": 9
-, "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)"
-, "repository": { "type": "git", "url": "git://github.com/TooTallNate/node-gyp.git" }
-, "preferGlobal": true
-, "bin": "./bin/node-gyp.js"
-, "main": "./lib/node-gyp.js"
-, "dependencies": {
-      "glob": "3"
-    , "graceful-fs": "2"
-    , "fstream": "0"
-    , "minimatch": "0"
-    , "mkdirp": "0"
-    , "nopt": "2"
-    , "npmlog": "0"
-    , "osenv": "0"
-    , "request": "2"
-    , "rimraf": "2"
-    , "semver": "~2.0.7"
-    , "tar": "0"
-    , "which": "1"
+{
+  "name": "node-gyp",
+  "description": "Node.js native addon build tool",
+  "keywords": [
+    "native",
+    "addon",
+    "module",
+    "c",
+    "c++",
+    "bindings",
+    "gyp"
+  ],
+  "version": "0.10.6",
+  "installVersion": 9,
+  "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TooTallNate/node-gyp.git"
+  },
+  "preferGlobal": true,
+  "bin": "./bin/node-gyp.js",
+  "main": "./lib/node-gyp.js",
+  "dependencies": {
+    "glob": "3",
+    "graceful-fs": "2",
+    "fstream": "0",
+    "minimatch": "0",
+    "mkdirp": "0",
+    "nopt": "2",
+    "npmlog": "0",
+    "osenv": "0",
+    "request": "2",
+    "rimraf": "2",
+    "semver": "~2.0.7",
+    "tar": "0",
+    "which": "1"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
   }
-, "engines": { "node": ">= 0.8.0" }
 }
