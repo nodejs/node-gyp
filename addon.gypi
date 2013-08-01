@@ -29,7 +29,12 @@
         },
       }],
       [ 'OS=="win"', {
-        'libraries': [ '-l<(node_root_dir)/$(Configuration)/node.lib' ],
+        'libraries': [
+          'kernel32.lib', 'user32.lib', 'gdi32.lib', 'winspool.lib',
+          'comdlg32.lib', 'advapi32.lib', 'shell32.lib', 'ole32.lib',
+          'oleaut32.lib', 'uuid.lib', 'odbc32.lib', 'DelayImp.lib',
+          '-l<(node_root_dir)/$(Configuration)/node.lib'
+        ],
         # warning C4251: 'node::ObjectWrap::handle_' : class 'v8::Persistent<T>'
         # needs to have dll-interface to be used by clients of class 'node::ObjectWrap'
         'msvs_disabled_warnings': [ 4251 ],
