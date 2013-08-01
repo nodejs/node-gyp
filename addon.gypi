@@ -30,9 +30,18 @@
       }],
       [ 'OS=="win"', {
         'libraries': [
-          'kernel32.lib', 'user32.lib', 'gdi32.lib', 'winspool.lib',
-          'comdlg32.lib', 'advapi32.lib', 'shell32.lib', 'ole32.lib',
-          'oleaut32.lib', 'uuid.lib', 'odbc32.lib', 'DelayImp.lib',
+          '-lkernel32.lib',
+          '-luser32.lib',
+          '-lgdi32.lib',
+          '-lwinspool.lib',
+          '-lcomdlg32.lib',
+          '-ladvapi32.lib',
+          '-lshell32.lib',
+          '-lole32.lib',
+          '-loleaut32.lib',
+          '-luuid.lib',
+          '-lodbc32.lib',
+          '-lDelayImp.lib',
           '-l<(node_root_dir)/$(Configuration)/node.lib'
         ],
         # warning C4251: 'node::ObjectWrap::handle_' : class 'v8::Persistent<T>'
