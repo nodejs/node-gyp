@@ -1,4 +1,4 @@
-On Windows XP/Vista/7, [node-gyp requires Python 2.3 and Visual Studio 2010](https://github.com/TooTallNate/node-gyp#installation)
+On Windows XP/Vista/7, [node-gyp requires Python 2.7 and Visual Studio 2010](https://github.com/TooTallNate/node-gyp#installation)
 
 According to the readme file in [Microsoft Visual C++ 2010 Service Pack 1 Compiler Update for the Windows SDK 7.1](http://www.microsoft.com/en-us/download/details.aspx?id=4422), _to ensure that your system has a supported configuration, uninstall the following products and then reinstall them in the order listed_:
 
