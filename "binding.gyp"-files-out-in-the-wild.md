@@ -29,3 +29,4 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [node-levelup](https://github.com/rvagg/node-levelup/blob/master/binding.gyp) + [leveldb.gyp](https://github.com/rvagg/node-levelup/blob/master/deps/leveldb/leveldb.gyp) + [snappy.gyp](https://github.com/rvagg/node-levelup/blob/master/deps/snappy/snappy.gyp)
  * [node-expat](https://github.com/astro/node-expat/blob/master/binding.gyp) + [libexpat](https://github.com/astro/node-expat/blob/master/deps/libexpat/libexpat.gyp)
  * [node-openvg-canvas](https://github.com/luismreis/node-openvg-canvas/blob/master/binding.gyp) + [node-openvg](https://github.com/luismreis/node-openvg/blob/master/binding.gyp)
+ * [node-cryptopp](https://github.com/BatikhSouri/node-cryptopp/blob/master/binding.gyp)
