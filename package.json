@@ -18,7 +18,10 @@
     "url": "git://github.com/TooTallNate/node-gyp.git"
   },
   "preferGlobal": true,
-  "bin": "./bin/node-gyp.js",
+  "bin": {
+    "node-gyp": "./bin/node-gyp.js",
+    "node_resolve": "./bin/node_resolve"
+  },
   "main": "./lib/node-gyp.js",
   "dependencies": {
     "glob": "3",
