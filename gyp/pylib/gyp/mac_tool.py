@@ -9,6 +9,7 @@ These functions are executed via gyp-mac-tool when using the Makefile generator.
 """
 
 import fcntl
+import json
 import os
 import plistlib
 import re
@@ -87,16 +88,14 @@ class MacTool(object):
     #     semicolon in dictionary.
     # on invalid files. Do the same kind of validation.
     import CoreFoundation
-    s = open(source).read()
+    s = open(source, 'rb').read()
     d = CoreFoundation.CFDataCreate(None, s, len(s))
     _, error = CoreFoundation.CFPropertyListCreateFromXMLData(None, d, 0, None)
     if error:
       return
 
-    fp = open(dest, 'w')
-    args = ['/usr/bin/iconv', '--from-code', input_code, '--to-code',
-        'UTF-16', source]
-    subprocess.call(args, stdout=fp)
+    fp = open(dest, 'wb')
+    fp.write(s.decode(input_code).encode('UTF-16'))
     fp.close()
 
   def _DetectInputEncoding(self, file_name):
@@ -110,28 +109,58 @@ class MacTool(object):
       return None
     fp.close()
     if header.startswith("\xFE\xFF"):
-      return "UTF-16BE"
+      return "UTF-16"
     elif header.startswith("\xFF\xFE"):
-      return "UTF-16LE"
+      return "UTF-16"
     elif header.startswith("\xEF\xBB\xBF"):
       return "UTF-8"
     else:
       return None
 
-  def ExecCopyInfoPlist(self, source, dest):
+  def ExecCopyInfoPlist(self, source, dest, *keys):
     """Copies the |source| Info.plist to the destination directory |dest|."""
     # Read the source Info.plist into memory.
     fd = open(source, 'r')
     lines = fd.read()
     fd.close()
 
+    # Insert synthesized key/value pairs (e.g. BuildMachineOSBuild).
+    plist = plistlib.readPlistFromString(lines)
+    if keys:
+      plist = dict(plist.items() + json.loads(keys[0]).items())
+    lines = plistlib.writePlistToString(plist)
+
     # Go through all the environment variables and replace them as variables in
     # the file.
+    IDENT_RE = re.compile('[/\s]')
     for key in os.environ:
       if key.startswith('_'):
         continue
       evar = '${%s}' % key
-      lines = string.replace(lines, evar, os.environ[key])
+      evalue = os.environ[key]
+      lines = string.replace(lines, evar, evalue)
+
+      # Xcode supports various suffices on environment variables, which are
+      # all undocumented. :rfc1034identifier is used in the standard project
+      # template these days, and :identifier was used earlier. They are used to
+      # convert non-url characters into things that look like valid urls --
+      # except that the replacement character for :identifier, '_' isn't valid
+      # in a URL either -- oops, hence :rfc1034identifier was born.
+      evar = '${%s:identifier}' % key
+      evalue = IDENT_RE.sub('_', os.environ[key])
+      lines = string.replace(lines, evar, evalue)
+
+      evar = '${%s:rfc1034identifier}' % key
+      evalue = IDENT_RE.sub('-', os.environ[key])
+      lines = string.replace(lines, evar, evalue)
+
+    # Remove any keys with values that haven't been replaced.
+    lines = lines.split('\n')
+    for i in range(len(lines)):
+      if lines[i].strip().startswith("<string>${"):
+        lines[i] = None
+        lines[i - 1] = None
+    lines = '\n'.join(filter(lambda x: x is not None, lines))
 
     # Write out the file with variables replaced.
     fd = open(dest, 'w')

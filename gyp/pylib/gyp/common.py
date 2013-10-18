@@ -131,6 +131,13 @@ def RelativePath(path, relative_to):
   path = os.path.realpath(path)
   relative_to = os.path.realpath(relative_to)
 
+  # On Windows, we can't create a relative path to a different drive, so just
+  # use the absolute path.
+  if sys.platform == 'win32':
+    if (os.path.splitdrive(path)[0].lower() !=
+        os.path.splitdrive(relative_to)[0].lower()):
+      return path
+
   # Split the paths into components.
   path_split = path.split(os.path.sep)
   relative_to_split = relative_to.split(os.path.sep)
@@ -401,9 +408,16 @@ def GetFlavor(params):
 
 
 def CopyTool(flavor, out_path):
-  """Finds (mac|sun|win)_tool.gyp in the gyp directory and copies it
+  """Finds (flock|mac|win)_tool.gyp in the gyp directory and copies it
   to |out_path|."""
-  prefix = { 'solaris': 'sun', 'mac': 'mac', 'win': 'win' }.get(flavor, None)
+  # aix and solaris just need flock emulation. mac and win use more complicated
+  # support scripts.
+  prefix = {
+      'aix': 'flock',
+      'solaris': 'flock',
+      'mac': 'mac',
+      'win': 'win'
+      }.get(flavor, None)
   if not prefix:
     return
 
