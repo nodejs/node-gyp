@@ -31,7 +31,7 @@
     "osenv": "0",
     "request": "2",
     "rimraf": "2",
-    "semver": "~2.1",
+    "semver": "~2.2.1",
     "tar": "0",
     "which": "1"
   },
