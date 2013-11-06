@@ -10,7 +10,7 @@
     "bindings",
     "gyp"
   ],
-  "version": "0.10.10",
+  "version": "0.11.0",
   "installVersion": 9,
   "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)",
   "repository": {
@@ -31,7 +31,7 @@
     "osenv": "0",
     "request": "2",
     "rimraf": "2",
-    "semver": "~2.1",
+    "semver": "~2.2.1",
     "tar": "0",
     "which": "1"
   },
