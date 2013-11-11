@@ -10,6 +10,7 @@ import re
 import subprocess
 import sys
 import gyp
+import glob
 
 
 class VisualStudioVersion(object):
@@ -249,7 +250,7 @@ def _CreateVersion(name, path, sdk_based=False):
                                   path=path,
                                   sdk_based=sdk_based),
       '2010e': VisualStudioVersion('2010e',
-                                   'Visual Studio 2010',
+                                   'Visual C++ Express 2010',
                                    solution_version='11.00',
                                    project_version='4.0',
                                    flat_sln=True,
@@ -339,13 +340,13 @@ def _DetectVisualStudioVersions(versions_to_check, force_express):
       path = _ConvertToCygpath(path)
       # Check for full.
       full_path = os.path.join(path, 'devenv.exe')
-      express_path = os.path.join(path, 'vcexpress.exe')
+      express_path = os.path.join(path, '*express.exe')
       if not force_express and os.path.exists(full_path):
         # Add this one.
         versions.append(_CreateVersion(version_to_year[version],
             os.path.join(path, '..', '..')))
       # Check for express.
-      elif os.path.exists(express_path):
+      elif glob.glob(express_path):
         # Add this one.
         versions.append(_CreateVersion(version_to_year[version] + 'e',
             os.path.join(path, '..', '..')))
@@ -376,7 +377,7 @@ def SelectVisualStudioVersion(version='auto'):
   if version == 'auto':
     version = os.environ.get('GYP_MSVS_VERSION', 'auto')
   version_map = {
-    'auto': ('10.0', '9.0', '8.0', '11.0'),
+    'auto': ('10.0', '12.0', '9.0', '8.0', '11.0'),
     '2005': ('8.0',),
     '2005e': ('8.0',),
     '2008': ('9.0',),
@@ -391,9 +392,9 @@ def SelectVisualStudioVersion(version='auto'):
   override_path = os.environ.get('GYP_MSVS_OVERRIDE_PATH')
   if override_path:
     msvs_version = os.environ.get('GYP_MSVS_VERSION')
-    if not msvs_version or 'e' not in msvs_version:
+    if not msvs_version:
       raise ValueError('GYP_MSVS_OVERRIDE_PATH requires GYP_MSVS_VERSION to be '
-                       'set to an "e" version (e.g. 2010e)')
+                       'set to a particular version (e.g. 2010e).')
     return _CreateVersion(msvs_version, override_path, sdk_based=True)
   version = str(version)
   versions = _DetectVisualStudioVersions(version_map[version], 'e' in version)

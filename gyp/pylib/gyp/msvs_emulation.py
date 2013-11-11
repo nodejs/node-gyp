@@ -363,7 +363,7 @@ class MsvsSettings(object):
     cl('AdditionalOptions', prefix='')
     cflags.extend(['/FI' + f for f in self._Setting(
         ('VCCLCompilerTool', 'ForcedIncludeFiles'), config, default=[])])
-    if self.vs_version.short_name == '2013' or self.vs_version == '2013e':
+    if self.vs_version.short_name in ('2013', '2013e'):
       # New flag required in 2013 to maintain previous PDB behavior.
       cflags.append('/FS')
     # ninja handles parallelism by itself, don't have the compiler do it too.
