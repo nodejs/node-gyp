@@ -57,7 +57,7 @@ def IsPathSection(section):
     section = section[:-1]
   return section in path_sections or is_path_section_match_re.search(section)
 
-# base_non_configuraiton_keys is a list of key names that belong in the target
+# base_non_configuration_keys is a list of key names that belong in the target
 # itself and should not be propagated into its configurations.  It is merged
 # with a list that can come from the generator to
 # create non_configuration_keys.
@@ -69,7 +69,6 @@ base_non_configuration_keys = [
   'default_configuration',
   'dependencies',
   'dependencies_original',
-  'link_languages',
   'libraries',
   'postbuilds',
   'product_dir',
@@ -85,7 +84,6 @@ base_non_configuration_keys = [
   'toolset',
   'toolsets',
   'type',
-  'variants',
 
   # Sections that can be found inside targets or configurations, but that
   # should not be propagated from targets into their configurations.
@@ -108,12 +106,11 @@ invalid_configuration_keys = [
   'type',
 ]
 
-# Controls how the generator want the build file paths.
-absolute_build_file_paths = False
-
 # Controls whether or not the generator supports multiple toolsets.
 multiple_toolsets = False
 
+# Converts filelist paths to output paths.
+generator_filelist_path = None
 
 def GetIncludedBuildFiles(build_file_path, aux_data, included=None):
   """Return a list of all build files included into build_file_path.
@@ -223,21 +220,26 @@ def LoadOneBuildFile(build_file_path, data, aux_data, variables, includes,
     gyp.common.ExceptionAppend(e, 'while reading ' + build_file_path)
     raise
 
+  if not isinstance(build_file_data, dict):
+    raise GypError("%s does not evaluate to a dictionary." % build_file_path)
+
   data[build_file_path] = build_file_data
   aux_data[build_file_path] = {}
 
   # Scan for includes and merge them in.
-  try:
-    if is_target:
-      LoadBuildFileIncludesIntoDict(build_file_data, build_file_path, data,
-                                    aux_data, variables, includes, check)
-    else:
-      LoadBuildFileIncludesIntoDict(build_file_data, build_file_path, data,
-                                    aux_data, variables, None, check)
-  except Exception, e:
-    gyp.common.ExceptionAppend(e,
-                               'while reading includes of ' + build_file_path)
-    raise
+  if ('skip_includes' not in build_file_data or
+      not build_file_data['skip_includes']):
+    try:
+      if is_target:
+        LoadBuildFileIncludesIntoDict(build_file_data, build_file_path, data,
+                                      aux_data, variables, includes, check)
+      else:
+        LoadBuildFileIncludesIntoDict(build_file_data, build_file_path, data,
+                                      aux_data, variables, None, check)
+    except Exception, e:
+      gyp.common.ExceptionAppend(e,
+                                 'while reading includes of ' + build_file_path)
+      raise
 
   return build_file_data
 
@@ -343,10 +345,6 @@ def LoadTargetBuildFile(build_file_path, data, aux_data, variables, includes,
       variables['DEPTH'] = '.'
     else:
       variables['DEPTH'] = d.replace('\\', '/')
-
-  # If the generator needs absolue paths, then do so.
-  if absolute_build_file_paths:
-    build_file_path = os.path.abspath(build_file_path)
 
   if build_file_path in data['target_build_files']:
     # Already loaded.
@@ -550,12 +548,13 @@ class ParallelState(object):
     self.condition.release()
 
 
-def LoadTargetBuildFileParallel(build_file_path, data, aux_data,
-                                variables, includes, depth, check):
+def LoadTargetBuildFilesParallel(build_files, data, aux_data,
+                                 variables, includes, depth, check):
   parallel_state = ParallelState()
   parallel_state.condition = threading.Condition()
-  parallel_state.dependencies = [build_file_path]
-  parallel_state.scheduled = set([build_file_path])
+  # Make copies of the build_files argument that we can modify while working.
+  parallel_state.dependencies = list(build_files)
+  parallel_state.scheduled = set(build_files)
   parallel_state.pending = 0
   parallel_state.data = data
   parallel_state.aux_data = aux_data
@@ -584,7 +583,6 @@ def LoadTargetBuildFileParallel(build_file_path, data, aux_data,
       global_flags = {
         'path_sections': globals()['path_sections'],
         'non_configuration_keys': globals()['non_configuration_keys'],
-        'absolute_build_file_paths': globals()['absolute_build_file_paths'],
         'multiple_toolsets': globals()['multiple_toolsets']}
 
       if not parallel_state.pool:
@@ -785,7 +783,7 @@ def ExpandVariables(input, phase, variables, build_file):
       # Find the build file's directory, so commands can be run or file lists
       # generated relative to it.
       build_file_dir = os.path.dirname(build_file)
-      if build_file_dir == '':
+      if build_file_dir == '' and not file_list:
         # If build_file is just a leaf filename indicating a file in the
         # current directory, build_file_dir might be an empty string.  Set
         # it to None to signal to subprocess.Popen that it should run the
@@ -802,9 +800,11 @@ def ExpandVariables(input, phase, variables, build_file):
       else:
         contents_list = contents.split(' ')
       replacement = contents_list[0]
-      path = replacement
-      if not os.path.isabs(path):
-        path = os.path.join(build_file_dir, path)
+      if os.path.isabs(replacement):
+        raise GypError('| cannot handle absolute paths, got "%s"' % replacement)
+
+      path = generator_filelist_path(build_file_dir, replacement)
+      replacement = gyp.common.RelativePath(path, build_file_dir)
       f = gyp.common.WriteOnDiff(path)
       for i in contents_list[1:]:
         f.write('%s\n' % i)
@@ -843,7 +843,8 @@ def ExpandVariables(input, phase, variables, build_file):
           # that don't load quickly, this can be faster than
           # <!(python modulename param eters). Do this in |build_file_dir|.
           oldwd = os.getcwd()  # Python doesn't like os.open('.'): no fchdir.
-          os.chdir(build_file_dir)
+          if build_file_dir:  # build_file_dir may be None (see above).
+            os.chdir(build_file_dir)
           try:
 
             parsed_contents = shlex.split(contents)
@@ -1439,6 +1440,9 @@ class DependencyGraphNode(object):
     self.dependencies = []
     self.dependents = []
 
+  def __repr__(self):
+    return '<DependencyGraphNode: %r>' % self.ref
+
   def FlattenToList(self):
     # flat_list is the sorted list of dependencies - actually, the list items
     # are the "ref" attributes of DependencyGraphNodes.  Every target will
@@ -1480,6 +1484,27 @@ class DependencyGraphNode(object):
           in_degree_zeros.add(node_dependent)
 
     return flat_list
+
+  def FindCycles(self, path=None):
+    """
+    Returns a list of cycles in the graph, where each cycle is its own list.
+    """
+    if path is None:
+      path = [self]
+
+    results = []
+    for node in self.dependents:
+      if node in path:
+        cycle = [node]
+        for part in path:
+          cycle.append(part)
+          if part == node:
+            break
+        results.append(tuple(cycle))
+      else:
+        results.extend(node.FindCycles([node] + path))
+
+    return list(set(results))
 
   def DirectDependencies(self, dependencies=None):
     """Returns a list of just direct dependencies."""
@@ -1556,7 +1581,8 @@ class DependencyGraphNode(object):
 
     return dependencies
 
-  def LinkDependencies(self, targets, dependencies=None, initial=True):
+  def _LinkDependenciesInternal(self, targets, include_shared_libraries,
+                                dependencies=None, initial=True):
     """Returns a list of dependency targets that are linked into this target.
 
     This function has a split personality, depending on the setting of
@@ -1566,6 +1592,9 @@ class DependencyGraphNode(object):
     When adding a target to the list of dependencies, this function will
     recurse into itself with |initial| set to False, to collect dependencies
     that are linked into the linkable target for which the list is being built.
+
+    If |include_shared_libraries| is False, the resulting dependencies will not
+    include shared_library targets that are linked into this target.
     """
     if dependencies == None:
       dependencies = []
@@ -1610,6 +1639,16 @@ class DependencyGraphNode(object):
     if not initial and target_type in ('executable', 'loadable_module'):
       return dependencies
 
+    # Shared libraries are already fully linked.  They should only be included
+    # in |dependencies| when adjusting static library dependencies (in order to
+    # link against the shared_library's import lib), but should not be included
+    # in |dependencies| when propagating link_settings.
+    # The |include_shared_libraries| flag controls which of these two cases we
+    # are handling.
+    if (not initial and target_type == 'shared_library' and
+        not include_shared_libraries):
+      return dependencies
+
     # The target is linkable, add it to the list of link dependencies.
     if self.ref not in dependencies:
       dependencies.append(self.ref)
@@ -1619,9 +1658,31 @@ class DependencyGraphNode(object):
         # this target linkable.  Always look at dependencies of the initial
         # target, and always look at dependencies of non-linkables.
         for dependency in self.dependencies:
-          dependency.LinkDependencies(targets, dependencies, False)
+          dependency._LinkDependenciesInternal(targets,
+                                               include_shared_libraries,
+                                               dependencies, False)
 
     return dependencies
+
+  def DependenciesForLinkSettings(self, targets):
+    """
+    Returns a list of dependency targets whose link_settings should be merged
+    into this target.
+    """
+
+    # TODO(sbaig) Currently, chrome depends on the bug that shared libraries'
+    # link_settings are propagated.  So for now, we will allow it, unless the
+    # 'allow_sharedlib_linksettings_propagation' flag is explicitly set to
+    # False.  Once chrome is fixed, we can remove this flag.
+    include_shared_libraries = \
+        targets[self.ref].get('allow_sharedlib_linksettings_propagation', True)
+    return self._LinkDependenciesInternal(targets, include_shared_libraries)
+
+  def DependenciesToLinkAgainst(self, targets):
+    """
+    Returns a list of dependency targets that are linked into this target.
+    """
+    return self._LinkDependenciesInternal(targets, True)
 
 
 def BuildDependencyList(targets):
@@ -1713,10 +1774,16 @@ def VerifyNoGYPFileCircularDependencies(targets):
     for file in dependency_nodes.iterkeys():
       if not file in flat_list:
         bad_files.append(file)
+    common_path_prefix = os.path.commonprefix(dependency_nodes)
+    cycles = []
+    for cycle in root_node.FindCycles():
+      simplified_paths = []
+      for node in cycle:
+        assert(node.ref.startswith(common_path_prefix))
+        simplified_paths.append(node.ref[len(common_path_prefix):])
+      cycles.append('Cycle: %s' % ' -> '.join(simplified_paths))
     raise DependencyGraphNode.CircularException, \
-        'Some files not reachable, cycle in .gyp file dependency graph ' + \
-        'detected involving some or all of: ' + \
-        ' '.join(bad_files)
+        'Cycles in .gyp file dependency graph detected:\n' + '\n'.join(cycles)
 
 
 def DoDependentSettings(key, flat_list, targets, dependency_nodes):
@@ -1733,7 +1800,8 @@ def DoDependentSettings(key, flat_list, targets, dependency_nodes):
       dependencies = \
           dependency_nodes[target].DirectAndImportedDependencies(targets)
     elif key == 'link_settings':
-      dependencies = dependency_nodes[target].LinkDependencies(targets)
+      dependencies = \
+          dependency_nodes[target].DependenciesForLinkSettings(targets)
     else:
       raise GypError("DoDependentSettings doesn't know how to determine "
                       'dependencies for ' + key)
@@ -1806,7 +1874,8 @@ def AdjustStaticLibraryDependencies(flat_list, targets, dependency_nodes,
       # target.  Add them to the dependencies list if they're not already
       # present.
 
-      link_dependencies = dependency_nodes[target].LinkDependencies(targets)
+      link_dependencies = \
+          dependency_nodes[target].DependenciesToLinkAgainst(targets)
       for dependency in link_dependencies:
         if dependency == target:
           continue
@@ -2379,6 +2448,8 @@ def ValidateRulesInTarget(target, target_dict, extra_sources_for_rules):
     rule_names[rule_name] = rule
 
     rule_extension = rule['extension']
+    if rule_extension.startswith('.'):
+      rule_extension = rule_extension[1:]
     if rule_extension in rule_extensions:
       raise GypError(('extension %s associated with multiple rules, ' +
                       'target %s rules %s and %s') %
@@ -2393,7 +2464,6 @@ def ValidateRulesInTarget(target, target_dict, extra_sources_for_rules):
       raise GypError(
             'rule_sources must not exist in input, target %s rule %s' %
             (target, rule_name))
-    extension = rule['extension']
 
     rule_sources = []
     source_keys = ['sources']
@@ -2403,7 +2473,7 @@ def ValidateRulesInTarget(target, target_dict, extra_sources_for_rules):
         (source_root, source_extension) = os.path.splitext(source)
         if source_extension.startswith('.'):
           source_extension = source_extension[1:]
-        if source_extension == extension:
+        if source_extension == rule_extension:
           rule_sources.append(source)
 
     if len(rule_sources) > 0:
@@ -2529,17 +2599,14 @@ def Load(build_files, variables, includes, depth, generator_input_info, check,
   non_configuration_keys = base_non_configuration_keys[:]
   non_configuration_keys.extend(generator_input_info['non_configuration_keys'])
 
-  # TODO(mark) handle variants if the generator doesn't want them directly.
-  generator_handles_variants = \
-      generator_input_info['generator_handles_variants']
-
-  global absolute_build_file_paths
-  absolute_build_file_paths = \
-      generator_input_info['generator_wants_absolute_build_file_paths']
-
   global multiple_toolsets
   multiple_toolsets = generator_input_info[
       'generator_supports_multiple_toolsets']
+
+  global generator_filelist_path
+  generator_filelist_path = generator_input_info['generator_filelist_path']
+  if not generator_filelist_path:
+    generator_filelist_path = lambda a, b: os.path.join(a, b)
 
   # A generator can have other lists (in addition to sources) be processed
   # for rules.
@@ -2554,21 +2621,20 @@ def Load(build_files, variables, includes, depth, generator_input_info, check,
   # track of the keys corresponding to "target" files.
   data = {'target_build_files': set()}
   aux_data = {}
-  for build_file in build_files:
-    # Normalize paths everywhere.  This is important because paths will be
-    # used as keys to the data dict and for references between input files.
-    build_file = os.path.normpath(build_file)
-    try:
-      if parallel:
-        print >>sys.stderr, 'Using parallel processing.'
-        LoadTargetBuildFileParallel(build_file, data, aux_data,
-                                    variables, includes, depth, check)
-      else:
+  # Normalize paths everywhere.  This is important because paths will be
+  # used as keys to the data dict and for references between input files.
+  build_files = set(map(os.path.normpath, build_files))
+  if parallel:
+    LoadTargetBuildFilesParallel(build_files, data, aux_data,
+                                 variables, includes, depth, check)
+  else:
+    for build_file in build_files:
+      try:
         LoadTargetBuildFile(build_file, data, aux_data,
                             variables, includes, depth, check, True)
-    except Exception, e:
-      gyp.common.ExceptionAppend(e, 'while trying to load %s' % build_file)
-      raise
+      except Exception, e:
+        gyp.common.ExceptionAppend(e, 'while trying to load %s' % build_file)
+        raise
 
   # Build a dict to access each target's subdict by qualified name.
   targets = BuildTargetsDict(data)
