@@ -127,6 +127,11 @@ def WriteXmlIfChanged(content, path, encoding='utf-8', pretty=False,
   # It has changed, write it
   if existing != xml_string:
     f = open(path, 'w')
+    try:
+      dec = unicode(xml_string, 'latin-1').encode('utf-8')
+      xml_string = dec
+    except Exception as inst:
+      pass
     f.write(xml_string)
     f.close()
 
