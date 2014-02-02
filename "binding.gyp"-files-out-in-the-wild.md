@@ -31,5 +31,5 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [node-openvg-canvas](https://github.com/luismreis/node-openvg-canvas/blob/master/binding.gyp) + [node-openvg](https://github.com/luismreis/node-openvg/blob/master/binding.gyp)
  * [node-cryptopp](https://github.com/BatikhSouri/node-cryptopp/blob/master/binding.gyp)
  * [topcube](https://github.com/creationix/topcube/blob/master/binding.gyp)
- * [node-osmium](https://github.com/springmeyer/node-osmium/blob/master/binding.gyp)
+ * [node-osmium](https://github.com/osmcode/node-osmium/blob/master/binding.gyp)
  * [node-osrm](https://github.com/DennisOSRM/node-osrm)
