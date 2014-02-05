@@ -18,7 +18,10 @@
     "url": "git://github.com/TooTallNate/node-gyp.git"
   },
   "preferGlobal": true,
-  "bin": "./bin/node-gyp.js",
+  "bin": {
+    "node-gyp": "./bin/node-gyp.js",
+    "node_resolve": "./bin/node_resolve"
+  },
   "main": "./lib/node-gyp.js",
   "dependencies": {
     "glob": "3",
@@ -33,7 +36,8 @@
     "rimraf": "2",
     "semver": "~2.2.1",
     "tar": "0",
-    "which": "1"
+    "which": "1",
+    "resolve": "0"
   },
   "engines": {
     "node": ">= 0.8.0"

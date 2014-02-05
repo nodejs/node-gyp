@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var resolve = require('resolve');
+
+var result;
+var cwd = process.cwd();
+
+result = resolve.sync(process.argv[2], { basedir: cwd });
+result = path.dirname(result);
+
+console.log(result);
