@@ -50,7 +50,7 @@ version `node-gyp` uses by setting `npm`'s 'python' config key to the appropriat
 value:
 
 ``` bash
-$ npm config set python python2.7
+$ npm config set python /path/to/executable/python2.7
 ```
 
 Note that OS X is just a flavour of Unix and so needs `python`, `make`, and C/C++.
