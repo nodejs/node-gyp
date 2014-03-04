@@ -45,6 +45,13 @@ You will also need to install:
     * Windows 7/8:
       * Microsoft Visual Studio C++ 2012 for Windows Desktop ([Express][msvc2012] version works well)
 
+Systems with multiple Python versions installed can specifiy which Python version `node-gyp` 
+uses by setting `npm`'s `python` config key to the appropriate value:
+
+``` bash
+$ npm config set python python2.7
+```
+
 Note that OS X is just a flavour of Unix and so needs `python`, `make`, and C/C++.
 An easy way to obtain these is to install XCode from Apple,
 and then use it to install the command line tools (under Preferences -> Downloads).
