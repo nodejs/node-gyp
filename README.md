@@ -46,7 +46,14 @@ You will also need to install:
       * Microsoft Visual Studio C++ 2012 for Windows Desktop ([Express][msvc2012] version works well)
 
 If you have multiple Python versions installed, you can identify which Python 
-version `node-gyp` uses by setting `npm`'s 'python' config key to the appropriate 
+version `node-gyp` uses by setting the '--python' variable:
+
+``` bash
+$ node-gyp --python /path/to/python2.7
+```
+
+If `node-gyp` is called by way of `npm` *and* you have multiple versions of 
+Python installed, then you can set `npm`'s 'python' config key to the appropriate 
 value:
 
 ``` bash
