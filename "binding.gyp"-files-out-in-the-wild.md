@@ -19,7 +19,7 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [node-midi](https://github.com/justinlatimer/node-midi/blob/master/binding.gyp)
  * [node-sqlite3](https://github.com/developmentseed/node-sqlite3/blob/master/binding.gyp) + [libsqlite3](https://github.com/developmentseed/node-sqlite3/blob/master/deps/sqlite3.gyp)
  * [node-srs](https://github.com/springmeyer/node-srs/blob/master/binding.gyp)
- * [node-zipfile](https://github.com/springmeyer/node-zipfile/blob/master/build.gyp)
+ * [node-zipfile](https://github.com/mapbox/node-zipfile/blob/master/binding.gyp)
  * [node-mapnik](https://github.com/mapnik/node-mapnik/blob/master/binding.gyp)
  * [node-inotify](https://github.com/c4milo/node-inotify/blob/master/binding.gyp)
  * [v8-profiler](https://github.com/c4milo/v8-profiler/blob/master/binding.gyp)
