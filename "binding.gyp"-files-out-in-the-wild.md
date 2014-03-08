@@ -33,3 +33,4 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [topcube](https://github.com/creationix/topcube/blob/master/binding.gyp)
  * [node-osmium](https://github.com/osmcode/node-osmium/blob/master/binding.gyp)
  * [node-osrm](https://github.com/DennisOSRM/node-osrm)
+ * [node-oracle](https://github.com/joeferner/node-oracle/blob/master/binding.gyp)
