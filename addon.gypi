@@ -42,11 +42,24 @@
           '-luuid.lib',
           '-lodbc32.lib',
           '-lDelayImp.lib',
-          '-l"<(node_root_dir)/$(ConfigurationName)/node.lib"'
+          '-lnode.lib'
         ],
+        'library_dirs': [ '<(nodelibdir)' ],
         # warning C4251: 'node::ObjectWrap::handle_' : class 'v8::Persistent<T>'
         # needs to have dll-interface to be used by clients of class 'node::ObjectWrap'
         'msvs_disabled_warnings': [ 4251 ],
+
+        # Gyp's ninja generator depends on these specially named
+        # configurations to build 64-bit on Windows.
+        # See http://skbug.com/2348
+        'configurations': {
+          'Debug_x64': {
+            'inherit_from': ['Debug'],
+          },
+          'Release_x64': {
+            'inherit_from': ['Release'],
+          }
+        }
       }, {
         # OS!="win"
         'defines': [ '_LARGEFILE_SOURCE', '_FILE_OFFSET_BITS=64' ],
