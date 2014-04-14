@@ -143,6 +143,22 @@ Commands
 | `remove`      | Removes the node development header files for the given version
 
 
+Flags
+--------
+| **Flag**          | **Description**
+|:------------------|:---------------------------------------------------------------
+| `--ninja`         | Use __ninja__ as build system (defaults on non-Windows)
+| `--makefile`      | Use __make__ as build system
+| `--msvs`          | Use __msbuild__ as build system (defaults on Windows)
+| `--without-ninja` | Do not install __ninja__
+
+You can permanently disable __ninja__ just type:
+``` bash
+$ npm config set without-ninja
+$ npm config set makefile
+```
+
+
 License
 -------
 
