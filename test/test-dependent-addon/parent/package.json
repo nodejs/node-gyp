@@ -1,0 +1,14 @@
+{
+  "name": "parent",
+  "version": "0.0.0",
+  "description": "parent",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
+  },
+  "repository" : true,
+  "author": "",
+  "license": "ISC",
+  "gypfile": true
+}
