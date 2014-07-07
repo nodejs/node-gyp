@@ -8,3 +8,5 @@ According to the readme file in [Microsoft Visual C++ 2010 Service Pack 1 Compil
 1. [Visual C++ 2010 SP1 Compiler Update for the Windows SDK 7.1](http://www.microsoft.com/en-us/download/details.aspx?id=4422)
 
 On x64 environments, the last update in the list fixes errors about missing compilers and `error MSB4019: The imported project "C:\Microsoft.Cpp.Default.props" was not found.`
+
+If you experience the error `LNK1181` file `kernel32.lib` not found, try compiling using the `Windows SDK 7.1 Command Prompt` start menu shortcut.
