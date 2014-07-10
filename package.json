@@ -33,7 +33,8 @@
     "rimraf": "2",
     "semver": "~2.2.1",
     "tar": "0",
-    "which": "1"
+    "which": "1",
+    "process": "0"
   },
   "engines": {
     "node": ">= 0.8.0"
