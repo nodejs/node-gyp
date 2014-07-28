@@ -14,6 +14,9 @@ Multiple target versions of node are supported (i.e. `0.8`, `0.9`, `0.10`, ..., 
 etc.), regardless of what version of node is actually installed on your system
 (`node-gyp` downloads the necessary development files for the target version).
 
+Still, some modules may fail to install under 0.11.x, so do try running a stable
+version of node if that is the case (0.10.x).
+
 #### Features:
 
  * Easy to use, consistent interface
@@ -43,6 +46,7 @@ You will also need to install:
       * For 64-bit builds of node and native modules you will _**also**_ need the [Windows 7 64-bit SDK][win7sdk]
         * If the install fails, try uninstalling any C++ 2010 x64&x86 Redistributable that you have installed first.
       * If you get errors that the 64-bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1]
+	  * If you still get errors, try installing [Microsoft Visual Studio 2010 *Service Pack 1*][msvc2010sp1].
     * Windows 7/8:
       * Microsoft Visual Studio C++ 2012 for Windows Desktop ([Express][msvc2012] version works well)
 
@@ -176,4 +180,5 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [msvc2010]: http://go.microsoft.com/?linkid=9709949
 [msvc2012]: http://go.microsoft.com/?linkid=9816758
 [win7sdk]: http://www.microsoft.com/en-us/download/details.aspx?id=8279
+[msvc2010sp1]: http://www.microsoft.com/downloads/en/confirmation.aspx?FamilyID=75568aa6-8107-475d-948a-ef22627e57a5
 [compiler update for the Windows SDK 7.1]: http://www.microsoft.com/en-us/download/details.aspx?id=4422
