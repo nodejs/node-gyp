@@ -22,9 +22,9 @@
   "main": "./lib/node-gyp.js",
   "dependencies": {
     "glob": "3 || 4",
-    "graceful-fs": "2",
+    "graceful-fs": "3",
     "fstream": "0",
-    "minimatch": "0",
+    "minimatch": "1",
     "mkdirp": "0",
     "nopt": "2 || 3",
     "npmlog": "0",
