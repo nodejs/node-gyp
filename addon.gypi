@@ -3,6 +3,7 @@
     'type': 'loadable_module',
     'product_prefix': '',
     'include_dirs': [
+      '<(node_root_dir)',
       '<(node_root_dir)/src',
       '<(node_root_dir)/deps/uv/include',
       '<(node_root_dir)/deps/v8/include'
