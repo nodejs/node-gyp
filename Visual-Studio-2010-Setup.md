@@ -9,4 +9,10 @@ According to the readme file in [Microsoft Visual C++ 2010 Service Pack 1 Compil
 
 On x64 environments, the last update in the list fixes errors about missing compilers and `error MSB4019: The imported project "C:\Microsoft.Cpp.Default.props" was not found.`
 
-If you experience the error `LNK1181` file `kernel32.lib` not found, try compiling using the `Windows SDK 7.1 Command Prompt` start menu shortcut.
+
+#### `LNK1181` file `kernel32.lib` not found
+Easy Solution: try compiling using the `Windows SDK 7.1 Command Prompt` start menu shortcut.
+
+Proper Solution: To properly fix the situation, you'll need to globally set some environment variables.  
+To get their proper values, launch the `Windows SDK 7.1 Command Prompt`, then within the prompt get the value of the following variables: `PATH` (it adds some things to PATH, you can put these anywhere in the PATH list), `LIBPATH`, `LIB`, `PlatformToolset`, `WindowsSDKDir`, `sdkdir`, `TARGET_PLATFORM`, and `VS120COMNTOOLS`.  
+Take their values, and put them in either your User or System variables. You can easily get to this menu by doing `Win+Pause/Break`, `Advanced System Settings`, and then `Environment Variables`.
