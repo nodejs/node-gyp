@@ -44,7 +44,7 @@ You will also need to install:
         * If the install fails, try uninstalling any C++ 2010 x64&x86 Redistributable that you have installed first.
       * If you get errors that the 64-bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1]
     * Windows 7/8:
-      * Microsoft Visual Studio C++ 2012 for Windows Desktop ([Express][msvc2012] version works well)
+      * Microsoft Visual Studio C++ 2012/13 for Windows Desktop ([Express][msvc2012] version works well)
 
 If you have multiple Python versions installed, you can identify which Python
 version `node-gyp` uses by setting the '--python' variable:
