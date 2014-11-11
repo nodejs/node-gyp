@@ -82,7 +82,7 @@ $ node-gyp configure
 ```
 
 __Note__: The `configure` step looks for the `binding.gyp` file in the current
-directory to processs. See below for instructions on creating the `binding.gyp` file.
+directory to process. See below for instructions on creating the `binding.gyp` file.
 
 Now you will have either a `Makefile` (on Unix platforms) or a `vcxproj` file
 (on Windows) in the `build/` directory. Next invoke the `build` command:
@@ -96,7 +96,7 @@ in `build/Debug/` or `build/Release/`, depending on the build mode. At this poin
 you can require the `.node` file with Node and run your tests!
 
 __Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
-`-d`) switch when running the either `configure` or `build` command.
+`-d`) switch when running either the `configure`, `build` or `rebuild` command.
 
 
 The "binding.gyp" file
@@ -120,8 +120,9 @@ A barebones `gyp` file appropriate for building a node addon looks like:
 }
 ```
 
-Some additional resources for writing `gyp` files:
+Some additional resources for addons and writing `gyp` files:
 
+ * ["Going Native" a nodeschool.io tutorial](http://nodeschool.io/#goingnative)
  * ["Hello World" node addon example](https://github.com/joyent/node/tree/master/test/addons/hello-world)
  * [gyp user documentation](http://code.google.com/p/gyp/wiki/GypUserDocumentation)
  * [gyp input format reference](http://code.google.com/p/gyp/wiki/InputFormatReference)
@@ -136,9 +137,9 @@ Commands
 | **Command**   | **Description**
 |:--------------|:---------------------------------------------------------------
 | `build`       | Invokes `make`/`msbuild.exe` and builds the native addon
-| `clean`       | Removes any the `build` dir if it exists
+| `clean`       | Removes the `build` directory if it exists
 | `configure`   | Generates project build files for the current platform
-| `rebuild`     | Runs "clean", "configure" and "build" all in a row
+| `rebuild`     | Runs `clean`, `configure` and `build` all in a row
 | `install`     | Installs node development header files for the given version
 | `list`        | Lists the currently installed node development file versions
 | `remove`      | Removes the node development header files for the given version
