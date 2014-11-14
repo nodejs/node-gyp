@@ -25,7 +25,8 @@
         'defines': [ '_DARWIN_USE_64_BIT_INODE=1' ],
         'libraries': [ '-undefined dynamic_lookup' ],
         'xcode_settings': {
-          'DYLIB_INSTALL_NAME_BASE': '@rpath'
+          'DYLIB_INSTALL_NAME_BASE': '@rpath',
+          'OTHER_LDFLAGS' : [ '-undefined dynamic_lookup' ]
         },
       }],
       [ 'OS=="win"', {
