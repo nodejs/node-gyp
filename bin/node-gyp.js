@@ -20,6 +20,7 @@ var log = require('npmlog')
 var prog = gyp()
 var completed = false
 prog.parseArgv(process.argv)
+prog.setDevDir()
 
 if (prog.todo.length === 0) {
   if (~process.argv.indexOf('-v') || ~process.argv.indexOf('--version')) {
