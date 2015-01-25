@@ -41,5 +41,8 @@
   "devDependencies": {
     "buffertools": "~2.1.2",
     "leveldown": "~1.0.1"
+  },
+  "scripts": {
+    "test": "make test"
   }
 }
