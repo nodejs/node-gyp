@@ -1,6 +1,7 @@
 {
   "name": "node-gyp",
   "description": "Node.js native addon build tool",
+  "license": "MIT",
   "keywords": [
     "native",
     "addon",
