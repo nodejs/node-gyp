@@ -14,6 +14,9 @@
       ['_type=="loadable_module"', {
         'product_extension': 'node',
         'defines': [ 'BUILDING_NODE_EXTENSION' ],
+        'xcode_settings': {
+          'OTHER_LDFLAGS': [ '-undefined dynamic_lookup' ],
+        },
       }],
 
       ['_type=="static_library"', {
@@ -48,7 +51,6 @@
     'conditions': [
       [ 'OS=="mac"', {
         'defines': [ '_DARWIN_USE_64_BIT_INODE=1' ],
-        'libraries': [ '-undefined dynamic_lookup' ],
         'xcode_settings': {
           'DYLIB_INSTALL_NAME_BASE': '@rpath'
         },
