@@ -9,14 +9,20 @@
       '<(node_root_dir)/deps/uv/include',
       '<(node_root_dir)/deps/v8/include'
     ],
-    'defines': ['NODE_GYP_MODULE_NAME=>(_target_name)'],
+    'defines': [
+      'NODE_GYP_MODULE_NAME=>(_target_name)'
+    ],
 
     'target_conditions': [
       ['_type=="loadable_module"', {
         'product_extension': 'node',
-        'defines': [ 'BUILDING_NODE_EXTENSION' ],
+        'defines': [
+          'BUILDING_NODE_EXTENSION'
+        ],
         'xcode_settings': {
-          'OTHER_LDFLAGS': [ '-undefined dynamic_lookup' ],
+          'OTHER_LDFLAGS': [
+            '-undefined dynamic_lookup'
+          ],
         },
       }],
 
@@ -51,7 +57,9 @@
 
     'conditions': [
       [ 'OS=="mac"', {
-        'defines': [ '_DARWIN_USE_64_BIT_INODE=1' ],
+        'defines': [
+          '_DARWIN_USE_64_BIT_INODE=1'
+        ],
         'xcode_settings': {
           'DYLIB_INSTALL_NAME_BASE': '@rpath'
         },
@@ -72,12 +80,18 @@
           '-lDelayImp.lib',
           '-l"<(node_root_dir)/$(ConfigurationName)/node.lib"'
         ],
-        # warning C4251: 'node::ObjectWrap::handle_' : class 'v8::Persistent<T>'
-        # needs to have dll-interface to be used by clients of class 'node::ObjectWrap'
-        'msvs_disabled_warnings': [ 4251 ],
+        'msvs_disabled_warnings': [
+          # warning C4251: 'node::ObjectWrap::handle_' : class 'v8::Persistent<T>'
+          # needs to have dll-interface to be used by
+          # clients of class 'node::ObjectWrap'
+          4251
+        ],
       }, {
         # OS!="win"
-        'defines': [ '_LARGEFILE_SOURCE', '_FILE_OFFSET_BITS=64' ],
+        'defines': [
+          '_LARGEFILE_SOURCE',
+          '_FILE_OFFSET_BITS=64'
+        ],
       }],
       [ 'OS=="freebsd" or OS=="openbsd" or OS=="solaris" or (OS=="linux" and target_arch!="ia32")', {
         'cflags': [ '-fPIC' ],
