@@ -30,6 +30,7 @@
     "nopt": "2 || 3",
     "npmlog": "0 || 1",
     "osenv": "0",
+    "path-array": "^1.0.0",
     "request": "2",
     "rimraf": "2",
     "semver": "2.x || 3.x || 4",
