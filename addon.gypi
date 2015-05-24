@@ -9,6 +9,7 @@
       '<(node_root_dir)/deps/uv/include',
       '<(node_root_dir)/deps/v8/include'
     ],
+    'defines': ['NODE_GYP_MODULE_NAME=>(_target_name)'],
 
     'target_conditions': [
       ['_type=="loadable_module"', {
