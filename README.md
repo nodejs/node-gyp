@@ -35,13 +35,18 @@ You will also need to install:
   * On Unix:
     * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported)
     * `make`
-    * A proper C/C++ compiler toolchain, like GCC
+    * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
+  * On Mac OS X:
+    * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported) (already installed on Mac OS X)
+    * [Xcode](https://developer.apple.com/xcode/downloads/)
+      * You also need to install the `Command Line Tools` via Xcode. You can find this under the menu `Xcode -> Preferences -> Downloads`
+      * This step will install `gcc` and the related toolchain containing `make`
   * On Windows:
     * [Python][windows-python] ([`v2.7.3`][windows-python-v2.7.3] recommended, `v3.x.x` is __*not*__ supported)
-      * Make sure that you have a PYTHON environment variable, and it is set to drive:\path\to\python.exe not to a folder.
+      * Make sure that you have a PYTHON environment variable, and it is set to drive:\path\to\python.exe not to a folder
     * Windows XP/Vista/7:
       * Microsoft Visual Studio C++ 2013 ([Express][msvc2013] version works well)
-        * If the install fails, try uninstalling any C++ 2010 x64&x86 Redistributable that you have installed first.
+        * If the install fails, try uninstalling any C++ 2010 x64&x86 Redistributable that you have installed first
         * If you get errors that the 64-bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1]
     * Windows 7/8:
       * Microsoft Visual Studio C++ 2013 for Windows Desktop ([Express][msvc2013] version works well)
