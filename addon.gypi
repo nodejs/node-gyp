@@ -36,7 +36,7 @@
         # If the addon specifies `'win_delay_load_hook': 'true'` in its
         # binding.gyp, link a delay-load hook into the DLL. This hook ensures
         # that the addon will work regardless of whether the node/iojs binary
-        # is named node.exe, iojs.exe, or something else.
+        # is named node.exe, iojs.exe, or node.dll.
         'conditions': [
           [ 'OS=="win"', {
             'sources': [
@@ -44,7 +44,7 @@
             ],
             'msvs_settings': {
               'VCLinkerTool': {
-                'DelayLoadDLLs': [ 'iojs.exe', 'node.exe' ],
+                'DelayLoadDLLs': [ 'iojs.exe', 'node.exe', 'node.dll' ],
                 # Don't print a linker warning when no imports from either .exe
                 # are used.
                 'AdditionalOptions': [ '/ignore:4199' ],

@@ -21,10 +21,16 @@ static FARPROC WINAPI load_exe_hook(unsigned int event, DelayLoadInfo* info) {
     return NULL;
 
   if (_stricmp(info->szDll, "iojs.exe") != 0 &&
-      _stricmp(info->szDll, "node.exe") != 0)
+      _stricmp(info->szDll, "node.exe") != 0 &&
+      _stricmp(info->szDll, "node.dll") != 0)
     return NULL;
 
-  m = GetModuleHandle(NULL);
+  m = GetModuleHandle("node.dll");
+  if (m == NULL) 
+  {
+    m = GetModuleHandle(NULL);
+  }
+
   return (FARPROC) m;
 }
 
