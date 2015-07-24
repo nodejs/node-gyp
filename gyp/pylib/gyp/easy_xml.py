@@ -4,6 +4,7 @@
 
 import re
 import os
+import locale
 
 
 def XmlToString(content, encoding='utf-8', pretty=False):
@@ -119,7 +120,8 @@ def WriteXmlIfChanged(content, path, encoding='utf-8', pretty=False,
   try:
     xml_string = xml_string.encode(encoding)
   except Exception:
-    xml_string = unicode(xml_string, 'latin-1').encode(encoding)
+    ansi_locale = locale.getdefaultlocale()
+    xml_string = unicode(xml_string, ansi_locale[1]).encode(encoding)
 
   # Get the old content
   try:
