@@ -33,7 +33,7 @@
     "path-array": "^1.0.0",
     "request": "2",
     "rimraf": "2",
-    "semver": "2.x || 3.x || 4",
+    "semver": "2.x || 3.x || 4 || 5",
     "tar": "^1.0.0",
     "which": "1"
   },
