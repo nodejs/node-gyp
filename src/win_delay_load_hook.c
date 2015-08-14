@@ -11,12 +11,12 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-
+#include <Shlwapi.h>
 #include <delayimp.h>
 #include <string.h>
 
 static FARPROC WINAPI load_exe_hook(unsigned int event, DelayLoadInfo* info) {
-  HMODULE m;
+
   if (event != dliNotePreLoadLibrary)
     return NULL;
 
@@ -25,13 +25,34 @@ static FARPROC WINAPI load_exe_hook(unsigned int event, DelayLoadInfo* info) {
       _stricmp(info->szDll, "node.dll") != 0)
     return NULL;
 
-  m = GetModuleHandle("node.dll");
-  if (m == NULL) 
-  {
-    m = GetModuleHandle(NULL);
+  // Get a handle to the current process executable.
+  HMODULE processModule = GetModuleHandle(NULL);
+
+  // Get the path to the executable.
+  TCHAR processPath[_MAX_PATH];
+  GetModuleFileName(processModule, processPath, _MAX_PATH);
+
+  // Get the name of the current executable.
+  LPSTR processName = PathFindFileName(&processPath[0]);
+
+  // If the current process is node or iojs, then just return the proccess module.
+  if (_stricmp(processName, "node.exe") == 0 ||
+      _stricmp(processName, "iojs.exe") == 0) {
+    return (FARPROC)processModule;
   }
 
-  return (FARPROC) m;
+  // If it is another process, attempt to load 'node.dll' from the same directory.
+  PathRemoveFileSpec(&processPath[0]);
+  PathAppend(&processPath[0], "node.dll");
+
+  HMODULE nodeDllModule = GetModuleHandle(&processPath[0]);
+  if(nodeDllModule != NULL) {
+    // This application has a node.dll in the same directory as the executable, use that.
+    return (FARPROC)nodeDllModule;
+  }
+
+  // Fallback to the current executable, which must statically link to node.lib.
+  return (FARPROC)processModule;
 }
 
 PfnDliHook __pfnDliNotifyHook2 = load_exe_hook;

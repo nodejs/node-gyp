@@ -42,6 +42,9 @@
             'sources': [
               '<(node_gyp_dir)/src/win_delay_load_hook.c',
             ],
+            'libraries': [
+              '-lShlwapi.lib'
+            ],
             'msvs_settings': {
               'VCLinkerTool': {
                 'DelayLoadDLLs': [ 'iojs.exe', 'node.exe', 'node.dll' ],
