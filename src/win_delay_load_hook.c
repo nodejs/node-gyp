@@ -33,7 +33,7 @@ static FARPROC WINAPI load_exe_hook(unsigned int event, DelayLoadInfo* info) {
   GetModuleFileName(processModule, processPath, _MAX_PATH);
 
   // Get the name of the current executable.
-  LPSTR processName = PathFindFileName(&processPath[0]);
+  LPSTR processName = PathFindFileName(processPath);
 
   // If the current process is node or iojs, then just return the proccess module.
   if (_stricmp(processName, "node.exe") == 0 ||
@@ -42,10 +42,10 @@ static FARPROC WINAPI load_exe_hook(unsigned int event, DelayLoadInfo* info) {
   }
 
   // If it is another process, attempt to load 'node.dll' from the same directory.
-  PathRemoveFileSpec(&processPath[0]);
-  PathAppend(&processPath[0], "node.dll");
+  PathRemoveFileSpec(processPath);
+  PathAppend(processPath, "node.dll");
 
-  HMODULE nodeDllModule = GetModuleHandle(&processPath[0]);
+  HMODULE nodeDllModule = GetModuleHandle(processPath);
   if(nodeDllModule != NULL) {
     // This application has a node.dll in the same directory as the executable, use that.
     return (FARPROC)nodeDllModule;

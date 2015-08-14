@@ -36,7 +36,7 @@
         # If the addon specifies `'win_delay_load_hook': 'true'` in its
         # binding.gyp, link a delay-load hook into the DLL. This hook ensures
         # that the addon will work regardless of whether the node/iojs binary
-        # is named node.exe, iojs.exe, or node.dll.
+        # is named node.exe, iojs.exe, node.dll or something else.
         'conditions': [
           [ 'OS=="win"', {
             'sources': [
