@@ -7,6 +7,7 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [node-canvas](https://github.com/LearnBoost/node-canvas/blob/master/binding.gyp)
  * [node-ffi](https://github.com/rbranson/node-ffi/blob/master/binding.gyp) + [libffi](https://github.com/rbranson/node-ffi/blob/master/deps/libffi/libffi.gyp)
  * [node-time](https://github.com/TooTallNate/node-time/blob/master/binding.gyp)
+ * [node-sass](https://github.com/sass/node-sass/blob/master/binding.gyp) + [libsass](https://github.com/sass/node-sass/blob/master/src/libsass.gyp)
  * [node-serialport](https://github.com/voodootikigod/node-serialport/blob/master/binding.gyp)
  * [node-weak](https://github.com/TooTallNate/node-weak/blob/master/binding.gyp)
  * [pty.js](https://github.com/chjj/pty.js/blob/master/binding.gyp)
