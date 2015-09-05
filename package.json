@@ -35,6 +35,7 @@
     "rimraf": "2",
     "semver": "2.x || 3.x || 4 || 5",
     "tar": "^1.0.0",
+    "verror": "^1.6.0",
     "which": "1"
   },
   "engines": {
