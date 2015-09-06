@@ -16,7 +16,7 @@
   "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)",
   "repository": {
     "type": "git",
-    "url": "git://github.com/TooTallNate/node-gyp.git"
+    "url": "git://github.com/nodejs/node-gyp.git"
   },
   "preferGlobal": true,
   "bin": "./bin/node-gyp.js",
