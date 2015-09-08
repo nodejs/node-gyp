@@ -1,3 +1,7 @@
+v3.0.1 2015-09-08
+
+* [[`846337e36b`](https://github.com/nodejs/node-gyp/commit/846337e36b)] - normalise versions for target == this comparison (Rod Vagg) [#716](https://github.com/nodejs/node-gyp/pull/716)
+
 v3.0.0 2015-09-08
 
 * [[`9720d0373c`](https://github.com/nodejs/node-gyp/commit/9720d0373c)] - remove node_modules from tree (Rod Vagg) [#711](https://github.com/nodejs/node-gyp/pull/711)
