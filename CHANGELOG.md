@@ -1,3 +1,7 @@
+v3.0.3 2015-09-14
+
+* [[`ad827cda30`](https://github.com/nodejs/node-gyp/commit/ad827cda30)] - tarballUrl global and && when checking for iojs (Lars-Magnus Skog) [#729](https://github.com/nodejs/node-gyp/pull/729)
+
 v3.0.2 2015-09-12
 
 * [[`6e8c3bf3c6`](https://github.com/nodejs/node-gyp/commit/6e8c3bf3c6)] - add back support for passing additional cmdline args (Rod Vagg) [#723](https://github.com/nodejs/node-gyp/pull/723)
