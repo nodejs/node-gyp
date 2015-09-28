@@ -2235,7 +2235,7 @@ def GenerateOutputForConfig(target_list, target_dicts, data, params,
     master_ninja.rule(
       'copy',
       description='COPY $in $out',
-      command='rm -rf $out && cp -af $in $out')
+      command='rm -rf $out && cp -RpPf $in $out')
   master_ninja.newline()
 
   all_targets = set()
