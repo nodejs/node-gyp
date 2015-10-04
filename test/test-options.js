@@ -6,6 +6,11 @@ var gyp = require('../lib/node-gyp')
 test('options in environment', function (t) {
   t.plan(1)
 
+  // `npm test` dumps a ton of npm_config_* variables in the environment.
+  Object.keys(process.env)
+        .filter(function(key) { return /^npm_config_/.test(key) })
+        .forEach(function(key) { delete process.env[key] })
+
   // Zero-length keys should get filtered out.
   process.env.npm_config_ = '42'
   // Other keys should get added.
