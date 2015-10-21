@@ -86,6 +86,9 @@ generator_additional_non_configuration_keys = [
     'msvs_enable_winrt',
     'msvs_requires_importlibrary',
     'msvs_enable_winphone',
+    'msvs_application_type_revision',
+    'msvs_target_platform_version',
+    'msvs_target_platform_minversion',
 ]
 
 
@@ -2344,6 +2347,9 @@ def _GenerateMSBuildRuleTargetsFile(targets_path, msbuild_rules):
         rule_name,
         {'Condition': "'@(%s)' != '' and '%%(%s.ExcludedFromBuild)' != "
          "'true'" % (rule_name, rule_name),
+         'EchoOff': 'true',
+         'StandardOutputImportance': 'High',
+         'StandardErrorImportance': 'High',
          'CommandLineTemplate': '%%(%s.CommandLineTemplate)' % rule_name,
          'AdditionalOptions': '%%(%s.AdditionalOptions)' % rule_name,
          'Inputs': rule_inputs
@@ -2634,8 +2640,23 @@ def _GetMSBuildGlobalProperties(spec, guid, gyp_file_name):
   if spec.get('msvs_enable_winrt'):
     properties[0].append(['DefaultLanguage', 'en-US'])
     properties[0].append(['AppContainerApplication', 'true'])
-    properties[0].append(['ApplicationTypeRevision', '8.1'])
+    if spec.get('msvs_application_type_revision'):
+      app_type_revision = spec.get('msvs_application_type_revision')
+      properties[0].append(['ApplicationTypeRevision', app_type_revision])
+    else:
+      properties[0].append(['ApplicationTypeRevision', '8.1'])
 
+    if spec.get('msvs_target_platform_version'):
+      target_platform_version = spec.get('msvs_target_platform_version')
+      properties[0].append(['WindowsTargetPlatformVersion',
+                            target_platform_version])
+      if spec.get('msvs_target_platform_minversion'):
+        target_platform_minversion = spec.get('msvs_target_platform_minversion')
+        properties[0].append(['WindowsTargetPlatformMinVersion',
+                              target_platform_minversion])
+      else:
+        properties[0].append(['WindowsTargetPlatformMinVersion',
+                              target_platform_version])
     if spec.get('msvs_enable_winphone'):
       properties[0].append(['ApplicationType', 'Windows Phone'])
     else:
@@ -2777,9 +2798,6 @@ def _GetMSBuildAttributes(spec, config, build_file):
     product_name = spec.get('product_name', '$(ProjectName)')
     target_name = prefix + product_name
     msbuild_attributes['TargetName'] = target_name
-  if 'TargetExt' not in msbuild_attributes and 'product_extension' in spec:
-    ext = spec.get('product_extension')
-    msbuild_attributes['TargetExt'] = '.' + ext
 
   if spec.get('msvs_external_builder'):
     external_out_dir = spec.get('msvs_external_builder_out_dir', '.')
@@ -2833,9 +2851,6 @@ def _GetMSBuildConfigurationGlobalProperties(spec, configurations, build_file):
                             attributes['OutputDirectory'])
     _AddConditionalProperty(properties, condition, 'TargetName',
                             attributes['TargetName'])
-    if 'TargetExt' in attributes:
-      _AddConditionalProperty(properties, condition, 'TargetExt',
-                              attributes['TargetExt'])
 
     if attributes.get('TargetPath'):
       _AddConditionalProperty(properties, condition, 'TargetPath',
