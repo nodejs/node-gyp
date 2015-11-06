@@ -137,8 +137,8 @@ Some additional resources for addons and writing `gyp` files:
 
  * ["Going Native" a nodeschool.io tutorial](http://nodeschool.io/#goingnative)
  * ["Hello World" node addon example](https://github.com/joyent/node/tree/master/test/addons/hello-world)
- * [gyp user documentation](https://chromium.googlesource.com/external/gyp/+/master/docs/UserDocumentation.md)
- * [gyp input format reference](https://chromium.googlesource.com/external/gyp/+/master/docs/InputFormatReference.md)
+ * [gyp user documentation](https://gyp.gsrc.io/docs/UserDocumentation.md)
+ * [gyp input format reference](https://gyp.gsrc.io/docs/InputFormatReference.md)
  * [*"binding.gyp" files out in the wild* wiki page](https://github.com/nodejs/node-gyp/wiki/%22binding.gyp%22-files-out-in-the-wild)
 
 
