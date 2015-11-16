@@ -38,7 +38,7 @@ You will also need to install:
     * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
   * On Mac OS X:
     * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported) (already installed on Mac OS X)
-    * [Xcode](https://developer.apple.com/xcode/downloads/)
+    * [Xcode](https://developer.apple.com/xcode/download/)
       * You also need to install the `Command Line Tools` via Xcode. You can find this under the menu `Xcode -> Preferences -> Downloads`
       * This step will install `gcc` and the related toolchain containing `make`
   * On Windows:
@@ -136,9 +136,9 @@ A barebones `gyp` file appropriate for building a node addon looks like:
 Some additional resources for addons and writing `gyp` files:
 
  * ["Going Native" a nodeschool.io tutorial](http://nodeschool.io/#goingnative)
- * ["Hello World" node addon example](https://github.com/joyent/node/tree/master/test/addons/hello-world)
- * [gyp user documentation](https://chromium.googlesource.com/external/gyp/+/master/docs/UserDocumentation.md)
- * [gyp input format reference](https://chromium.googlesource.com/external/gyp/+/master/docs/InputFormatReference.md)
+ * ["Hello World" node addon example](https://github.com/nodejs/node/tree/master/test/addons/hello-world)
+ * [gyp user documentation](https://gyp.gsrc.io/docs/UserDocumentation.md)
+ * [gyp input format reference](https://gyp.gsrc.io/docs/InputFormatReference.md)
  * [*"binding.gyp" files out in the wild* wiki page](https://github.com/nodejs/node-gyp/wiki/%22binding.gyp%22-files-out-in-the-wild)
 
 
@@ -185,8 +185,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-[windows-python]: http://www.python.org/getit/windows
-[windows-python-v2.7.3]: http://www.python.org/download/releases/2.7.3#download
-[msvc2013]: http://www.microsoft.com/en-gb/download/details.aspx?id=44914
-[win7sdk]: http://www.microsoft.com/en-us/download/details.aspx?id=8279
-[compiler update for the Windows SDK 7.1]: http://www.microsoft.com/en-us/download/details.aspx?id=4422
+[windows-python-v2.7.3]: https://www.python.org/download/releases/2.7.3/#download
+[msvc2013]: https://www.microsoft.com/en-gb/download/details.aspx?id=44914
+[win7sdk]: https://www.microsoft.com/en-us/download/details.aspx?id=8279
+[compiler update for the Windows SDK 7.1]: https://www.microsoft.com/en-us/download/details.aspx?id=4422
