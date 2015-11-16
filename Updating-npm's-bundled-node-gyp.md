@@ -40,5 +40,5 @@ $ cd "C:\Program Files\nodejs\node_modules\npm"
 Now you can finally run:
 
 ``` bash
-$ npm install node-gyp@latest
+$ npm install -g node-gyp@latest
 ```
