@@ -2054,6 +2054,11 @@ def GenerateOutput(target_list, target_dicts, data, params):
         'flock': './gyp-flock-tool flock',
         'flock_index': 2,
     })
+  elif flavor == 'openbsd':
+    copy_archive_arguments = '-pPRf'
+    header_params.update({
+        'copy_archive_args': copy_archive_arguments,
+    })
 
   header_params.update({
     'CC.target':   GetEnvironFallback(('CC_target', 'CC'), '$(CC)'),
