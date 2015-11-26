@@ -162,7 +162,12 @@ def _FixPath(path):
   Returns:
     The path with all slashes made into backslashes.
   """
-  if fixpath_prefix and path and not os.path.isabs(path) and not path[0] == '$':
+  
+  if sys.platform == 'msys':
+    path = path.replace('/c/','C:\\')
+    if fixpath_prefix and path and not path.startswith('C:\\') and not path[0] == '$':
+        path = os.path.join(fixpath_prefix, path)
+  elif fixpath_prefix and path and not os.path.isabs(path) and not path[0] == '$':
     path = os.path.join(fixpath_prefix, path)
   path = path.replace('/', '\\')
   path = _NormalizedSource(path)
@@ -3111,7 +3116,10 @@ def _VerifySourcesExist(sources, root_dir):
       missing_sources.extend(_VerifySourcesExist(source.contents, root_dir))
     else:
       if '$' not in source:
-        full_path = os.path.join(root_dir, source)
+        if (sys.platform == 'msys' or sys.platform == 'win32') and source.startswith('C:\\'):
+		  full_path = source
+        else:
+          full_path = os.path.join(root_dir, source)
         if not os.path.exists(full_path):
           missing_sources.append(full_path)
   return missing_sources
