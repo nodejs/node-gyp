@@ -697,6 +697,7 @@ _Renamed(_compile, 'UsePrecompiledHeader', 'PrecompiledHeader',
                        'Create',   # /Yc
                        'Use']))  # /Yu
 _Renamed(_compile, 'WarnAsError', 'TreatWarningAsError', _boolean)  # /WX
+_Renamed(_compile, 'WarnAsError', 'TreatWarningsAsErrors', _boolean)  # /WX
 
 _ConvertedToAdditionalOption(_compile, 'DefaultCharIsUnsigned', '/J')
 
