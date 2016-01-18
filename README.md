@@ -42,30 +42,17 @@ You will also need to install:
       * You also need to install the `Command Line Tools` via Xcode. You can find this under the menu `Xcode -> Preferences -> Downloads`
       * This step will install `gcc` and the related toolchain containing `make`
   * On Windows:
-    * Python ([`v2.7.10`][python-v2.7.10] recommended, `v3.x.x` is __*not*__ supported)
-      * Make sure that you have a PYTHON environment variable, and it is set to drive:\path\to\python.exe not to a folder
-    * Windows XP/Vista/7:
-      * Microsoft Visual Studio C++ 2013 ([Express][msvc2013] version works well)
-        * If the install fails, try uninstalling any C++ 2010 x64&x86 Redistributable that you have installed first
-        * If you get errors that the 64-bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1]
-    * Windows 7/8:
-      * Microsoft Visual Studio C++ 2013 for Windows Desktop ([Express][msvc2013] version works well)
-    * Windows 10:
-        * Install the latest version of npm (3.3.6 at the time of writing)
-        * Install Python 2.7 from https://www.python.org/download/releases/2.7/ and make sure its on the System Path
-        * Install Visual Studio Community 2015 Edition. (Custom Install, Select Visual C++ during the installation)
-        * Set the environment variable GYP_MSVS_VERSION=2015
-        * Run the command prompt as Administrator
-        * $ npm install (--msvs_version=2015) <-- Shouldn't be needed if you have set GYP_MSVS_VERSION env
-        * If the above steps have not worked or you are unsure please visit http://www.serverpals.com/blog/building-using-node-gyp-with-visual-studio-express-2015-on-windows-10-pro-x64 for a full walkthrough
-    * All Windows Versions
-      * For 64-bit builds of node and native modules you will _**also**_ need the [Windows 7 64-bit SDK][win7sdk]
-      * You may need to run one of the following commands if your build complains about WindowsSDKDir not being set, and you are sure you have already installed the SDK:
+    * Visual C++ Build Environment:
+      * Option 1: Install [Visual C++ Build Tools](http://go.microsoft.com/fwlink/?LinkId=691126) using the **Default Install** option.
+      
+      * Option 2: Install [Visual Studio 2015](https://www.visualstudio.com/products/visual-studio-community-vs) (or modify an existing installation) and select *Common Tools for Visual C++* during setup. This also works with the free Community and Express for Desktop editions.
+     
+      > :bulb: [Windows Vista / 7 only] requires [.NET Framework 4.5.1](http://www.microsoft.com/en-us/download/details.aspx?id=40773)
+    
+    * Install [Python 2.7](https://www.python.org/downloads/) (`v3.x.x` is not supported), and run `npm config set python python2.7` (or see below for further instructions on specifying the proper Python version and path.)
+    * Launch cmd, `npm config set msvs_version 2015`
 
-```
-call "C:\Program Files\Microsoft SDKs\Windows\v7.1\bin\Setenv.cmd" /Release /x86
-call "C:\Program Files\Microsoft SDKs\Windows\v7.1\bin\Setenv.cmd" /Release /x64
-```
+    If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
 
 If you have multiple Python versions installed, you can identify which Python
 version `node-gyp` uses by setting the '--python' variable:
