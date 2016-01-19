@@ -132,6 +132,7 @@ TRYBOTS = [
 
 
 def GetPreferredTryMasters(_, change):
-  return {
-      'client.gyp': { t: set(['defaulttests']) for t in TRYBOTS },
-  }
+  client = { 'client.gyp': {}}
+  for t in TRYBOTS:
+    client['client.gyp'].push({t: set(['defaulttests'])})
+  return client
