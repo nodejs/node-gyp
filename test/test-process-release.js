@@ -45,23 +45,93 @@ test('test process release - process.version = 0.10.21', function (t) {
   })
 })
 
-test('test process release - process.version = 0.12.22', function (t) {
+// prior to -headers.tar.gz
+test('test process release - process.version = 0.12.9', function (t) {
   t.plan(2)
 
-  var release = processRelease([], { opts: {} }, 'v0.12.22', null)
+  var release = processRelease([], { opts: {} }, 'v0.12.9', null)
 
-  t.equal(release.semver.version, '0.12.22')
+  t.equal(release.semver.version, '0.12.9')
   delete release.semver
 
   t.deepEqual(release, {
-    version: '0.12.22',
+    version: '0.12.9',
     name: 'node',
-    baseUrl: 'https://nodejs.org/dist/v0.12.22/',
-    tarballUrl: 'https://nodejs.org/dist/v0.12.22/node-v0.12.22.tar.gz',
-    shasumsUrl: 'https://nodejs.org/dist/v0.12.22/SHASUMS256.txt',
-    versionDir: '0.12.22',
-    libUrl32: 'https://nodejs.org/dist/v0.12.22/node.lib',
-    libUrl64: 'https://nodejs.org/dist/v0.12.22/x64/node.lib',
+    baseUrl: 'https://nodejs.org/dist/v0.12.9/',
+    tarballUrl: 'https://nodejs.org/dist/v0.12.9/node-v0.12.9.tar.gz',
+    shasumsUrl: 'https://nodejs.org/dist/v0.12.9/SHASUMS256.txt',
+    versionDir: '0.12.9',
+    libUrl32: 'https://nodejs.org/dist/v0.12.9/node.lib',
+    libUrl64: 'https://nodejs.org/dist/v0.12.9/x64/node.lib',
+    libPath32: 'node.lib',
+    libPath64: 'x64/node.lib'
+  })
+})
+
+// prior to -headers.tar.gz
+test('test process release - process.version = 0.10.41', function (t) {
+  t.plan(2)
+
+  var release = processRelease([], { opts: {} }, 'v0.10.41', null)
+
+  t.equal(release.semver.version, '0.10.41')
+  delete release.semver
+
+  t.deepEqual(release, {
+    version: '0.10.41',
+    name: 'node',
+    baseUrl: 'https://nodejs.org/dist/v0.10.41/',
+    tarballUrl: 'https://nodejs.org/dist/v0.10.41/node-v0.10.41.tar.gz',
+    shasumsUrl: 'https://nodejs.org/dist/v0.10.41/SHASUMS256.txt',
+    versionDir: '0.10.41',
+    libUrl32: 'https://nodejs.org/dist/v0.10.41/node.lib',
+    libUrl64: 'https://nodejs.org/dist/v0.10.41/x64/node.lib',
+    libPath32: 'node.lib',
+    libPath64: 'x64/node.lib'
+  })
+})
+
+// has -headers.tar.gz
+test('test process release - process.release ~ node@0.10.42', function (t) {
+  t.plan(2)
+
+  var release = processRelease([], { opts: {} }, 'v0.10.42', null)
+
+  t.equal(release.semver.version, '0.10.42')
+  delete release.semver
+
+  t.deepEqual(release, {
+    version: '0.10.42',
+    name: 'node',
+    baseUrl: 'https://nodejs.org/dist/v0.10.42/',
+    tarballUrl: 'https://nodejs.org/dist/v0.10.42/node-v0.10.42-headers.tar.gz',
+    shasumsUrl: 'https://nodejs.org/dist/v0.10.42/SHASUMS256.txt',
+    versionDir: '0.10.42',
+    libUrl32: 'https://nodejs.org/dist/v0.10.42/node.lib',
+    libUrl64: 'https://nodejs.org/dist/v0.10.42/x64/node.lib',
+    libPath32: 'node.lib',
+    libPath64: 'x64/node.lib'
+  })
+})
+
+// has -headers.tar.gz
+test('test process release - process.release ~ node@0.12.10', function (t) {
+  t.plan(2)
+
+  var release = processRelease([], { opts: {} }, 'v0.12.10', null)
+
+  t.equal(release.semver.version, '0.12.10')
+  delete release.semver
+
+  t.deepEqual(release, {
+    version: '0.12.10',
+    name: 'node',
+    baseUrl: 'https://nodejs.org/dist/v0.12.10/',
+    tarballUrl: 'https://nodejs.org/dist/v0.12.10/node-v0.12.10-headers.tar.gz',
+    shasumsUrl: 'https://nodejs.org/dist/v0.12.10/SHASUMS256.txt',
+    versionDir: '0.12.10',
+    libUrl32: 'https://nodejs.org/dist/v0.12.10/node.lib',
+    libUrl64: 'https://nodejs.org/dist/v0.12.10/x64/node.lib',
     libPath32: 'node.lib',
     libPath64: 'x64/node.lib'
   })
