@@ -519,3 +519,119 @@ test('test process release - process.release ~ node@4.0.0-rc.4 - bogus string pa
   })
 })
 
+test('test process release - NODEJS_ORG_MIRROR', function (t) {
+  t.plan(2)
+
+  process.env.NODEJS_ORG_MIRROR = 'http://foo.bar'
+
+  var release = processRelease([], { opts: {} }, 'v4.1.23', {
+    name: 'node',
+    headersUrl: 'https://nodejs.org/dist/v4.1.23/node-v4.1.23-headers.tar.gz'
+  })
+
+  t.equal(release.semver.version, '4.1.23')
+  delete release.semver
+
+  t.deepEqual(release, {
+    version: '4.1.23',
+    name: 'node',
+    baseUrl: 'http://foo.bar/v4.1.23/',
+    tarballUrl: 'http://foo.bar/v4.1.23/node-v4.1.23-headers.tar.gz',
+    shasumsUrl: 'http://foo.bar/v4.1.23/SHASUMS256.txt',
+    versionDir: '4.1.23',
+    libUrl32: 'http://foo.bar/v4.1.23/win-x86/node.lib',
+    libUrl64: 'http://foo.bar/v4.1.23/win-x64/node.lib',
+    libPath32: 'win-x86/node.lib',
+    libPath64: 'win-x64/node.lib'
+  })
+
+  delete process.env.NODEJS_ORG_MIRROR
+})
+
+test('test process release - NVM_NODEJS_ORG_MIRROR', function (t) {
+  t.plan(2)
+
+  process.env.NVM_NODEJS_ORG_MIRROR = 'http://foo.bar'
+
+  var release = processRelease([], { opts: {} }, 'v4.1.23', {
+    name: 'node',
+    headersUrl: 'https://nodejs.org/dist/v4.1.23/node-v4.1.23-headers.tar.gz'
+  })
+
+  t.equal(release.semver.version, '4.1.23')
+  delete release.semver
+
+  t.deepEqual(release, {
+    version: '4.1.23',
+    name: 'node',
+    baseUrl: 'http://foo.bar/v4.1.23/',
+    tarballUrl: 'http://foo.bar/v4.1.23/node-v4.1.23-headers.tar.gz',
+    shasumsUrl: 'http://foo.bar/v4.1.23/SHASUMS256.txt',
+    versionDir: '4.1.23',
+    libUrl32: 'http://foo.bar/v4.1.23/win-x86/node.lib',
+    libUrl64: 'http://foo.bar/v4.1.23/win-x64/node.lib',
+    libPath32: 'win-x86/node.lib',
+    libPath64: 'win-x64/node.lib'
+  })
+
+  delete process.env.NVM_NODEJS_ORG_MIRROR
+})
+
+test('test process release - IOJS_ORG_MIRROR', function (t) {
+  t.plan(2)
+
+  process.env.IOJS_ORG_MIRROR = 'http://foo.bar'
+
+  var release = processRelease([], { opts: {} }, 'v3.2.24', {
+    name: 'io.js',
+    headersUrl: 'https://iojs.org/download/release/v3.2.24/iojs-v3.2.24-headers.tar.gz'
+  })
+
+  t.equal(release.semver.version, '3.2.24')
+  delete release.semver
+
+  t.deepEqual(release, {
+    version: '3.2.24',
+    name: 'iojs',
+    baseUrl: 'http://foo.bar/v3.2.24/',
+    tarballUrl: 'http://foo.bar/v3.2.24/iojs-v3.2.24-headers.tar.gz',
+    shasumsUrl: 'http://foo.bar/v3.2.24/SHASUMS256.txt',
+    versionDir: 'iojs-3.2.24',
+    libUrl32: 'http://foo.bar/v3.2.24/win-x86/iojs.lib',
+    libUrl64: 'http://foo.bar/v3.2.24/win-x64/iojs.lib',
+    libPath32: 'win-x86/iojs.lib',
+    libPath64: 'win-x64/iojs.lib'
+  })
+
+  delete process.env.IOJS_ORG_MIRROR
+})
+
+
+test('test process release - NVM_IOJS_ORG_MIRROR', function (t) {
+  t.plan(2)
+
+  process.env.NVM_IOJS_ORG_MIRROR = 'http://foo.bar'
+
+  var release = processRelease([], { opts: {} }, 'v3.2.24', {
+    name: 'io.js',
+    headersUrl: 'https://iojs.org/download/release/v3.2.24/iojs-v3.2.24-headers.tar.gz'
+  })
+
+  t.equal(release.semver.version, '3.2.24')
+  delete release.semver
+
+  t.deepEqual(release, {
+    version: '3.2.24',
+    name: 'iojs',
+    baseUrl: 'http://foo.bar/v3.2.24/',
+    tarballUrl: 'http://foo.bar/v3.2.24/iojs-v3.2.24-headers.tar.gz',
+    shasumsUrl: 'http://foo.bar/v3.2.24/SHASUMS256.txt',
+    versionDir: 'iojs-3.2.24',
+    libUrl32: 'http://foo.bar/v3.2.24/win-x86/iojs.lib',
+    libUrl64: 'http://foo.bar/v3.2.24/win-x64/iojs.lib',
+    libPath32: 'win-x86/iojs.lib',
+    libPath64: 'win-x64/iojs.lib'
+  })
+
+  delete process.env.NVM_IOJS_ORG_MIRROR
+})
