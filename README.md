@@ -165,6 +165,17 @@ Commands
 | `list`        | Lists the currently installed node development file versions
 | `remove`      | Removes the node development header files for the given version
 
+Command options
+---------------
+
+`node-gyp` accepts the following command options:
+
+| **Option**         | **Description**
+|:-------------------|:------------------------------------------------
+| `-j n`, `--jobs n` | For `build`: run parallel builds
+| `--silly`, `--loglevel=silly` | Log all progress to console
+| `--verbose`, `--loglevel=verbose` | Log most progress to console
+| `--debug`          | Make Debug build (default=Release)
 
 License
 -------
