@@ -175,6 +175,7 @@ Command options
 | `-j n`, `--jobs n` | For `build`: run parallel builds
 | `--silly`, `--loglevel=silly` | Log all progress to console
 | `--verbose`, `--loglevel=verbose` | Log most progress to console
+| `--silent`, `--loglevel=silent` | Don't log anything
 | `--debug`          | Make Debug build (default=Release)
 
 License
