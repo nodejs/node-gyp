@@ -177,6 +177,7 @@ Command options
 | `--verbose`, `--loglevel=verbose` | Log most progress to console
 | `--silent`, `--loglevel=silent` | Don't log anything
 | `--debug`          | Make Debug build (default=Release)
+| `--release`, `--no-debug` | Make Release build
 
 License
 -------
