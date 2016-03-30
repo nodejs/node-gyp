@@ -9,17 +9,29 @@
 
 #ifdef _MSC_VER
 
-#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
-#endif
-
 #include <windows.h>
 
 #include <delayimp.h>
 #include <string.h>
 
+static HMODULE node_dll = NULL;
+static HMODULE nw_dll = NULL;
+
 static FARPROC WINAPI load_exe_hook(unsigned int event, DelayLoadInfo* info) {
-  HMODULE m;
+  if (event == dliNotePreGetProcAddress) {
+    FARPROC ret = NULL;
+    ret = GetProcAddress(node_dll, info->dlp.szProcName);
+    if (ret)
+      return ret;
+    ret = GetProcAddress(nw_dll, info->dlp.szProcName);
+    return ret;
+  }
+  if (event == dliStartProcessing) {
+    node_dll = GetModuleHandle("node.dll");
+    nw_dll = GetModuleHandle("nw.dll");
+    return NULL;
+  }
   if (event != dliNotePreLoadLibrary)
     return NULL;
 
@@ -27,8 +39,7 @@ static FARPROC WINAPI load_exe_hook(unsigned int event, DelayLoadInfo* info) {
       _stricmp(info->szDll, "node.exe") != 0)
     return NULL;
 
-  m = GetModuleHandle(NULL);
-  return (FARPROC) m;
+  return (FARPROC) node_dll;
 }
 
 PfnDliHook __pfnDliNotifyHook2 = load_exe_hook;
