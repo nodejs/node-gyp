@@ -4,5 +4,13 @@
 # found in the LICENSE file.
 
 set -e
+
+# Detect if it exists: http://stackoverflow.com/a/677212/247482
+if command -v python2 >/dev/null 2>&1; then
+  python=python2
+else
+  python=python
+fi
+
 base=$(dirname "$0")
-exec python "${base}/gyp_main.py" "$@"
+exec $python "${base}/gyp_main.py" "$@"
