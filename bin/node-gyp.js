@@ -22,6 +22,7 @@ var path = require('path')
 var prog = gyp()
 var completed = false
 prog.parseArgv(process.argv)
+prog.buildDir = prog.opts['build-dir'] || 'build'
 prog.devDir = prog.opts.devdir
 
 var homeDir = osenv.home()
