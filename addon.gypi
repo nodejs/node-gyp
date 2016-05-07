@@ -11,7 +11,9 @@
       '<(node_root_dir)/deps/v8/include'
     ],
     'defines': [
-      'NODE_GYP_MODULE_NAME=>(_target_name)'
+      'NODE_GYP_MODULE_NAME=>(_target_name)',
+      # Warn when using deprecated V8 APIs.
+      'V8_DEPRECATION_WARNINGS=1'
     ],
 
     'target_conditions': [
