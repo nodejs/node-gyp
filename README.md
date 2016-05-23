@@ -10,9 +10,9 @@ program which is removed for node `v0.8`. If you have a native addon for node th
 still has a `wscript` file, then you should definitely add a `binding.gyp` file
 to support the latest versions of node.
 
-Multiple target versions of node are supported (i.e. `0.8`, `0.9`, `0.10`, ..., `1.0`,
+Multiple target versions of node are supported (i.e. `0.8`, ..., `4`, `5`, `6`,
 etc.), regardless of what version of node is actually installed on your system
-(`node-gyp` downloads the necessary development files for the target version).
+(`node-gyp` downloads the necessary development files or headers for the target version).
 
 #### Features:
 
@@ -44,11 +44,11 @@ You will also need to install:
   * On Windows:
     * Visual C++ Build Environment:
       * Option 1: Install [Visual C++ Build Tools](http://go.microsoft.com/fwlink/?LinkId=691126) using the **Default Install** option.
-      
+
       * Option 2: Install [Visual Studio 2015](https://www.visualstudio.com/products/visual-studio-community-vs) (or modify an existing installation) and select *Common Tools for Visual C++* during setup. This also works with the free Community and Express for Desktop editions.
-     
+
       > :bulb: [Windows Vista / 7 only] requires [.NET Framework 4.5.1](http://www.microsoft.com/en-us/download/details.aspx?id=40773)
-    
+
     * Install [Python 2.7](https://www.python.org/downloads/) (`v3.x.x` is not supported), and run `npm config set python python2.7` (or see below for further instructions on specifying the proper Python version and path.)
     * Launch cmd, `npm config set msvs_version 2015`
 
@@ -144,13 +144,42 @@ Commands
 
 | **Command**   | **Description**
 |:--------------|:---------------------------------------------------------------
+| `help`        | Shows the help dialog
 | `build`       | Invokes `make`/`msbuild.exe` and builds the native addon
 | `clean`       | Removes the `build` directory if it exists
 | `configure`   | Generates project build files for the current platform
 | `rebuild`     | Runs `clean`, `configure` and `build` all in a row
-| `install`     | Installs node development header files for the given version
-| `list`        | Lists the currently installed node development file versions
-| `remove`      | Removes the node development header files for the given version
+| `install`     | Installs node header files for the given version
+| `list`        | Lists the currently installed node header versions
+| `remove`      | Removes the node header files for the given version
+
+
+Command Options
+--------
+
+`node-gyp` accepts the following command options:
+
+| **Command**                       | **Description**
+|:----------------------------------|:------------------------------------------
+| `-j n`, `--jobs n`                | Run make in parallel
+| `--silly`, `--loglevel=silly`     | Log all progress to console
+| `--verbose`, `--loglevel=verbose` | Log most progress to console
+| `--silent`, `--loglevel=silent`   | Don't log anything to console
+| `debug`, `--debug`                | Make Debug build (default=Release)
+| `--release`, `--no-debug`         | Make Release build
+| `-C $dir`, `--directory=$dir`     | Run command in different directory
+| `--make=$make`                    | Override make command (e.g. gmake)
+| `--thin=yes`                      | Enable thin static libraries
+| `--arch=$arch`                    | Set target architecture (e.g. ia32)
+| `--tarball=$path`                 | Get headers from a local tarball
+| `--ensure`                        | Don't reinstall headers if already present
+| `--dist-url=$url`                 | Download header tarball from custom URL
+| `--proxy=$url`                    | Set HTTP proxy for downloading header tarball
+| `--cafile=$cafile`                | Override default CA chain (to download tarball)
+| `--nodedir=$path`                 | Set the path to the node binary
+| `--python=$path`                  | Set path to the python (2) binary
+| `--msvs_version=$version`         | Set Visual Studio version (win)
+| `--solution=$solution`            | Set Visual Studio Solution version (win)
 
 
 License
