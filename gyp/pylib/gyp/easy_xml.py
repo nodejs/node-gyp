@@ -4,7 +4,7 @@
 
 import re
 import os
-
+import locale
 
 def XmlToString(content, encoding='utf-8', pretty=False):
   """ Writes the XML content to disk, touching the file only if it has changed.
@@ -119,7 +119,7 @@ def WriteXmlIfChanged(content, path, encoding='utf-8', pretty=False,
   try:
     xml_string = xml_string.encode(encoding)
   except Exception:
-    xml_string = unicode(xml_string, 'latin-1').encode(encoding)
+    xml_string = unicode(xml_string, locale.getdefaultlocale()[1]).encode(encoding)
 
   # Get the old content
   try:
