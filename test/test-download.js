@@ -82,6 +82,50 @@ test('download over https with custom ca', function (t) {
   })
 })
 
+test('download over https with custom dist-url', function (t) {
+  t.plan(3)
+
+  var cert = fs.readFileSync(__dirname + '/fixtures/server.crt', 'utf8')
+  var key = fs.readFileSync(__dirname + '/fixtures/server.key', 'utf8')
+
+  var cafile = __dirname + '/fixtures/ca.crt'
+  var ca = install.test.readCAFile(cafile)
+  t.strictEqual(ca.length, 1)
+
+  var options = { ca: ca, cert: cert, key: key }
+  var server = https.createServer(options, function (req, res) {
+    t.strictEqual(req.headers['user-agent'],
+        'node-gyp v42 (node ' + process.version + ')')
+    res.end('ok')
+    server.close()
+  })
+
+  server.on('clientError', function (err) {
+    throw err
+  })
+
+  var host = '127.0.0.1'
+  server.listen(9000, host, function () {
+    var port = this.address().port
+    var url = 'https://' + host + ':' + port
+    var gyp = {
+      opts: { disturl: url },
+      version: '42',
+    }
+    var req = install.test.download(gyp, {}, url)
+    req.on('response', function (res) {
+      var body = ''
+      res.setEncoding('utf8')
+      res.on('data', function(data) {
+        body += data
+      })
+      res.on('end', function() {
+        t.strictEqual(body, 'ok')
+      })
+    })
+  })
+})
+
 test('download with missing cafile', function (t) {
   t.plan(1)
   var gyp = {
