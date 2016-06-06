@@ -2,6 +2,8 @@ This page contains links to some examples of existing `binding.gyp` files that o
 
 To add to this page, just add the link to the project's `binding.gyp` file below:
 
+ * [ons](https://github.com/XadillaX/aliyun-ons/blob/master/binding.gyp)
+ * [thmclrx](https://github.com/XadillaX/thmclrx/blob/master/binding.gyp)
  * [libxmljs](https://github.com/polotek/libxmljs/blob/master/binding.gyp)
  * [node-buffertools](https://github.com/bnoordhuis/node-buffertools/blob/master/binding.gyp)
  * [node-canvas](https://github.com/LearnBoost/node-canvas/blob/master/binding.gyp)
