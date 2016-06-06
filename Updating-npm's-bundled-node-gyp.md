@@ -42,3 +42,5 @@ Now you can finally run:
 ``` bash
 $ npm install -g node-gyp@latest
 ```
+
+note: i found that the -g on windows is not correct. It gets installed in C:\Users\<name>\AppData\Roaming\npm\node_modules\gyp which is not the directory where node is installed C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\node-gyp\...
