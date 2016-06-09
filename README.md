@@ -43,7 +43,7 @@ You will also need to install:
       * This step will install `gcc` and the related toolchain containing `make`
   * On Windows:
     * Visual C++ Build Environment:
-      * Option 1: Install [Visual C++ Build Tools](http://go.microsoft.com/fwlink/?LinkId=691126) using the **Default Install** option.
+      * Option 1: Install [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools) using the **Default Install** option.
 
       * Option 2: Install [Visual Studio 2015](https://www.visualstudio.com/products/visual-studio-community-vs) (or modify an existing installation) and select *Common Tools for Visual C++* during setup. This also works with the free Community and Express for Desktop editions.
 
