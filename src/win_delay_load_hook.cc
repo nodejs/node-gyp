@@ -31,6 +31,6 @@ static FARPROC WINAPI load_exe_hook(unsigned int event, DelayLoadInfo* info) {
   return (FARPROC) m;
 }
 
-PfnDliHook __pfnDliNotifyHook2 = load_exe_hook;
+decltype(__pfnDliNotifyHook2) __pfnDliNotifyHook2 = load_exe_hook;
 
 #endif
