@@ -1,0 +1,15 @@
+{
+  "name": "hello_world",
+  "version": "0.0.0",
+  "description": "Node.js Addons Example #1",
+  "main": "hello.js",
+  "private": true,
+  "dependencies": {
+    "bindings": "~1.2.1",
+    "nan": "^2.0.0"
+  },
+  "scripts": {
+    "test": "node hello.js"
+  },
+  "gypfile": true
+}
