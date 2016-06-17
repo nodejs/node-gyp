@@ -162,6 +162,7 @@ Command Options
 | **Command**                       | **Description**
 |:----------------------------------|:------------------------------------------
 | `-j n`, `--jobs n`                | Run make in parallel
+| `--target=v6.2.1`                 | Node version to build for (default=process.version)
 | `--silly`, `--loglevel=silly`     | Log all progress to console
 | `--verbose`, `--loglevel=verbose` | Log most progress to console
 | `--silent`, `--loglevel=silent`   | Don't log anything to console
