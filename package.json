@@ -25,7 +25,7 @@
     "fstream": "^1.0.0",
     "glob": "^7.0.3",
     "graceful-fs": "^4.1.2",
-    "minimatch": "1",
+    "minimatch": "^3.0.2",
     "mkdirp": "^0.5.0",
     "nopt": "2 || 3",
     "npmlog": "0 || 1 || 2 || 3",
