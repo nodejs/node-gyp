@@ -108,6 +108,37 @@ you can require the `.node` file with Node and run your tests!
 __Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
 `-d`) switch when running either the `configure`, `build` or `rebuild` command.
 
+#### Usage without Python
+
+There is a [`gyp.js`](https://github.com/indutny/gyp.js/) project, a GYP
+implementation in JavaScript. It generates [`Ninja`](https://ninja-build.org/)
+build files and requires no Python installation.
+
+In this case you will need to install [`Ninja`](https://ninja-build.org/) build
+tool and a C/C++ compiler toolchain.
+
+To generate projects files with `gyp.js` instead of `gyp` and to build them with
+`ninja`, please supply a command-line option `--gypjs` in `node-gyp` command.
+
+``` bash
+$ node-gyp configure --gypjs
+```
+
+It is also possible to set `npm_config_gypjs` environment variable to turn on
+the `gyp.js` usage.
+
+``` bash
+$ npm_config_gypjs=1 node-gyp build
+```
+
+Path to an existing `ninja` installation can be set with a `--ninja` command-line
+option or in a `NINJA` environment variable.
+
+``` bash
+$ node-gyp configure --gypjs --ninja=/my/path/to/ninja
+$ npm_config_gypjs=1 NINJA=/my/path/to/ninja node-gyp build
+```
+
 
 The "binding.gyp" file
 ----------------------
@@ -184,6 +215,8 @@ Command Options
 | `--python=$path`                  | Set path to the python (2) binary
 | `--msvs_version=$version`         | Set Visual Studio version (win)
 | `--solution=$solution`            | Set Visual Studio Solution version (win)
+| `--gypjs`                         | Use gyp.js instead of gyp
+| `--ninja=$ninja`                  | Override ninja command (with --gypjs)
 
 
 License
