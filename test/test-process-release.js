@@ -16,10 +16,8 @@ test('test process release - process.version = 0.8.20', function (t) {
     tarballUrl: 'https://nodejs.org/dist/v0.8.20/node-v0.8.20.tar.gz',
     shasumsUrl: 'https://nodejs.org/dist/v0.8.20/SHASUMS256.txt',
     versionDir: '0.8.20',
-    libUrl32: 'https://nodejs.org/dist/v0.8.20/node.lib',
-    libUrl64: 'https://nodejs.org/dist/v0.8.20/x64/node.lib',
-    libPath32: 'node.lib',
-    libPath64: 'x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/dist/v0.8.20/node.lib', libPath: 'node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/dist/v0.8.20/x64/node.lib', libPath: 'x64/node.lib' },
   })
 })
 
@@ -38,10 +36,8 @@ test('test process release - process.version = 0.10.21', function (t) {
     tarballUrl: 'https://nodejs.org/dist/v0.10.21/node-v0.10.21.tar.gz',
     shasumsUrl: 'https://nodejs.org/dist/v0.10.21/SHASUMS256.txt',
     versionDir: '0.10.21',
-    libUrl32: 'https://nodejs.org/dist/v0.10.21/node.lib',
-    libUrl64: 'https://nodejs.org/dist/v0.10.21/x64/node.lib',
-    libPath32: 'node.lib',
-    libPath64: 'x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/dist/v0.10.21/node.lib', libPath: 'node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/dist/v0.10.21/x64/node.lib', libPath: 'x64/node.lib' },
   })
 })
 
@@ -61,10 +57,8 @@ test('test process release - process.version = 0.12.9', function (t) {
     tarballUrl: 'https://nodejs.org/dist/v0.12.9/node-v0.12.9.tar.gz',
     shasumsUrl: 'https://nodejs.org/dist/v0.12.9/SHASUMS256.txt',
     versionDir: '0.12.9',
-    libUrl32: 'https://nodejs.org/dist/v0.12.9/node.lib',
-    libUrl64: 'https://nodejs.org/dist/v0.12.9/x64/node.lib',
-    libPath32: 'node.lib',
-    libPath64: 'x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/dist/v0.12.9/node.lib', libPath: 'node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/dist/v0.12.9/x64/node.lib', libPath: 'x64/node.lib' },
   })
 })
 
@@ -84,10 +78,8 @@ test('test process release - process.version = 0.10.41', function (t) {
     tarballUrl: 'https://nodejs.org/dist/v0.10.41/node-v0.10.41.tar.gz',
     shasumsUrl: 'https://nodejs.org/dist/v0.10.41/SHASUMS256.txt',
     versionDir: '0.10.41',
-    libUrl32: 'https://nodejs.org/dist/v0.10.41/node.lib',
-    libUrl64: 'https://nodejs.org/dist/v0.10.41/x64/node.lib',
-    libPath32: 'node.lib',
-    libPath64: 'x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/dist/v0.10.41/node.lib', libPath: 'node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/dist/v0.10.41/x64/node.lib', libPath: 'x64/node.lib' },
   })
 })
 
@@ -107,10 +99,8 @@ test('test process release - process.release ~ node@0.10.42', function (t) {
     tarballUrl: 'https://nodejs.org/dist/v0.10.42/node-v0.10.42-headers.tar.gz',
     shasumsUrl: 'https://nodejs.org/dist/v0.10.42/SHASUMS256.txt',
     versionDir: '0.10.42',
-    libUrl32: 'https://nodejs.org/dist/v0.10.42/node.lib',
-    libUrl64: 'https://nodejs.org/dist/v0.10.42/x64/node.lib',
-    libPath32: 'node.lib',
-    libPath64: 'x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/dist/v0.10.42/node.lib', libPath: 'node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/dist/v0.10.42/x64/node.lib', libPath: 'x64/node.lib' },
   })
 })
 
@@ -130,10 +120,8 @@ test('test process release - process.release ~ node@0.12.10', function (t) {
     tarballUrl: 'https://nodejs.org/dist/v0.12.10/node-v0.12.10-headers.tar.gz',
     shasumsUrl: 'https://nodejs.org/dist/v0.12.10/SHASUMS256.txt',
     versionDir: '0.12.10',
-    libUrl32: 'https://nodejs.org/dist/v0.12.10/node.lib',
-    libUrl64: 'https://nodejs.org/dist/v0.12.10/x64/node.lib',
-    libPath32: 'node.lib',
-    libPath64: 'x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/dist/v0.12.10/node.lib', libPath: 'node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/dist/v0.12.10/x64/node.lib', libPath: 'x64/node.lib' },
   })
 })
 
@@ -155,10 +143,8 @@ test('test process release - process.release ~ node@4.1.23', function (t) {
     tarballUrl: 'https://nodejs.org/dist/v4.1.23/node-v4.1.23-headers.tar.gz',
     shasumsUrl: 'https://nodejs.org/dist/v4.1.23/SHASUMS256.txt',
     versionDir: '4.1.23',
-    libUrl32: 'https://nodejs.org/dist/v4.1.23/win-x86/node.lib',
-    libUrl64: 'https://nodejs.org/dist/v4.1.23/win-x64/node.lib',
-    libPath32: 'win-x86/node.lib',
-    libPath64: 'win-x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/dist/v4.1.23/win-x86/node.lib', libPath: 'win-x86/node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/dist/v4.1.23/win-x64/node.lib', libPath: 'win-x64/node.lib' },
   })
 })
 
@@ -180,10 +166,8 @@ test('test process release - process.release ~ node@4.1.23 / corp build', functi
     tarballUrl: 'https://some.custom.location/node-v4.1.23-headers.tar.gz',
     shasumsUrl: 'https://some.custom.location/SHASUMS256.txt',
     versionDir: '4.1.23',
-    libUrl32: 'https://some.custom.location/win-x86/node.lib',
-    libUrl64: 'https://some.custom.location/win-x64/node.lib',
-    libPath32: 'win-x86/node.lib',
-    libPath64: 'win-x64/node.lib'
+    ia32: { libUrl: 'https://some.custom.location/win-x86/node.lib', libPath: 'win-x86/node.lib' },
+    x64:  { libUrl: 'https://some.custom.location/win-x64/node.lib', libPath: 'win-x64/node.lib' },
   })
 })
 
@@ -202,10 +186,8 @@ test('test process release - process.version = 1.8.4', function (t) {
     tarballUrl: 'https://iojs.org/download/release/v1.8.4/iojs-v1.8.4.tar.gz',
     shasumsUrl: 'https://iojs.org/download/release/v1.8.4/SHASUMS256.txt',
     versionDir: 'iojs-1.8.4',
-    libUrl32: 'https://iojs.org/download/release/v1.8.4/win-x86/iojs.lib',
-    libUrl64: 'https://iojs.org/download/release/v1.8.4/win-x64/iojs.lib',
-    libPath32: 'win-x86/iojs.lib',
-    libPath64: 'win-x64/iojs.lib'
+    ia32: { libUrl: 'https://iojs.org/download/release/v1.8.4/win-x86/iojs.lib', libPath: 'win-x86/iojs.lib' },
+    x64:  { libUrl: 'https://iojs.org/download/release/v1.8.4/win-x64/iojs.lib', libPath: 'win-x64/iojs.lib' },
   })
 })
 
@@ -227,10 +209,8 @@ test('test process release - process.release ~ iojs@3.2.24', function (t) {
     tarballUrl: 'https://iojs.org/download/release/v3.2.24/iojs-v3.2.24-headers.tar.gz',
     shasumsUrl: 'https://iojs.org/download/release/v3.2.24/SHASUMS256.txt',
     versionDir: 'iojs-3.2.24',
-    libUrl32: 'https://iojs.org/download/release/v3.2.24/win-x86/iojs.lib',
-    libUrl64: 'https://iojs.org/download/release/v3.2.24/win-x64/iojs.lib',
-    libPath32: 'win-x86/iojs.lib',
-    libPath64: 'win-x64/iojs.lib'
+    ia32: { libUrl: 'https://iojs.org/download/release/v3.2.24/win-x86/iojs.lib', libPath: 'win-x86/iojs.lib' },
+    x64:  { libUrl: 'https://iojs.org/download/release/v3.2.24/win-x64/iojs.lib', libPath: 'win-x64/iojs.lib' },
   })
 })
 
@@ -253,10 +233,8 @@ test('test process release - process.release ~ iojs@3.2.11 +libUrl32', function 
     tarballUrl: 'https://iojs.org/download/release/v3.2.11/iojs-v3.2.11-headers.tar.gz',
     shasumsUrl: 'https://iojs.org/download/release/v3.2.11/SHASUMS256.txt',
     versionDir: 'iojs-3.2.11',
-    libUrl32: 'https://iojs.org/download/release/v3.2.11/win-x86/iojs.lib',
-    libUrl64: 'https://iojs.org/download/release/v3.2.11/win-x64/iojs.lib',
-    libPath32: 'win-x86/iojs.lib',
-    libPath64: 'win-x64/iojs.lib'
+    ia32: { libUrl: 'https://iojs.org/download/release/v3.2.11/win-x86/iojs.lib', libPath: 'win-x86/iojs.lib' },
+    x64:  { libUrl: 'https://iojs.org/download/release/v3.2.11/win-x64/iojs.lib', libPath: 'win-x64/iojs.lib' },
   })
 })
 
@@ -279,10 +257,8 @@ test('test process release - process.release ~ iojs@3.2.101 +libUrl64', function
     tarballUrl: 'https://iojs.org/download/release/v3.2.101/iojs-v3.2.101-headers.tar.gz',
     shasumsUrl: 'https://iojs.org/download/release/v3.2.101/SHASUMS256.txt',
     versionDir: 'iojs-3.2.101',
-    libUrl32: 'https://iojs.org/download/release/v3.2.101/win-x86/iojs.lib',
-    libUrl64: 'https://iojs.org/download/release/v3.2.101/win-x64/iojs.lib',
-    libPath32: 'win-x86/iojs.lib',
-    libPath64: 'win-x64/iojs.lib'
+    ia32: { libUrl: 'https://iojs.org/download/release/v3.2.101/win-x86/iojs.lib', libPath: 'win-x86/iojs.lib' },
+    x64:  { libUrl: 'https://iojs.org/download/release/v3.2.101/win-x64/iojs.lib', libPath: 'win-x64/iojs.lib' },
   })
 })
 
@@ -305,10 +281,8 @@ test('test process release - process.release ~ iojs@3.3.0 - borked win-ia32', fu
     tarballUrl: 'https://iojs.org/download/release/v3.2.101/iojs-v3.2.101-headers.tar.gz',
     shasumsUrl: 'https://iojs.org/download/release/v3.2.101/SHASUMS256.txt',
     versionDir: 'iojs-3.2.101',
-    libUrl32: 'https://iojs.org/download/release/v3.2.101/win-x86/iojs.lib',
-    libUrl64: 'https://iojs.org/download/release/v3.2.101/win-x64/iojs.lib',
-    libPath32: 'win-x86/iojs.lib',
-    libPath64: 'win-x64/iojs.lib'
+    ia32: { libUrl: 'https://iojs.org/download/release/v3.2.101/win-x86/iojs.lib', libPath: 'win-x86/iojs.lib' },
+    x64:  { libUrl: 'https://iojs.org/download/release/v3.2.101/win-x64/iojs.lib', libPath: 'win-x64/iojs.lib' },
   })
 })
 
@@ -330,10 +304,8 @@ test('test process release - process.release ~ node@4.1.23 --target=0.10.40', fu
     tarballUrl: 'https://nodejs.org/dist/v0.10.40/node-v0.10.40.tar.gz',
     shasumsUrl: 'https://nodejs.org/dist/v0.10.40/SHASUMS256.txt',
     versionDir: '0.10.40',
-    libUrl32: 'https://nodejs.org/dist/v0.10.40/node.lib',
-    libUrl64: 'https://nodejs.org/dist/v0.10.40/x64/node.lib',
-    libPath32: 'node.lib',
-    libPath64: 'x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/dist/v0.10.40/node.lib', libPath: 'node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/dist/v0.10.40/x64/node.lib', libPath: 'x64/node.lib' },
   })
 })
 
@@ -355,10 +327,8 @@ test('test process release - process.release ~ node@4.1.23 --target=1.8.4', func
     tarballUrl: 'https://iojs.org/download/release/v1.8.4/iojs-v1.8.4.tar.gz',
     shasumsUrl: 'https://iojs.org/download/release/v1.8.4/SHASUMS256.txt',
     versionDir: 'iojs-1.8.4',
-    libUrl32: 'https://iojs.org/download/release/v1.8.4/win-x86/iojs.lib',
-    libUrl64: 'https://iojs.org/download/release/v1.8.4/win-x64/iojs.lib',
-    libPath32: 'win-x86/iojs.lib',
-    libPath64: 'win-x64/iojs.lib'
+    ia32: { libUrl: 'https://iojs.org/download/release/v1.8.4/win-x86/iojs.lib', libPath: 'win-x86/iojs.lib' },
+    x64:  { libUrl: 'https://iojs.org/download/release/v1.8.4/win-x64/iojs.lib', libPath: 'win-x64/iojs.lib' },
   })
 })
 
@@ -380,10 +350,8 @@ test('test process release - process.release ~ node@4.1.23 --dist-url=https://fo
     tarballUrl: 'https://foo.bar/baz/v4.1.23/node-v4.1.23-headers.tar.gz',
     shasumsUrl: 'https://foo.bar/baz/v4.1.23/SHASUMS256.txt',
     versionDir: '4.1.23',
-    libUrl32: 'https://foo.bar/baz/v4.1.23/win-x86/node.lib',
-    libUrl64: 'https://foo.bar/baz/v4.1.23/win-x64/node.lib',
-    libPath32: 'win-x86/node.lib',
-    libPath64: 'win-x64/node.lib'
+    ia32: { libUrl: 'https://foo.bar/baz/v4.1.23/win-x86/node.lib', libPath: 'win-x86/node.lib' },
+    x64:  { libUrl: 'https://foo.bar/baz/v4.1.23/win-x64/node.lib', libPath: 'win-x64/node.lib' },
   })
 })
 
@@ -405,10 +373,8 @@ test('test process release - process.release ~ frankenstein@4.1.23', function (t
     tarballUrl: 'https://frankensteinjs.org/dist/v4.1.23/frankenstein-v4.1.23-headers.tar.gz',
     shasumsUrl: 'https://frankensteinjs.org/dist/v4.1.23/SHASUMS256.txt',
     versionDir: 'frankenstein-4.1.23',
-    libUrl32: 'https://frankensteinjs.org/dist/v4.1.23/win-x86/frankenstein.lib',
-    libUrl64: 'https://frankensteinjs.org/dist/v4.1.23/win-x64/frankenstein.lib',
-    libPath32: 'win-x86/frankenstein.lib',
-    libPath64: 'win-x64/frankenstein.lib'
+    ia32: { libUrl: 'https://frankensteinjs.org/dist/v4.1.23/win-x86/frankenstein.lib', libPath: 'win-x86/frankenstein.lib' },
+    x64:  { libUrl: 'https://frankensteinjs.org/dist/v4.1.23/win-x64/frankenstein.lib', libPath: 'win-x64/frankenstein.lib' },
   })
 })
 
@@ -431,10 +397,8 @@ test('test process release - process.release ~ frankenstein@4.1.23 --dist-url=ht
     tarballUrl: 'http://foo.bar/baz/v4.1.23/frankenstein-v4.1.23-headers.tar.gz',
     shasumsUrl: 'http://foo.bar/baz/v4.1.23/SHASUMS256.txt',
     versionDir: 'frankenstein-4.1.23',
-    libUrl32: 'http://foo.bar/baz/v4.1.23/win-x86/frankenstein.lib',
-    libUrl64: 'http://foo.bar/baz/v4.1.23/win-x64/frankenstein.lib',
-    libPath32: 'win-x86/frankenstein.lib',
-    libPath64: 'win-x64/frankenstein.lib'
+    ia32: { libUrl: 'http://foo.bar/baz/v4.1.23/win-x86/frankenstein.lib', libPath: 'win-x86/frankenstein.lib' },
+    x64:  { libUrl: 'http://foo.bar/baz/v4.1.23/win-x64/frankenstein.lib', libPath: 'win-x64/frankenstein.lib' },
   })
 })
 
@@ -456,10 +420,8 @@ test('test process release - process.release ~ node@4.0.0-rc.4', function (t) {
     tarballUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/node-v4.0.0-rc.4-headers.tar.gz',
     shasumsUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/SHASUMS256.txt',
     versionDir: '4.0.0-rc.4',
-    libUrl32: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x86/node.lib',
-    libUrl64: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib',
-    libPath32: 'win-x86/node.lib',
-    libPath64: 'win-x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x86/node.lib', libPath: 'win-x86/node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib', libPath: 'win-x64/node.lib' },
   })
 })
 
@@ -484,10 +446,8 @@ test('test process release - process.release ~ node@4.0.0-rc.4 passed as argv[0]
     tarballUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/node-v4.0.0-rc.4-headers.tar.gz',
     shasumsUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/SHASUMS256.txt',
     versionDir: '4.0.0-rc.4',
-    libUrl32: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x86/node.lib',
-    libUrl64: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib',
-    libPath32: 'win-x86/node.lib',
-    libPath64: 'win-x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x86/node.lib', libPath: 'win-x86/node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib', libPath: 'win-x64/node.lib' },
   })
 })
 
@@ -512,10 +472,8 @@ test('test process release - process.release ~ node@4.0.0-rc.4 - bogus string pa
     tarballUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/node-v4.0.0-rc.4-headers.tar.gz',
     shasumsUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/SHASUMS256.txt',
     versionDir: '4.0.0-rc.4',
-    libUrl32: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x86/node.lib',
-    libUrl64: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib',
-    libPath32: 'win-x86/node.lib',
-    libPath64: 'win-x64/node.lib'
+    ia32: { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x86/node.lib', libPath: 'win-x86/node.lib' },
+    x64:  { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib', libPath: 'win-x64/node.lib' },
   })
 })
 
@@ -539,10 +497,8 @@ test('test process release - NODEJS_ORG_MIRROR', function (t) {
     tarballUrl: 'http://foo.bar/v4.1.23/node-v4.1.23-headers.tar.gz',
     shasumsUrl: 'http://foo.bar/v4.1.23/SHASUMS256.txt',
     versionDir: '4.1.23',
-    libUrl32: 'http://foo.bar/v4.1.23/win-x86/node.lib',
-    libUrl64: 'http://foo.bar/v4.1.23/win-x64/node.lib',
-    libPath32: 'win-x86/node.lib',
-    libPath64: 'win-x64/node.lib'
+    ia32: { libUrl: 'http://foo.bar/v4.1.23/win-x86/node.lib', libPath: 'win-x86/node.lib' },
+    x64:  { libUrl: 'http://foo.bar/v4.1.23/win-x64/node.lib', libPath: 'win-x64/node.lib' },
   })
 
   delete process.env.NODEJS_ORG_MIRROR
@@ -568,10 +524,8 @@ test('test process release - NVM_NODEJS_ORG_MIRROR', function (t) {
     tarballUrl: 'http://foo.bar/v4.1.23/node-v4.1.23-headers.tar.gz',
     shasumsUrl: 'http://foo.bar/v4.1.23/SHASUMS256.txt',
     versionDir: '4.1.23',
-    libUrl32: 'http://foo.bar/v4.1.23/win-x86/node.lib',
-    libUrl64: 'http://foo.bar/v4.1.23/win-x64/node.lib',
-    libPath32: 'win-x86/node.lib',
-    libPath64: 'win-x64/node.lib'
+    ia32: { libUrl: 'http://foo.bar/v4.1.23/win-x86/node.lib', libPath: 'win-x86/node.lib' },
+    x64:  { libUrl: 'http://foo.bar/v4.1.23/win-x64/node.lib', libPath: 'win-x64/node.lib' },
   })
 
   delete process.env.NVM_NODEJS_ORG_MIRROR
@@ -597,10 +551,8 @@ test('test process release - IOJS_ORG_MIRROR', function (t) {
     tarballUrl: 'http://foo.bar/v3.2.24/iojs-v3.2.24-headers.tar.gz',
     shasumsUrl: 'http://foo.bar/v3.2.24/SHASUMS256.txt',
     versionDir: 'iojs-3.2.24',
-    libUrl32: 'http://foo.bar/v3.2.24/win-x86/iojs.lib',
-    libUrl64: 'http://foo.bar/v3.2.24/win-x64/iojs.lib',
-    libPath32: 'win-x86/iojs.lib',
-    libPath64: 'win-x64/iojs.lib'
+    ia32: { libUrl: 'http://foo.bar/v3.2.24/win-x86/iojs.lib', libPath: 'win-x86/iojs.lib' },
+    x64:  { libUrl: 'http://foo.bar/v3.2.24/win-x64/iojs.lib', libPath: 'win-x64/iojs.lib' },
   })
 
   delete process.env.IOJS_ORG_MIRROR
@@ -627,10 +579,8 @@ test('test process release - NVM_IOJS_ORG_MIRROR', function (t) {
     tarballUrl: 'http://foo.bar/v3.2.24/iojs-v3.2.24-headers.tar.gz',
     shasumsUrl: 'http://foo.bar/v3.2.24/SHASUMS256.txt',
     versionDir: 'iojs-3.2.24',
-    libUrl32: 'http://foo.bar/v3.2.24/win-x86/iojs.lib',
-    libUrl64: 'http://foo.bar/v3.2.24/win-x64/iojs.lib',
-    libPath32: 'win-x86/iojs.lib',
-    libPath64: 'win-x64/iojs.lib'
+    ia32: { libUrl: 'http://foo.bar/v3.2.24/win-x86/iojs.lib', libPath: 'win-x86/iojs.lib' },
+    x64:  { libUrl: 'http://foo.bar/v3.2.24/win-x64/iojs.lib', libPath: 'win-x64/iojs.lib' },
   })
 
   delete process.env.NVM_IOJS_ORG_MIRROR
