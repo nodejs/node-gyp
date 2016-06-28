@@ -41,3 +41,4 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [node-osrm](https://github.com/DennisOSRM/node-osrm)
  * [node-oracle](https://github.com/joeferner/node-oracle/blob/master/binding.gyp)
  * [node-process-list](https://github.com/ReklatsMasters/node-process-list/blob/master/binding.gyp)
+ * [node-nanomsg](https://github.com/nickdesaulniers/node-nanomsg/blob/master/binding.gyp)
