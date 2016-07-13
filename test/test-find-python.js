@@ -195,6 +195,77 @@ test('find python - no python, use python launcher', function (t) {
   }
 })
 
+test('find python - python 3, use python launcher', function (t) {
+  t.plan(10)
+
+  var f = new TestPythonFinder('python', done)
+  f.env = {}
+  f.win = true
+
+  f.which = function(program, cb) {
+    t.strictEqual(program, 'python')
+    cb(null, program)
+  }
+  f.execFile = function(program, args, opts, cb) {
+    f.execFile = function(program, args, opts, cb) {
+      f.execFile = function(program, args, opts, cb) {
+        t.strictEqual(program, 'Z:\\snake.exe')
+        t.ok(/import platform/.test(args[1]))
+        cb(null, '2.7.0')
+      }
+      t.strictEqual(program, 'py.exe')
+      t.notEqual(args.indexOf('-2'), -1)
+      t.notEqual(args.indexOf('-c'), -1)
+      cb(null, 'Z:\\snake.exe')
+    }
+    t.strictEqual(program, 'python')
+    t.ok(/import platform/.test(args[1]))
+    cb(null, '3.0.0')
+  }
+  f.checkPython()
+
+  function done(err, python) {
+    t.strictEqual(err, null)
+    t.strictEqual(python, 'Z:\\snake.exe')
+  }
+})
+
+test('find python - python 3, use python launcher, python 2 too old',
+     function (t) {
+  t.plan(9)
+
+  var f = new TestPythonFinder('python', done)
+  f.checkedPythonLauncher = false
+  f.env = {}
+  f.win = true
+
+  f.which = function(program, cb) {
+    t.strictEqual(program, 'python')
+    cb(null, program)
+  }
+  f.execFile = function(program, args, opts, cb) {
+    f.execFile = function(program, args, opts, cb) {
+      f.execFile = function(program, args, opts, cb) {
+        t.strictEqual(program, 'Z:\\snake.exe')
+        t.ok(/import platform/.test(args[1]))
+        cb(null, '2.3.4')
+      }
+      t.strictEqual(program, 'py.exe')
+      t.notEqual(args.indexOf('-2'), -1)
+      t.notEqual(args.indexOf('-c'), -1)
+      cb(null, 'Z:\\snake.exe')
+    }
+    t.strictEqual(program, 'python')
+    t.ok(/import platform/.test(args[1]))
+    cb(null, '3.0.0')
+  }
+  f.checkPython()
+
+  function done(err, python) {
+    t.ok(/is not supported by gyp/.test(err))
+  }
+})
+
 test('find python - no python, no python launcher, good guess', function (t) {
   t.plan(6)
 
