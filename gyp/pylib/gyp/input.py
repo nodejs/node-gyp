@@ -910,7 +910,7 @@ def ExpandVariables(input, phase, variables, build_file):
 
           p_stdout, p_stderr = p.communicate('')
 
-          if p.wait() != 0 or p_stderr:
+          if p.wait() != 0:
             sys.stderr.write(p_stderr)
             # Simulate check_call behavior, since check_call only exists
             # in python 2.5 and later.
