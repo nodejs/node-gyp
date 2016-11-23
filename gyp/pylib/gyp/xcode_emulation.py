@@ -429,7 +429,8 @@ class XcodeSettings(object):
     # Since the CLT has no SDK paths anyway, returning None is the
     # most sensible route and should still do the right thing.
     try:
-      return GetStdout(['xcodebuild', '-version', '-sdk', sdk, infoitem])
+      return ""
+      #return GetStdout(['xcodebuild', '-version', '-sdk', sdk, infoitem])
     except:
       pass
 
@@ -1117,7 +1118,8 @@ class XcodeSettings(object):
     if default_sdk_root:
       return default_sdk_root
     try:
-      all_sdks = GetStdout(['xcodebuild', '-showsdks'])
+      print ""
+      #all_sdks = GetStdout(['xcodebuild', '-showsdks'])
     except:
       # If xcodebuild fails, there will be no valid SDKs
       return ''
@@ -1251,7 +1253,8 @@ def XcodeVersion():
   if XCODE_VERSION_CACHE:
     return XCODE_VERSION_CACHE
   try:
-    version_list = GetStdout(['xcodebuild', '-version']).splitlines()
+    print ""
+    #version_list = GetStdout(['xcodebuild', '-version']).splitlines()
     # In some circumstances xcodebuild exits 0 but doesn't return
     # the right results; for example, a user on 10.7 or 10.8 with
     # a bogus path set via xcode-select
