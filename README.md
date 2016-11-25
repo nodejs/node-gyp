@@ -4,7 +4,7 @@ node-gyp
 
 `node-gyp` is a cross-platform command-line tool written in Node.js for compiling
 native addon modules for Node.js.  It bundles the [gyp](https://code.google.com/p/gyp/)
-project used by the Chromium team and takes away the pain of dealing with the
+project formerly used by the Chromium team (they now use [GN](https://chromium.googlesource.com/chromium/src/tools/gn/)) and takes away the pain of dealing with the
 various differences in build platforms. It is the replacement to the `node-waf`
 program which is removed for node `v0.8`. If you have a native addon for node that
 still has a `wscript` file, then you should definitely add a `binding.gyp` file
