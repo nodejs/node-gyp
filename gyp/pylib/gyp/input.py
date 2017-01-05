@@ -1222,6 +1222,8 @@ def ProcessVariablesAndConditionsInDict(the_dict, phase, variables_in,
     # Skip "variables", which was already processed if present.
     if key != 'variables' and type(value) is str:
       expanded = ExpandVariables(value, phase, variables, build_file)
+      if type(expanded) in (long, list, dict):
+        continue
       if type(expanded) not in (str, int):
         raise ValueError(
               'Variable expansion in this context permits str and int ' + \
