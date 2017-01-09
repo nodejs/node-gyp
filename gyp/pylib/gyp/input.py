@@ -1279,7 +1279,7 @@ def ProcessVariablesAndConditionsInDict(the_dict, phase, variables_in,
   for key, value in the_dict.iteritems():
     # Skip "variables" and string values, which were already processed if
     # present.
-    if key == 'variables' or type(value) is str:
+    if key == 'variables' or type(value) in (str, long):
       continue
     if type(value) is dict:
       # Pass a copy of the variables dict so that subdicts can't influence
