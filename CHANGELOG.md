@@ -1,3 +1,18 @@
+v3.5.0 2017-01-10
+=================
+
+* [[`762d19a39e`](https://github.com/nodejs/node-gyp/commit/762d19a39e)] - \[doc\] merge History.md and CHANGELOG.md (Rod Vagg) 
+* [[`80fc5c3d31`](https://github.com/nodejs/node-gyp/commit/80fc5c3d31)] - Fix deprecated dependency warning (Simone Primarosa) [#1069](https://github.com/nodejs/node-gyp/pull/1069)
+* [[`05c44944fd`](https://github.com/nodejs/node-gyp/commit/05c44944fd)] - Open the build file with universal-newlines mode (Guy Margalit) [#1053](https://github.com/nodejs/node-gyp/pull/1053)
+* [[`37ae7be114`](https://github.com/nodejs/node-gyp/commit/37ae7be114)] - Try python launcher when stock python is python 3. (Ben Noordhuis) [#992](https://github.com/nodejs/node-gyp/pull/992)
+* [[`e3778d9907`](https://github.com/nodejs/node-gyp/commit/e3778d9907)] - Add lots of findPython() tests. (Ben Noordhuis) [#992](https://github.com/nodejs/node-gyp/pull/992)
+* [[`afc766adf6`](https://github.com/nodejs/node-gyp/commit/afc766adf6)] - Unset executable bit for .bat files (Pavel Medvedev) [#969](https://github.com/nodejs/node-gyp/pull/969)
+* [[`ddac348991`](https://github.com/nodejs/node-gyp/commit/ddac348991)] - Use push on PYTHONPATH and add tests (Michael Hart) [#990](https://github.com/nodejs/node-gyp/pull/990)
+* [[`b182a19042`](https://github.com/nodejs/node-gyp/commit/b182a19042)] - ***Revert*** "add "path-array" dep" (Michael Hart) [#990](https://github.com/nodejs/node-gyp/pull/990)
+* [[`7c08b85c5a`](https://github.com/nodejs/node-gyp/commit/7c08b85c5a)] - ***Revert*** "**configure**: use "path-array" for PYTHONPATH" (Michael Hart) [#990](https://github.com/nodejs/node-gyp/pull/990)
+* [[`9c8d275526`](https://github.com/nodejs/node-gyp/commit/9c8d275526)] - Add --devdir flag. (Ben Noordhuis) [#916](https://github.com/nodejs/node-gyp/pull/916)
+* [[`f6eab1f9e4`](https://github.com/nodejs/node-gyp/commit/f6eab1f9e4)] - **doc**: add windows-build-tools to readme (Felix Rieseberg) [#970](https://github.com/nodejs/node-gyp/pull/970)
+
 v3.4.0 2016-06-28
 =================
 
