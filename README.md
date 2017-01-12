@@ -71,6 +71,21 @@ value:
 $ npm config set python /path/to/executable/python2.7
 ```
 
+If you have multiple Python versions installed, you can identify which Python 
+version `node-gyp` uses by setting the '--python' variable:
+
+``` bash
+$ node-gyp --python /path/to/python2.7
+```
+
+If `node-gyp` is called by way of `npm` *and* you have multiple versions of 
+Python installed, then you can set `npm`'s 'python' config key to the appropriate 
+value:
+
+``` bash
+$ npm config set python /path/to/executable/python2.7
+```
+
 Note that OS X is just a flavour of Unix and so needs `python`, `make`, and C/C++.
 An easy way to obtain these is to install XCode from Apple,
 and then use it to install the command line tools (under Preferences -> Downloads).
