@@ -180,6 +180,7 @@ Command Options
 | `--dist-url=$url`                 | Download header tarball from custom URL
 | `--proxy=$url`                    | Set HTTP proxy for downloading header tarball
 | `--cafile=$cafile`                | Override default CA chain (to download tarball)
+| `--ciphers=$cipherlist`           | Override default [TLS cipher suite](https://www.openssl.org/docs/man1.0.2/apps/ciphers.html#CIPHER-LIST-FORMAT) (to download tarball)
 | `--nodedir=$path`                 | Set the path to the node binary
 | `--python=$path`                  | Set path to the python (2) binary
 | `--msvs_version=$version`         | Set Visual Studio version (win)
