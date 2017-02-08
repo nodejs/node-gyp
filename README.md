@@ -42,7 +42,7 @@ You will also need to install:
       * You also need to install the `Command Line Tools` via Xcode. You can find this under the menu `Xcode -> Preferences -> Downloads`
       * This step will install `gcc` and the related toolchain containing `make`
   * On Windows:
-    * Option 1: Install all the required tools and configurations using Microsoft's [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) using `npm install --global --production windows-build-tools` from an elevated PowerShell or CMD.exe (run as Administrator).
+    * Option 1: Install all the required tools and configurations using Microsoft's [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) using `npm install --global --production windows-build-tools` from an elevated PowerShell or CMD.exe (run as Administrator). Note: although windows-build-tools will install Python, it will not add python to your PATH, so you will have to add it manually.
     * Option 2: Install tools and configuration manually:
       * Visual C++ Build Environment:
         * Option 1: Install [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools) using the **Default Install** option.
