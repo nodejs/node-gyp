@@ -170,4 +170,9 @@ def main():
       print sdks[0]
 
 if __name__ == '__main__':
-  main()
+  try:
+    main()
+  except WindowsError:
+    # if no VS2017 installed querying com server will fail
+    #   - print nothing
+    pass
