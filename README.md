@@ -179,6 +179,7 @@ Command Options
 | `--ensure`                        | Don't reinstall headers if already present
 | `--dist-url=$url`                 | Download header tarball from custom URL
 | `--proxy=$url`                    | Set HTTP proxy for downloading header tarball
+| `--strictssl=true|false`          | Set SSL certificate verification to on/off
 | `--cafile=$cafile`                | Override default CA chain (to download tarball)
 | `--nodedir=$path`                 | Set the path to the node binary
 | `--python=$path`                  | Set path to the python (2) binary
