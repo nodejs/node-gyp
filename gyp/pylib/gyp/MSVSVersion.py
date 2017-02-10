@@ -86,7 +86,7 @@ class VisualStudioVersion(object):
       if target_arch == 'x86':
         if self.short_name == '2017':
           return [os.path.normpath(
-            ps.path.join(self.path, 'Common7/Tools/VsDevCmd.bat')), '/no_logo',
+            os.path.join(self.path, 'Common7/Tools/VsDevCmd.bat')), '/no_logo',
             '/arch=x86']
         if self.short_name >= '2013' and self.short_name[-1] != 'e' and (
             os.environ.get('PROCESSOR_ARCHITECTURE') == 'AMD64' or
@@ -102,7 +102,7 @@ class VisualStudioVersion(object):
         assert target_arch == 'x64'
         if self.short_name == '2017':
           return [os.path.normpath(
-            ps.path.join(self.path, 'Common7/Tools/VsDevCmd.bat')), '/no_logo',
+            os.path.join(self.path, 'Common7/Tools/VsDevCmd.bat')), '/no_logo',
             '/arch=x64']
         arg = 'x86_amd64'
         # Use the 64-on-64 compiler if we're not using an express
@@ -373,7 +373,7 @@ def _DetectVisualStudioVersions(versions_to_check, force_express):
       '11.0': '2012',
       '12.0': '2013',
       '14.0': '2015',
-      '15.0': '2017'
+      '15.0': '2017',
   }
   versions = []
   for version in versions_to_check:
