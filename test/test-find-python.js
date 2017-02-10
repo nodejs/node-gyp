@@ -1,14 +1,14 @@
 'use strict'
 
 var test = require('tape')
-var configure = require('../lib/configure')
+var findPython = require('../lib/find-python')
 var execFile = require('child_process').execFile
-var PythonFinder = configure.test.PythonFinder
+var PythonFinder = findPython.test.PythonFinder
 
 test('find python', function (t) {
   t.plan(4)
 
-  configure.test.findPython('python', function (err, found) {
+  findPython.test.findPython('python', function (err, found) {
     t.strictEqual(err, null)
     var proc = execFile(found, ['-V'], function (err, stdout, stderr) {
       t.strictEqual(err, null)
