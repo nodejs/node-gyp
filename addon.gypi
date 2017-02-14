@@ -1,15 +1,13 @@
 {
+  'variables' : {
+    'node_engine_include_dir%': 'deps/v8/include',
+  },
   'target_defaults': {
     'type': 'loadable_module',
     'win_delay_load_hook': 'true',
     'product_prefix': '',
 
     'conditions': [
-      [ 'node_engine=="v8"', {
-        'variables': {
-          'node_engine_include_dir%': 'deps/v8/include'
-        },
-      }],
       [ 'node_engine=="chakracore"', {
         'variables': {
           'node_engine_include_dir%': 'deps/chakrashim/include'
