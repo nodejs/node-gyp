@@ -1,0 +1,38 @@
+From 06cea25b3af096b7fe82c25cc06ecba808ba9765 Mon Sep 17 00:00:00 2001
+From: Refael Ackermann <me@refack.com>
+Date: Wed, 15 Feb 2017 17:29:32 -0500
+Subject: [PATCH] ninja: make ninja work on windows again
+
+---
+ gyp/pylib/gyp/generator/ninja.py | 2 ++
+ gyp/pylib/gyp/msvs_emulation.py  | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/gyp/pylib/gyp/generator/ninja.py b/gyp/pylib/gyp/generator/ninja.py
+index 841067e..fd8ae0f 100644
+--- a/gyp/pylib/gyp/generator/ninja.py
++++ b/gyp/pylib/gyp/generator/ninja.py
+@@ -333,6 +333,8 @@ class NinjaWriter(object):
+       obj += '.' + self.toolset
+ 
+     path_dir, path_basename = os.path.split(path)
++    if os.path.isabs(path_dir):
++      path_dir = os.path.relpath(path_dir, self.abs_build_dir)
+     assert not os.path.isabs(path_dir), (
+         "'%s' can not be absolute path (see crbug.com/462153)." % path_dir)
+ 
+diff --git a/gyp/pylib/gyp/msvs_emulation.py b/gyp/pylib/gyp/msvs_emulation.py
+index ca67b12..d6a910d 100644
+--- a/gyp/pylib/gyp/msvs_emulation.py
++++ b/gyp/pylib/gyp/msvs_emulation.py
+@@ -302,6 +302,7 @@ class MsvsSettings(object):
+     return {'Win32': 'x86', 'x64': 'x64'}.get(platform, 'x86')
+ 
+   def _TargetConfig(self, config):
++    return config
+     """Returns the target-specific configuration."""
+     # There's two levels of architecture/platform specification in VS. The
+     # first level is globally for the configuration (this is what we consider
+-- 
+2.11.0.windows.1
+
