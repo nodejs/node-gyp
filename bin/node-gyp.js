@@ -25,14 +25,18 @@ prog.parseArgv(process.argv)
 prog.devDir = prog.opts.devdir
 
 var homeDir = osenv.home()
-if (prog.devDir) {
+if (process.env.LOCALAPPDATA) {
+  // TODO: create intermediate directories
+  pro.devDir = path.resolve(process.env.LOCALAPPDATA, 'nodejs', 'node-gyp')
+} else if (prog.devDir) {
   prog.devDir = prog.devDir.replace(/^~/, homeDir)
 } else if (homeDir) {
   prog.devDir = path.resolve(homeDir, '.node-gyp')
 } else {
   throw new Error(
     "node-gyp requires that the user's home directory is specified " +
-    "in either of the environmental variables HOME or USERPROFILE. " +
+    "in either of the environmental variables HOME or USERPROFILE, " +
+    "or LOCALAPPDATA is set." +
     "Overide with: --devdir /path/to/.node-gyp")
 }
 
