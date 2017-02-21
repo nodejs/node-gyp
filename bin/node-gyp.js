@@ -25,9 +25,8 @@ prog.parseArgv(process.argv)
 prog.devDir = prog.opts.devdir
 
 var homeDir = osenv.home()
-if (process.env.LOCALAPPDATA) {
-  // TODO: create intermediate directories
-  pro.devDir = path.resolve(process.env.LOCALAPPDATA, 'nodejs', 'node-gyp')
+if (process.env.LOCALAPPDATA && process.platform === 'win32') {
+  prog.devDir = path.resolve(process.env.LOCALAPPDATA, 'nodejs', 'node-gyp')
 } else if (prog.devDir) {
   prog.devDir = prog.devDir.replace(/^~/, homeDir)
 } else if (homeDir) {
