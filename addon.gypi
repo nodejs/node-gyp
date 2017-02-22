@@ -81,7 +81,8 @@
           '_DARWIN_USE_64_BIT_INODE=1'
         ],
         'xcode_settings': {
-          'DYLIB_INSTALL_NAME_BASE': '@rpath'
+          'DYLIB_INSTALL_NAME_BASE': '@rpath',
+          'OTHER_LDFLAGS' : [ '-undefined dynamic_lookup' ]
         },
       }],
       [ 'OS=="aix"', {
