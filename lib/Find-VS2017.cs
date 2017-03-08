@@ -218,7 +218,7 @@ namespace VisualStudioConfiguration
                 const string Win10SDKPrefix = "Microsoft.VisualStudio.Component.Windows10SDK.";
 
                 string id = package.GetId();
-                if (id == "Microsoft.Component.MSBuild")
+                if (id == "Microsoft.VisualStudio.VC.MSBuild.Base")
                     hasMSBuild = true;
                 else if (id == "Microsoft.VisualStudio.Component.VC.Tools.x86.x64")
                     hasVCTools = true;
@@ -233,7 +233,7 @@ namespace VisualStudioConfiguration
             }
 
             if (!hasMSBuild)
-                log.Append("  - Missing MSBuild (Microsoft.Component.MSBuild)\\n");
+                log.Append("  - Missing Visual Studio C++ core features (Microsoft.VisualStudio.VC.MSBuild.Base)\\n");
             if (!hasVCTools)
                 log.Append("  - Missing VC++ 2017 v141 toolset (x86,x64) (Microsoft.VisualStudio.Component.VC.Tools.x86.x64)\\n");
             if ((Win10SDKVer == 0) && (!hasWin8SDK))
