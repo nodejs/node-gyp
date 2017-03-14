@@ -1,3 +1,6 @@
+// Copyright 2017 - Refael Ackermann
+// Distributed under MIT style license
+// See accompanying file LICENSE at https://github.com/node4good/windows-autoconf
 // powershell -ExecutionPolicy Unrestricted -Version "2.0" -Command "&{Add-Type -Path Find-VS2017.cs; [VisualStudioConfiguration.Main]::Query()}"
 using System;
 using System.Text;
