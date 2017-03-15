@@ -1,3 +1,13 @@
+v3.6.0 2017-03-16
+=================
+
+* [[`ae141e1906`](https://github.com/nodejs/node-gyp/commit/ae141e1906)] - **win**: find and setup for VS2017 (Refael Ackermann) [#1130](https://github.com/nodejs/node-gyp/pull/1130)
+* [[`ec5fc36a80`](https://github.com/nodejs/node-gyp/commit/ec5fc36a80)] - Add support to build node.js with chakracore for ARM. (Kunal Pathak) [#873](https://github.com/nodejs/node-gyp/pull/873)
+* [[`a04ea3051a`](https://github.com/nodejs/node-gyp/commit/a04ea3051a)] - Add support to build node.js with chakracore. (Kunal Pathak) [#873](https://github.com/nodejs/node-gyp/pull/873)
+* [[`93d7fa83c8`](https://github.com/nodejs/node-gyp/commit/93d7fa83c8)] - Upgrade semver dependency. (Ben Noordhuis) [#1107](https://github.com/nodejs/node-gyp/pull/1107)
+* [[`ff9a6fadfd`](https://github.com/nodejs/node-gyp/commit/ff9a6fadfd)] - Update link of gyp as Google code is shutting down (Peter Dave Hello) [#1061](https://github.com/nodejs/node-gyp/pull/1061)
+
+
 v3.5.0 2017-01-10
 =================
 
