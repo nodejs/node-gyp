@@ -6,6 +6,7 @@
 This module contains classes that help to emulate xcodebuild behavior on top of
 other build systems, such as make and ninja.
 """
+
 from __future__ import print_function
 
 import copy

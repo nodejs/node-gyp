@@ -13,6 +13,7 @@ and Visual Studio 2010 for all available settings through the user interface.
 The MSBuild schemas were also considered.  They are typically found in the
 MSBuild install directory, e.g. c:\Program Files (x86)\MSBuild
 """
+
 from __future__ import print_function
 
 import sys
@@ -463,8 +464,8 @@ def ConvertToMSBuildSettings(msvs_settings, stderr=sys.stderr):
           try:
             msvs_tool[msvs_setting](msvs_value, msbuild_settings)
           except ValueError as e:
-            print(('Warning: while converting %s/%s to MSBuild, '
-                              '%s' % (msvs_tool_name, msvs_setting, e)), file=stderr)
+            print('Warning: while converting %s/%s to MSBuild, '
+                              '%s' % (msvs_tool_name, msvs_setting, e), file=stderr)
         else:
           _ValidateExclusionSetting(msvs_setting,
                                     msvs_tool,
@@ -473,8 +474,8 @@ def ConvertToMSBuildSettings(msvs_settings, stderr=sys.stderr):
                                      (msvs_tool_name, msvs_setting)),
                                     stderr)
     else:
-      print(('Warning: unrecognized tool %s while converting to '
-                        'MSBuild.' % msvs_tool_name), file=stderr)
+      print('Warning: unrecognized tool %s while converting to '
+                        'MSBuild.' % msvs_tool_name, file=stderr)
   return msbuild_settings
 
 
@@ -519,8 +520,8 @@ def _ValidateSettings(validators, settings, stderr):
           try:
             tool_validators[setting](value)
           except ValueError as e:
-            print(('Warning: for %s/%s, %s' %
-                              (tool_name, setting, e)), file=stderr)
+            print('Warning: for %s/%s, %s' %
+                              (tool_name, setting, e), file=stderr)
         else:
           _ValidateExclusionSetting(setting,
                                     tool_validators,
@@ -529,7 +530,7 @@ def _ValidateSettings(validators, settings, stderr):
                                     stderr)
 
     else:
-      print(('Warning: unrecognized tool %s' % tool_name), file=stderr)
+      print('Warning: unrecognized tool %s' % (tool_name), file=stderr)
 
 
 # MSVS and MBuild names of the tools.

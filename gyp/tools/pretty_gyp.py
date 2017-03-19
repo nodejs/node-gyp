@@ -5,6 +5,7 @@
 # found in the LICENSE file.
 
 """Pretty-prints the contents of a GYP file."""
+
 from __future__ import print_function
 
 import sys

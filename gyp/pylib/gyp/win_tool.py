@@ -8,6 +8,7 @@
 
 These functions are executed via gyp-win-tool when using the ninja generator.
 """
+
 from __future__ import print_function
 
 import os

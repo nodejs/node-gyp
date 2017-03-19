@@ -1,7 +1,8 @@
-from __future__ import print_function
 # Copyright (c) 2012 Google Inc. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
+
+from __future__ import print_function
 
 import copy
 import ntpath
@@ -756,8 +757,8 @@ def _EscapeVCProjCommandLineArgListItem(s):
     # the VCProj but cause the same problem on the final command-line. Moving
     # the item to the end of the list does works, but that's only possible if
     # there's only one such item. Let's just warn the user.
-    print(('Warning: MSVS may misinterpret the odd number of ' +
-                          'quotes in ' + s), file=sys.stderr)
+    print('Warning: MSVS may misinterpret the odd number of ' +
+                          'quotes in ' + s, file=sys.stderr)
   return s
 
 
@@ -975,8 +976,8 @@ def _ValidateSourcesForMSVSProject(spec, version):
       error += '  %s: %s\n' % (basename, ' '.join(files))
 
   if error:
-    print('static library %s has several files with the same basename:\n' %
-          spec['target_name'] + error + 'MSVC08 cannot handle that.')
+    print('static library %s has several files with the same basename:\n' % spec['target_name']
+          + error + 'MSVC08 cannot handle that.')
     raise GypError('Duplicate basenames in sources section, see list above')
 
 
@@ -3028,7 +3029,7 @@ def _FinalizeMSBuildSettings(spec, configuration):
     for ignored_setting in ignored_settings:
       value = configuration.get(ignored_setting)
       if value:
-        print ('Warning: The automatic conversion to MSBuild does not handle '
+        print('Warning: The automatic conversion to MSBuild does not handle '
                '%s.  Ignoring setting of %s' % (ignored_setting, str(value)))
 
   defines = [_EscapeCppDefineForMSBuild(d) for d in defines]
