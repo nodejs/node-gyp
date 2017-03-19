@@ -452,7 +452,7 @@ class XCObject(object):
       digest_int_count = hash.digest_size / 4
       digest_ints = struct.unpack('>' + 'I' * digest_int_count, hash.digest())
       id_ints = [0, 0, 0]
-      for index in xrange(0, digest_int_count):
+      for index in range(0, digest_int_count):
         id_ints[index % 3] ^= digest_ints[index]
       self.id = '%08X%08X%08X' % tuple(id_ints)
 
@@ -1426,7 +1426,7 @@ class XCFileLikeElement(XCHierarchicalElement):
     xche = self
     while xche != None and isinstance(xche, XCHierarchicalElement):
       xche_hashables = xche.Hashables()
-      for index in xrange(0, len(xche_hashables)):
+      for index in range(0, len(xche_hashables)):
         hashables.insert(index, xche_hashables[index])
       xche = xche.parent
     return hashables
@@ -2401,7 +2401,7 @@ class PBXNativeTarget(XCTarget):
       # The headers phase should come before the resources, sources, and
       # frameworks phases, if any.
       insert_at = len(self._properties['buildPhases'])
-      for index in xrange(0, len(self._properties['buildPhases'])):
+      for index in range(0, len(self._properties['buildPhases'])):
         phase = self._properties['buildPhases'][index]
         if isinstance(phase, PBXResourcesBuildPhase) or \
            isinstance(phase, PBXSourcesBuildPhase) or \
@@ -2422,7 +2422,7 @@ class PBXNativeTarget(XCTarget):
       # The resources phase should come before the sources and frameworks
       # phases, if any.
       insert_at = len(self._properties['buildPhases'])
-      for index in xrange(0, len(self._properties['buildPhases'])):
+      for index in range(0, len(self._properties['buildPhases'])):
         phase = self._properties['buildPhases'][index]
         if isinstance(phase, PBXSourcesBuildPhase) or \
            isinstance(phase, PBXFrameworksBuildPhase):

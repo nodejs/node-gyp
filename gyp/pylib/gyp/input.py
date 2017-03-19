@@ -1028,7 +1028,7 @@ def ExpandVariables(input, phase, variables, build_file):
 
   # Convert all strings that are canonically-represented integers into integers.
   if type(output) is list:
-    for index in xrange(0, len(output)):
+    for index in range(0, len(output)):
       if IsStrCanonicalInt(output[index]):
         output[index] = int(output[index])
   elif IsStrCanonicalInt(output):
@@ -1385,7 +1385,7 @@ def QualifyDependencies(targets):
     toolset = target_dict['toolset']
     for dependency_key in all_dependency_sections:
       dependencies = target_dict.get(dependency_key, [])
-      for index in xrange(0, len(dependencies)):
+      for index in range(0, len(dependencies)):
         dep_file, dep_target, dep_toolset = gyp.common.ResolveTarget(
             target_build_file, dependencies[index], toolset)
         if not multiple_toolsets:
@@ -1426,7 +1426,7 @@ def ExpandWildcardDependencies(targets, data):
     for dependency_key in dependency_sections:
       dependencies = target_dict.get(dependency_key, [])
 
-      # Loop this way instead of "for dependency in" or "for index in xrange"
+      # Loop this way instead of "for dependency in" or "for index in range"
       # because the dependencies list will be modified within the loop body.
       index = 0
       while index < len(dependencies):
@@ -2399,7 +2399,7 @@ def ProcessListFiltersInDict(name, the_dict):
     exclude_key = list_key + '!'
     if exclude_key in the_dict:
       for exclude_item in the_dict[exclude_key]:
-        for index in xrange(0, len(the_list)):
+        for index in range(0, len(the_list)):
           if exclude_item == the_list[index]:
             # This item matches the exclude_item, so set its action to 0
             # (exclude).
@@ -2425,7 +2425,7 @@ def ProcessListFiltersInDict(name, the_dict):
           raise ValueError('Unrecognized action ' + action + ' in ' + name + \
                            ' key ' + regex_key)
 
-        for index in xrange(0, len(the_list)):
+        for index in range(0, len(the_list)):
           list_item = the_list[index]
           if list_actions[index] == action_value:
             # Even if the regex matches, nothing will change so continue (regex
@@ -2456,7 +2456,7 @@ def ProcessListFiltersInDict(name, the_dict):
     # the indices of items that haven't been seen yet don't shift.  That means
     # that things need to be prepended to excluded_list to maintain them in the
     # same order that they existed in the_list.
-    for index in xrange(len(list_actions) - 1, -1, -1):
+    for index in range(len(list_actions) - 1, -1, -1):
       if list_actions[index] == 0:
         # Dump anything with action 0 (exclude).  Keep anything with action 1
         # (include) or -1 (no include or exclude seen for the item).
@@ -2665,7 +2665,7 @@ def TurnIntIntoStrInDict(the_dict):
 def TurnIntIntoStrInList(the_list):
   """Given list the_list, recursively converts all integers into strings.
   """
-  for index in xrange(0, len(the_list)):
+  for index in range(0, len(the_list)):
     item = the_list[index]
     if type(item) is int:
       the_list[index] = str(item)

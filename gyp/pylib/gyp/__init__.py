@@ -434,7 +434,7 @@ def gyp_main(args):
       build_file_dir = os.path.abspath(os.path.dirname(build_file))
       build_file_dir_components = build_file_dir.split(os.path.sep)
       components_len = len(build_file_dir_components)
-      for index in xrange(components_len - 1, -1, -1):
+      for index in range(components_len - 1, -1, -1):
         if build_file_dir_components[index] == 'src':
           options.depth = os.path.sep.join(build_file_dir_components)
           break

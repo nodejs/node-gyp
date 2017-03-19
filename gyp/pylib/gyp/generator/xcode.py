@@ -1014,7 +1014,7 @@ def GenerateOutput(target_list, target_dicts, data, params):
         # target.
         makefile.write('all: \\\n')
         for concrete_output_index in \
-            xrange(0, len(concrete_outputs_by_rule_source)):
+            range(0, len(concrete_outputs_by_rule_source)):
           # Only list the first (index [0]) concrete output of each input
           # in the "all" target.  Otherwise, a parallel make (-j > 1) would
           # attempt to process each input multiple times simultaneously.
@@ -1037,7 +1037,7 @@ def GenerateOutput(target_list, target_dicts, data, params):
           # rule source.  Collect the names of the directories that are
           # required.
           concrete_output_dirs = []
-          for concrete_output_index in xrange(0, len(concrete_outputs)):
+          for concrete_output_index in range(0, len(concrete_outputs)):
             concrete_output = concrete_outputs[concrete_output_index]
             if concrete_output_index == 0:
               bol = ''
@@ -1056,7 +1056,7 @@ def GenerateOutput(target_list, target_dicts, data, params):
           # the set of additional rule inputs, if any.
           prerequisites = [rule_source]
           prerequisites.extend(rule.get('inputs', []))
-          for prerequisite_index in xrange(0, len(prerequisites)):
+          for prerequisite_index in range(0, len(prerequisites)):
             prerequisite = prerequisites[prerequisite_index]
             if prerequisite_index == len(prerequisites) - 1:
               eol = ''
