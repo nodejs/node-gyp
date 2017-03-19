@@ -170,7 +170,7 @@ class XcodeSettings(object):
     # the same for all configs are implicitly per-target settings.
     self.xcode_settings = {}
     configs = spec['configurations']
-    for configname, config in configs.iteritems():
+    for configname, config in configs.items():
       self.xcode_settings[configname] = config.get('xcode_settings', {})
       self._ConvertConditionalKeys(configname)
       if self.xcode_settings[configname].get('IPHONEOS_DEPLOYMENT_TARGET',
@@ -891,7 +891,7 @@ class XcodeSettings(object):
         result = dict(self.xcode_settings[configname])
         first_pass = False
       else:
-        for key, value in self.xcode_settings[configname].iteritems():
+        for key, value in self.xcode_settings[configname].items():
           if key not in result:
             continue
           elif result[key] != value:
@@ -1639,7 +1639,7 @@ def _AddIOSDeviceConfigurations(targets):
   for target_dict in targets.itervalues():
     toolset = target_dict['toolset']
     configs = target_dict['configurations']
-    for config_name, config_dict in dict(configs).iteritems():
+    for config_name, config_dict in dict(configs).items():
       iphoneos_config_dict = copy.deepcopy(config_dict)
       configs[config_name + '-iphoneos'] = iphoneos_config_dict
       configs[config_name + '-iphonesimulator'] = config_dict

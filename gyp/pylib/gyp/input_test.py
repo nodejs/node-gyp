@@ -22,7 +22,7 @@ class TestFindCycles(unittest.TestCase):
     dependency.dependents.append(dependent)
 
   def test_no_cycle_empty_graph(self):
-    for label, node in self.nodes.iteritems():
+    for label, node in self.nodes.items():
       self.assertEqual([], node.FindCycles())
 
   def test_no_cycle_line(self):
@@ -30,7 +30,7 @@ class TestFindCycles(unittest.TestCase):
     self._create_dependency(self.nodes['b'], self.nodes['c'])
     self._create_dependency(self.nodes['c'], self.nodes['d'])
 
-    for label, node in self.nodes.iteritems():
+    for label, node in self.nodes.items():
       self.assertEqual([], node.FindCycles())
 
   def test_no_cycle_dag(self):
@@ -38,7 +38,7 @@ class TestFindCycles(unittest.TestCase):
     self._create_dependency(self.nodes['a'], self.nodes['c'])
     self._create_dependency(self.nodes['b'], self.nodes['c'])
 
-    for label, node in self.nodes.iteritems():
+    for label, node in self.nodes.items():
       self.assertEqual([], node.FindCycles())
 
   def test_cycle_self_reference(self):

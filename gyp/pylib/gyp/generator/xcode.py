@@ -183,7 +183,7 @@ class XcodeProject(object):
     # the tree tree view for UI display.
     # Any values set globally are applied to all configurations, then any
     # per-configuration values are applied.
-    for xck, xcv in self.build_file_dict.get('xcode_settings', {}).iteritems():
+    for xck, xcv in self.build_file_dict.get('xcode_settings', {}).items():
       xccl.SetBuildSetting(xck, xcv)
     if 'xcode_config_file' in self.build_file_dict:
       config_ref = self.project.AddOrGetFileInRootGroup(
@@ -197,7 +197,7 @@ class XcodeProject(object):
         if build_file_configuration_named:
           xcc = xccl.ConfigurationNamed(config_name)
           for xck, xcv in build_file_configuration_named.get('xcode_settings',
-                                                             {}).iteritems():
+                                                             {}).items():
             xcc.SetBuildSetting(xck, xcv)
           if 'xcode_config_file' in build_file_configuration_named:
             config_ref = self.project.AddOrGetFileInRootGroup(
@@ -273,7 +273,7 @@ class XcodeProject(object):
           script = script + "\n".join(
             ['export %s="%s"' %
              (key, gyp.xcodeproj_file.ConvertVariablesToShellSyntax(val))
-             for (key, val) in command.get('environment').iteritems()]) + "\n"
+             for (key, val) in command.get('environment').items()]) + "\n"
 
         # Some test end up using sockets, files on disk, etc. and can get
         # confused if more then one test runs at a time.  The generator
@@ -566,7 +566,7 @@ def EscapeXcodeDefine(s):
 def PerformBuild(data, configurations, params):
   options = params['options']
 
-  for build_file, build_file_dict in data.iteritems():
+  for build_file, build_file_dict in data.items():
     (build_file_root, build_file_ext) = os.path.splitext(build_file)
     if build_file_ext != '.gyp':
       continue
@@ -625,7 +625,7 @@ def GenerateOutput(target_list, target_dicts, data, params):
   skip_excluded_files = \
       not generator_flags.get('xcode_list_excluded_files', True)
   xcode_projects = {}
-  for build_file, build_file_dict in data.iteritems():
+  for build_file, build_file_dict in data.items():
     (build_file_root, build_file_ext) = os.path.splitext(build_file)
     if build_file_ext != '.gyp':
       continue
@@ -1278,7 +1278,7 @@ exit 1
           set_define = EscapeXcodeDefine(define)
           xcbc.AppendBuildSetting('GCC_PREPROCESSOR_DEFINITIONS', set_define)
       if 'xcode_settings' in configuration:
-        for xck, xcv in configuration['xcode_settings'].iteritems():
+        for xck, xcv in configuration['xcode_settings'].items():
           xcbc.SetBuildSetting(xck, xcv)
       if 'xcode_config_file' in configuration:
         config_ref = pbxp.AddOrGetFileInRootGroup(
@@ -1286,7 +1286,7 @@ exit 1
         xcbc.SetBaseConfiguration(config_ref)
 
   build_files = []
-  for build_file, build_file_dict in data.iteritems():
+  for build_file, build_file_dict in data.items():
     if build_file.endswith('.gyp'):
       build_files.append(build_file)
 
