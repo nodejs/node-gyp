@@ -16,6 +16,8 @@ MSBuild install directory, e.g. c:\Program Files (x86)\MSBuild
 
 from __future__ import print_function
 
+from gyp import string_types
+
 import sys
 import re
 
@@ -108,11 +110,11 @@ class _String(_Type):
   """A setting that's just a string."""
 
   def ValidateMSVS(self, value):
-    if not isinstance(value, basestring):
+    if not isinstance(value, string_types):
       raise ValueError('expected string; got %r' % value)
 
   def ValidateMSBuild(self, value):
-    if not isinstance(value, basestring):
+    if not isinstance(value, string_types):
       raise ValueError('expected string; got %r' % value)
 
   def ConvertToMSBuild(self, value):
@@ -124,11 +126,11 @@ class _StringList(_Type):
   """A settings that's a list of strings."""
 
   def ValidateMSVS(self, value):
-    if not isinstance(value, basestring) and not isinstance(value, list):
+    if not isinstance(value, string_types) and not isinstance(value, list):
       raise ValueError('expected string list; got %r' % value)
 
   def ValidateMSBuild(self, value):
-    if not isinstance(value, basestring) and not isinstance(value, list):
+    if not isinstance(value, string_types) and not isinstance(value, list):
       raise ValueError('expected string list; got %r' % value)
 
   def ConvertToMSBuild(self, value):

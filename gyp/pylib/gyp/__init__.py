@@ -16,6 +16,13 @@ import sys
 import traceback
 from gyp.common import GypError
 
+try:
+    # Python 2
+    string_types = basestring
+except NameError:
+    # Python 3
+    string_types = str
+
 # Default debug modes for GYP
 debug = {}
 
@@ -412,7 +419,7 @@ def gyp_main(args):
     for option, value in sorted(options.__dict__.items()):
       if option[0] == '_':
         continue
-      if isinstance(value, basestring):
+      if isinstance(value, string_types):
         DebugOutput(DEBUG_GENERAL, "  %s: '%s'", option, value)
       else:
         DebugOutput(DEBUG_GENERAL, "  %s: %s", option, value)
