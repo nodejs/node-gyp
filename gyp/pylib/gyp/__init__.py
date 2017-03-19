@@ -5,6 +5,7 @@
 # found in the LICENSE file.
 
 from __future__ import print_function
+
 import copy
 import gyp.input
 import optparse
@@ -227,12 +228,12 @@ def RegenerateFlags(options):
           (action == 'store_false' and not value)):
         flags.append(opt)
       elif options.use_environment and env_name:
-        print(('Warning: environment regeneration unimplemented '
+        print('Warning: environment regeneration unimplemented '
                              'for %s flag %r env_name %r' % (action, opt,
-                                                             env_name)), file=sys.stderr)
+                                                             env_name), file=sys.stderr)
     else:
-      print(('Warning: regeneration unimplemented for action %r '
-                           'flag %r' % (action, opt)), file=sys.stderr)
+      print('Warning: regeneration unimplemented for action %r '
+                           'flag %r' % (action, opt), file=sys.stderr)
 
   return flags
 

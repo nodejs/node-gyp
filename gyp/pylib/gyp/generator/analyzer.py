@@ -61,6 +61,7 @@ Notice that "b1" and "b2" are not in the "all" target as "b.gyp" was not
 directly supplied to gyp. OTOH if both "a.gyp" and "b.gyp" are supplied to gyp
 then the "all" target includes "b1" and "b2".
 """
+
 from __future__ import print_function
 
 import gyp.common
@@ -292,8 +293,8 @@ def _WasBuildFileModified(build_file, data, files, toplevel_dir):
         _ToGypPath(gyp.common.UnrelativePath(include_file, build_file))
     if _ToLocalPath(toplevel_dir, rel_include_file) in files:
       if debug:
-        print('included gyp file modified, gyp_file=', build_file, \
-            'included file=', rel_include_file)
+        print('included gyp file modified, gyp_file=', build_file,
+              'included file=', rel_include_file)
       return True
   return False
 
@@ -485,11 +486,11 @@ def _AddCompileTargets(target, roots, add_if_no_ancestor, result):
           (add_if_no_ancestor or target.requires_build)) or
          (target.is_static_library and add_if_no_ancestor and
           not target.is_or_has_linked_ancestor)):
-    print('\t\tadding to compile targets', target.name, 'executable', \
-           target.is_executable, 'added_to_compile_targets', \
-           target.added_to_compile_targets, 'add_if_no_ancestor', \
-           add_if_no_ancestor, 'requires_build', target.requires_build, \
-           'is_static_library', target.is_static_library, \
+    print('\t\tadding to compile targets', target.name, 'executable',
+           target.is_executable, 'added_to_compile_targets',
+           target.added_to_compile_targets, 'add_if_no_ancestor',
+           add_if_no_ancestor, 'requires_build', target.requires_build,
+           'is_static_library', target.is_static_library,
            'is_or_has_linked_ancestor', target.is_or_has_linked_ancestor)
     result.add(target)
     target.added_to_compile_targets = True
