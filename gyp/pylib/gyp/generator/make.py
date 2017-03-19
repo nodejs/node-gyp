@@ -674,7 +674,7 @@ def _ValidateSourcesForOSX(spec, all_sources):
     basenames.setdefault(basename, []).append(source)
 
   error = ''
-  for basename, files in basenames.iteritems():
+  for basename, files in basenames.items():
     if len(files) > 1:
       error += '  %s: %s\n' % (basename, ' '.join(files))
 
@@ -1547,7 +1547,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
       # Postbuilds expect to be run in the gyp file's directory, so insert an
       # implicit postbuild to cd to there.
       postbuilds.insert(0, gyp.common.EncodePOSIXShellList(['cd', self.path]))
-      for i in xrange(len(postbuilds)):
+      for i in range(len(postbuilds)):
         if not postbuilds[i].startswith('$'):
           postbuilds[i] = EscapeShellArgument(postbuilds[i])
       self.WriteLn('%s: builddir := $(abs_builddir)' % QuoteSpaces(self.output))

@@ -314,7 +314,7 @@ class XCObject(object):
     """
 
     that = self.__class__(id=self.id, parent=self.parent)
-    for key, value in self._properties.iteritems():
+    for key, value in self._properties.items():
       is_strong = self._schema[key][2]
 
       if isinstance(value, XCObject):
@@ -452,7 +452,7 @@ class XCObject(object):
       digest_int_count = hash.digest_size / 4
       digest_ints = struct.unpack('>' + 'I' * digest_int_count, hash.digest())
       id_ints = [0, 0, 0]
-      for index in xrange(0, digest_int_count):
+      for index in range(0, digest_int_count):
         id_ints[index % 3] ^= digest_ints[index]
       self.id = '%08X%08X%08X' % tuple(id_ints)
 
@@ -475,7 +475,7 @@ class XCObject(object):
     """Returns a list of all of this object's owned (strong) children."""
 
     children = []
-    for property, attributes in self._schema.iteritems():
+    for property, attributes in self._schema.items():
       (is_list, property_type, is_strong) = attributes[0:3]
       if is_strong and property in self._properties:
         if not is_list:
@@ -622,7 +622,7 @@ class XCObject(object):
         printable += end_tabs + ')'
     elif isinstance(value, dict):
       printable = '{' + sep
-      for item_key, item_value in sorted(value.iteritems()):
+      for item_key, item_value in sorted(value.items()):
         printable += element_tabs + \
             self._XCPrintableValue(tabs + 1, item_key, flatten_list) + ' = ' + \
             self._XCPrintableValue(tabs + 1, item_value, flatten_list) + ';' + \
@@ -730,7 +730,7 @@ class XCObject(object):
     self._XCKVPrint(file, 3, 'isa', self.__class__.__name__)
 
     # The remaining elements of an object dictionary are sorted alphabetically.
-    for property, value in sorted(self._properties.iteritems()):
+    for property, value in sorted(self._properties.items()):
       self._XCKVPrint(file, 3, property, value)
 
     # End the object.
@@ -752,7 +752,7 @@ class XCObject(object):
     if properties is None:
       return
 
-    for property, value in properties.iteritems():
+    for property, value in properties.items():
       # Make sure the property is in the schema.
       if not property in self._schema:
         raise KeyError(property + ' not in ' + self.__class__.__name__)
@@ -865,7 +865,7 @@ class XCObject(object):
 
     # TODO(mark): A stronger verification mechanism is needed.  Some
     # subclasses need to perform validation beyond what the schema can enforce.
-    for property, attributes in self._schema.iteritems():
+    for property, attributes in self._schema.items():
       (is_list, property_type, is_strong, is_required) = attributes[0:4]
       if is_required and not property in self._properties:
         raise KeyError(self.__class__.__name__ + ' requires ' + property)
@@ -875,7 +875,7 @@ class XCObject(object):
     overwrite properties that have already been set."""
 
     defaults = {}
-    for property, attributes in self._schema.iteritems():
+    for property, attributes in self._schema.items():
       (is_list, property_type, is_strong, is_required) = attributes[0:4]
       if is_required and len(attributes) >= 5 and \
           not property in self._properties:
@@ -1426,7 +1426,7 @@ class XCFileLikeElement(XCHierarchicalElement):
     xche = self
     while xche != None and isinstance(xche, XCHierarchicalElement):
       xche_hashables = xche.Hashables()
-      for index in xrange(0, len(xche_hashables)):
+      for index in range(0, len(xche_hashables)):
         hashables.insert(index, xche_hashables[index])
       xche = xche.parent
     return hashables
@@ -2401,7 +2401,7 @@ class PBXNativeTarget(XCTarget):
       # The headers phase should come before the resources, sources, and
       # frameworks phases, if any.
       insert_at = len(self._properties['buildPhases'])
-      for index in xrange(0, len(self._properties['buildPhases'])):
+      for index in range(0, len(self._properties['buildPhases'])):
         phase = self._properties['buildPhases'][index]
         if isinstance(phase, PBXResourcesBuildPhase) or \
            isinstance(phase, PBXSourcesBuildPhase) or \
@@ -2422,7 +2422,7 @@ class PBXNativeTarget(XCTarget):
       # The resources phase should come before the sources and frameworks
       # phases, if any.
       insert_at = len(self._properties['buildPhases'])
-      for index in xrange(0, len(self._properties['buildPhases'])):
+      for index in range(0, len(self._properties['buildPhases'])):
         phase = self._properties['buildPhases'][index]
         if isinstance(phase, PBXSourcesBuildPhase) or \
            isinstance(phase, PBXFrameworksBuildPhase):
@@ -2844,7 +2844,7 @@ class PBXProject(XCContainerPortal):
       # determine the sort order.
       return cmp(x_index, y_index)
 
-    for other_pbxproject, ref_dict in self._other_pbxprojects.iteritems():
+    for other_pbxproject, ref_dict in self._other_pbxprojects.items():
       # Build up a list of products in the remote project file, ordered the
       # same as the targets that produce them.
       remote_products = []
@@ -2889,7 +2889,7 @@ class XCProjectFile(XCObject):
       self._XCPrint(file, 0, '{ ')
     else:
       self._XCPrint(file, 0, '{\n')
-    for property, value in sorted(self._properties.iteritems(),
+    for property, value in sorted(self._properties.items(),
                                   cmp=lambda x, y: cmp(x, y)):
       if property == 'objects':
         self._PrintObjects(file)
