@@ -11,9 +11,10 @@
 
    Then it outputs a possible build order.
 """
-from __future__ import print_function
 
 __author__ = 'nsylvain (Nicolas Sylvain)'
+
+from __future__ import print_function
 
 import os
 import re

@@ -7,6 +7,7 @@
 """Using the JSON dumped by the dump-dependency-json generator,
 generate input suitable for graphviz to render a dependency graph of
 targets."""
+
 from __future__ import print_function
 
 import collections

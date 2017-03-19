@@ -1,4 +1,3 @@
-from __future__ import print_function
 # Copyright (c) 2013 Google Inc. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
@@ -21,6 +20,8 @@ from __future__ import print_function
 # Global settings and utility functions are currently stuffed in the
 # toplevel Makefile.  It may make sense to generate some .mk files on
 # the side to keep the files readable.
+
+from __future__ import print_function
 
 import os
 import re
@@ -678,9 +679,8 @@ def _ValidateSourcesForOSX(spec, all_sources):
       error += '  %s: %s\n' % (basename, ' '.join(files))
 
   if error:
-    print('static library %s has several files with the same basename:\n' %
-          spec['target_name'] + error + 'libtool on OS X will generate' +
-          ' warnings for them.')
+    print(('static library %s has several files with the same basename:\n' % spec['target_name'])
+           + error + 'libtool on OS X will generate' + ' warnings for them.')
     raise GypError('Duplicate basenames in sources section, see list above')
 
 
@@ -1382,8 +1382,8 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
     elif self.type == 'none':
       target = '%s.stamp' % target
     elif self.type != 'executable':
-      print(("ERROR: What output file should be generated?",
-             "type", self.type, "target", target))
+      print("ERROR: What output file should be generated?",
+             "type", self.type, "target", target)
 
     target_prefix = spec.get('product_prefix', target_prefix)
     target = spec.get('product_name', target)

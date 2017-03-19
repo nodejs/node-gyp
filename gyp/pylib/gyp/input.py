@@ -1,7 +1,8 @@
-from __future__ import print_function
 # Copyright (c) 2012 Google Inc. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
+
+from __future__ import print_function
 
 from compiler.ast import Const
 from compiler.ast import Dict
@@ -2530,8 +2531,8 @@ def ValidateSourcesInTarget(target, target_dict, build_file,
       error += '  %s: %s\n' % (basename, ' '.join(files))
 
   if error:
-    print('static library %s has several files with the same basename:\n' %
-          target + error + 'libtool on Mac cannot handle that. Use '
+    print('static library %s has several files with the same basename:\n' % target
+          + error + 'libtool on Mac cannot handle that. Use '
           '--no-duplicate-basename-check to disable this validation.')
     raise GypError('Duplicate basenames in sources section, see list above')
 
