@@ -185,6 +185,19 @@ Command Options
 | `--msvs_version=$version`         | Set Visual Studio version (win)
 | `--solution=$solution`            | Set Visual Studio Solution version (win)
 
+Command options
+---------------
+
+`node-gyp` accepts the following command options:
+
+| **Option**         | **Description**
+|:-------------------|:------------------------------------------------
+| `-j n`, `--jobs n` | For `build`: run parallel builds
+| `--silly`, `--loglevel=silly` | Log all progress to console
+| `--verbose`, `--loglevel=verbose` | Log most progress to console
+| `--silent`, `--loglevel=silent` | Don't log anything
+| `--debug`          | Make Debug build (default=Release)
+| `--release`, `--no-debug` | Make Release build
 
 License
 -------
