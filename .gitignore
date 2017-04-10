@@ -1,3 +1,5 @@
 gyp/test
-node_modules
+node_modules/*
+!test/node_modules/hello_world
+build
 test/.node-gyp
