@@ -1,12 +1,12 @@
 'use strict'
 
-var test = require('tape')
+var tap = require('tap')
 var execFile = require('child_process').execFile
 var path = require('path')
 var addonPath = path.resolve(__dirname, 'node_modules', 'hello_world')
 var nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
 
-test('build simple addon', function (t) {
+tap.test('build simple addon', function (t) {
   t.plan(3)
 
   // Set the loglevel otherwise the output disappears when run via 'npm test'

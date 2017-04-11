@@ -1,9 +1,9 @@
 'use strict';
 
-var test = require('tape')
+var tap = require('tap')
 var gyp = require('../lib/node-gyp')
 
-test('options in environment', function (t) {
+tap.test('options in environment', function (t) {
   t.plan(1)
 
   // `npm test` dumps a ton of npm_config_* variables in the environment.

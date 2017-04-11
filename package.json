@@ -40,12 +40,12 @@
     "node": ">= 0.8.0"
   },
   "devDependencies": {
-    "tape": "~4.2.0",
     "bindings": "~1.2.1",
     "nan": "^2.0.0",
-    "require-inject": "~1.3.0"
+    "require-inject": "~1.3.0",
+    "tap": "^10.3.2"
   },
   "scripts": {
-    "test": "tape test/test-*"
+    "test": "tap test/test-*"
   }
 }

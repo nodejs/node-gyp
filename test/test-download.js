@@ -3,10 +3,10 @@
 var fs = require('fs')
 var http = require('http')
 var https = require('https')
-var test = require('tape')
+var tap = require('tap')
 var install = require('../lib/install')
 
-test('download over http', function (t) {
+tap.test('download over http', function (t) {
   t.plan(2)
 
   var server = http.createServer(function (req, res) {
@@ -38,7 +38,7 @@ test('download over http', function (t) {
   })
 })
 
-test('download over https with custom ca', function (t) {
+tap.test('download over https with custom ca', function (t) {
   t.plan(3)
 
   var cert = fs.readFileSync(__dirname + '/fixtures/server.crt', 'utf8')
@@ -82,7 +82,7 @@ test('download over https with custom ca', function (t) {
   })
 })
 
-test('download with missing cafile', function (t) {
+tap.test('download with missing cafile', function (t) {
   t.plan(1)
   var gyp = {
     opts: { cafile: 'no.such.file' },
@@ -94,7 +94,7 @@ test('download with missing cafile', function (t) {
   }
 })
 
-test('check certificate splitting', function (t) {
+tap.test('check certificate splitting', function (t) {
   var cas = install.test.readCAFile(__dirname + '/fixtures/ca-bundle.crt')
   t.plan(2)
   t.strictEqual(cas.length, 2)

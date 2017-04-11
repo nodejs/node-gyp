@@ -1,6 +1,6 @@
 'use strict'
 
-var test = require('tape')
+var tap = require('tap')
 var path = require('path')
 var requireInject = require('require-inject')
 var configure = requireInject('../lib/configure', {
@@ -27,7 +27,7 @@ var readableFiles = [
   path.resolve(dir, readableFileInDir)
 ]
 
-test('find accessible - empty array', function (t) {
+tap.test('find accessible - empty array', function (t) {
   t.plan(1)
 
   var candidates = []
@@ -35,7 +35,7 @@ test('find accessible - empty array', function (t) {
   t.strictEqual(found, undefined)
 })
 
-test('find accessible - single item array, readable', function (t) {
+tap.test('find accessible - single item array, readable', function (t) {
   t.plan(1)
 
   var candidates = [ readableFile ]
@@ -43,7 +43,7 @@ test('find accessible - single item array, readable', function (t) {
   t.strictEqual(found, path.resolve(dir, readableFile))
 })
 
-test('find accessible - single item array, readable in subdir', function (t) {
+tap.test('find accessible - single item array, readable in subdir', function (t) {
   t.plan(1)
 
   var candidates = [ readableFileInDir ]
@@ -51,7 +51,7 @@ test('find accessible - single item array, readable in subdir', function (t) {
   t.strictEqual(found, path.resolve(dir, readableFileInDir))
 })
 
-test('find accessible - single item array, unreadable', function (t) {
+tap.test('find accessible - single item array, unreadable', function (t) {
   t.plan(1)
 
   var candidates = [ 'unreadable_file' ]
@@ -60,7 +60,7 @@ test('find accessible - single item array, unreadable', function (t) {
 })
 
 
-test('find accessible - multi item array, no matches', function (t) {
+tap.test('find accessible - multi item array, no matches', function (t) {
   t.plan(1)
 
   var candidates = [ 'non_existent_file', 'unreadable_file' ]
@@ -69,7 +69,7 @@ test('find accessible - multi item array, no matches', function (t) {
 })
 
 
-test('find accessible - multi item array, single match', function (t) {
+tap.test('find accessible - multi item array, single match', function (t) {
   t.plan(1)
 
   var candidates = [ 'non_existent_file', readableFile ]
@@ -77,7 +77,7 @@ test('find accessible - multi item array, single match', function (t) {
   t.strictEqual(found, path.resolve(dir, readableFile))
 })
 
-test('find accessible - multi item array, return first match', function (t) {
+tap.test('find accessible - multi item array, return first match', function (t) {
   t.plan(1)
 
   var candidates = [ 'non_existent_file', anotherReadableFile, readableFile ]

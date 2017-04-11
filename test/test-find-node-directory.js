@@ -1,4 +1,4 @@
-var test = require('tape')
+var tap = require('tap')
 var path = require('path')
 var findNodeDirectory = require('../lib/find-node-directory')
 
@@ -8,7 +8,7 @@ var platforms = ['darwin', 'freebsd', 'linux', 'sunos', 'win32', 'aix']
 // the script is running in and it should match the layout
 // in a build tree where npm is installed in
 // .... /deps/npm
-test('test find-node-directory - node install', function (t) {
+tap.test('test find-node-directory - node install', function (t) {
   t.plan(platforms.length)
   for (var next = 0; next < platforms.length; next++) {
     var processObj = {execPath: '/x/y/bin/node', platform: platforms[next]}
@@ -23,7 +23,7 @@ test('test find-node-directory - node install', function (t) {
 // in an installed tree where npm is installed in
 // .... /lib/node_modules/npm or .../node_modules/npm
 // depending on the patform
-test('test find-node-directory - node build', function (t) {
+tap.test('test find-node-directory - node build', function (t) {
   t.plan(platforms.length)
   for (var next = 0; next < platforms.length; next++) {
     var processObj = {execPath: '/x/y/bin/node', platform: platforms[next]}
@@ -41,7 +41,7 @@ test('test find-node-directory - node build', function (t) {
 
 // we should find the directory based on the execPath
 // for node and match because it was in the bin directory
-test('test find-node-directory - node in bin directory', function (t) {
+tap.test('test find-node-directory - node in bin directory', function (t) {
   t.plan(platforms.length)
   for (var next = 0; next < platforms.length; next++) {
     var processObj = {execPath: '/x/y/bin/node', platform: platforms[next]}
@@ -53,7 +53,7 @@ test('test find-node-directory - node in bin directory', function (t) {
 
 // we should find the directory based on the execPath
 // for node and match because it was in the Release directory
-test('test find-node-directory - node in build release dir', function (t) {
+tap.test('test find-node-directory - node in build release dir', function (t) {
   t.plan(platforms.length)
   for (var next = 0; next < platforms.length; next++) {
     var processObj
@@ -72,7 +72,7 @@ test('test find-node-directory - node in build release dir', function (t) {
 
 // we should find the directory based on the execPath
 // for node and match because it was in the Debug directory
-test('test find-node-directory - node in Debug release dir', function (t) {
+tap.test('test find-node-directory - node in Debug release dir', function (t) {
   t.plan(platforms.length)
   for (var next = 0; next < platforms.length; next++) {
     var processObj
@@ -90,7 +90,7 @@ test('test find-node-directory - node in Debug release dir', function (t) {
 
 // we should not find it as it will not match based on the execPath nor
 // the directory from which the script is running
-test('test find-node-directory - not found', function (t) {
+tap.test('test find-node-directory - not found', function (t) {
   t.plan(platforms.length)
   for (var next = 0; next < platforms.length; next++) {
     var processObj = {execPath: '/x/y/z/y', platform:next}
@@ -104,7 +104,7 @@ test('test find-node-directory - not found', function (t) {
 // .... /deps/npm
 // same test as above but make sure additional directory entries
 // don't cause an issue
-test('test find-node-directory - node install', function (t) {
+tap.test('test find-node-directory - node install', function (t) {
   t.plan(platforms.length)
   for (var next = 0; next < platforms.length; next++) {
     var processObj = {execPath: '/x/y/bin/node', platform: platforms[next]}

@@ -1,7 +1,7 @@
-var test = require('tape')
+var tap = require('tap')
 var processRelease = require('../lib/process-release')
 
-test('test process release - process.version = 0.8.20', function (t) {
+tap.test('test process release - process.version = 0.8.20', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v0.8.20', null)
@@ -23,7 +23,7 @@ test('test process release - process.version = 0.8.20', function (t) {
   })
 })
 
-test('test process release - process.version = 0.10.21', function (t) {
+tap.test('test process release - process.version = 0.10.21', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v0.10.21', null)
@@ -46,7 +46,7 @@ test('test process release - process.version = 0.10.21', function (t) {
 })
 
 // prior to -headers.tar.gz
-test('test process release - process.version = 0.12.9', function (t) {
+tap.test('test process release - process.version = 0.12.9', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v0.12.9', null)
@@ -69,7 +69,7 @@ test('test process release - process.version = 0.12.9', function (t) {
 })
 
 // prior to -headers.tar.gz
-test('test process release - process.version = 0.10.41', function (t) {
+tap.test('test process release - process.version = 0.10.41', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v0.10.41', null)
@@ -92,7 +92,7 @@ test('test process release - process.version = 0.10.41', function (t) {
 })
 
 // has -headers.tar.gz
-test('test process release - process.release ~ node@0.10.42', function (t) {
+tap.test('test process release - process.release ~ node@0.10.42', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v0.10.42', null)
@@ -115,7 +115,7 @@ test('test process release - process.release ~ node@0.10.42', function (t) {
 })
 
 // has -headers.tar.gz
-test('test process release - process.release ~ node@0.12.10', function (t) {
+tap.test('test process release - process.release ~ node@0.12.10', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v0.12.10', null)
@@ -137,7 +137,7 @@ test('test process release - process.release ~ node@0.12.10', function (t) {
   })
 })
 
-test('test process release - process.release ~ node@4.1.23', function (t) {
+tap.test('test process release - process.release ~ node@4.1.23', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v4.1.23', {
@@ -162,7 +162,7 @@ test('test process release - process.release ~ node@4.1.23', function (t) {
   })
 })
 
-test('test process release - process.release ~ node@4.1.23 / corp build', function (t) {
+tap.test('test process release - process.release ~ node@4.1.23 / corp build', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v4.1.23', {
@@ -187,7 +187,7 @@ test('test process release - process.release ~ node@4.1.23 / corp build', functi
   })
 })
 
-test('test process release - process.version = 1.8.4', function (t) {
+tap.test('test process release - process.version = 1.8.4', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v1.8.4', null)
@@ -209,7 +209,7 @@ test('test process release - process.version = 1.8.4', function (t) {
   })
 })
 
-test('test process release - process.release ~ iojs@3.2.24', function (t) {
+tap.test('test process release - process.release ~ iojs@3.2.24', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v3.2.24', {
@@ -234,7 +234,7 @@ test('test process release - process.release ~ iojs@3.2.24', function (t) {
   })
 })
 
-test('test process release - process.release ~ iojs@3.2.11 +libUrl32', function (t) {
+tap.test('test process release - process.release ~ iojs@3.2.11 +libUrl32', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v3.2.11', {
@@ -260,7 +260,7 @@ test('test process release - process.release ~ iojs@3.2.11 +libUrl32', function 
   })
 })
 
-test('test process release - process.release ~ iojs@3.2.101 +libUrl64', function (t) {
+tap.test('test process release - process.release ~ iojs@3.2.101 +libUrl64', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v3.2.101', {
@@ -286,7 +286,7 @@ test('test process release - process.release ~ iojs@3.2.101 +libUrl64', function
   })
 })
 
-test('test process release - process.release ~ iojs@3.3.0 - borked win-ia32', function (t) {
+tap.test('test process release - process.release ~ iojs@3.3.0 - borked win-ia32', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v3.2.101', {
@@ -312,7 +312,7 @@ test('test process release - process.release ~ iojs@3.3.0 - borked win-ia32', fu
   })
 })
 
-test('test process release - process.release ~ node@4.1.23 --target=0.10.40', function (t) {
+tap.test('test process release - process.release ~ node@4.1.23 --target=0.10.40', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: { target: '0.10.40' } }, 'v4.1.23', {
@@ -337,7 +337,7 @@ test('test process release - process.release ~ node@4.1.23 --target=0.10.40', fu
   })
 })
 
-test('test process release - process.release ~ node@4.1.23 --target=1.8.4', function (t) {
+tap.test('test process release - process.release ~ node@4.1.23 --target=1.8.4', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: { target: '1.8.4' } }, 'v4.1.23', {
@@ -362,7 +362,7 @@ test('test process release - process.release ~ node@4.1.23 --target=1.8.4', func
   })
 })
 
-test('test process release - process.release ~ node@4.1.23 --dist-url=https://foo.bar/baz', function (t) {
+tap.test('test process release - process.release ~ node@4.1.23 --dist-url=https://foo.bar/baz', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: { 'dist-url': 'https://foo.bar/baz' } }, 'v4.1.23', {
@@ -387,7 +387,7 @@ test('test process release - process.release ~ node@4.1.23 --dist-url=https://fo
   })
 })
 
-test('test process release - process.release ~ frankenstein@4.1.23', function (t) {
+tap.test('test process release - process.release ~ frankenstein@4.1.23', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v4.1.23', {
@@ -413,7 +413,7 @@ test('test process release - process.release ~ frankenstein@4.1.23', function (t
 })
 
 
-test('test process release - process.release ~ frankenstein@4.1.23 --dist-url=http://foo.bar/baz/', function (t) {
+tap.test('test process release - process.release ~ frankenstein@4.1.23 --dist-url=http://foo.bar/baz/', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: { 'dist-url': 'http://foo.bar/baz/' } }, 'v4.1.23', {
@@ -438,7 +438,7 @@ test('test process release - process.release ~ frankenstein@4.1.23 --dist-url=ht
   })
 })
 
-test('test process release - process.release ~ node@4.0.0-rc.4', function (t) {
+tap.test('test process release - process.release ~ node@4.0.0-rc.4', function (t) {
   t.plan(2)
 
   var release = processRelease([], { opts: {} }, 'v4.0.0-rc.4', {
@@ -464,7 +464,7 @@ test('test process release - process.release ~ node@4.0.0-rc.4', function (t) {
 })
 
 
-test('test process release - process.release ~ node@4.0.0-rc.4 passed as argv[0]', function (t) {
+tap.test('test process release - process.release ~ node@4.0.0-rc.4 passed as argv[0]', function (t) {
   t.plan(2)
 
   // note the missing 'v' on the arg, it should normalise when checking
@@ -492,7 +492,7 @@ test('test process release - process.release ~ node@4.0.0-rc.4 passed as argv[0]
 })
 
 
-test('test process release - process.release ~ node@4.0.0-rc.4 - bogus string passed as argv[0]', function (t) {
+tap.test('test process release - process.release ~ node@4.0.0-rc.4 - bogus string passed as argv[0]', function (t) {
   t.plan(2)
 
   // additional arguments can be passed in on the commandline that should be ignored if they
@@ -519,7 +519,7 @@ test('test process release - process.release ~ node@4.0.0-rc.4 - bogus string pa
   })
 })
 
-test('test process release - NODEJS_ORG_MIRROR', function (t) {
+tap.test('test process release - NODEJS_ORG_MIRROR', function (t) {
   t.plan(2)
 
   process.env.NODEJS_ORG_MIRROR = 'http://foo.bar'
@@ -548,7 +548,7 @@ test('test process release - NODEJS_ORG_MIRROR', function (t) {
   delete process.env.NODEJS_ORG_MIRROR
 })
 
-test('test process release - NVM_NODEJS_ORG_MIRROR', function (t) {
+tap.test('test process release - NVM_NODEJS_ORG_MIRROR', function (t) {
   t.plan(2)
 
   process.env.NVM_NODEJS_ORG_MIRROR = 'http://foo.bar'
@@ -577,7 +577,7 @@ test('test process release - NVM_NODEJS_ORG_MIRROR', function (t) {
   delete process.env.NVM_NODEJS_ORG_MIRROR
 })
 
-test('test process release - IOJS_ORG_MIRROR', function (t) {
+tap.test('test process release - IOJS_ORG_MIRROR', function (t) {
   t.plan(2)
 
   process.env.IOJS_ORG_MIRROR = 'http://foo.bar'
@@ -607,7 +607,7 @@ test('test process release - IOJS_ORG_MIRROR', function (t) {
 })
 
 
-test('test process release - NVM_IOJS_ORG_MIRROR', function (t) {
+tap.test('test process release - NVM_IOJS_ORG_MIRROR', function (t) {
   t.plan(2)
 
   process.env.NVM_IOJS_ORG_MIRROR = 'http://foo.bar'

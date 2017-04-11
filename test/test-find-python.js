@@ -1,11 +1,11 @@
 'use strict'
 
-var test = require('tape')
+var tap = require('tap')
 var configure = require('../lib/configure')
 var execFile = require('child_process').execFile
 var PythonFinder = configure.test.PythonFinder
 
-test('find python', function (t) {
+tap.test('find python', function (t) {
   t.plan(4)
 
   configure.test.findPython('python', function (err, found) {
@@ -42,7 +42,7 @@ poison(TestPythonFinder.prototype, 'stat')
 poison(TestPythonFinder.prototype, 'which')
 poison(TestPythonFinder.prototype, 'win')
 
-test('find python - python', function (t) {
+tap.test('find python - python', function (t) {
   t.plan(5)
 
   var f = new TestPythonFinder('python', done)
@@ -63,7 +63,7 @@ test('find python - python', function (t) {
   }
 })
 
-test('find python - python too old', function (t) {
+tap.test('find python - python too old', function (t) {
   t.plan(4)
 
   var f = new TestPythonFinder('python', done)
@@ -83,7 +83,7 @@ test('find python - python too old', function (t) {
   }
 })
 
-test('find python - python too new', function (t) {
+tap.test('find python - python too new', function (t) {
   t.plan(4)
 
   var f = new TestPythonFinder('python', done)
@@ -103,7 +103,7 @@ test('find python - python too new', function (t) {
   }
 })
 
-test('find python - no python', function (t) {
+tap.test('find python - no python', function (t) {
   t.plan(2)
 
   var f = new TestPythonFinder('python', done)
@@ -118,7 +118,7 @@ test('find python - no python', function (t) {
   }
 })
 
-test('find python - no python2', function (t) {
+tap.test('find python - no python2', function (t) {
   t.plan(6)
 
   var f = new TestPythonFinder('python2', done)
@@ -143,7 +143,7 @@ test('find python - no python2', function (t) {
   }
 })
 
-test('find python - no python2, no python, unix', function (t) {
+tap.test('find python - no python2, no python, unix', function (t) {
   t.plan(3)
 
   var f = new TestPythonFinder('python2', done)
@@ -165,7 +165,7 @@ test('find python - no python2, no python, unix', function (t) {
   }
 })
 
-test('find python - no python, use python launcher', function (t) {
+tap.test('find python - no python, use python launcher', function (t) {
   t.plan(8)
 
   var f = new TestPythonFinder('python', done)
@@ -195,7 +195,7 @@ test('find python - no python, use python launcher', function (t) {
   }
 })
 
-test('find python - python 3, use python launcher', function (t) {
+tap.test('find python - python 3, use python launcher', function (t) {
   t.plan(10)
 
   var f = new TestPythonFinder('python', done)
@@ -230,7 +230,7 @@ test('find python - python 3, use python launcher', function (t) {
   }
 })
 
-test('find python - python 3, use python launcher, python 2 too old',
+tap.test('find python - python 3, use python launcher, python 2 too old',
      function (t) {
   t.plan(9)
 
@@ -266,7 +266,7 @@ test('find python - python 3, use python launcher, python 2 too old',
   }
 })
 
-test('find python - no python, no python launcher, good guess', function (t) {
+tap.test('find python - no python, no python launcher, good guess', function (t) {
   t.plan(6)
 
   var re = /C:[\\\/]Python27[\\\/]python[.]exe/
@@ -298,7 +298,7 @@ test('find python - no python, no python launcher, good guess', function (t) {
   }
 })
 
-test('find python - no python, no python launcher, bad guess', function (t) {
+tap.test('find python - no python, no python launcher, bad guess', function (t) {
   t.plan(4)
 
   var f = new TestPythonFinder('python', done)

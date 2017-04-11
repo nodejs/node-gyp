@@ -1,6 +1,6 @@
 'use strict'
 
-var test = require('tape')
+var tap = require('tap')
 var path = require('path')
 var gyp = require('../lib/node-gyp')
 var requireInject = require('require-inject')
@@ -15,7 +15,7 @@ var EXPECTED_PYPATH = path.join(__dirname, '..', 'gyp', 'pylib')
 var SEPARATOR = process.platform == 'win32' ? ';' : ':'
 var SPAWN_RESULT = { on: function () { } }
 
-test('configure PYTHONPATH with no existing env', function (t) {
+tap.test('configure PYTHONPATH with no existing env', function (t) {
   t.plan(1)
 
   delete process.env.PYTHONPATH
@@ -29,7 +29,7 @@ test('configure PYTHONPATH with no existing env', function (t) {
   configure(prog, [])
 })
 
-test('configure PYTHONPATH with existing env of one dir', function (t) {
+tap.test('configure PYTHONPATH with existing env of one dir', function (t) {
   t.plan(2)
 
   var existingPath = path.join('a', 'b')
@@ -49,7 +49,7 @@ test('configure PYTHONPATH with existing env of one dir', function (t) {
   configure(prog, [])
 })
 
-test('configure PYTHONPATH with existing env of multiple dirs', function (t) {
+tap.test('configure PYTHONPATH with existing env of multiple dirs', function (t) {
   t.plan(2)
 
   var pythonDir1 = path.join('a', 'b')
