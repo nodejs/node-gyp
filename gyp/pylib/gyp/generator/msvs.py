@@ -2818,6 +2818,7 @@ def _GetMSBuildAttributes(spec, config, build_file):
     config_type = _ConvertMSVSConfigurationType(config_type)
     msbuild_attributes = config.get('msbuild_configuration_attributes', {})
     msbuild_attributes.setdefault('ConfigurationType', config_type)
+    msbuild_attributes.setdefault('TreatWarningsAsErrors', False)
     output_dir = msbuild_attributes.get('OutputDirectory',
                                       '$(SolutionDir)$(Configuration)')
     msbuild_attributes['OutputDirectory'] = _FixPath(output_dir) + '\\'
