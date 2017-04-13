@@ -141,6 +141,10 @@ def RelativePath(path, relative_to, follow_path_symlink=True):
   # symlink, this option has no effect.
 
   # Convert to normalized (and therefore absolute paths).
+  if sys.platform == 'msys':
+    path = path.replace('C:\\','/c/').replace('\\','/')
+    relative_to = relative_to.replace('C:\\','/c/').replace('\\','/')
+
   if follow_path_symlink:
     path = os.path.realpath(path)
   else:

@@ -9,7 +9,10 @@ import sys
 
 # Make sure we're using the version of pylib in this repo, not one installed
 # elsewhere on the system.
-sys.path.insert(0, os.path.join(os.path.dirname(sys.argv[0]), 'pylib'))
+if sys.platform == 'msys':
+  sys.path.insert(0, os.path.join(sys.path[0], 'pylib'))
+else:
+  sys.path.insert(0, os.path.join(os.path.dirname(sys.argv[0]), 'pylib'))
 import gyp
 
 if __name__ == '__main__':
