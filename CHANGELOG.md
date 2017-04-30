@@ -1,3 +1,12 @@
+v3.6.1 2017-04-30
+=================
+
+* [[`49801716c2`](https://github.com/nodejs/node-gyp/commit/49801716c2)] - **test**: fix test-find-python on v0.10.x buildbot. (Ben Noordhuis) [#1172](https://github.com/nodejs/node-gyp/pull/1172)
+* [[`a83a3801fc`](https://github.com/nodejs/node-gyp/commit/a83a3801fc)] - **test**: fix test/test-configure-python on AIX (Richard Lau) [#1131](https://github.com/nodejs/node-gyp/pull/1131)
+* [[`8a767145c9`](https://github.com/nodejs/node-gyp/commit/8a767145c9)] - **gyp**: Revert quote_cmd workaround (Kunal Pathak) [#1153](https://github.com/nodejs/node-gyp/pull/1153)
+* [[`c09cf7671e`](https://github.com/nodejs/node-gyp/commit/c09cf7671e)] - **doc**: add a note for using `configure` on Windows (Vse Mozhet Byt) [#1152](https://github.com/nodejs/node-gyp/pull/1152)
+* [[`da9cb5f411`](https://github.com/nodejs/node-gyp/commit/da9cb5f411)] - Delete superfluous .patch files. (Ben Noordhuis) [#1122](https://github.com/nodejs/node-gyp/pull/1122)
+
 v3.6.0 2017-03-16
 =================
 
