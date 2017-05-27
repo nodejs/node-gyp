@@ -14,6 +14,23 @@ function runHello() {
   return execFileSync('node', ['-e', testCode], { cwd: __dirname }).toString()
 }
 
+function getEncoding() {
+  var code = 'import locale;print locale.getdefaultlocale()[1]'
+  return execFileSync('python', ['-c', code]).toString().trim()
+}
+
+function checkCharmapValid() {
+  var data
+  try {
+    data = execFileSync('python', ['fixtures/test-charmap.py'], 
+                        { cwd: __dirname })
+  } catch (err) {
+    return false
+  }
+  var lines = data.toString().trim().split('\n')
+  return lines.pop() === 'True'
+}
+
 test('build simple addon', function (t) {
   t.plan(3)
 
@@ -31,21 +48,37 @@ test('build simple addon', function (t) {
 })
 
 test('build simple addon in path with non-ascii characters', function (t) {
+  t.plan(1)
+
+  if (!checkCharmapValid()) {
+    return t.skip('python console app can\'t encode non-ascii character.')
+  }
+
+  var testDirNames = {
+    'cp936': '文件夹',
+    'cp1252': 'Latīna',
+    'cp932': 'フォルダ'
+  }
+  // Select non-ascii characters by current encoding
+  var testDirName = testDirNames[getEncoding()]
+  // If encoding is UTF-8 or other then no need to test
+  if (!testDirName) {
+    return t.skip('no need to test')
+  }
+
   t.plan(3)
 
-  var data, config, nodeDir, testNodeDir
-  var configPath = path.join(addonPath, 'build', 'config.gypi')
-
+  var data, configPath = path.join(addonPath, 'build', 'config.gypi')
   try {
     data = fs.readFileSync(configPath, 'utf8')
   } catch (err) {
     t.error(err)
     return
   }
-  config = JSON.parse(data.replace(/\#.+\n/, ''))
-  nodeDir = config.variables.nodedir
-  // Create path with non-ascii characters
-  testNodeDir = path.join(addonPath, '非英文字符')
+  var config = JSON.parse(data.replace(/\#.+\n/, ''))
+  var nodeDir = config.variables.nodedir
+  var testNodeDir = path.join(addonPath, testDirName)
+  // Create symbol link to path with non-ascii characters
   try {
     fs.symlinkSync(nodeDir, testNodeDir, 'dir')
   } catch (err) {
