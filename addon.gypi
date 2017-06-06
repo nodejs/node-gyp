@@ -16,6 +16,7 @@
     ],
 
     'include_dirs': [
+      '<(node_root_dir)',
       '<(node_root_dir)/include/node',
       '<(node_root_dir)/src',
       '<(node_root_dir)/deps/uv/include',
