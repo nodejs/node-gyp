@@ -1222,9 +1222,9 @@ def ProcessVariablesAndConditionsInDict(the_dict, phase, variables_in,
     # Skip "variables", which was already processed if present.
     if key != 'variables' and type(value) is str:
       expanded = ExpandVariables(value, phase, variables, build_file)
-      if type(expanded) not in (str, int):
+      if type(expanded) not in (str, int, long):
         raise ValueError(
-              'Variable expansion in this context permits str and int ' + \
+              'Variable expansion in this context permits str and int/long ' + \
               'only, found ' + expanded.__class__.__name__ + ' for ' + key)
       the_dict[key] = expanded
 
@@ -1279,7 +1279,7 @@ def ProcessVariablesAndConditionsInDict(the_dict, phase, variables_in,
   for key, value in the_dict.iteritems():
     # Skip "variables" and string values, which were already processed if
     # present.
-    if key == 'variables' or type(value) is str:
+    if key == 'variables' or type(value) in (str, long):
       continue
     if type(value) is dict:
       # Pass a copy of the variables dict so that subdicts can't influence
