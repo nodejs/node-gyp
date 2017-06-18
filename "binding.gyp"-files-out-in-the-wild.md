@@ -44,3 +44,4 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [node-nanomsg](https://github.com/nickdesaulniers/node-nanomsg/blob/master/binding.gyp)
  * [Ghostscript4JS](https://github.com/NickNaso/ghostscript4js/blob/master/binding.gyp)
  * [nodecv](https://github.com/xudafeng/nodecv/blob/master/binding.gyp)
+ * [magick-cli](https://github.com/NickNaso/magick-cli/blob/master/binding.gyp)
