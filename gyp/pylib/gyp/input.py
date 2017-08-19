@@ -2033,7 +2033,7 @@ def MakePathRelative(to_file, fro_file, item):
         gyp.common.RelativePath(os.path.dirname(fro_file),
                                 os.path.dirname(to_file)),
                                 item)).replace('\\', '/')
-    if item[-1] == '/':
+    if item[-1:] == '/':
       ret += '/'
     return ret
 
