@@ -74,7 +74,7 @@ test('find python - python', function (t) {
 })
 
 test('find python - python too old', function (t) {
-  t.plan(4)
+  t.plan(5)
 
   var f = new TestPythonFinder('python', done)
   f.which = function(program, cb) {
@@ -88,13 +88,14 @@ test('find python - python too old', function (t) {
   }
   f.checkPython()
 
-  function done(err, python) {
-    t.ok(/is not supported by gyp/.test(err))
+  function done(err) {
+    t.ok(/this version is not supported by GYP/.test(err))
+    t.ok(/For more information consult the documentation/.test(err))
   }
 })
 
 test('find python - python too new', function (t) {
-  t.plan(4)
+  t.plan(5)
 
   var f = new TestPythonFinder('python', done)
   f.which = function(program, cb) {
@@ -108,8 +109,9 @@ test('find python - python too new', function (t) {
   }
   f.checkPython()
 
-  function done(err, python) {
-    t.ok(/is not supported by gyp/.test(err))
+  function done (err) {
+    t.ok(/this version is not supported by GYP/.test(err))
+    t.ok(/For more information consult the documentation/.test(err))
   }
 })
 
@@ -123,8 +125,8 @@ test('find python - no python', function (t) {
   }
   f.checkPython()
 
-  function done(err, python) {
-    t.ok(/Can't find Python executable/.test(err))
+  function done(err) {
+    t.ok(/For more information consult the documentation/.test(err))
   }
 })
 
@@ -170,8 +172,8 @@ test('find python - no python2, no python, unix', function (t) {
   }
   f.checkPython()
 
-  function done(err, python) {
-    t.ok(/Can't find Python executable/.test(err))
+  function done(err) {
+    t.ok(/For more information consult the documentation/.test(err))
   }
 })
 
@@ -242,7 +244,7 @@ test('find python - python 3, use python launcher', function (t) {
 
 test('find python - python 3, use python launcher, python 2 too old',
      function (t) {
-  t.plan(9)
+  t.plan(10)
 
   var f = new TestPythonFinder('python', done)
   f.checkedPythonLauncher = false
@@ -271,8 +273,9 @@ test('find python - python 3, use python launcher, python 2 too old',
   }
   f.checkPython()
 
-  function done(err, python) {
-    t.ok(/is not supported by gyp/.test(err))
+  function done(err) {
+    t.ok(/this version is not supported by GYP/.test(err))
+    t.ok(/For more information consult the documentation/.test(err))
   }
 })
 
@@ -334,6 +337,6 @@ test('find python - no python, no python launcher, bad guess', function (t) {
   f.checkPython()
 
   function done(err, python) {
-    t.ok(/Can't find Python executable/.test(err))
+    t.ok(/For more information consult the documentation/.test(err))
   }
 })

@@ -87,8 +87,12 @@ function run () {
   prog.commands[command.name](command.args, function (err) {
     if (err) {
       log.error(command.name + ' error')
-      log.error('stack', err.stack)
-      errorMessage()
+      if (err.noPython) {
+        log.error(err.message)
+      } else {
+        log.error('stack', err.stack)
+        errorMessage()
+      }
       log.error('not ok')
       return process.exit(1)
     }
