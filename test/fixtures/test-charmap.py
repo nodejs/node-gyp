@@ -5,6 +5,9 @@ reload(sys)
 
 def main():
   encoding = locale.getdefaultlocale()[1]
+  if not encoding:
+    return False
+
   sys.setdefaultencoding(encoding)
   textmap = {
     'cp936': u'\u4e2d\u6587',
