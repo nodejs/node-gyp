@@ -916,11 +916,12 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
       # libraries, but until everything is made cross-compile safe, also use
       # target libraries.
       # TODO(piman): when everything is cross-compile safe, remove lib.target
-      self.WriteLn('cmd_%s = LD_LIBRARY_PATH=$(builddir)/lib.host:'
-                   '$(builddir)/lib.target:$$LD_LIBRARY_PATH; '
+      subst_builddir = '$(subst \',\'\\\'\',$(builddir))'
+      self.WriteLn('cmd_%s = LD_LIBRARY_PATH=\'%s/lib.host:'
+                   '%s/lib.target\':$$LD_LIBRARY_PATH; '
                    'export LD_LIBRARY_PATH; '
                    '%s%s'
-                   % (name, cd_action, command))
+                   % (name, subst_builddir, subst_builddir, cd_action, command))
       self.WriteLn()
       outputs = map(self.Absolutify, outputs)
       # The makefile rules are all relative to the top dir, but the gyp actions
