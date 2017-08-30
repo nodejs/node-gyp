@@ -45,3 +45,4 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [Ghostscript4JS](https://github.com/NickNaso/ghostscript4js/blob/master/binding.gyp)
  * [nodecv](https://github.com/xudafeng/nodecv/blob/master/binding.gyp)
  * [magick-cli](https://github.com/NickNaso/magick-cli/blob/master/binding.gyp)
+ * [sharp](https://github.com/lovell/sharp/blob/master/binding.gyp)
