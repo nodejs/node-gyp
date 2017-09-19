@@ -13,6 +13,10 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
+#ifndef DELAYIMP_INSECURE_WRITABLE_HOOKS
+#define DELAYIMP_INSECURE_WRITABLE_HOOKS
+#endif
+
 #include <windows.h>
 
 #include <delayimp.h>
