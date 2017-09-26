@@ -89,7 +89,7 @@
           '-Wl,-bimport:<(node_exp_file)'
         ],
       }],
-      [ 'OS=="os390"', {
+      [ 'OS=="zos"', {
         'cflags': [
           '-q64',
           '-Wc,DLL',

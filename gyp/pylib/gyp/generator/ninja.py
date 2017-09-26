@@ -2248,7 +2248,7 @@ def GenerateOutputForConfig(target_list, target_dicts, data, params,
       'copy',
       description='COPY $in $out',
       command='%s gyp-win-tool recursive-mirror $in $out' % sys.executable)
-  elif flavor == 'os390':
+  elif flavor == 'zos':
     master_ninja.rule(
       'copy',
       description='COPY $in $out',
