@@ -89,6 +89,17 @@
           '-Wl,-bimport:<(node_exp_file)'
         ],
       }],
+      [ 'OS=="zos"', {
+        'cflags': [
+          '-q64',
+          '-Wc,DLL',
+          '-qlonglong'
+        ],
+        'ldflags': [
+          '-q64',
+          '<(node_exp_file)'
+        ],
+      }],
       [ 'OS=="win"', {
         'conditions': [
           ['node_engine=="chakracore"', {
