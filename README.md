@@ -38,12 +38,12 @@ You will also need to install:
    * `make`
    * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
 
-### On Mac OS X
+### On macOS
 
-   * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported) (already installed on Mac OS X)
+   * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported) (already installed on macOS)
    * [Xcode](https://developer.apple.com/xcode/download/)
-     * You also need to install the `Command Line Tools` via Xcode. You can find this under the menu `Xcode -> Preferences -> Downloads`
-     * This step will install `gcc` and the related toolchain containing `make`
+     * You also need to install the `Command Line Tools` via Xcode. You can find this under the menu `Xcode -> Preferences -> Downloads` (or by running `xcode-select --install` in your Terminal)
+       * This step will install `gcc` and the related toolchain containing `make`
 
 ### On Windows
 
@@ -80,10 +80,6 @@ value:
 ``` bash
 $ npm config set python /path/to/executable/python2.7
 ```
-
-Note that OS X is just a flavour of Unix and so needs `python`, `make`, and C/C++.
-An easy way to obtain these is to install XCode from Apple,
-and then use it to install the command line tools (under Preferences -> Downloads).
 
 How to Use
 ----------
