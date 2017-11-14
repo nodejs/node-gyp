@@ -127,7 +127,7 @@ class MacTool(object):
     fp = open(file_name, 'rb')
     try:
       header = fp.read(3)
-    except e:
+    except Exception:
       fp.close()
       return None
     fp.close()
