@@ -691,7 +691,7 @@ class XCObject(object):
           printable_value[0] == '"' and printable_value[-1] == '"':
         printable_value = printable_value[1:-1]
       printable += printable_key + ' = ' + printable_value + ';' + after_kv
-    except TypeError, e:
+    except TypeError as e:
       gyp.common.ExceptionAppend(e,
                                  'while printing key "%s"' % key)
       raise
