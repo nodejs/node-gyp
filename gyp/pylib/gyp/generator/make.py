@@ -1639,7 +1639,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
       self.WriteDoCmd([self.output_binary], deps, 'touch', part_of_all,
                       postbuilds=postbuilds)
     else:
-      print("WARNING: no output for", self.type, target)
+      print("WARNING: no output for", self.type, self.target)
 
     # Add an alias for each target (if there are any outputs).
     # Installable target aliases are created below.
