@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Copyright (c) 2012 Google Inc. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
@@ -128,7 +129,7 @@ class XcodeProject(object):
     try:
       os.makedirs(self.path)
       self.created_dir = True
-    except OSError, e:
+    except OSError as e:
       if e.errno != errno.EEXIST:
         raise
 
@@ -453,7 +454,7 @@ sys.exit(subprocess.call(sys.argv[1:]))" """
       same = False
       try:
         same = filecmp.cmp(pbxproj_path, new_pbxproj_path, False)
-      except OSError, e:
+      except OSError as e:
         if e.errno != errno.ENOENT:
           raise
 
@@ -472,10 +473,10 @@ sys.exit(subprocess.call(sys.argv[1:]))" """
         #
         # No way to get the umask without setting a new one?  Set a safe one
         # and then set it back to the old value.
-        umask = os.umask(077)
+        umask = os.umask(0o77)
         os.umask(umask)
 
-        os.chmod(new_pbxproj_path, 0666 & ~umask)
+        os.chmod(new_pbxproj_path, 0o666 & ~umask)
         os.rename(new_pbxproj_path, pbxproj_path)
 
     except Exception:
@@ -576,7 +577,7 @@ def PerformBuild(data, configurations, params):
   for config in configurations:
     arguments = ['xcodebuild', '-project', xcodeproj_path]
     arguments += ['-configuration', config]
-    print "Building [%s]: %s" % (config, arguments)
+    print("Building [%s]: %s" % (config, arguments))
     subprocess.check_call(arguments)
 
 
@@ -736,7 +737,7 @@ def GenerateOutput(target_list, target_dicts, data, params):
       xctarget_type = gyp.xcodeproj_file.PBXNativeTarget
       try:
         target_properties['productType'] = _types[type_bundle_key]
-      except KeyError, e:
+      except KeyError as e:
         gyp.common.ExceptionAppend(e, "-- unknown product type while "
                                    "writing target %s" % target_name)
         raise
