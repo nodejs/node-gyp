@@ -203,7 +203,7 @@ Command Options
 | `--dist-url=$url`                 | Download header tarball from custom URL
 | `--proxy=$url`                    | Set HTTP proxy for downloading header tarball
 | `--cafile=$cafile`                | Override default CA chain (to download tarball)
-| `--nodedir=$path`                 | Set the path to the node binary
+| `--nodedir=$path`                 | Set the path to the node source code
 | `--python=$path`                  | Set path to the python (2) binary
 | `--msvs_version=$version`         | Set Visual Studio version (win)
 | `--solution=$solution`            | Set Visual Studio Solution version (win)
