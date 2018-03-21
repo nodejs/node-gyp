@@ -2,6 +2,48 @@
 
 var test = require('tape')
 var gyp = require('../lib/node-gyp')
+var path = require('path')
+var requireInject = require('require-inject')
+
+test('options in node-gyp.rc', function (t) {
+  t.plan(1)
+
+  var injectedGyp = requireInject('../lib/node-gyp', {
+    'graceful-fs': {
+      'readFileSync': function (filePath, fileEncoding) {
+        if (filePath === path.resolve(__dirname, '..', 'node-gyp.rc') && fileEncoding === 'utf-8') {
+          return 'x=42';
+        } else {
+          var error = new Error('ENOENT - not found')
+          throw error
+        }
+      }
+    }
+  })
+
+  var g = injectedGyp()
+  g.parseArgv(['rebuild'])
+
+  t.deepEqual(Object.keys(g.opts).sort(), ['argv', 'x'])
+})
+
+test('options without node-gyp.rc', function (t) {
+  t.plan(1)
+
+  var injectedGyp = requireInject('../lib/node-gyp', {
+    'graceful-fs': {
+      'readFileSync': function (filePath, fileEncoding) {
+        var error = new Error('ENOENT - not found')
+        throw error
+      }
+    }
+  })
+
+  t.doesNotThrow(function () {
+    var g = injectedGyp()
+    g.parseArgv(['rebuild'])
+  })
+})
 
 test('options in environment', function (t) {
   t.plan(1)

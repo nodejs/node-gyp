@@ -223,6 +223,10 @@ __`node-gyp` responds to environment variables or `npm` configuration__
  This way only works when `node-gyp` is executed by `npm`:  
  `$ npm config set [--global] devdir /tmp/.gyp`  
  `$ npm i buffertools`
+3. `node-gyp` builtin config file at `/path/to/node-gyp/node-gyp.rc`. This is an
+ unchangeable "builtin" configuration file. Set fields in INI format here. This
+ is primarily for distribution maintainers to override default configs such
+ as `--nodedir` option in a standard and consistent manner.
  
 
 
