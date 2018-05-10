@@ -642,7 +642,7 @@ def Sourceify(path):
 def QuoteSpaces(s, quote=r'\ '):
   return s.replace(' ', quote)
 
-def SourceifyAndQuoteSpace(path):
+def SourceifyAndQuoteSpaces(path):
   """Convert a path to its source directory form and quote spaces."""
   return QuoteSpaces(Sourceify(path))
 
