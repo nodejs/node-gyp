@@ -1270,7 +1270,10 @@ def XcodeVersion():
   version = version_list[0]
   build = version_list[-1]
   # Be careful to convert "4.2" to "0420":
-  version = version.split()[-1].replace('.', '')
+  version = version.split()[-1]
+  for digit in version.split('.')[0]:
+    version += '0'
+  version = version[:-1].replace('.', '')
   version = (version + '0' * (3 - len(version))).zfill(4)
   if build:
     build = build.split()[-1]
