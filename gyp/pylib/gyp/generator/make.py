@@ -601,6 +601,11 @@ def EscapeShellArgument(s):
   return "'" + s.replace("'", "'\\''") + "'"
 
 
+def EscapeFilePath(s):
+  "Escape spaces in paths so that they will be handled and read properly"
+  return s.replace(" ", "\ ");
+
+
 def EscapeMakeVariableExpansion(s):
   """Make has its own variable expansion syntax using $. We must escape it for
      string to be interpreted literally."""
@@ -633,10 +638,10 @@ srcdir_prefix = ''
 def Sourceify(path):
   """Convert a path to its source directory form."""
   if '$(' in path:
-    return path
+    return EscapeFilePath(path)
   if os.path.isabs(path):
-    return path
-  return srcdir_prefix + path
+    return EscapeFilePath(path)
+  return EscapeFilePath(srcdir_prefix + path)
 
 
 def QuoteSpaces(s, quote=r'\ '):
