@@ -54,20 +54,9 @@ Install all the required tools and configurations using Microsoft's [windows-bui
 #### Option 2
 
 Install tools and configuration manually:
-   * Visual C++ Build Environment:
-     * Option 1: Install [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools) using the **Default Install** option.
-
-     * Option 2: Install [Visual Studio 2015](https://www.visualstudio.com/products/visual-studio-community-vs) and select *Common Tools for Visual C++* during setup. This also works with the free Community and Express for Desktop editions.
-
-     * Option 3: if you already have Visual Studio 2015 installed and did not install the
-            *Common Tools for Visual C++* during setup, you can `File -> New -> Project`, pick
-            any of the options under `Templates -> Other Languages -> Visual C++` then `Ok`
-            and Visual Studio will offer to install the *Common Tools for Visual C++* with a
-            "Install Missing Features" / "You need the Universal Windows App Development Tools
-            to develop Windows app projects." dialog.
-
-     > :bulb: [Windows Vista / 7 only] requires [.NET Framework 4.5.1](http://www.microsoft.com/en-us/download/details.aspx?id=40773)
-
+   * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
+   (using "Visual C++ build tools" workload) or [Visual Studio 2017 Community](https://visualstudio.microsoft.com/pl/thank-you-downloading-visual-studio/?sku=Community)
+   (using the "Desktop development with C++" workload)
    * Install [Python 2.7](https://www.python.org/downloads/) (`v3.x.x` is not supported), and run `npm config set python python2.7` (or see below for further instructions on specifying the proper Python version and path.)
    * Launch cmd, `npm config set msvs_version 2015`
 
