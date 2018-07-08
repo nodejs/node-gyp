@@ -6,8 +6,8 @@ var gyp = require('../lib/node-gyp')
 var requireInject = require('require-inject')
 var configure = requireInject('../lib/configure', {
   'graceful-fs': {
-    'openSync': function (file, mode) { return 0; },
-    'closeSync': function (fd) { },
+    'openSync': function () { return 0; },
+    'closeSync': function () { },
     'writeFile': function (file, data, cb) { cb() },
     'stat': function (file, cb) { cb(null, {}) }
   }
