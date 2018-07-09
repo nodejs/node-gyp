@@ -119,7 +119,7 @@ you can require the `.node` file with Node.js and run your tests!
 __Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
 `-d`) switch when running either the `configure`, `build` or `rebuild` commands.
 
-## The "binding.gyp" file
+## The `binding.gyp` file
 
 A `binding.gyp` file describes the configuration to build your module, in a
 JSON-like format. This file gets placed in the root of your package, alongside
@@ -212,7 +212,7 @@ Or this on Windows:
 > set npm_config_devdir=c:\temp\.gyp
 ```
 
-### npm configuration
+### `npm` configuration
 
 Use the form `OPTION_NAME` for any of the command options listed above.
 
@@ -228,4 +228,4 @@ is run via `npm`, not when `node-gyp` is run directly.
 ## License
 
 `node-gyp` is available under the MIT license. See the [LICENSE
-file][LICENSE] for details.
+file](LICENSE) for details.
