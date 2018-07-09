@@ -125,7 +125,7 @@ A `binding.gyp` file describes the configuration to build your module, in a
 JSON-like format. This file gets placed in the root of your package, alongside
 `package.json`.
 
-A barebones `gyp` file appropriate for building a Node.js addon coud look like:
+A barebones `gyp` file appropriate for building a Node.js addon could look like:
 
 ``` python
 {
