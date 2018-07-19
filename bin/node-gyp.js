@@ -1,14 +1,6 @@
 #!/usr/bin/env node
 
-/**
- * Set the title.
- */
-
 process.title = 'node-gyp'
-
-/**
- * Module dependencies.
- */
 
 var gyp = require('../')
 var log = require('npmlog')
@@ -126,7 +118,6 @@ process.on('uncaughtException', function (err) {
 })
 
 function errorMessage () {
-  // copied from npm's lib/util/error-handler.js
   var os = require('os')
   log.error('System', os.type() + ' ' + os.release())
   log.error('command', process.argv
