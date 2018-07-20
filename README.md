@@ -2,6 +2,8 @@ node-gyp
 =========
 ## Node.js native addon build tool
 
+> This patch is just to run a "blank CI on v3.x"
+
 `node-gyp` is a cross-platform command-line tool written in Node.js for compiling
 native addon modules for Node.js.  It bundles the [gyp](https://gyp.gsrc.io)
 project used by the Chromium team and takes away the pain of dealing with the
@@ -209,7 +211,7 @@ Configuration
 --------
 
 __`node-gyp` responds to environment variables or `npm` configuration__
-1. Environment variables take the form `npm_config_OPTION_NAME` for any of the 
+1. Environment variables take the form `npm_config_OPTION_NAME` for any of the
  options listed above (dashes in option names should be replaced by underscores).
  These work also when `node-gyp` is invoked directly:  
  `$ export npm_config_devdir=/tmp/.gyp`  
@@ -219,7 +221,7 @@ __`node-gyp` responds to environment variables or `npm` configuration__
  This way only works when `node-gyp` is executed by `npm`:  
  `$ npm config set [--global] devdir /tmp/.gyp`  
  `$ npm i buffertools`
- 
+
 
 
 License
