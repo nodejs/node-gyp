@@ -6,7 +6,7 @@ var fs = require('graceful-fs')
 var child_process = require('child_process')
 var addonPath = path.resolve(__dirname, 'node_modules', 'hello_world')
 var nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
-var execFileSync = child_process.execFileSync
+var execFileSync = child_process.execFileSync || require('./processExecSync')
 var execFile = child_process.execFile
 
 function runHello() {
