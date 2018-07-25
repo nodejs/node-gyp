@@ -2,6 +2,12 @@ var fs = require('graceful-fs')
 var child_process = require('child_process')
 var exec = child_process.exec
 
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(search, pos) {
+        return this.substr(!pos || pos < 0 ? 0 : +pos, search.length) === search;
+    };
+}
+
 function processExecSync(file, args, options) {
   var child, error, timeout, tmpdir, command, quote;
   command = makeCommand(file, args);
@@ -16,40 +22,61 @@ function processExecSync(file, args, options) {
   timeout = Date.now() + options.timeout;
   // init tmpdir
   var os_temp_base = "/tmp";
+  var os = determine_os();
+  os_temp_base = "/tmp"
+  
   if(process.env.TMP){
     os_temp_base = process.env.TMP;
   }
+
   if(os_temp_base[os_temp_base.length - 1] !== "/"){
     os_temp_base += "/";
   }
+
   tmpdir = os_temp_base+'processExecSync.' + Date.now() + Math.random();
   fs.mkdirSync(tmpdir);
+
   // init command
-  command = '(' + command + ' > ' + tmpdir + '/stdout 2> ' + tmpdir +
+  if(os === "linux"){
+    command = '(' + command + ' > ' + tmpdir + '/stdout 2> ' + tmpdir +
       '/stderr); echo $? > ' + tmpdir + '/status';
+  }else{
+    command = '(' + command + ' > ' + tmpdir + '/stdout 2> ' + tmpdir +
+      '/stderr) | echo %errorlevel% > ' + tmpdir + '/status | exit';
+  }
+
   // init child
   child = exec(command, options, function () {
       return;
   });
-  while (true) {
+
+  var maxTry = 100000; // increases the test time by 6 seconds on win-2016-node-0.10
+  var tryCount = 0;
+  while (tryCount < maxTry) {
     try {
-      fs.readFileSync(tmpdir + '/status');
-      break;
+      var x = fs.readFileSync(tmpdir + '/status');
+      if(x.toString() === "0"){
+        break;
+      }
     } catch (ignore) {
     }
+    tryCount++;
     if (Date.now() > timeout) {
       error = child;
       break;
     }
   }
+
   ['stdout', 'stderr', 'status'].forEach(function (file) {
     child[file] = fs.readFileSync(tmpdir + '/' + file, options.encoding);
-    fs.unlinkSync(tmpdir + '/' + file);
+    setTimeout(unlinkFile, 500, tmpdir + '/' + file);
   });
-  // child.status = Number(child.status);
-  // if (child.status !== 0) {
-  //     error = child;
-  // }
+  
+  child.status = Number(child.status);
+  if (child.status !== 0) {
+      error = child;
+  }
+  
   try {
       fs.rmdirSync(tmpdir);
   } catch (ignore) {
@@ -85,4 +112,30 @@ function makeCommand(file, args){
     }
   }
   return command;
+}
+
+function determine_os(){
+  var os = "";
+  var tmpVar = "";
+  if(process.env.OSTYPE){
+    tmpVar = process.env.OSTYPE;
+  }else if(process.env.OS){
+    tmpVar = process.env.OS;
+  }else{
+    //default is linux
+    tmpVar = "linux";
+  }
+
+  if(tmpVar.startsWith("linux")){
+    os = "linux"
+  }
+  if(tmpVar.startsWith("win")){
+    os = "win"
+  }
+
+  return os;
+}
+
+function unlinkFile(file){
+  fs.unlinkSync(file);
 }
