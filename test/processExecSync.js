@@ -15,7 +15,14 @@ function processExecSync(file, args, options) {
   // init timeout
   timeout = Date.now() + options.timeout;
   // init tmpdir
-  tmpdir = '/tmp/processExecSync.' + Date.now() + Math.random();
+  var os_temp_base = "/tmp";
+  if(process.env.TMP){
+    os_temp_base = process.env.TMP;
+  }
+  if(os_temp_base[os_temp_base.length - 1] !== "/"){
+    os_temp_base += "/";
+  }
+  tmpdir = os_temp_base+'processExecSync.' + Date.now() + Math.random();
   fs.mkdirSync(tmpdir);
   // init command
   command = '(' + command + ' > ' + tmpdir + '/stdout 2> ' + tmpdir +
