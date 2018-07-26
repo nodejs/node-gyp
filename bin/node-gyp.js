@@ -118,6 +118,7 @@ process.on('uncaughtException', function (err) {
 })
 
 function errorMessage () {
+  // copied from npm's lib/utils/error-handler.js
   var os = require('os')
   log.error('System', os.type() + ' ' + os.release())
   log.error('command', process.argv
