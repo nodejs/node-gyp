@@ -34,7 +34,7 @@ if (prog.todo.length === 0) {
   } else {
     console.log('%s', prog.usage())
   }
-  return process.exit(0)
+  process.exit(0)
 }
 
 log.info('it worked if it ends with', 'ok')
