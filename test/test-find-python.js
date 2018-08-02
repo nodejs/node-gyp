@@ -88,7 +88,7 @@ test('find python - python too old', function (t) {
   }
   f.checkPython()
 
-  function done(err, python) {
+  function done(err) {
     t.ok(/is not supported by gyp/.test(err))
   }
 })
@@ -108,7 +108,7 @@ test('find python - python too new', function (t) {
   }
   f.checkPython()
 
-  function done(err, python) {
+  function done(err) {
     t.ok(/is not supported by gyp/.test(err))
   }
 })
@@ -123,7 +123,7 @@ test('find python - no python', function (t) {
   }
   f.checkPython()
 
-  function done(err, python) {
+  function done(err) {
     t.ok(/Can't find Python executable/.test(err))
   }
 })
@@ -170,7 +170,7 @@ test('find python - no python2, no python, unix', function (t) {
   }
   f.checkPython()
 
-  function done(err, python) {
+  function done(err) {
     t.ok(/Can't find Python executable/.test(err))
   }
 })
@@ -271,7 +271,7 @@ test('find python - python 3, use python launcher, python 2 too old',
   }
   f.checkPython()
 
-  function done(err, python) {
+  function done(err) {
     t.ok(/is not supported by gyp/.test(err))
   }
 })
@@ -333,7 +333,7 @@ test('find python - no python, no python launcher, bad guess', function (t) {
   }
   f.checkPython()
 
-  function done(err, python) {
+  function done(err) {
     t.ok(/Can't find Python executable/.test(err))
   }
 })
