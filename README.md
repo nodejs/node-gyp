@@ -48,7 +48,7 @@ Install all the required tools and configurations using Microsoft's [windows-bui
 
 Install tools and configuration manually:
    * Visual C++ Build Environment:
-     * Option 1: Install [Visual C++ Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools) using the **Default Install** option.
+     * Option 1: Install [Visual C++ Build Tools](https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2017) using the **Build Tools for Visual Studio 2017** option.
 
      * Option 2: Install [Visual Studio 2015](https://www.visualstudio.com/products/visual-studio-community-vs) and select *Common Tools for Visual C++* during setup. This also works with the free Community and Express for Desktop editions.
 
