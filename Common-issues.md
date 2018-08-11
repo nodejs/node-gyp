@@ -7,8 +7,8 @@ If you have issues with `execvp`, be sure to check your `$PYTHON` environment va
 Notes: https://gist.github.com/erichocean/5177582
 
 ## npm ERR! `node-gyp rebuild`(Windows)
-* just install the build tools from [here](http://landinghub.visualstudio.com/visual-cpp-build-tools)
-PLease note the version as is required in below command e.g **2015** or **2017**
-* Launch cmd, run `npm config set msvs_version 2015`
-* restart and all is well 👍 
+* just install the build tools from [here](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
+PLease note the version as is required in below command e.g **2017**
+* Launch cmd, run `npm config set msvs_version 2017`
+* close and open new CMD/terminal and all is well :100: 
 
