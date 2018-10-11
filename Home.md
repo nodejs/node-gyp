@@ -5,4 +5,3 @@ Welcome to the node-gyp wiki!
  * [[Common Issues]]
  * [[Updating npm's bundled node-gyp]]
  * [[Error: "pre" versions of node cannot be installed]]
- * [[Visual Studio 2010 Setup]]
