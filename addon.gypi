@@ -1,6 +1,7 @@
 {
   'variables' : {
     'node_engine_include_dir%': 'deps/v8/include',
+    'node_host_binary%': 'node'
   },
   'target_defaults': {
     'type': 'loadable_module',
@@ -62,12 +63,13 @@
         # is named node.exe, iojs.exe, or something else.
         'conditions': [
           [ 'OS=="win"', {
+            'defines': [ 'HOST_BINARY=\"<(node_host_binary)<(EXECUTABLE_SUFFIX)\"', ],
             'sources': [
               '<(node_gyp_dir)/src/win_delay_load_hook.cc',
             ],
             'msvs_settings': {
               'VCLinkerTool': {
-                'DelayLoadDLLs': [ 'iojs.exe', 'node.exe' ],
+                'DelayLoadDLLs': [ '<(node_host_binary)<(EXECUTABLE_SUFFIX)' ],
                 # Don't print a linker warning when no imports from either .exe
                 # are used.
                 'AdditionalOptions': [ '/ignore:4199' ],
