@@ -22,6 +22,7 @@
   "bin": "./bin/node-gyp.js",
   "main": "./lib/node-gyp.js",
   "dependencies": {
+    "env-paths": "^1.0.0",
     "glob": "^7.0.3",
     "graceful-fs": "^4.1.2",
     "mkdirp": "^0.5.0",

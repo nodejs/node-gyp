@@ -170,7 +170,7 @@ Some additional resources for addons and writing `gyp` files:
 | `--thin=yes`                      | Enable thin static libraries
 | `--arch=$arch`                    | Set target architecture (e.g. ia32)
 | `--tarball=$path`                 | Get headers from a local tarball
-| `--devdir=$path`                  | SDK download directory (default is `~/.node-gyp`)
+| `--devdir=$path`                  | SDK download directory (default is OS cache directory)
 | `--ensure`                        | Don't reinstall headers if already present
 | `--dist-url=$url`                 | Download header tarball from custom URL
 | `--proxy=$url`                    | Set HTTP proxy for downloading header tarball
