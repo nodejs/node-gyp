@@ -2,10 +2,10 @@
 
 process.title = 'node-gyp'
 
+var envPaths = require('env-paths')
 var gyp = require('../')
 var log = require('npmlog')
 var os = require('os')
-var path = require('path')
 
 /**
  * Process and execute the selected commands.
@@ -20,7 +20,7 @@ var homeDir = os.homedir()
 if (prog.devDir) {
   prog.devDir = prog.devDir.replace(/^~/, homeDir)
 } else if (homeDir) {
-  prog.devDir = path.resolve(homeDir, '.node-gyp')
+  prog.devDir = envPaths('node-gyp', { suffix: '' }).cache
 } else {
   throw new Error(
     "node-gyp requires that the user's home directory is specified " +
