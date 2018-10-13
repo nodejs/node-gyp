@@ -4,7 +4,7 @@ process.title = 'node-gyp'
 
 var gyp = require('../')
 var log = require('npmlog')
-var osenv = require('osenv')
+var os = require('os')
 var path = require('path')
 
 /**
@@ -16,7 +16,7 @@ var completed = false
 prog.parseArgv(process.argv)
 prog.devDir = prog.opts.devdir
 
-var homeDir = osenv.home()
+var homeDir = os.homedir()
 if (prog.devDir) {
   prog.devDir = prog.devDir.replace(/^~/, homeDir)
 } else if (homeDir) {
