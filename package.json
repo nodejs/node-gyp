@@ -27,7 +27,6 @@
     "mkdirp": "^0.5.0",
     "nopt": "2 || 3",
     "npmlog": "0 || 1 || 2 || 3 || 4",
-    "osenv": "0",
     "request": "^2.87.0",
     "rimraf": "2",
     "semver": "~5.3.0",
@@ -35,7 +34,7 @@
     "which": "1"
   },
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 6.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.5",
