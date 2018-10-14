@@ -154,6 +154,21 @@ except ImportError:
   import sha
   _new_sha1 = sha.new
 
+try:
+  basestring            # Python 2
+except NameError:
+  basestring = (str, )  # Python 3
+
+try:
+  cmp             # Python 2
+except NameError:
+  def cmp(x, y):  # Python 3
+    return (x > y) - (x < y)
+
+try:
+  unicode               # Python 2
+except NameError:
+  unicode = str         # Python 3
 
 # See XCObject._EncodeString.  This pattern is used to determine when a string
 # can be printed unquoted.  Strings that match this pattern may be printed
@@ -324,8 +339,7 @@ class XCObject(object):
           that._properties[key] = new_value
         else:
           that._properties[key] = value
-      elif isinstance(value, str) or isinstance(value, unicode) or \
-           isinstance(value, int):
+      elif isinstance(value, (basestring, int)):
         that._properties[key] = value
       elif isinstance(value, list):
         if is_strong:
@@ -766,7 +780,7 @@ class XCObject(object):
                 ' must be list, not ' + value.__class__.__name__)
         for item in value:
           if not isinstance(item, property_type) and \
-             not (item.__class__ == unicode and property_type == str):
+             item.__class__ not in (str, unicode):
             # Accept unicode where str is specified.  str is treated as
             # UTF-8-encoded.
             raise TypeError(
@@ -774,7 +788,7 @@ class XCObject(object):
                   ' must be ' + property_type.__name__ + ', not ' + \
                   item.__class__.__name__)
       elif not isinstance(value, property_type) and \
-           not (value.__class__ == unicode and property_type == str):
+           value.__class__ not in (str, unicode):
         # Accept unicode where str is specified.  str is treated as
         # UTF-8-encoded.
         raise TypeError(
@@ -788,8 +802,7 @@ class XCObject(object):
             self._properties[property] = value.Copy()
           else:
             self._properties[property] = value
-        elif isinstance(value, str) or isinstance(value, unicode) or \
-             isinstance(value, int):
+        elif isinstance(value, (basestring, int)):
           self._properties[property] = value
         elif isinstance(value, list):
           if is_strong:

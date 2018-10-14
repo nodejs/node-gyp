@@ -21,6 +21,12 @@ import sys
 from xml.dom.minidom import parse
 from xml.dom.minidom import Node
 
+try:
+  cmp             # Python 2
+except NameError:
+  def cmp(x, y):  # Python 3
+    return (x > y) - (x < y)
+
 REPLACEMENTS = dict()
 ARGUMENTS = None
 

@@ -28,8 +28,13 @@ _deepcopy_dispatch = d = {}
 def _deepcopy_atomic(x):
   return x
 
-for x in (type(None), int, long, float,
-          bool, str, unicode, type):
+try:
+  type_list = (type(None), int, long, float,
+               bool, str, unicode, type)
+except NameError:
+  type_list = (type(None), int, float,
+               bool, str, type)
+for x in type_list:
   d[x] = _deepcopy_atomic
 
 def _deepcopy_list(x):
