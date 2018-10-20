@@ -55,6 +55,14 @@
         'standalone_static_library': '<(standalone_static_library)'
       }],
 
+      ['_type!="executable"', {
+        'conditions': [
+          [ 'OS=="android"', {
+            'cflags!': [ '-fPIE' ],
+          }]
+        ]
+      }],
+
       ['_win_delay_load_hook=="true"', {
         # If the addon specifies `'win_delay_load_hook': 'true'` in its
         # binding.gyp, link a delay-load hook into the DLL. This hook ensures
@@ -138,10 +146,10 @@
           '_FILE_OFFSET_BITS=64'
         ],
       }],
-      [ 'OS in "freebsd openbsd netbsd solaris" or \
+      [ 'OS in "freebsd openbsd netbsd solaris android" or \
          (OS=="linux" and target_arch!="ia32")', {
         'cflags': [ '-fPIC' ],
-      }]
+      }],
     ]
   }
 }
