@@ -4,14 +4,19 @@ var test = require('tape')
 var path = require('path')
 var fs = require('graceful-fs')
 var child_process = require('child_process')
+var os = require('os')
 var addonPath = path.resolve(__dirname, 'node_modules', 'hello_world')
 var nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
 var execFileSync = child_process.execFileSync || require('./process-exec-sync')
 var execFile = child_process.execFile
 
-function runHello() {
+function runHello(hostProcess) {
+  if (!hostProcess) {
+    hostProcess = process.execPath
+  }
   var testCode = "console.log(require('hello_world').hello())"
-  return execFileSync(process.execPath, ['-e', testCode], { cwd: __dirname }).toString()
+  console.log('running ', hostProcess);
+  return execFileSync(hostProcess, ['-e', testCode], { cwd: __dirname }).toString()
 }
 
 function getEncoding() {
@@ -107,6 +112,32 @@ test('build simple addon in path with non-ascii characters', function (t) {
     t.strictEqual(err, null)
     t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
     t.strictEqual(runHello().trim(), 'world')
+  })
+  proc.stdout.setEncoding('utf-8')
+  proc.stderr.setEncoding('utf-8')
+})
+
+test('addon works with renamed host executable', function (t) {
+  // No `fs.copyFileSync` before node8.
+  if (process.version.substr(1).split('.')[0] < 8) {
+    t.skip("skipping test for old node version");
+    t.end();
+    return;
+  }
+
+  t.plan(3)
+
+  var notNodePath = path.join(os.tmpdir(), 'notnode' + path.extname(process.execPath))
+  fs.copyFileSync(process.execPath, notNodePath)
+
+  var cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
+  var proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
+    var logLines = stderr.toString().trim().split(/\r?\n/)
+    var lastLine = logLines[logLines.length-1]
+    t.strictEqual(err, null)
+    t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
+    t.strictEqual(runHello(notNodePath).trim(), 'world')
+    fs.unlinkSync(notNodePath)
   })
   proc.stdout.setEncoding('utf-8')
   proc.stderr.setEncoding('utf-8')
