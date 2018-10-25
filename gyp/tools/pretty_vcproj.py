@@ -17,6 +17,7 @@ from __future__ import print_function
 
 import os
 import sys
+from gyp.compat import compat_cmp
 
 from xml.dom.minidom import parse
 from xml.dom.minidom import Node
@@ -28,7 +29,7 @@ ARGUMENTS = None
 class CmpTuple(object):
   """Compare function between 2 tuple."""
   def __call__(self, x, y):
-    return cmp(x[0], y[0])
+    return compat_cmp(x[0], y[0])
 
 
 class CmpNode(object):
@@ -56,7 +57,7 @@ class CmpNode(object):
 
       return node_string
 
-    return cmp(get_string(x), get_string(y))
+    return compat_cmp(get_string(x), get_string(y))
 
 
 def PrettyPrintNode(node, indent=0):

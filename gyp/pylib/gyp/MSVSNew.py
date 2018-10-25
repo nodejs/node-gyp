@@ -8,6 +8,7 @@ import os
 import random
 
 import gyp.common
+from gyp.common import compat_cmp
 
 # hashlib is supplied as of Python 2.5 as the replacement interface for md5
 # and other secure hashes.  In 2.6, md5 is deprecated.  Import hashlib if
@@ -62,7 +63,7 @@ def MakeGuid(name, seed='msvs_new'):
 class MSVSSolutionEntry(object):
   def __cmp__(self, other):
     # Sort by name then guid (so things are in order on vs2008).
-    return cmp((self.name, self.get_guid()), (other.name, other.get_guid()))
+    return compat_cmp((self.name, self.get_guid()), (other.name, other.get_guid()))
 
 
 class MSVSFolder(MSVSSolutionEntry):

@@ -1847,7 +1847,7 @@ def VerifyNoGYPFileCircularDependencies(targets):
   # Create a DependencyGraphNode for each gyp file containing a target.  Put
   # it into a dict for easy access.
   dependency_nodes = {}
-  for target in targets.iterkeys():
+  for target in targets.keys():
     build_file = gyp.common.BuildFile(target)
     if not build_file in dependency_nodes:
       dependency_nodes[build_file] = DependencyGraphNode(build_file)
@@ -1878,7 +1878,7 @@ def VerifyNoGYPFileCircularDependencies(targets):
 
   # Files that have no dependencies are treated as dependent on root_node.
   root_node = DependencyGraphNode(None)
-  for build_file_node in dependency_nodes.itervalues():
+  for build_file_node in dependency_nodes.values():
     if len(build_file_node.dependencies) == 0:
       build_file_node.dependencies.append(root_node)
       root_node.dependents.append(build_file_node)

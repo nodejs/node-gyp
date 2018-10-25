@@ -7,13 +7,13 @@
 
 import gyp.generator.msvs as msvs
 import unittest
-import StringIO
+from gyp.compat import StringIO
 
 
 class TestSequenceFunctions(unittest.TestCase):
 
   def setUp(self):
-    self.stderr = StringIO.StringIO()
+    self.stderr = StringIO()
 
   def test_GetLibraries(self):
     self.assertEqual(

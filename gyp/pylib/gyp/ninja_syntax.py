@@ -68,11 +68,11 @@ class Writer(object):
         all_inputs = list(map(escape_path, all_inputs))
 
         if implicit:
-            implicit = map(escape_path, self._as_list(implicit))
+            implicit = list(map(escape_path, self._as_list(implicit)))
             all_inputs.append('|')
             all_inputs.extend(implicit)
         if order_only:
-            order_only = map(escape_path, self._as_list(order_only))
+            order_only = list(map(escape_path, self._as_list(order_only)))
             all_inputs.append('||')
             all_inputs.extend(order_only)
 

@@ -15,13 +15,8 @@ import shlex
 import sys
 import traceback
 from gyp.common import GypError
+from gyp.compat import string_types
 
-try:
-    # Python 2
-    string_types = basestring
-except NameError:
-    # Python 3
-    string_types = str
 
 # Default debug modes for GYP
 debug = {}

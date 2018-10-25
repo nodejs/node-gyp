@@ -19,7 +19,7 @@ from gyp.common import OrderedSet
 import gyp.msvs_emulation
 import gyp.MSVSUtil as MSVSUtil
 import gyp.xcode_emulation
-from cStringIO import StringIO
+from gyp.compat import StringIO
 
 from gyp.common import GetEnvironFallback
 import gyp.ninja_syntax as ninja_syntax
@@ -348,7 +348,7 @@ class NinjaWriter(object):
 
     Uses a stamp file if necessary."""
 
-    assert targets == filter(None, targets), targets
+    assert targets == list(filter(None, targets)), targets
     if len(targets) == 0:
       assert not order_only
       return None
@@ -768,7 +768,7 @@ class NinjaWriter(object):
     xcassets = []
     for output, res in gyp.xcode_emulation.GetMacBundleResources(
         generator_default_variables['PRODUCT_DIR'],
-        self.xcode_settings, map(self.GypPathToNinja, resources)):
+        self.xcode_settings, list(map(self.GypPathToNinja, resources))):
       output = self.ExpandSpecial(output)
       if os.path.splitext(output)[-1] != '.xcassets':
         isBinary = self.xcode_settings.IsBinaryOutputFormat(self.config_name)
@@ -937,7 +937,7 @@ class NinjaWriter(object):
                            [Define(d, self.flavor) for d in defines])
     if self.flavor == 'win':
       self.WriteVariableList(ninja_file, 'asmflags',
-                             map(self.ExpandSpecial, asmflags))
+                             list(map(self.ExpandSpecial, asmflags)))
       self.WriteVariableList(ninja_file, 'rcflags',
           [QuoteShellArgument(self.ExpandSpecial(f), self.flavor)
            for f in self.msvs_settings.GetRcflags(config_name,
@@ -972,18 +972,18 @@ class NinjaWriter(object):
     arflags = config.get('arflags', [])
 
     self.WriteVariableList(ninja_file, 'cflags',
-                           map(self.ExpandSpecial, cflags))
+                           list(map(self.ExpandSpecial, cflags)))
     self.WriteVariableList(ninja_file, 'cflags_c',
-                           map(self.ExpandSpecial, cflags_c))
+                           list(map(self.ExpandSpecial, cflags_c)))
     self.WriteVariableList(ninja_file, 'cflags_cc',
-                           map(self.ExpandSpecial, cflags_cc))
+                           list(map(self.ExpandSpecial, cflags_cc)))
     if self.flavor == 'mac':
       self.WriteVariableList(ninja_file, 'cflags_objc',
-                             map(self.ExpandSpecial, cflags_objc))
+                             list(map(self.ExpandSpecial, cflags_objc)))
       self.WriteVariableList(ninja_file, 'cflags_objcc',
-                             map(self.ExpandSpecial, cflags_objcc))
+                             list(map(self.ExpandSpecial, cflags_objcc)))
     self.WriteVariableList(ninja_file, 'arflags',
-                           map(self.ExpandSpecial, arflags))
+                           list(map(self.ExpandSpecial, arflags)))
     ninja_file.newline()
     outputs = []
     has_rc_source = False
@@ -1182,7 +1182,7 @@ class NinjaWriter(object):
         ldflags.append(r'-Wl,-rpath=\$$ORIGIN/%s' % rpath)
         ldflags.append('-Wl,-rpath-link=%s' % rpath)
     self.WriteVariableList(ninja_file, 'ldflags',
-                           map(self.ExpandSpecial, ldflags))
+                           list(map(self.ExpandSpecial, ldflags)))
 
     library_dirs = config.get('library_dirs', [])
     if self.flavor == 'win':
@@ -1196,8 +1196,8 @@ class NinjaWriter(object):
                                          self.flavor)
                       for l in library_dirs]
 
-    libraries = gyp.common.uniquer(map(self.ExpandSpecial,
-                                       spec.get('libraries', [])))
+    libraries = gyp.common.uniquer(list(map(self.ExpandSpecial,
+                                       spec.get('libraries', []))))
     if self.flavor == 'mac':
       libraries = self.xcode_settings.AdjustLibraries(libraries, config_name)
     elif self.flavor == 'win':

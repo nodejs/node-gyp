@@ -7,7 +7,10 @@ structures or complex types except for dicts and lists. This is
 because gyp copies so large structure that small copy overhead ends up
 taking seconds in a project the size of Chromium."""
 
-class Error(Exception):
+from gyp.compat import simple_types
+
+
+class CopyError(Exception):
   pass
 
 __all__ = ["Error", "deepcopy"]
@@ -20,7 +23,7 @@ def deepcopy(x):
   try:
     return _deepcopy_dispatch[type(x)](x)
   except KeyError:
-    raise Error('Unsupported type %s for deepcopy. Use copy.deepcopy ' +
+    raise CopyError('Unsupported type %s for deepcopy. Use copy.deepcopy ' +
                 'or expand simple_copy support.' % type(x))
 
 _deepcopy_dispatch = d = {}
@@ -28,8 +31,7 @@ _deepcopy_dispatch = d = {}
 def _deepcopy_atomic(x):
   return x
 
-for x in (type(None), int, long, float,
-          bool, str, unicode, type):
+for x in simple_types:
   d[x] = _deepcopy_atomic
 
 def _deepcopy_list(x):

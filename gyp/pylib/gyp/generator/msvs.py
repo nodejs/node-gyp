@@ -2682,7 +2682,7 @@ def _GetMSBuildGlobalProperties(spec, guid, gyp_file_name):
 
   platform_name = None
   msvs_windows_target_platform_version = None
-  for configuration in spec['configurations'].itervalues():
+  for configuration in spec['configurations'].values():
     platform_name = platform_name or _ConfigPlatform(configuration)
     msvs_windows_target_platform_version = \
                     msvs_windows_target_platform_version or \
@@ -3242,7 +3242,7 @@ def _GetMSBuildProjectReferences(project):
           ['Project', guid],
           ['ReferenceOutputAssembly', 'false']
           ]
-      for config in dependency.spec.get('configurations', {}).itervalues():
+      for config in dependency.spec.get('configurations', {}).values():
         if config.get('msvs_use_library_dependency_inputs', 0):
           project_ref.append(['UseLibraryDependencyInputs', 'true'])
           break
@@ -3311,7 +3311,7 @@ def _GenerateMSBuildProject(project, options, version, generator_flags):
                               extension_to_rule_name)
   missing_sources = _VerifySourcesExist(sources, project_dir)
 
-  for configuration in configurations.itervalues():
+  for configuration in configurations.values():
     _FinalizeMSBuildSettings(spec, configuration)
 
   # Add attributes to root element

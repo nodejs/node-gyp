@@ -138,6 +138,7 @@ a project file is output.
 """
 
 import gyp.common
+from gyp.compat import string_types, unicode_type, compat_cmp
 import posixpath
 import re
 import struct
@@ -153,7 +154,6 @@ try:
 except ImportError:
   import sha
   _new_sha1 = sha.new
-
 
 # See XCObject._EncodeString.  This pattern is used to determine when a string
 # can be printed unquoted.  Strings that match this pattern may be printed
@@ -324,8 +324,7 @@ class XCObject(object):
           that._properties[key] = new_value
         else:
           that._properties[key] = value
-      elif isinstance(value, str) or isinstance(value, unicode) or \
-           isinstance(value, int):
+      elif isinstance(value, string_types) or isinstance(value, int):
         that._properties[key] = value
       elif isinstance(value, list):
         if is_strong:
@@ -603,7 +602,7 @@ class XCObject(object):
       comment = value.Comment()
     elif isinstance(value, str):
       printable += self._EncodeString(value)
-    elif isinstance(value, unicode):
+    elif isinstance(value, unicode_type):
       printable += self._EncodeString(value.encode('utf-8'))
     elif isinstance(value, int):
       printable += str(value)
@@ -766,7 +765,7 @@ class XCObject(object):
                 ' must be list, not ' + value.__class__.__name__)
         for item in value:
           if not isinstance(item, property_type) and \
-             not (item.__class__ == unicode and property_type == str):
+             not (item.__class__ == unicode_type and property_type == str):
             # Accept unicode where str is specified.  str is treated as
             # UTF-8-encoded.
             raise TypeError(
@@ -774,7 +773,7 @@ class XCObject(object):
                   ' must be ' + property_type.__name__ + ', not ' + \
                   item.__class__.__name__)
       elif not isinstance(value, property_type) and \
-           not (value.__class__ == unicode and property_type == str):
+           not (value.__class__ == unicode_type and property_type == str):
         # Accept unicode where str is specified.  str is treated as
         # UTF-8-encoded.
         raise TypeError(
@@ -788,8 +787,7 @@ class XCObject(object):
             self._properties[property] = value.Copy()
           else:
             self._properties[property] = value
-        elif isinstance(value, str) or isinstance(value, unicode) or \
-             isinstance(value, int):
+        elif isinstance(value, string_types) or isinstance(value, int):
           self._properties[property] = value
         elif isinstance(value, list):
           if is_strong:
@@ -1016,7 +1014,7 @@ class XCHierarchicalElement(XCObject):
 
     if self_type == other_type:
       # If the two objects are of the same sort rank, compare their names.
-      return cmp(self.Name(), other.Name())
+      return compat_cmp(self.Name(), other.Name())
 
     # Otherwise, sort groups before everything else.
     if self_type == 'group':
@@ -2733,7 +2731,7 @@ class PBXProject(XCContainerPortal):
       # Xcode seems to sort this list case-insensitively
       self._properties['projectReferences'] = \
           sorted(self._properties['projectReferences'], cmp=lambda x,y:
-                 cmp(x['ProjectRef'].Name().lower(),
+                 compat_cmp(x['ProjectRef'].Name().lower(),
                      y['ProjectRef'].Name().lower()))
     else:
       # The link already exists.  Pull out the relevnt data.
@@ -2842,7 +2840,7 @@ class PBXProject(XCContainerPortal):
 
       # Use the order of each remote PBXFileReference in remote_products to
       # determine the sort order.
-      return cmp(x_index, y_index)
+      return compat_cmp(x_index, y_index)
 
     for other_pbxproject, ref_dict in self._other_pbxprojects.items():
       # Build up a list of products in the remote project file, ordered the
@@ -2890,7 +2888,7 @@ class XCProjectFile(XCObject):
     else:
       self._XCPrint(file, 0, '{\n')
     for property, value in sorted(self._properties.items(),
-                                  cmp=lambda x, y: cmp(x, y)):
+                                  cmp=lambda x, y: compat_cmp(x, y)):
       if property == 'objects':
         self._PrintObjects(file)
       else:
@@ -2917,7 +2915,7 @@ class XCProjectFile(XCObject):
       self._XCPrint(file, 0, '\n')
       self._XCPrint(file, 0, '/* Begin ' + class_name + ' section */\n')
       for object in sorted(objects_by_class[class_name],
-                           cmp=lambda x, y: cmp(x.id, y.id)):
+                           cmp=lambda x, y: compat_cmp(x.id, y.id)):
         object.Print(file)
       self._XCPrint(file, 0, '/* End ' + class_name + ' section */\n')
 

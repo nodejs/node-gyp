@@ -177,16 +177,14 @@ def _RegistryGetValueUsingWinReg(key, value):
     ImportError if _winreg is unavailable.
   """
   try:
-      # Python 2
-      from _winreg import OpenKey, QueryValueEx
+      from winreg import OpenKey, QueryValueEx, HKEY_LOCAL_MACHINE
   except ImportError:
-      # Python 3
-      from winreg import OpenKey, QueryValueEx
+      from _winreg import OpenKey, QueryValueEx, HKEY_LOCAL_MACHINE
 
   try:
     root, subkey = key.split('\\', 1)
     assert root == 'HKLM'  # Only need HKLM for now.
-    with OpenKey(_winreg.HKEY_LOCAL_MACHINE, subkey) as hkey:
+    with OpenKey(HKEY_LOCAL_MACHINE, subkey) as hkey:
       return QueryValueEx(hkey, value)[0]
   except WindowsError:
     return None

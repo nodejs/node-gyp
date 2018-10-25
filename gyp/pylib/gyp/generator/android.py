@@ -383,7 +383,7 @@ class AndroidMkWriter(object):
 
         # We set up a rule to build the first output, and then set up
         # a rule for each additional output to depend on the first.
-        outputs = map(self.LocalPathify, outputs)
+        outputs = list(map(self.LocalPathify, outputs))
         main_output = outputs[0]
         self.WriteLn('%s: gyp_local_path := $(LOCAL_PATH)' % main_output)
         self.WriteLn('%s: gyp_var_prefix := $(GYP_VAR_PREFIX)' % main_output)
@@ -475,7 +475,7 @@ class AndroidMkWriter(object):
       self.WriteLn('\n# Include paths placed before CFLAGS/CPPFLAGS')
       includes = list(config.get('include_dirs', []))
       includes.extend(extracted_includes)
-      includes = map(Sourceify, map(self.LocalPathify, includes))
+      includes = list(map(Sourceify, map(self.LocalPathify, includes)))
       includes = self.NormalizeIncludePaths(includes)
       self.WriteList(includes, 'LOCAL_C_INCLUDES_%s' % configname)
 
@@ -510,9 +510,9 @@ class AndroidMkWriter(object):
       spec, configs: input from gyp.
       extra_sources: Sources generated from Actions or Rules.
     """
-    sources = filter(make.Compilable, spec.get('sources', []))
+    sources = list(filter(make.Compilable, spec.get('sources', [])))
     generated_not_sources = [x for x in extra_sources if not make.Compilable(x)]
-    extra_sources = filter(make.Compilable, extra_sources)
+    extra_sources = list(filter(make.Compilable, extra_sources))
 
     # Determine and output the C++ extension used by these sources.
     # We simply find the first C++ file and use that extension.
@@ -574,7 +574,8 @@ class AndroidMkWriter(object):
     self.WriteList(final_generated_sources, 'LOCAL_GENERATED_SOURCES')
 
     origin_src_dirs = gyp.common.uniquer(origin_src_dirs)
-    origin_src_dirs = map(Sourceify, map(self.LocalPathify, origin_src_dirs))
+    origin_src_dirs = list(map(Sourceify, map(self.LocalPathify,
+                                              origin_src_dirs)))
     self.WriteList(origin_src_dirs, 'GYP_COPIED_SOURCE_ORIGIN_DIRS')
 
     self.WriteList(local_files, 'LOCAL_SRC_FILES')

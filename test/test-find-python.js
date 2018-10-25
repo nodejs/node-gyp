@@ -13,8 +13,8 @@ test('find python', function (t) {
     t.strictEqual(err, null)
     var proc = execFile(found, ['-V'], function (err, stdout, stderr) {
       t.strictEqual(err, null)
-      t.strictEqual(stdout, '')
-      t.ok(/Python 2/.test(stderr))
+      t.strictEqual(stderr, '')
+      t.ok(/Python /.test(stdout))
     })
     proc.stdout.setEncoding('utf-8')
     proc.stderr.setEncoding('utf-8')
@@ -104,7 +104,7 @@ test('find python - python too new', function (t) {
   f.execFile = function(program, args, opts, cb) {
     t.strictEqual(program, 'python')
     t.ok(/import sys/.test(args[1]))
-    cb(null, '3.0.0')
+    cb(null, '4.0.0')
   }
   f.checkPython()
 
@@ -230,7 +230,7 @@ test('find python - python 3, use python launcher', function (t) {
     }
     t.strictEqual(program, 'python')
     t.ok(/import sys/.test(args[1]))
-    cb(null, '3.0.0')
+    cb(null, '4.0.0')
   }
   f.checkPython()
 
@@ -267,7 +267,7 @@ test('find python - python 3, use python launcher, python 2 too old',
     }
     t.strictEqual(program, 'python')
     t.ok(/import sys/.test(args[1]))
-    cb(null, '3.0.0')
+    cb(null, '4.0.0')
   }
   f.checkPython()
 

@@ -1,7 +1,17 @@
 from __future__ import print_function
 import sys
+import importlib
 import locale
 
+
+if hasattr(importlib, 'reload'):
+    reload = importlib.reload
+
+if hasattr(sys, 'setdefaultencoding'):
+    setdefaultencoding = sys.setdefaultencoding
+else:
+    def setdefaultencoding(*args, **kwargs):
+        pass
 reload(sys)
 
 def main():
@@ -9,7 +19,7 @@ def main():
   if not encoding:
     return False
 
-  sys.setdefaultencoding(encoding)
+  setdefaultencoding(encoding)
   textmap = {
     'cp936': u'\u4e2d\u6587',
     'cp1252': u'Lat\u012Bna',

@@ -8,13 +8,13 @@
 
 import gyp.easy_xml as easy_xml
 import unittest
-import StringIO
+from gyp.compat import StringIO
 
 
 class TestSequenceFunctions(unittest.TestCase):
 
   def setUp(self):
-    self.stderr = StringIO.StringIO()
+    self.stderr = StringIO()
 
   def test_EasyXml_simple(self):
     self.assertEqual(

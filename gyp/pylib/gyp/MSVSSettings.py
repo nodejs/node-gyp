@@ -16,7 +16,7 @@ MSBuild install directory, e.g. c:\Program Files (x86)\MSBuild
 
 from __future__ import print_function
 
-from gyp import string_types
+from gyp.compat import string_types
 
 import sys
 import re
