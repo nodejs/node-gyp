@@ -4,22 +4,12 @@
 
 """New implementation of Visual Studio project generation."""
 
+from functools import total_ordering
+import hashlib
 import os
 import random
 
 import gyp.common
-
-# hashlib is supplied as of Python 2.5 as the replacement interface for md5
-# and other secure hashes.  In 2.6, md5 is deprecated.  Import hashlib if
-# available, avoiding a deprecation warning under 2.6.  Import md5 otherwise,
-# preserving 2.4 compatibility.
-try:
-  import hashlib
-  _new_md5 = hashlib.md5
-except ImportError:
-  import md5
-  _new_md5 = md5.new
-
 
 # Initialize random number generator
 random.seed()
@@ -50,7 +40,7 @@ def MakeGuid(name, seed='msvs_new'):
   not change when the project for a target is rebuilt.
   """
   # Calculate a MD5 signature for the seed and name.
-  d = _new_md5(str(seed) + str(name)).hexdigest().upper()
+  d = hashlib.md5(str(seed) + str(name)).hexdigest().upper()
   # Convert most of the signature to GUID form (discard the rest)
   guid = ('{' + d[:8] + '-' + d[8:12] + '-' + d[12:16] + '-' + d[16:20]
           + '-' + d[20:32] + '}')
@@ -59,10 +49,11 @@ def MakeGuid(name, seed='msvs_new'):
 #------------------------------------------------------------------------------
 
 
+@total_ordering
 class MSVSSolutionEntry(object):
-  def __cmp__(self, other):
+  def __lt__(self, other):
     # Sort by name then guid (so things are in order on vs2008).
-    return cmp((self.name, self.get_guid()), (other.name, other.get_guid()))
+    return ((self.name, self.get_guid()) < (other.name, other.get_guid()))
 
 
 class MSVSFolder(MSVSSolutionEntry):
