@@ -155,6 +155,23 @@ except ImportError:
   _new_sha1 = sha.new
 
 
+try:
+    basestring     # Python 2
+except NameError:  # Python 3
+    basestring = (str, )
+
+try:
+    cmp            # Python 2
+except NameError:  # Python 3
+    def cmp(x, y):
+        return (x > y) - (x < y)
+
+try:
+    unicode        # Python 2
+except NameError:  # Python 3
+    unicode = str
+
+
 # See XCObject._EncodeString.  This pattern is used to determine when a string
 # can be printed unquoted.  Strings that match this pattern may be printed
 # unquoted.  Strings that do not match must be quoted and may be further
@@ -324,8 +341,7 @@ class XCObject(object):
           that._properties[key] = new_value
         else:
           that._properties[key] = value
-      elif isinstance(value, str) or isinstance(value, unicode) or \
-           isinstance(value, int):
+      elif isinstance(value, (basestring, int)):
         that._properties[key] = value
       elif isinstance(value, list):
         if is_strong:
@@ -788,8 +804,7 @@ class XCObject(object):
             self._properties[property] = value.Copy()
           else:
             self._properties[property] = value
-        elif isinstance(value, str) or isinstance(value, unicode) or \
-             isinstance(value, int):
+        elif isinstance(value, (basestring, int)):
           self._properties[property] = value
         elif isinstance(value, list):
           if is_strong:
