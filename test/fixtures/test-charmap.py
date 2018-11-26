@@ -2,14 +2,21 @@ from __future__ import print_function
 import sys
 import locale
 
-reload(sys)
+try:
+  reload(sys)
+except NameError:
+  pass
+
 
 def main():
   encoding = locale.getdefaultlocale()[1]
   if not encoding:
     return False
 
-  sys.setdefaultencoding(encoding)
+  try:
+    sys.setdefaultencoding(encoding)
+  except NameError:
+    pass
   textmap = {
     'cp936': u'\u4e2d\u6587',
     'cp1252': u'Lat\u012Bna',
@@ -18,6 +25,7 @@ def main():
   if encoding in textmap:
     print(textmap[encoding])
   return True
+
 
 if __name__ == '__main__':
   print(main())
