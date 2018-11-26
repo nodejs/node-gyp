@@ -55,8 +55,10 @@ Install tools and configuration manually:
 
    If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
 
+### Configuring Python Dependency
+
 If you have multiple Python versions installed, you can identify which Python
-version `node-gyp` uses by setting the '--python' variable:
+version `node-gyp` uses by setting the `--python` variable:
 
 ``` bash
 $ node-gyp --python /path/to/python2.7
