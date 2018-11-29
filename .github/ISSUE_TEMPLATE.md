@@ -18,7 +18,7 @@ that module's issue tracker (`npm issues modulename`).
 Paste your log here, between the backticks. It can be:
   - npm --verbose output,
   - or contents of npm-debug.log,
-  - or verbose build output.
+  - or output of node-gyp rebuild --verbose.
 ```
 
 </details>
