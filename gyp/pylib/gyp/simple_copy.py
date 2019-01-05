@@ -32,7 +32,7 @@ try:  # Python 2
   for x in (type(None), int, long, float, bool, str, unicode, type):
     d[x] = _deepcopy_atomic
 except NameError:  # Python 3
-  for x in (type(None), int, float, bool, str, type):
+  for x in (type(None), int, bytes, float, bool, str, type):
     d[x] = _deepcopy_atomic
 
 def _deepcopy_list(x):
