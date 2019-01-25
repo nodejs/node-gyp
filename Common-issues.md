@@ -8,7 +8,7 @@ Notes: https://gist.github.com/erichocean/5177582
 
 ## npm ERR! `node-gyp rebuild`(Windows)
 * just install the build tools from [here](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
-PLease note the version as is required in below command e.g **2017**
+Please note the version as is required in below command e.g **2017**
 * Launch cmd, run `npm config set msvs_version 2017`
 * close and open new CMD/terminal and all is well :100: 
 
