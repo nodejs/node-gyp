@@ -53,6 +53,11 @@ Install tools and configuration manually:
    * Install [Python 2.7](https://www.python.org/downloads/) (`v3.x.x` is not supported), and run `npm config set python python2.7` (or see below for further instructions on specifying the proper Python version and path.)
    * Launch cmd, `npm config set msvs_version 2017`
 
+#### Option 3
+
+   * Install [Visual Studio 2015](https://stackoverflow.com/a/44290942/373207)
+   * Set the path to the MSBuild folder: ```SET VCTargetsPath=C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140```
+
    If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
 
 ### Configuring Python Dependency
