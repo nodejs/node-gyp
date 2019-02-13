@@ -1,3 +1,16 @@
-gyp/test
+.*
+!.eslintrc.yaml
+!.gitignore
+
+# Don't track node_modules
 node_modules
+# Re-include this test fixture
+!test/node_modules/hello_world
+package-lock.json
+
+# We don't track GYP's test suite
+gyp/test
+
+# Test atrifacts
 test/.node-gyp
+

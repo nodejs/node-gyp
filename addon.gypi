@@ -1,20 +1,13 @@
 {
-  'variables' : {
+  'variables': {
     'node_engine_include_dir%': 'deps/v8/include',
-    'node_host_binary%': 'node'
+    'node_host_binary%': 'node',
   },
+
   'target_defaults': {
     'type': 'loadable_module',
     'win_delay_load_hook': 'true',
     'product_prefix': '',
-
-    'conditions': [
-      [ 'node_engine=="chakracore"', {
-        'variables': {
-          'node_engine_include_dir%': 'deps/chakrashim/include'
-        },
-      }]
-    ],
 
     'include_dirs': [
       '<(node_root_dir)/include/node',
@@ -23,29 +16,31 @@
       '<(node_root_dir)/deps/openssl/openssl/include',
       '<(node_root_dir)/deps/uv/include',
       '<(node_root_dir)/deps/zlib',
-      '<(node_root_dir)/<(node_engine_include_dir)'
+      '<(node_root_dir)/<(node_engine_include_dir)',
     ],
+
     'defines!': [
       'BUILDING_UV_SHARED=1',  # Inherited from common.gypi.
       'BUILDING_V8_SHARED=1',  # Inherited from common.gypi.
     ],
+
     'defines': [
       'NODE_GYP_MODULE_NAME=>(_target_name)',
       'USING_UV_SHARED=1',
       'USING_V8_SHARED=1',
       # Warn when using deprecated V8 APIs.
-      'V8_DEPRECATION_WARNINGS=1'
+      'V8_DEPRECATION_WARNINGS=1',
     ],
 
     'target_conditions': [
       ['_type=="loadable_module"', {
         'product_extension': 'node',
         'defines': [
-          'BUILDING_NODE_EXTENSION'
+          'BUILDING_NODE_EXTENSION',
         ],
         'xcode_settings': {
           'OTHER_LDFLAGS': [
-            '-undefined dynamic_lookup'
+            '-undefined dynamic_lookup',
           ],
         },
       }],
@@ -53,15 +48,15 @@
       ['_type=="static_library"', {
         # set to `1` to *disable* the -T thin archive 'ld' flag.
         # older linkers don't support this flag.
-        'standalone_static_library': '<(standalone_static_library)'
+        'standalone_static_library': '<(standalone_static_library)',
       }],
 
       ['_type!="executable"', {
         'conditions': [
-          [ 'OS=="android"', {
-            'cflags!': [ '-fPIE' ],
-          }]
-        ]
+          ['OS=="android"', {
+            'cflags!': ['-fPIE'],
+          }],
+        ],
       }],
 
       ['_win_delay_load_hook=="true"', {
@@ -70,17 +65,19 @@
         # that the addon will work regardless of whether the node/iojs binary
         # is named node.exe, iojs.exe, or something else.
         'conditions': [
-          [ 'OS=="win"', {
-            'defines': [ 'HOST_BINARY=\"<(node_host_binary)<(EXECUTABLE_SUFFIX)\"', ],
+          ['OS=="win"', {
+            'defines': [
+              'HOST_BINARY=\"<(node_host_binary)<(EXECUTABLE_SUFFIX)\"',
+            ],
             'sources': [
               '<(node_gyp_dir)/src/win_delay_load_hook.cc',
             ],
             'msvs_settings': {
               'VCLinkerTool': {
-                'DelayLoadDLLs': [ '<(node_host_binary)<(EXECUTABLE_SUFFIX)' ],
+                'DelayLoadDLLs': ['<(node_host_binary)<(EXECUTABLE_SUFFIX)'],
                 # Don't print a linker warning when no imports from either .exe
                 # are used.
-                'AdditionalOptions': [ '/ignore:4199' ],
+                'AdditionalOptions': ['/ignore:4199'],
               },
             },
           }],
@@ -89,35 +86,40 @@
     ],
 
     'conditions': [
-      [ 'OS=="mac"', {
-        'defines': [
-          '_DARWIN_USE_64_BIT_INODE=1'
-        ],
-        'xcode_settings': {
-          'DYLIB_INSTALL_NAME_BASE': '@rpath'
+      ['node_engine=="chakracore"', {
+        'variables': {
+          'node_engine_include_dir%': 'deps/chakrashim/include',
         },
       }],
-      [ 'OS=="aix"', {
+      ['OS=="mac"', {
+        'defines': [
+          '_DARWIN_USE_64_BIT_INODE=1',
+        ],
+        'xcode_settings': {
+          'DYLIB_INSTALL_NAME_BASE': '@rpath',
+        },
+      }],
+      ['OS=="aix"', {
         'ldflags': [
-          '-Wl,-bimport:<(node_exp_file)'
+          '-Wl,-bimport:<(node_exp_file)',
         ],
       }],
-      [ 'OS=="zos"', {
+      ['OS=="zos"', {
         'cflags': [
           '-q64',
           '-Wc,DLL',
-          '-qlonglong'
+          '-qlonglong',
         ],
         'ldflags': [
           '-q64',
-          '<(node_exp_file)'
+          '<(node_exp_file)',
         ],
       }],
-      [ 'OS=="win"', {
+      ['OS=="win"', {
         'conditions': [
           ['node_engine=="chakracore"', {
-            'library_dirs': [ '<(node_root_dir)/$(ConfigurationName)' ],
-            'libraries': [ '<@(node_engine_libs)' ],
+            'library_dirs': ['<(node_root_dir)/$(ConfigurationName)'],
+            'libraries': ['<@(node_engine_libs)'],
           }],
         ],
         'libraries': [
@@ -133,25 +135,23 @@
           '-luuid.lib',
           '-lodbc32.lib',
           '-lDelayImp.lib',
-          '-l"<(node_lib_file)"'
+          '-l"<(node_lib_file)"',
         ],
         'msvs_disabled_warnings': [
           # warning C4251: 'node::ObjectWrap::handle_' : class 'v8::Persistent<T>'
           # needs to have dll-interface to be used by
           # clients of class 'node::ObjectWrap'
-          4251
+          4251,
         ],
-      }, {
-        # OS!="win"
-        'defines': [
-          '_LARGEFILE_SOURCE',
-          '_FILE_OFFSET_BITS=64'
-        ],
+      }, {  # OS!="win"
+         'defines': [
+           '_LARGEFILE_SOURCE',
+           '_FILE_OFFSET_BITS=64',
+         ],
+       }],
+      ['OS in "freebsd openbsd netbsd solaris android" or (OS=="linux" and target_arch != "ia32")', {
+        'cflags': ['-fPIC'],
       }],
-      [ 'OS in "freebsd openbsd netbsd solaris android" or \
-         (OS=="linux" and target_arch!="ia32")', {
-        'cflags': [ '-fPIC' ],
-      }],
-    ]
-  }
+    ],
+  },
 }

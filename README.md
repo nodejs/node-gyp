@@ -1,13 +1,13 @@
 # `node-gyp` - Node.js native addon build tool
 
 `node-gyp` is a cross-platform command-line tool written in Node.js for compiling
-native addon modules for Node.js. It bundles the [gyp](https://gyp.gsrc.io)
-project used by the Chromium team and takes away the pain of dealing with the
+native addon modules for Node.js. It bundles the [gyp](https://gyp3.org/)
+project used by the Node.js core team and takes away the pain of dealing with the
 various differences in build platforms.
 
-Multiple target versions of Node.js are supported (i.e. `0.8`, ..., `4`, `5`, `6`,
-etc.), regardless of what version of Node.js is actually installed on your system
-(`node-gyp` downloads the necessary development files or headers for the target version).
+Multiple target versions of Node.js are supported (i.e. `6`, `8`, `10`, etc.),
+regardless of what version of Node.js is actually installed on your system
+(`node-gyp` downloads the necessary development files and headers for the target version).
 
 ## Features
 
@@ -25,15 +25,15 @@ $ npm install -g node-gyp
 
 You will also need to install:
 
+* `python v2.7` (`v3.x` support is a work in progress)
+
 ### On Unix
 
-   * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported)
    * `make`
    * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
 
 ### On macOS
 
-   * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported) (already installed on macOS)
    * [Xcode](https://developer.apple.com/xcode/download/)
      * You also need to install the `Command Line Tools` via Xcode. You can find this under the menu `Xcode -> Preferences -> Locations` (or by running `xcode-select --install` in your Terminal)
        * This step will install `gcc` and the related toolchain containing `make`
@@ -50,7 +50,7 @@ Install tools and configuration manually:
    * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
    (using "Visual C++ build tools" workload) or [Visual Studio 2017 Community](https://visualstudio.microsoft.com/pl/thank-you-downloading-visual-studio/?sku=Community)
    (using the "Desktop development with C++" workload)
-   * Install [Python 2.7](https://www.python.org/downloads/) (`v3.x.x` is not supported), and run `npm config set python python2.7` (or see below for further instructions on specifying the proper Python version and path.)
+   * Install [Python 2.7](https://www.python.org/downloads/), and run `npm config set python python2.7` (or see below for further instructions on specifying the proper Python version and path.)
    * Launch cmd, `npm config set msvs_version 2017`
 
    If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
