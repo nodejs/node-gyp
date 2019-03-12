@@ -90,10 +90,14 @@
 
     'conditions': [
       [ 'OS=="mac"', {
+        'cflags': [
+          '-fvisibility=hidden'
+        ],
         'defines': [
           '_DARWIN_USE_64_BIT_INODE=1'
         ],
         'xcode_settings': {
+          'GCC_SYMBOLS_PRIVATE_EXTERN': 'YES', # -fvisibility=hidden
           'DYLIB_INSTALL_NAME_BASE': '@rpath'
         },
       }],
