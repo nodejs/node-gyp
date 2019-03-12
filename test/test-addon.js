@@ -23,6 +23,15 @@ function getEncoding () {
   return execFileSync('python', ['-c', code]).toString().trim()
 }
 
+function runDuplicateBindings () {
+  const hostProcess = process.execPath
+  const testCode =
+    'console.log((function(bindings) {' +
+    'return bindings.pointerCheck1(bindings.pointerCheck2());' +
+    "})(require('duplicate_symbols')))"
+  return execFileSync(hostProcess, ['-e', testCode], { cwd: __dirname }).toString()
+}
+
 function checkCharmapValid () {
   var data
   try {
@@ -49,6 +58,21 @@ test('build simple addon', function (t) {
   })
   proc.stdout.setEncoding('utf-8')
   proc.stderr.setEncoding('utf-8')
+})
+
+test('make sure addon symbols do not overlap', function (t) {
+  t.plan(3)
+
+  var addonPath = path.resolve(__dirname, 'node_modules', 'duplicate_symbols')
+  // Set the loglevel otherwise the output disappears when run via 'npm test'
+  var cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
+  execFile(process.execPath, cmd, function (err, stdout, stderr) {
+    var logLines = stderr.trim().split(/\r?\n/)
+    var lastLine = logLines[logLines.length - 1]
+    t.strictEqual(err, null)
+    t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
+    t.strictEqual(runDuplicateBindings().trim(), 'not equal')
+  })
 })
 
 test('build simple addon in path with non-ascii characters', function (t) {
