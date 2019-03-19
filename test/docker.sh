@@ -2,7 +2,7 @@
 
 #set -e
 
-test_node_versions="0.8.28 0.10.40 0.12.7 4.3.0 5.6.0"
+test_node_versions="6.17.0 8.15.1 10.15.3 11.12.0"
 
 myuid=$(id -u)
 mygid=$(id -g)
