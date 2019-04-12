@@ -1,3 +1,4 @@
 gyp/test
 node_modules
 test/.node-gyp
+package-lock.json
