@@ -1,3 +1,15 @@
+v3.8.1 2019-04-12
+=================
+
+### Due to security concern this version drops support for Node.js versions < 4.0.0
+
+* [[`3578b2abf0`](https://github.com/nodejs/node-gyp/commit/3578b2abf0)] - **deps**: explicit limit on supported engines (Refael Ackermann)
+* [[`ec8505e15f`](https://github.com/nodejs/node-gyp/commit/ec8505e15f)] - **deps**: updated tar package version to 4.4.8 (Pobegaylo Maksim) [#1713](https://github.com/nodejs/node-gyp/pull/1713)
+* [[`6e1e425ffb`](https://github.com/nodejs/node-gyp/commit/6e1e425ffb)] - **(BREAKING for node < 4)** Upgrade to tar v3 (isaacs) [#1212](https://github.com/nodejs/node-gyp/pull/1212)
+* [[`e6699d13cd`](https://github.com/nodejs/node-gyp/commit/e6699d13cd)] - **test**: fix addon test for Node.js 12 and V8 7.4 (Richard Lau) [#1705](https://github.com/nodejs/node-gyp/pull/1705)
+* [[`0c6bf530a0`](https://github.com/nodejs/node-gyp/commit/0c6bf530a0)] - **lib**: use print() for python version detection (GreenAddress) [#1534](https://github.com/nodejs/node-gyp/pull/1534)
+
+
 v3.8.0 2018-08-09
 =================
 
