@@ -1,3 +1,11 @@
+v4.0.0 2019-04-24
+=================
+
+* [[`ceed5cbe10`](https://github.com/nodejs/node-gyp/commit/ceed5cbe10)] - **deps**: updated tar package version to 4.4.8 (Pobegaylo Maksim) [#1713](https://github.com/nodejs/node-gyp/pull/1713)
+* [[`374519e066`](https://github.com/nodejs/node-gyp/commit/374519e066)] - **(SEMVER-MAJOR)** Upgrade to tar v3 (isaacs) [#1212](https://github.com/nodejs/node-gyp/pull/1212)
+* [[`e6699d13cd`](https://github.com/nodejs/node-gyp/commit/e6699d13cd)] - **test**: fix addon test for Node.js 12 and V8 7.4 (Richard Lau) [#1705](https://github.com/nodejs/node-gyp/pull/1705)
+* [[`0c6bf530a0`](https://github.com/nodejs/node-gyp/commit/0c6bf530a0)] - **lib**: use print() for python version detection (GreenAddress) [#1534](https://github.com/nodejs/node-gyp/pull/1534)
+
 v3.8.0 2018-08-09
 =================
 
