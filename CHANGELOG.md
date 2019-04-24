@@ -1,3 +1,42 @@
+v5.0.0 2019-06-13
+=================
+
+* [[`8a83972743`](https://github.com/nodejs/node-gyp/commit/8a83972743)] - **(SEMVER-MAJOR)** **bin**: follow XDG OS conventions for storing data (Selwyn) [#1570](https://github.com/nodejs/node-gyp/pull/1570)
+* [[`9e46872ea3`](https://github.com/nodejs/node-gyp/commit/9e46872ea3)] - **bin,lib**: remove extra comments/lines/spaces (Jon Moss) [#1508](https://github.com/nodejs/node-gyp/pull/1508)
+* [[`8098ebdeb4`](https://github.com/nodejs/node-gyp/commit/8098ebdeb4)] - **deps**: replace `osenv` dependency with native `os` (Selwyn)
+* [[`f83b457e03`](https://github.com/nodejs/node-gyp/commit/f83b457e03)] - **deps**: bump request to 2.8.7, fixes heok/hawk issues (Rohit Hazra) [#1492](https://github.com/nodejs/node-gyp/pull/1492)
+* [[`323cee7323`](https://github.com/nodejs/node-gyp/commit/323cee7323)] - **deps**: pin `request` version range (Refael Ackermann) [#1300](https://github.com/nodejs/node-gyp/pull/1300)
+* [[`c515912d08`](https://github.com/nodejs/node-gyp/commit/c515912d08)] - **doc**: improve issue template (Bartosz Sosnowski) [#1618](https://github.com/nodejs/node-gyp/pull/1618)
+* [[`cca2d66727`](https://github.com/nodejs/node-gyp/commit/cca2d66727)] - **doc**: python info needs own header (Taylor D. Lee) [#1245](https://github.com/nodejs/node-gyp/pull/1245)
+* [[`3e64c780f5`](https://github.com/nodejs/node-gyp/commit/3e64c780f5)] - **doc**: lint README.md (Jon Moss) [#1498](https://github.com/nodejs/node-gyp/pull/1498)
+* [[`a20faedc91`](https://github.com/nodejs/node-gyp/commit/a20faedc91)] - **(SEMVER-MAJOR)** **gyp**: enable MARMASM items only on new VS versions (João Reis) [#1762](https://github.com/nodejs/node-gyp/pull/1762)
+* [[`721eb691cf`](https://github.com/nodejs/node-gyp/commit/721eb691cf)] - **gyp**: teach MSVS generator about MARMASM Items (Jon Kunkee) [#1679](https://github.com/nodejs/node-gyp/pull/1679)
+* [[`91744bfecc`](https://github.com/nodejs/node-gyp/commit/91744bfecc)] - **gyp**: add support for Windows on Arm (Richard Townsend) [#1739](https://github.com/nodejs/node-gyp/pull/1739)
+* [[`a6e0a6c7ed`](https://github.com/nodejs/node-gyp/commit/a6e0a6c7ed)] - **gyp**: move compile\_commands\_json (Paul Maréchal) [#1661](https://github.com/nodejs/node-gyp/pull/1661)
+* [[`92e8b52cee`](https://github.com/nodejs/node-gyp/commit/92e8b52cee)] - **gyp**: fix target --\> self.target (cclauss)
+* [[`febdfa2137`](https://github.com/nodejs/node-gyp/commit/febdfa2137)] - **gyp**: fix sntex error (cclauss) [#1333](https://github.com/nodejs/node-gyp/pull/1333)
+* [[`588d333c14`](https://github.com/nodejs/node-gyp/commit/588d333c14)] - **gyp**: \_winreg module was renamed to winreg in Python 3. (Craig Rodrigues)
+* [[`98226d198c`](https://github.com/nodejs/node-gyp/commit/98226d198c)] - **gyp**: replace basestring with str, but only on Python 3. (Craig Rodrigues)
+* [[`7535e4478e`](https://github.com/nodejs/node-gyp/commit/7535e4478e)] - **gyp**: replace deprecated functions (Craig Rodrigues)
+* [[`2040cd21cc`](https://github.com/nodejs/node-gyp/commit/2040cd21cc)] - **gyp**: use print as a function, as specified in PEP 3105. (Craig Rodrigues)
+* [[`abef93ded5`](https://github.com/nodejs/node-gyp/commit/abef93ded5)] - **gyp**: get ready for python 3 (cclauss)
+* [[`43031fadcb`](https://github.com/nodejs/node-gyp/commit/43031fadcb)] - **python**: clean-up detection (João Reis) [#1582](https://github.com/nodejs/node-gyp/pull/1582)
+* [[`49ab79d221`](https://github.com/nodejs/node-gyp/commit/49ab79d221)] - **python**: more informative error (Refael Ackermann) [#1269](https://github.com/nodejs/node-gyp/pull/1269)
+* [[`997bc3c748`](https://github.com/nodejs/node-gyp/commit/997bc3c748)] - **readme**: add ARM64 info to MSVC setup instructions (Jon Kunkee) [#1655](https://github.com/nodejs/node-gyp/pull/1655)
+* [[`788e767179`](https://github.com/nodejs/node-gyp/commit/788e767179)] - **test**: remove unused variable (João Reis)
+* [[`6f5a408934`](https://github.com/nodejs/node-gyp/commit/6f5a408934)] - **tools**: fix usage of inherited -fPIC and -fPIE (Jens) [#1340](https://github.com/nodejs/node-gyp/pull/1340)
+* [[`0efb8fb34b`](https://github.com/nodejs/node-gyp/commit/0efb8fb34b)] - **(SEMVER-MAJOR)** **win**: support running in VS Command Prompt (João Reis) [#1762](https://github.com/nodejs/node-gyp/pull/1762)
+* [[`360ddbdf3a`](https://github.com/nodejs/node-gyp/commit/360ddbdf3a)] - **(SEMVER-MAJOR)** **win**: add support for Visual Studio 2019 (João Reis) [#1762](https://github.com/nodejs/node-gyp/pull/1762)
+* [[`8f43f68275`](https://github.com/nodejs/node-gyp/commit/8f43f68275)] - **(SEMVER-MAJOR)** **win**: detect all VS versions in node-gyp (João Reis) [#1762](https://github.com/nodejs/node-gyp/pull/1762)
+* [[`7fe4095974`](https://github.com/nodejs/node-gyp/commit/7fe4095974)] - **(SEMVER-MAJOR)** **win**: generic Visual Studio 2017 detection (João Reis) [#1762](https://github.com/nodejs/node-gyp/pull/1762)
+* [[`7a71d68bce`](https://github.com/nodejs/node-gyp/commit/7a71d68bce)] - **win**: use msbuild from the configure stage (Bartosz Sosnowski) [#1654](https://github.com/nodejs/node-gyp/pull/1654)
+* [[`d3b21220a0`](https://github.com/nodejs/node-gyp/commit/d3b21220a0)] - **win**: fix delay-load hook for electron 4 (Andy Dill)
+* [[`81f3a92338`](https://github.com/nodejs/node-gyp/commit/81f3a92338)] - Update list of Node.js versions to test against. (Ben Noordhuis) [#1670](https://github.com/nodejs/node-gyp/pull/1670)
+* [[`4748f6ab75`](https://github.com/nodejs/node-gyp/commit/4748f6ab75)] - Remove deprecated compatibility code. (Ben Noordhuis) [#1670](https://github.com/nodejs/node-gyp/pull/1670)
+* [[`45e3221fd4`](https://github.com/nodejs/node-gyp/commit/45e3221fd4)] - Remove an outdated workaround for Python 2.4 (cclauss) [#1650](https://github.com/nodejs/node-gyp/pull/1650)
+* [[`721dc7d314`](https://github.com/nodejs/node-gyp/commit/721dc7d314)] - Add ARM64 to MSBuild /Platform logic (Jon Kunkee) [#1655](https://github.com/nodejs/node-gyp/pull/1655)
+* [[`a5b7410497`](https://github.com/nodejs/node-gyp/commit/a5b7410497)] - Add ESLint no-unused-vars rule (Jon Moss) [#1497](https://github.com/nodejs/node-gyp/pull/1497)
+
 v4.0.0 2019-04-24
 =================
 
