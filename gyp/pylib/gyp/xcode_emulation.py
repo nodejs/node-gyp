@@ -458,7 +458,6 @@ class XcodeSettings(object):
     return XcodeSettings._sdk_path_cache[sdk_root]
 
   def _AppendPlatformVersionMinFlags(self, lst):
-    self._Appendf(lst, 'MACOSX_DEPLOYMENT_TARGET', '-mmacosx-version-min=%s')
     if 'IPHONEOS_DEPLOYMENT_TARGET' in self._Settings():
       # TODO: Implement this better?
       sdk_path_basename = os.path.basename(self._SdkPath())
@@ -468,6 +467,8 @@ class XcodeSettings(object):
       else:
         self._Appendf(lst, 'IPHONEOS_DEPLOYMENT_TARGET',
                       '-miphoneos-version-min=%s')
+    else:
+      self._Appendf(lst, 'MACOSX_DEPLOYMENT_TARGET', '-mmacosx-version-min=%s')
 
   def GetCflags(self, configname, arch=None):
     """Returns flags that need to be added to .c, .cc, .m, and .mm
