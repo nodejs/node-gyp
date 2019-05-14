@@ -844,7 +844,7 @@ class XcodeSettings(object):
     if self._IsXCTest():
       platform_root = self._XcodePlatformPath(configname)
       if platform_root:
-        cflags.append('-F' + platform_root + '/Developer/Library/Frameworks/')
+        cflags.append('-F' + platform_root + '/Developer/Library/Frameworks/')  # noqa TODO @cclauss
 
     is_extension = self._IsIosAppExtension() or self._IsIosWatchKitExtension()
     if sdk_root and is_extension:
