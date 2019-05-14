@@ -178,15 +178,15 @@ def _RegistryGetValueUsingWinReg(key, value):
   """
   try:
       # Python 2
-      from _winreg import OpenKey, QueryValueEx
+      from _winreg import HKEY_LOCAL_MACHINE, OpenKey, QueryValueEx
   except ImportError:
       # Python 3
-      from winreg import OpenKey, QueryValueEx
+      from winreg import HKEY_LOCAL_MACHINE, OpenKey, QueryValueEx
 
   try:
     root, subkey = key.split('\\', 1)
     assert root == 'HKLM'  # Only need HKLM for now.
-    with OpenKey(_winreg.HKEY_LOCAL_MACHINE, subkey) as hkey:
+    with OpenKey(HKEY_LOCAL_MACHINE, subkey) as hkey:
       return QueryValueEx(hkey, value)[0]
   except WindowsError:
     return None
