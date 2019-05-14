@@ -177,7 +177,7 @@ Some additional resources for addons and writing `gyp` files:
 | `--devdir=$path`                  | SDK download directory (default is OS cache directory)
 | `--ensure`                        | Don't reinstall headers if already present
 | `--dist-url=$url`                 | Download header tarball from custom URL
-| `--proxy=$url`                    | Set HTTP proxy for downloading header tarball
+| `--proxy=$url`                    | Set HTTP(S) proxy for downloading header tarball
 | `--cafile=$cafile`                | Override default CA chain (to download tarball)
 | `--nodedir=$path`                 | Set the path to the node source code
 | `--python=$path`                  | Set path to the Python 2 binary
