@@ -294,13 +294,109 @@ test('VS2017 Community with C++ workload', function (t) {
   finder.findVisualStudio()
 })
 
+test('VS2019 Preview with C++ workload', function (t) {
+  t.plan(2)
+
+  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
+    t.strictEqual(err, null)
+    t.deepEqual(info, {
+      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
+        'Preview\\MSBuild\\Current\\Bin\\MSBuild.exe',
+      path:
+        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Preview',
+      sdk: '10.0.17763.0',
+      toolset: 'v142',
+      version: '16.0.28608.199',
+      versionMajor: 16,
+      versionMinor: 0,
+      versionYear: 2019
+    })
+  })
+
+  poison(finder, 'regSearchKeys')
+  finder.findVisualStudio2017OrNewer = (cb) => {
+    const file = path.join(__dirname, 'fixtures',
+      'VS_2019_Preview.txt')
+    const data = fs.readFileSync(file)
+    finder.parseData(null, data, '', cb)
+  }
+  finder.findVisualStudio()
+})
+
+test('minimal VS2019 Build Tools', function (t) {
+  t.plan(2)
+
+  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
+    t.strictEqual(err, null)
+    t.deepEqual(info, {
+      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
+        'BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe',
+      path:
+        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools',
+      sdk: '10.0.17134.0',
+      toolset: 'v142',
+      version: '16.1.28922.388',
+      versionMajor: 16,
+      versionMinor: 1,
+      versionYear: 2019
+    })
+  })
+
+  poison(finder, 'regSearchKeys')
+  finder.findVisualStudio2017OrNewer = (cb) => {
+    const file = path.join(__dirname, 'fixtures',
+      'VS_2019_BuildTools_minimal.txt')
+    const data = fs.readFileSync(file)
+    finder.parseData(null, data, '', cb)
+  }
+  finder.findVisualStudio()
+})
+
+test('VS2019 Community with C++ workload', function (t) {
+  t.plan(2)
+
+  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
+    t.strictEqual(err, null)
+    t.deepEqual(info, {
+      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
+        'Community\\MSBuild\\Current\\Bin\\MSBuild.exe',
+      path:
+        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community',
+      sdk: '10.0.17763.0',
+      toolset: 'v142',
+      version: '16.1.28922.388',
+      versionMajor: 16,
+      versionMinor: 1,
+      versionYear: 2019
+    })
+  })
+
+  poison(finder, 'regSearchKeys')
+  finder.findVisualStudio2017OrNewer = (cb) => {
+    const file = path.join(__dirname, 'fixtures',
+      'VS_2019_Community_workload.txt')
+    const data = fs.readFileSync(file)
+    finder.parseData(null, data, '', cb)
+  }
+  finder.findVisualStudio()
+})
+
 function allVsVersions (t, finder) {
   finder.findVisualStudio2017OrNewer = (cb) => {
-    const file1 = path.join(__dirname, 'fixtures', 'VS_2017_BuildTools_minimal.txt')
-    const data1 = JSON.parse(fs.readFileSync(file1))
-    const file2 = path.join(__dirname, 'fixtures', 'VS_2017_Community_workload.txt')
-    const data2 = JSON.parse(fs.readFileSync(file2))
-    const data = JSON.stringify(data1.concat(data2))
+    const data0 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
+      'VS_2017_Unusable.txt')))
+    const data1 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
+      'VS_2017_BuildTools_minimal.txt')))
+    const data2 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
+      'VS_2017_Community_workload.txt')))
+    const data3 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
+      'VS_2019_Preview.txt')))
+    const data4 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
+      'VS_2019_BuildTools_minimal.txt')))
+    const data5 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
+      'VS_2019_Community_workload.txt')))
+    const data = JSON.stringify(data0.concat(data1, data2, data3, data4,
+      data5))
     finder.parseData(null, data, '', cb)
   }
   finder.regSearchKeys = (keys, value, addOpts, cb) => {
@@ -410,6 +506,45 @@ test('look for VS2017 by installation path', function (t) {
       t.deepEqual(info.path,
         'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community')
     })
+
+  allVsVersions(t, finder)
+  finder.findVisualStudio()
+})
+
+test('look for VS2019 by version number', function (t) {
+  t.plan(2)
+
+  const finder = new TestVisualStudioFinder(semverV1, '2019', (err, info) => {
+    t.strictEqual(err, null)
+    t.deepEqual(info.versionYear, 2019)
+  })
+
+  allVsVersions(t, finder)
+  finder.findVisualStudio()
+})
+
+test('look for VS2017 by installation path', function (t) {
+  t.plan(2)
+
+  const finder = new TestVisualStudioFinder(semverV1,
+    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools',
+    (err, info) => {
+      t.strictEqual(err, null)
+      t.deepEqual(info.path,
+        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools')
+    })
+
+  allVsVersions(t, finder)
+  finder.findVisualStudio()
+})
+
+test('latest version should be found by default', function (t) {
+  t.plan(2)
+
+  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
+    t.strictEqual(err, null)
+    t.deepEqual(info.versionYear, 2019)
+  })
 
   allVsVersions(t, finder)
   finder.findVisualStudio()
