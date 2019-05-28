@@ -88,6 +88,7 @@ generator_additional_non_configuration_keys = [
     'msvs_enable_winrt',
     'msvs_requires_importlibrary',
     'msvs_enable_winphone',
+    'msvs_enable_marmasm',
     'msvs_application_type_revision',
     'msvs_target_platform_version',
     'msvs_target_platform_minversion',
@@ -3362,7 +3363,8 @@ def _GenerateMSBuildProject(project, options, version, generator_flags):
    content += _GetMSBuildLocalProperties(project.msbuild_toolset)
   content += import_cpp_props_section
   content += import_masm_props_section
-  content += import_marmasm_props_section
+  if spec.get('msvs_enable_marmasm'):
+    content += import_marmasm_props_section
   content += _GetMSBuildExtensions(props_files_of_rules)
   content += _GetMSBuildPropertySheets(configurations)
   content += macro_section
@@ -3375,7 +3377,8 @@ def _GenerateMSBuildProject(project, options, version, generator_flags):
   content += _GetMSBuildProjectReferences(project)
   content += import_cpp_targets_section
   content += import_masm_targets_section
-  content += import_marmasm_targets_section
+  if spec.get('msvs_enable_marmasm'):
+    content += import_marmasm_targets_section
   content += _GetMSBuildExtensionTargets(targets_files_of_rules)
 
   if spec.get('msvs_external_builder'):
