@@ -8,6 +8,8 @@ const VisualStudioFinder = findVisualStudio.test.VisualStudioFinder
 
 const semverV1 = { major: 1, minor: 0, patch: 0 }
 
+delete process.env.VCINSTALLDIR
+
 function poison (object, property) {
   function fail () {
     console.error(Error(`Property ${property} should not have been accessed.`))
@@ -545,6 +547,68 @@ test('latest version should be found by default', function (t) {
     t.strictEqual(err, null)
     t.deepEqual(info.versionYear, 2019)
   })
+
+  allVsVersions(t, finder)
+  finder.findVisualStudio()
+})
+
+test('run on a usable VS Command Prompt', function (t) {
+  t.plan(2)
+
+  process.env.VCINSTALLDIR = 'C:\\VS2015\\VC'
+  // VSINSTALLDIR is not defined on Visual C++ Build Tools 2015
+  delete process.env.VSINSTALLDIR
+
+  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
+    t.strictEqual(err, null)
+    t.deepEqual(info.path, 'C:\\VS2015')
+  })
+
+  allVsVersions(t, finder)
+  finder.findVisualStudio()
+})
+
+test('run on a unusable VS Command Prompt', function (t) {
+  t.plan(2)
+
+  process.env.VCINSTALLDIR =
+    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildToolsUnusable\\VC'
+
+  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
+    t.ok(/find .* Visual Studio/i.test(err), 'expect error')
+    t.false(info, 'no data')
+  })
+
+  allVsVersions(t, finder)
+  finder.findVisualStudio()
+})
+
+test('run on a VS Command Prompt with matching msvs_version', function (t) {
+  t.plan(2)
+
+  process.env.VCINSTALLDIR = 'C:\\VS2015\\VC'
+
+  const finder = new TestVisualStudioFinder(semverV1, 'C:\\VS2015',
+    (err, info) => {
+      t.strictEqual(err, null)
+      t.deepEqual(info.path, 'C:\\VS2015')
+    })
+
+  allVsVersions(t, finder)
+  finder.findVisualStudio()
+})
+
+test('run on a VS Command Prompt with mismatched msvs_version', function (t) {
+  t.plan(2)
+
+  process.env.VCINSTALLDIR =
+    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC'
+
+  const finder = new TestVisualStudioFinder(semverV1, 'C:\\VS2015',
+    (err, info) => {
+      t.ok(/find .* Visual Studio/i.test(err), 'expect error')
+      t.false(info, 'no data')
+    })
 
   allVsVersions(t, finder)
   finder.findVisualStudio()
