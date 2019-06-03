@@ -2059,6 +2059,14 @@ def GenerateOutput(target_list, target_dicts, data, params):
       'srcdir': srcdir,
       'copy_archive_args': copy_archive_arguments,
       'makedep_args': makedep_arguments,
+      'CC.target':   GetEnvironFallback(('CC_target', 'CC'), '$(CC)'),
+      'AR.target':   GetEnvironFallback(('AR_target', 'AR'), '$(AR)'),
+      'CXX.target':  GetEnvironFallback(('CXX_target', 'CXX'), '$(CXX)'),
+      'LINK.target': GetEnvironFallback(('LINK_target', 'LINK'), '$(LINK)'),
+      'CC.host':     GetEnvironFallback(('CC_host', 'CC'), 'gcc'),
+      'AR.host':     GetEnvironFallback(('AR_host', 'AR'), 'ar'),
+      'CXX.host':    GetEnvironFallback(('CXX_host', 'CXX'), 'g++'),
+      'LINK.host':   GetEnvironFallback(('LINK_host', 'LINK'), '$(CXX.host)'),
     }
   if flavor == 'mac':
     flock_command = './gyp-mac-tool flock'
@@ -2079,6 +2087,10 @@ def GenerateOutput(target_list, target_dicts, data, params):
         'copy_archive_args': copy_archive_arguments,
         'makedep_args': makedep_arguments,
         'link_commands': LINK_COMMANDS_OS390,
+        'CC.target':   GetEnvironFallback(('CC_target', 'CC'), 'njsc'),
+        'CXX.target':  GetEnvironFallback(('CXX_target', 'CXX'), 'njsc++'),
+        'CC.host':     GetEnvironFallback(('CC_host', 'CC'), 'njsc'),
+        'CXX.host':    GetEnvironFallback(('CXX_host', 'CXX'), 'njsc++'),
     })
   elif flavor == 'solaris':
     header_params.update({
@@ -2103,17 +2115,6 @@ def GenerateOutput(target_list, target_dicts, data, params):
         'flock': './gyp-flock-tool flock',
         'flock_index': 2,
     })
-
-  header_params.update({
-    'CC.target':   GetEnvironFallback(('CC_target', 'CC'), '$(CC)'),
-    'AR.target':   GetEnvironFallback(('AR_target', 'AR'), '$(AR)'),
-    'CXX.target':  GetEnvironFallback(('CXX_target', 'CXX'), '$(CXX)'),
-    'LINK.target': GetEnvironFallback(('LINK_target', 'LINK'), '$(LINK)'),
-    'CC.host':     GetEnvironFallback(('CC_host', 'CC'), 'gcc'),
-    'AR.host':     GetEnvironFallback(('AR_host', 'AR'), 'ar'),
-    'CXX.host':    GetEnvironFallback(('CXX_host', 'CXX'), 'g++'),
-    'LINK.host':   GetEnvironFallback(('LINK_host', 'LINK'), '$(CXX.host)'),
-  })
 
   build_file, _, _ = gyp.common.ParseQualifiedTarget(target_list[0])
   make_global_settings_array = data[build_file].get('make_global_settings', [])
