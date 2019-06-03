@@ -110,7 +110,14 @@
         'cflags': [
           '-q64',
           '-Wc,DLL',
-          '-qlonglong'
+          '-qlonglong',
+          '-qenum=int',
+          '-qxclang=-fexec-charset=ISO8859-1'
+        ],
+        'defines': [
+          '_ALL_SOURCE=1',
+          'MAP_FAILED=-1',
+          '_UNIX03_SOURCE=1'
         ],
         'ldflags': [
           '-q64',
