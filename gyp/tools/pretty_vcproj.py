@@ -11,9 +11,10 @@
 
    It outputs the resulting xml to stdout.
 """
+from __future__ import print_function
+
 __author__ = 'nsylvain (Nicolas Sylvain)'
 
-from __future__ import print_function
 
 import os
 import sys
