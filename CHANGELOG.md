@@ -1,3 +1,9 @@
+v5.0.1 2019-06-20
+=================
+
+* [[`e3861722ed`](https://github.com/nodejs/node-gyp/commit/e3861722ed)] - **doc**: document --jobs max (David Sanders) [#1770](https://github.com/nodejs/node-gyp/pull/1770)
+* [[`1cfdb28886`](https://github.com/nodejs/node-gyp/commit/1cfdb28886)] - **lib**: reintroduce support for iojs file naming for releases \>= 1 && \< 4 (Samuel Attard) [#1777](https://github.com/nodejs/node-gyp/pull/1777)
+
 v5.0.0 2019-06-13
 =================
 
