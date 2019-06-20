@@ -162,7 +162,7 @@ Some additional resources for addons and writing `gyp` files:
 
 | **Command**                       | **Description**
 |:----------------------------------|:------------------------------------------
-| `-j n`, `--jobs n`                | Run `make` in parallel
+| `-j n`, `--jobs n`                | Run `make` in parallel. The value `max` will use all available CPU cores
 | `--target=v6.2.1`                 | Node.js version to build for (default is `process.version`)
 | `--silly`, `--loglevel=silly`     | Log all progress to console
 | `--verbose`, `--loglevel=verbose` | Log most progress to console
