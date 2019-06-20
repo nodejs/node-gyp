@@ -12,14 +12,14 @@
    Then it outputs a possible build order.
 """
 
-__author__ = 'nsylvain (Nicolas Sylvain)'
-
 from __future__ import print_function
 
 import os
 import re
 import sys
 import pretty_vcproj
+
+__author__ = 'nsylvain (Nicolas Sylvain)'
 
 def BuildProject(project, built, projects, deps):
   # if all dependencies are done, we can build it, otherwise we try to build the
