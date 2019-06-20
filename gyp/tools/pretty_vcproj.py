@@ -11,7 +11,6 @@
 
    It outputs the resulting xml to stdout.
 """
-__author__ = 'nsylvain (Nicolas Sylvain)'
 
 from __future__ import print_function
 
@@ -20,6 +19,8 @@ import sys
 
 from xml.dom.minidom import parse
 from xml.dom.minidom import Node
+
+__author__ = 'nsylvain (Nicolas Sylvain)'
 
 REPLACEMENTS = dict()
 ARGUMENTS = None
