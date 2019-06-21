@@ -28,7 +28,7 @@ function runDuplicateBindings() {
 }
 
 function getEncoding() {
-  var code = 'import locale;print locale.getdefaultlocale()[1]'
+  var code = 'import locale;print(locale.getdefaultlocale()[1])'
   return execFileSync('python', ['-c', code]).toString().trim()
 }
 
