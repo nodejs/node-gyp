@@ -138,21 +138,18 @@ a project file is output.
 """
 
 import gyp.common
+import hashlib
 import posixpath
 import re
 import struct
 import sys
 
-# hashlib is supplied as of Python 2.5 as the replacement interface for sha
-# and other secure hashes.  In 2.6, sha is deprecated.  Import hashlib if
-# available, avoiding a deprecation warning under 2.6.  Import sha otherwise,
-# preserving 2.4 compatibility.
 try:
-  import hashlib
-  _new_sha1 = hashlib.sha1
-except ImportError:
-  import sha
-  _new_sha1 = sha.new
+  basestring, cmp, unicode
+except NameError:  # Python 3
+  basestring = unicode = str
+  def cmp(x, y):
+    return (x > y) - (x < y)
 
 
 # See XCObject._EncodeString.  This pattern is used to determine when a string
@@ -324,8 +321,7 @@ class XCObject(object):
           that._properties[key] = new_value
         else:
           that._properties[key] = value
-      elif isinstance(value, str) or isinstance(value, unicode) or \
-           isinstance(value, int):
+      elif isinstance(value, (basestring, int)):
         that._properties[key] = value
       elif isinstance(value, list):
         if is_strong:
@@ -422,7 +418,7 @@ class XCObject(object):
       hash.update(data)
 
     if seed_hash is None:
-      seed_hash = _new_sha1()
+      seed_hash = hashlib.sha1()
 
     hash = seed_hash.copy()
 
@@ -788,8 +784,7 @@ class XCObject(object):
             self._properties[property] = value.Copy()
           else:
             self._properties[property] = value
-        elif isinstance(value, str) or isinstance(value, unicode) or \
-             isinstance(value, int):
+        elif isinstance(value, (basestring, int)):
           self._properties[property] = value
         elif isinstance(value, list):
           if is_strong:
