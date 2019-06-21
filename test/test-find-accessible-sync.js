@@ -5,7 +5,7 @@ var path = require('path')
 var requireInject = require('require-inject')
 var configure = requireInject('../lib/configure', {
   'graceful-fs': {
-    'closeSync': function (fd) { return undefined },
+    'closeSync': function () { return undefined },
     'openSync': function (path) {
       if (readableFiles.some(function (f) { return f === path} )) {
         return 0
