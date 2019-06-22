@@ -1,9 +1,9 @@
 'use strict'
 
+var test = require('tap').test
 var fs = require('fs')
 var http = require('http')
 var https = require('https')
-var test = require('tape')
 var install = require('../lib/install')
 
 test('download over http', function (t) {

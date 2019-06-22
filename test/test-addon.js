@@ -1,6 +1,6 @@
 'use strict'
 
-var test = require('tape')
+var test = require('tap').test
 var path = require('path')
 var fs = require('graceful-fs')
 var child_process = require('child_process')

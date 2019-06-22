@@ -1,6 +1,6 @@
 'use strict'
 
-var test = require('tape')
+var test = require('tap').test
 var path = require('path')
 var requireInject = require('require-inject')
 var configure = requireInject('../lib/configure', {

@@ -1,6 +1,6 @@
 'use strict'
 
-var test = require('tape')
+var test = require('tap').test
 var path = require('path')
 var gyp = require('../lib/node-gyp')
 var requireInject = require('require-inject')

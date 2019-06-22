@@ -1,4 +1,4 @@
-var test = require('tape')
+var test = require('tap').test
 var processRelease = require('../lib/process-release')
 
 test('test process release - process.version = 0.8.20', function (t) {

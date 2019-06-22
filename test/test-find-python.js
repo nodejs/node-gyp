@@ -1,6 +1,6 @@
 'use strict'
 
-var test = require('tape')
+var test = require('tap').test
 var configure = require('../lib/configure')
 var execFile = require('child_process').execFile
 var PythonFinder = configure.test.PythonFinder

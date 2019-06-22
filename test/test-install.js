@@ -1,6 +1,6 @@
 'use strict'
 
-var test = require('tape')
+var test = require('tap').test
 var install = require('../lib/install').test.install
 
 test('EACCES retry once', function (t) {
