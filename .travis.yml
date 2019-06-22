@@ -17,7 +17,7 @@ before_script:
     - flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - npm install
 script:
-    - npm test
+    - npm run test
     #- pytest --capture=sys  # add other tests here
 notifications:
     on_success: change

@@ -1,6 +1,6 @@
 'use strict'
 
-var test = require('tape')
+var test = require('tap').test
 var path = require('path')
 var gyp = require('../lib/node-gyp')
 var requireInject = require('require-inject')
@@ -16,6 +16,8 @@ var configure = requireInject('../lib/configure', {
 var EXPECTED_PYPATH = path.join(__dirname, '..', 'gyp', 'pylib')
 var SEPARATOR = process.platform == 'win32' ? ';' : ':'
 var SPAWN_RESULT = { on: function () { } }
+
+require('npmlog').level = 'warn'
 
 test('configure PYTHONPATH with no existing env', function (t) {
   t.plan(1)

@@ -1,6 +1,6 @@
 'use strict'
 
-var test = require('tape')
+var test = require('tap').test
 var path = require('path')
 var fs = require('graceful-fs')
 var child_process = require('child_process')
@@ -15,7 +15,6 @@ function runHello(hostProcess) {
     hostProcess = process.execPath
   }
   var testCode = "console.log(require('hello_world').hello())"
-  console.log('running ', hostProcess);
   return execFileSync(hostProcess, ['-e', testCode], { cwd: __dirname }).toString()
 }
 
@@ -25,7 +24,6 @@ function runDuplicateBindings() {
     "console.log((function(bindings) {" +
     "return bindings.pointerCheck1(bindings.pointerCheck2());" +
     "})(require('duplicate_symbols')))"
-  console.log('running ', hostProcess);
   return execFileSync(hostProcess, ['-e', testCode], { cwd: __dirname }).toString()
 }
 

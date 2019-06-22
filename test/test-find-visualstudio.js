@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('tape')
+var test = require('tap').test
 const fs = require('fs')
 const path = require('path')
 const findVisualStudio = require('../lib/find-visualstudio')
