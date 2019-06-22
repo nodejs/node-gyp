@@ -47,6 +47,7 @@
   },
   "scripts": {
     "lint": "eslint bin lib test",
-    "test": "npm run lint && tap -Rtap test/test-*"
+    "test": "npm run lint && tap test/test-*",
+    "test-ci": "npm run lint && tap -Rtap test/test-*"
   }
 }
