@@ -5,6 +5,8 @@ var configure = require('../lib/configure')
 var execFile = require('child_process').execFile
 var PythonFinder = configure.test.PythonFinder
 
+require('npmlog').level = 'warn'
+
 test('find python', function (t) {
   t.plan(4)
 
