@@ -18,7 +18,7 @@ test('download over http', function (t) {
     server.close()
   })
 
-  var host = '127.0.0.1'
+  var host = 'localhost'
   server.listen(0, host, function () {
     var port = this.address().port
     var gyp = {
@@ -62,7 +62,7 @@ test('download over https with custom ca', function (t) {
     throw err
   })
 
-  var host = '127.0.0.1'
+  var host = 'localhost'
   server.listen(8000, host, function () {
     var port = this.address().port
     var gyp = {
