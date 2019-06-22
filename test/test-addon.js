@@ -1,42 +1,42 @@
 'use strict'
 
-var test = require('tap').test
-var path = require('path')
-var fs = require('graceful-fs')
-var child_process = require('child_process')
-var os = require('os')
-var addonPath = path.resolve(__dirname, 'node_modules', 'hello_world')
-var nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
-var execFileSync = child_process.execFileSync || require('./process-exec-sync')
-var execFile = child_process.execFile
+const test = require('tap').test
+const path = require('path')
+const fs = require('graceful-fs')
+const childProcess = require('child_process')
+const os = require('os')
+const addonPath = path.resolve(__dirname, 'node_modules', 'hello_world')
+const nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
+const execFileSync = childProcess.execFileSync || require('./process-exec-sync')
+const execFile = childProcess.execFile
 
-function runHello(hostProcess) {
+function runHello (hostProcess) {
   if (!hostProcess) {
     hostProcess = process.execPath
   }
   var testCode = "console.log(require('hello_world').hello())"
-  return execFileSync(hostProcess, ['-e', testCode], { cwd: __dirname }).toString()
+  return execFileSync(hostProcess, [ '-e', testCode ], { cwd: __dirname }).toString()
 }
 
-function runDuplicateBindings() {
-  const hostProcess = process.execPath;
+function runDuplicateBindings () {
+  const hostProcess = process.execPath
   var testCode =
-    "console.log((function(bindings) {" +
-    "return bindings.pointerCheck1(bindings.pointerCheck2());" +
+    'console.log((function(bindings) {' +
+    'return bindings.pointerCheck1(bindings.pointerCheck2());' +
     "})(require('duplicate_symbols')))"
-  return execFileSync(hostProcess, ['-e', testCode], { cwd: __dirname }).toString()
+  return execFileSync(hostProcess, [ '-e', testCode ], { cwd: __dirname }).toString()
 }
 
-function getEncoding() {
+function getEncoding () {
   var code = 'import locale;print(locale.getdefaultlocale()[1])'
-  return execFileSync('python', ['-c', code]).toString().trim()
+  return execFileSync('python', [ '-c', code ]).toString().trim()
 }
 
-function checkCharmapValid() {
+function checkCharmapValid () {
   var data
   try {
-    data = execFileSync('python', ['fixtures/test-charmap.py'],
-                        { cwd: __dirname })
+    data = execFileSync('python', [ 'fixtures/test-charmap.py' ],
+      { cwd: __dirname })
   } catch (err) {
     return false
   }
@@ -48,10 +48,10 @@ test('build simple addon', function (t) {
   t.plan(3)
 
   // Set the loglevel otherwise the output disappears when run via 'npm test'
-  var cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
+  var cmd = [ nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose' ]
   var proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
     var logLines = stderr.toString().trim().split(/\r?\n/)
-    var lastLine = logLines[logLines.length-1]
+    var lastLine = logLines[logLines.length - 1]
     t.strictEqual(err, null)
     t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
     t.strictEqual(runHello().trim(), 'world')
@@ -68,7 +68,7 @@ test('make sure addon symbols do not overlap', function (t) {
   var cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
   execFile(process.execPath, cmd, function (err, stdout, stderr) {
     var logLines = stderr.trim().split(/\r?\n/)
-    var lastLine = logLines[logLines.length-1]
+    var lastLine = logLines[logLines.length - 1]
     t.strictEqual(err, null)
     t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
     t.strictEqual(runDuplicateBindings().trim(), 'not equal')
@@ -96,14 +96,15 @@ test('build simple addon in path with non-ascii characters', function (t) {
 
   t.plan(3)
 
-  var data, configPath = path.join(addonPath, 'build', 'config.gypi')
+  var data
+  var configPath = path.join(addonPath, 'build', 'config.gypi')
   try {
     data = fs.readFileSync(configPath, 'utf8')
   } catch (err) {
     t.error(err)
     return
   }
-  var config = JSON.parse(data.replace(/\#.+\n/, ''))
+  var config = JSON.parse(data.replace(/#.+\n/, ''))
   var nodeDir = config.variables.nodedir
   var testNodeDir = path.join(addonPath, testDirName)
   // Create symbol link to path with non-ascii characters
@@ -121,8 +122,14 @@ test('build simple addon in path with non-ascii characters', function (t) {
     }
   }
 
-  var cmd = [nodeGyp, 'rebuild', '-C', addonPath,
-             '--loglevel=verbose', '-nodedir=' + testNodeDir]
+  var cmd = [
+    nodeGyp,
+    'rebuild',
+    '-C',
+    addonPath,
+    '--loglevel=verbose',
+    '-nodedir=' + testNodeDir
+  ]
   var proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
     try {
       fs.unlink(testNodeDir)
@@ -131,7 +138,7 @@ test('build simple addon in path with non-ascii characters', function (t) {
     }
 
     var logLines = stderr.toString().trim().split(/\r?\n/)
-    var lastLine = logLines[logLines.length-1]
+    var lastLine = logLines[logLines.length - 1]
     t.strictEqual(err, null)
     t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
     t.strictEqual(runHello().trim(), 'world')
@@ -143,9 +150,9 @@ test('build simple addon in path with non-ascii characters', function (t) {
 test('addon works with renamed host executable', function (t) {
   // No `fs.copyFileSync` before node8.
   if (process.version.substr(1).split('.')[0] < 8) {
-    t.skip("skipping test for old node version");
-    t.end();
-    return;
+    t.skip('skipping test for old node version')
+    t.end()
+    return
   }
 
   t.plan(3)
@@ -153,10 +160,10 @@ test('addon works with renamed host executable', function (t) {
   var notNodePath = path.join(os.tmpdir(), 'notnode' + path.extname(process.execPath))
   fs.copyFileSync(process.execPath, notNodePath)
 
-  var cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
+  var cmd = [ nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose' ]
   var proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
     var logLines = stderr.toString().trim().split(/\r?\n/)
-    var lastLine = logLines[logLines.length-1]
+    var lastLine = logLines[logLines.length - 1]
     t.strictEqual(err, null)
     t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
     t.strictEqual(runHello(notNodePath).trim(), 'world')

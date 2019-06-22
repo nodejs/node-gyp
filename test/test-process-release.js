@@ -1,5 +1,7 @@
-var test = require('tap').test
-var processRelease = require('../lib/process-release')
+'use strict'
+
+const test = require('tap').test
+const processRelease = require('../lib/process-release')
 
 test('test process release - process.version = 0.8.20', function (t) {
   t.plan(2)
@@ -17,7 +19,7 @@ test('test process release - process.version = 0.8.20', function (t) {
     shasumsUrl: 'https://nodejs.org/dist/v0.8.20/SHASUMS256.txt',
     versionDir: '0.8.20',
     ia32: { libUrl: 'https://nodejs.org/dist/v0.8.20/node.lib', libPath: 'node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/dist/v0.8.20/x64/node.lib', libPath: 'x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/dist/v0.8.20/x64/node.lib', libPath: 'x64/node.lib' }
   })
 })
 
@@ -37,7 +39,7 @@ test('test process release - process.version = 0.10.21', function (t) {
     shasumsUrl: 'https://nodejs.org/dist/v0.10.21/SHASUMS256.txt',
     versionDir: '0.10.21',
     ia32: { libUrl: 'https://nodejs.org/dist/v0.10.21/node.lib', libPath: 'node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/dist/v0.10.21/x64/node.lib', libPath: 'x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/dist/v0.10.21/x64/node.lib', libPath: 'x64/node.lib' }
   })
 })
 
@@ -58,7 +60,7 @@ test('test process release - process.version = 0.12.9', function (t) {
     shasumsUrl: 'https://nodejs.org/dist/v0.12.9/SHASUMS256.txt',
     versionDir: '0.12.9',
     ia32: { libUrl: 'https://nodejs.org/dist/v0.12.9/node.lib', libPath: 'node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/dist/v0.12.9/x64/node.lib', libPath: 'x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/dist/v0.12.9/x64/node.lib', libPath: 'x64/node.lib' }
   })
 })
 
@@ -79,7 +81,7 @@ test('test process release - process.version = 0.10.41', function (t) {
     shasumsUrl: 'https://nodejs.org/dist/v0.10.41/SHASUMS256.txt',
     versionDir: '0.10.41',
     ia32: { libUrl: 'https://nodejs.org/dist/v0.10.41/node.lib', libPath: 'node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/dist/v0.10.41/x64/node.lib', libPath: 'x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/dist/v0.10.41/x64/node.lib', libPath: 'x64/node.lib' }
   })
 })
 
@@ -100,7 +102,7 @@ test('test process release - process.release ~ node@0.10.42', function (t) {
     shasumsUrl: 'https://nodejs.org/dist/v0.10.42/SHASUMS256.txt',
     versionDir: '0.10.42',
     ia32: { libUrl: 'https://nodejs.org/dist/v0.10.42/node.lib', libPath: 'node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/dist/v0.10.42/x64/node.lib', libPath: 'x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/dist/v0.10.42/x64/node.lib', libPath: 'x64/node.lib' }
   })
 })
 
@@ -121,7 +123,7 @@ test('test process release - process.release ~ node@0.12.10', function (t) {
     shasumsUrl: 'https://nodejs.org/dist/v0.12.10/SHASUMS256.txt',
     versionDir: '0.12.10',
     ia32: { libUrl: 'https://nodejs.org/dist/v0.12.10/node.lib', libPath: 'node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/dist/v0.12.10/x64/node.lib', libPath: 'x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/dist/v0.12.10/x64/node.lib', libPath: 'x64/node.lib' }
   })
 })
 
@@ -144,7 +146,7 @@ test('test process release - process.release ~ node@4.1.23', function (t) {
     shasumsUrl: 'https://nodejs.org/dist/v4.1.23/SHASUMS256.txt',
     versionDir: '4.1.23',
     ia32: { libUrl: 'https://nodejs.org/dist/v4.1.23/win-x86/node.lib', libPath: 'win-x86/node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/dist/v4.1.23/win-x64/node.lib', libPath: 'win-x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/dist/v4.1.23/win-x64/node.lib', libPath: 'win-x64/node.lib' }
   })
 })
 
@@ -167,7 +169,7 @@ test('test process release - process.release ~ node@4.1.23 / corp build', functi
     shasumsUrl: 'https://some.custom.location/SHASUMS256.txt',
     versionDir: '4.1.23',
     ia32: { libUrl: 'https://some.custom.location/win-x86/node.lib', libPath: 'win-x86/node.lib' },
-    x64:  { libUrl: 'https://some.custom.location/win-x64/node.lib', libPath: 'win-x64/node.lib' },
+    x64: { libUrl: 'https://some.custom.location/win-x64/node.lib', libPath: 'win-x64/node.lib' }
   })
 })
 
@@ -190,7 +192,7 @@ test('test process release - process.release ~ node@4.1.23 --target=0.10.40', fu
     shasumsUrl: 'https://nodejs.org/dist/v0.10.40/SHASUMS256.txt',
     versionDir: '0.10.40',
     ia32: { libUrl: 'https://nodejs.org/dist/v0.10.40/node.lib', libPath: 'node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/dist/v0.10.40/x64/node.lib', libPath: 'x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/dist/v0.10.40/x64/node.lib', libPath: 'x64/node.lib' }
   })
 })
 
@@ -213,7 +215,7 @@ test('test process release - process.release ~ node@4.1.23 --dist-url=https://fo
     shasumsUrl: 'https://foo.bar/baz/v4.1.23/SHASUMS256.txt',
     versionDir: '4.1.23',
     ia32: { libUrl: 'https://foo.bar/baz/v4.1.23/win-x86/node.lib', libPath: 'win-x86/node.lib' },
-    x64:  { libUrl: 'https://foo.bar/baz/v4.1.23/win-x64/node.lib', libPath: 'win-x64/node.lib' },
+    x64: { libUrl: 'https://foo.bar/baz/v4.1.23/win-x64/node.lib', libPath: 'win-x64/node.lib' }
   })
 })
 
@@ -236,10 +238,9 @@ test('test process release - process.release ~ frankenstein@4.1.23', function (t
     shasumsUrl: 'https://frankensteinjs.org/dist/v4.1.23/SHASUMS256.txt',
     versionDir: 'frankenstein-4.1.23',
     ia32: { libUrl: 'https://frankensteinjs.org/dist/v4.1.23/win-x86/frankenstein.lib', libPath: 'win-x86/frankenstein.lib' },
-    x64:  { libUrl: 'https://frankensteinjs.org/dist/v4.1.23/win-x64/frankenstein.lib', libPath: 'win-x64/frankenstein.lib' },
+    x64: { libUrl: 'https://frankensteinjs.org/dist/v4.1.23/win-x64/frankenstein.lib', libPath: 'win-x64/frankenstein.lib' }
   })
 })
-
 
 test('test process release - process.release ~ frankenstein@4.1.23 --dist-url=http://foo.bar/baz/', function (t) {
   t.plan(2)
@@ -260,7 +261,7 @@ test('test process release - process.release ~ frankenstein@4.1.23 --dist-url=ht
     shasumsUrl: 'http://foo.bar/baz/v4.1.23/SHASUMS256.txt',
     versionDir: 'frankenstein-4.1.23',
     ia32: { libUrl: 'http://foo.bar/baz/v4.1.23/win-x86/frankenstein.lib', libPath: 'win-x86/frankenstein.lib' },
-    x64:  { libUrl: 'http://foo.bar/baz/v4.1.23/win-x64/frankenstein.lib', libPath: 'win-x64/frankenstein.lib' },
+    x64: { libUrl: 'http://foo.bar/baz/v4.1.23/win-x64/frankenstein.lib', libPath: 'win-x64/frankenstein.lib' }
   })
 })
 
@@ -283,10 +284,9 @@ test('test process release - process.release ~ node@4.0.0-rc.4', function (t) {
     shasumsUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/SHASUMS256.txt',
     versionDir: '4.0.0-rc.4',
     ia32: { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x86/node.lib', libPath: 'win-x86/node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib', libPath: 'win-x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib', libPath: 'win-x64/node.lib' }
   })
 })
-
 
 test('test process release - process.release ~ node@4.0.0-rc.4 passed as argv[0]', function (t) {
   t.plan(2)
@@ -309,10 +309,9 @@ test('test process release - process.release ~ node@4.0.0-rc.4 passed as argv[0]
     shasumsUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/SHASUMS256.txt',
     versionDir: '4.0.0-rc.4',
     ia32: { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x86/node.lib', libPath: 'win-x86/node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib', libPath: 'win-x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib', libPath: 'win-x64/node.lib' }
   })
 })
-
 
 test('test process release - process.release ~ node@4.0.0-rc.4 - bogus string passed as argv[0]', function (t) {
   t.plan(2)
@@ -335,7 +334,7 @@ test('test process release - process.release ~ node@4.0.0-rc.4 - bogus string pa
     shasumsUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/SHASUMS256.txt',
     versionDir: '4.0.0-rc.4',
     ia32: { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x86/node.lib', libPath: 'win-x86/node.lib' },
-    x64:  { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib', libPath: 'win-x64/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/win-x64/node.lib', libPath: 'win-x64/node.lib' }
   })
 })
 
@@ -360,7 +359,7 @@ test('test process release - NODEJS_ORG_MIRROR', function (t) {
     shasumsUrl: 'http://foo.bar/v4.1.23/SHASUMS256.txt',
     versionDir: '4.1.23',
     ia32: { libUrl: 'http://foo.bar/v4.1.23/win-x86/node.lib', libPath: 'win-x86/node.lib' },
-    x64:  { libUrl: 'http://foo.bar/v4.1.23/win-x64/node.lib', libPath: 'win-x64/node.lib' },
+    x64: { libUrl: 'http://foo.bar/v4.1.23/win-x64/node.lib', libPath: 'win-x64/node.lib' }
   })
 
   delete process.env.NODEJS_ORG_MIRROR

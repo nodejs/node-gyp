@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
+'use strict'
+
 process.title = 'node-gyp'
 
-var envPaths = require('env-paths')
-var gyp = require('../')
-var log = require('npmlog')
-var os = require('os')
+const envPaths = require('env-paths')
+const gyp = require('../')
+const log = require('npmlog')
+const os = require('os')
 
 /**
  * Process and execute the selected commands.
  */
 
-var prog = gyp()
+const prog = gyp()
 var completed = false
 prog.parseArgv(process.argv)
 prog.devDir = prog.opts.devdir
@@ -24,8 +26,8 @@ if (prog.devDir) {
 } else {
   throw new Error(
     "node-gyp requires that the user's home directory is specified " +
-    "in either of the environmental variables HOME or USERPROFILE. " +
-    "Overide with: --devdir /path/to/.node-gyp")
+    'in either of the environmental variables HOME or USERPROFILE. ' +
+    'Overide with: --devdir /path/to/.node-gyp')
 }
 
 if (prog.todo.length === 0) {
@@ -41,7 +43,6 @@ log.info('it worked if it ends with', 'ok')
 log.verbose('cli', process.argv)
 log.info('using', 'node-gyp@%s', prog.version)
 log.info('using', 'node@%s | %s | %s', process.versions.node, process.platform, process.arch)
-
 
 /**
  * Change dir if -C/--directory was passed.
@@ -84,7 +85,7 @@ function run () {
       log.error('not ok')
       return process.exit(1)
     }
-    if (command.name == 'list') {
+    if (command.name === 'list') {
       var versions = arguments[1]
       if (versions.length > 0) {
         versions.forEach(function (version) {
@@ -122,7 +123,7 @@ function errorMessage () {
   var os = require('os')
   log.error('System', os.type() + ' ' + os.release())
   log.error('command', process.argv
-            .map(JSON.stringify).join(' '))
+    .map(JSON.stringify).join(' '))
   log.error('cwd', process.cwd())
   log.error('node -v', process.version)
   log.error('node-gyp -v', 'v' + prog.package.version)
@@ -130,10 +131,10 @@ function errorMessage () {
 
 function issueMessage () {
   errorMessage()
-  log.error('', [ 'This is a bug in `node-gyp`.'
-                , 'Try to update node-gyp and file an Issue if it does not help:'
-                , '    <https://github.com/nodejs/node-gyp/issues>'
-                ].join('\n'))
+  log.error('', [ 'This is a bug in `node-gyp`.',
+    'Try to update node-gyp and file an Issue if it does not help:',
+    '    <https://github.com/nodejs/node-gyp/issues>'
+  ].join('\n'))
 }
 
 // start running the given commands!
