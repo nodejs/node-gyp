@@ -30,6 +30,7 @@ test('configure PYTHONPATH with no existing env', function (t) {
     t.equal(process.env.PYTHONPATH, EXPECTED_PYPATH)
     return SPAWN_RESULT
   }
+  prog.devDir = devDir
   configure(prog, [], t.fail)
 })
 
@@ -49,6 +50,7 @@ test('configure PYTHONPATH with existing env of one dir', function (t) {
 
     return SPAWN_RESULT
   }
+  prog.devDir = devDir
   configure(prog, [], t.fail)
 })
 
@@ -70,5 +72,6 @@ test('configure PYTHONPATH with existing env of multiple dirs', function (t) {
 
     return SPAWN_RESULT
   }
+  prog.devDir = devDir
   configure(prog, [], t.fail)
 })
