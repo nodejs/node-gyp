@@ -20,7 +20,6 @@ matrix:
       before_install: choco install python2
   allow_failures:
     - os: windows
-    - python: 3.7
 install:
   #- pip install -r requirements.txt
   - pip install flake8  # pytest  # add another testing frameworks later
