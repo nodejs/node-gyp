@@ -22,6 +22,12 @@ from xml.dom.minidom import Node
 
 __author__ = 'nsylvain (Nicolas Sylvain)'
 
+try:
+  cmp
+except NameError:
+  def cmp(x, y):
+    return (x > y) - (x < y)
+
 REPLACEMENTS = dict()
 ARGUMENTS = None
 

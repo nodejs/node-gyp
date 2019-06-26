@@ -10,6 +10,11 @@ import random
 
 import gyp.common
 
+try:
+  cmp
+except NameError:
+  def cmp(x, y):
+    return (x > y) - (x < y)
 
 # Initialize random number generator
 random.seed()
