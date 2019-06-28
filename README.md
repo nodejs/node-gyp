@@ -63,7 +63,7 @@ If you have multiple Python versions installed, you can identify which Python
 version `node-gyp` uses by setting the `--python` variable:
 
 ``` bash
-$ node-gyp --python /path/to/python2.7
+$ node-gyp configure --python /path/to/python2.7
 ```
 
 If `node-gyp` is called by way of `npm`, *and* you have multiple versions of
