@@ -10,7 +10,13 @@ matrix:
       osx_image: xcode10.2
       language: shell  # 'language: python' is not yet supported on macOS
       before_install: HOMEBREW_NO_AUTO_UPDATE=1 brew install npm
-    - name: "Python 2.7 on Windows"
+    - name: "Node.js 6 & Python 2.7 on Windows"
+      os: windows
+      language: node_js
+      node_js: 6  # node
+      env: PATH=/c/Python27:/c/Python27/Scripts:$PATH
+      before_install: choco install python2
+    - name: "Node.js 12 & Python 2.7 on Windows"
       os: windows
       language: node_js
       node_js: 12  # node
