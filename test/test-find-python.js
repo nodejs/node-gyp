@@ -56,7 +56,7 @@ test('find python - python', function (t) {
       poison(f, 'execFile')
       t.strictEqual(program, '/path/python')
       t.ok(/sys\.version_info/.test(args[1]))
-      cb(null, '2.7.15')
+      cb(null, '3.6.7')
     }
     t.strictEqual(program,
                   process.platform === 'win32' ? '"python"' : 'python')
@@ -100,7 +100,7 @@ test('find python - python too new', function (t) {
     if (/sys\.executable/.test(args[args.length-1])) {
       cb(null, '/path/python')
     } else if (/sys\.version_info/.test(args[args.length-1])) {
-      cb(null, '3.0.0')
+      cb(null, '3.8.0')
     } else {
       t.fail()
     }
@@ -134,19 +134,19 @@ test('find python - no python', function (t) {
   }
 })
 
-test('find python - no python2', function (t) {
+test('find python - no python3', function (t) {
   t.plan(2)
 
   var f = new TestPythonFinder(null, done)
   f.execFile = function(program, args, opts, cb) {
     if (/sys\.executable/.test(args[args.length-1])) {
-      if (program == 'python2') {
+      if (program == 'python3') {
         cb(new Error('not found'))
       } else {
         cb(null, '/path/python')
       }
     } else if (/sys\.version_info/.test(args[args.length-1])) {
-      cb(null, '2.7.14')
+      cb(null, '3.6.7')
     } else {
       t.fail()
     }
@@ -159,7 +159,7 @@ test('find python - no python2', function (t) {
   }
 })
 
-test('find python - no python2, no python, unix', function (t) {
+test('find python - no python3, no python, unix', function (t) {
   t.plan(2)
 
   var f = new TestPythonFinder(null, done)
@@ -197,7 +197,7 @@ test('find python - no python, use python launcher', function (t) {
       cb(new Error('not found'))
     } else if (/sys\.version_info/.test(args[args.length-1])) {
       if (program === 'Z:\\snake.exe') {
-        cb(null, '2.7.14')
+        cb(null, '3.6.7')
       } else {
         t.fail()
       }
@@ -224,7 +224,7 @@ test('find python - python 3, use python launcher', function (t) {
       f.execFile = function(program, args, opts, cb) {
         poison(f, 'execFile')
         if (/sys\.version_info/.test(args[args.length-1])) {
-          cb(null, '2.7.14')
+          cb(null, '3.6.7')
         } else {
           t.fail()
         }
@@ -236,7 +236,7 @@ test('find python - python 3, use python launcher', function (t) {
     if (/sys\.executable/.test(args[args.length-1])) {
       cb(null, '/path/python')
     } else if (/sys\.version_info/.test(args[args.length-1])) {
-      cb(null, '3.0.0')
+      cb(null, '3.8.0')
     } else {
       t.fail()
     }
@@ -282,7 +282,7 @@ test('find python - python 3, use python launcher, python 2 too old',
     if (/sys\.executable/.test(args[args.length-1])) {
       cb(null, '/path/python')
     } else if (/sys\.version_info/.test(args[args.length-1])) {
-      cb(null, '3.0.0')
+      cb(null, '3.8.0')
     } else {
       t.fail()
     }
@@ -308,7 +308,7 @@ test('find python - no python, no python launcher, good guess', function (t) {
         poison(f, 'execFile')
         t.ok(re.test(program))
         t.ok(/sys\.version_info/.test(args[args.length-1]))
-        cb(null, '2.7.14')
+        cb(null, '3.6.7')
       }
       return cb(new Error('not found'))
     }
