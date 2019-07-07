@@ -28,8 +28,6 @@ matrix:
     - name: "Node.js 12 & Python 3.7 on Linux"
       python: 3.7
       before_install: nvm install 12
-  allow_failures:
-    - os: windows
 install:
   #- pip install -r requirements.txt
   - pip install flake8  # pytest  # add another testing frameworks later
