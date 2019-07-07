@@ -25,19 +25,23 @@ $ npm install -g node-gyp
 
 You will also need to install:
 
+NOTE: node-gyp is compatible with Python 2.7 and 3.7 but node itself is not yet compatible with Python 3.
+
 ### On Unix
 
-   * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported)
+   * `Python v2.7 or v3.7` (v3.5 and 3.6 may work but are not currently tested)
    * `make`
    * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
 
 ### On macOS
 
-   * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported) (already installed on macOS)
+   * `Python v2.7 or v3.7` (v3.5 and 3.6 may work but are not currently tested)
    * [Xcode](https://developer.apple.com/xcode/download/)
      * You also need to install the `XCode Command Line Tools` by running `xcode-select --install`. Alternatively, if you already have the full Xcode installed, you can find them under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`. This step will install `clang`, `clang++`, and `make`.
 
 ### On Windows
+
+Install the current version of Python from the [Microsoft Store package](https://docs.python.org/3.7/using/windows.html#the-microsoft-store-package).
 
 #### Option 1
 
@@ -49,7 +53,6 @@ Install tools and configuration manually:
    * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
    (using "Visual C++ build tools" workload) or [Visual Studio 2017 Community](https://visualstudio.microsoft.com/pl/thank-you-downloading-visual-studio/?sku=Community)
    (using the "Desktop development with C++" workload)
-   * Install [Python 2.7](https://www.python.org/downloads/) (`v3.x.x` is not supported), and run `npm config set python python2.7` (or see below for further instructions on specifying the proper Python version and path.)
    * Launch cmd, `npm config set msvs_version 2017`
 
    If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
@@ -62,7 +65,7 @@ If you have multiple Python versions installed, you can identify which Python
 version `node-gyp` uses by setting the `--python` variable:
 
 ``` bash
-$ node-gyp <command> --python /path/to/executable/python2.7
+$ node-gyp <command> --python /path/to/executable/python
 ```
 
 If `node-gyp` is called by way of `npm`, *and* you have multiple versions of
@@ -70,7 +73,7 @@ Python installed, then you can set `npm`'s 'python' config key to the appropriat
 value:
 
 ``` bash
-$ npm config set python /path/to/executable/python2.7
+$ npm config set python /path/to/executable/python
 ```
 
 ## How to Use
@@ -119,7 +122,7 @@ JSON-like format. This file gets placed in the root of your package, alongside
 
 A barebones `gyp` file appropriate for building a Node.js addon could look like:
 
-``` python
+```python
 {
   "targets": [
     {
@@ -179,7 +182,7 @@ Some additional resources for addons and writing `gyp` files:
 | `--proxy=$url`                    | Set HTTP proxy for downloading header tarball
 | `--cafile=$cafile`                | Override default CA chain (to download tarball)
 | `--nodedir=$path`                 | Set the path to the node source code
-| `--python=$path`                  | Set path to the Python 2 binary
+| `--python=$path`                  | Set path to the Python binary
 | `--msvs_version=$version`         | Set Visual Studio version (Windows only)
 | `--solution=$solution`            | Set Visual Studio Solution version (Windows only)
 
