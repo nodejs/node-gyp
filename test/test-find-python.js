@@ -5,6 +5,9 @@ const findPython = require('../lib/find-python')
 const execFile = require('child_process').execFile
 const PythonFinder = findPython.test.PythonFinder
 
+delete process.env.PYTHON
+delete process.env.NODE_GYP_FORCE_PYTHON
+
 require('npmlog').level = 'warn'
 
 test('find python', function (t) {
@@ -94,27 +97,6 @@ test('find python - python too old', function (t) {
   }
 })
 
-test('find python - python too new', function (t) {
-  t.plan(2)
-
-  var f = new TestPythonFinder(null, done)
-  f.execFile = function (program, args, opts, cb) {
-    if (/sys\.executable/.test(args[args.length - 1])) {
-      cb(null, '/path/python')
-    } else if (/sys\.version_info/.test(args[args.length - 1])) {
-      cb(null, '3.0.0')
-    } else {
-      t.fail()
-    }
-  }
-  f.findPython()
-
-  function done (err) {
-    t.ok(/Could not find any Python/.test(err))
-    t.ok(/not supported/i.test(f.errorLog))
-  }
-})
-
 test('find python - no python', function (t) {
   t.plan(2)
 
@@ -133,31 +115,6 @@ test('find python - no python', function (t) {
   function done (err) {
     t.ok(/Could not find any Python/.test(err))
     t.ok(/not in PATH/.test(f.errorLog))
-  }
-})
-
-test('find python - no python2', function (t) {
-  t.plan(2)
-
-  var f = new TestPythonFinder(null, done)
-  f.execFile = function (program, args, opts, cb) {
-    if (/sys\.executable/.test(args[args.length - 1])) {
-      if (program === 'python2') {
-        cb(new Error('not found'))
-      } else {
-        cb(null, '/path/python')
-      }
-    } else if (/sys\.version_info/.test(args[args.length - 1])) {
-      cb(null, '2.7.14')
-    } else {
-      t.fail()
-    }
-  }
-  f.findPython()
-
-  function done (err, python) {
-    t.strictEqual(err, null)
-    t.strictEqual(python, '/path/python')
   }
 })
 
@@ -214,88 +171,6 @@ test('find python - no python, use python launcher', function (t) {
     t.strictEqual(python, 'Z:\\snake.exe')
   }
 })
-
-test('find python - python 3, use python launcher', function (t) {
-  t.plan(4)
-
-  var f = new TestPythonFinder(null, done)
-  f.win = true
-
-  f.execFile = function (program, args, opts, cb) {
-    if (program === 'py.exe') {
-      f.execFile = function (program, args, opts, cb) {
-        poison(f, 'execFile')
-        if (/sys\.version_info/.test(args[args.length - 1])) {
-          cb(null, '2.7.14')
-        } else {
-          t.fail()
-        }
-      }
-      t.notEqual(args.indexOf('-2'), -1)
-      t.notEqual(args.indexOf('-c'), -1)
-      return cb(null, 'Z:\\snake.exe')
-    }
-    if (/sys\.executable/.test(args[args.length - 1])) {
-      cb(null, '/path/python')
-    } else if (/sys\.version_info/.test(args[args.length - 1])) {
-      cb(null, '3.0.0')
-    } else {
-      t.fail()
-    }
-  }
-  f.findPython()
-
-  function done (err, python) {
-    t.strictEqual(err, null)
-    t.strictEqual(python, 'Z:\\snake.exe')
-  }
-})
-
-test('find python - python 3, use python launcher, python 2 too old',
-  function (t) {
-    t.plan(6)
-
-    var f = new TestPythonFinder(null, done)
-    f.win = true
-
-    f.execFile = function (program, args, opts, cb) {
-      if (program === 'py.exe') {
-        f.execFile = function (program, args, opts, cb) {
-          if (/sys\.version_info/.test(args[args.length - 1])) {
-            f.execFile = function (program, args, opts, cb) {
-              if (/sys\.version_info/.test(args[args.length - 1])) {
-                poison(f, 'execFile')
-                t.strictEqual(program, f.defaultLocation)
-                cb(new Error('not found'))
-              } else {
-                t.fail()
-              }
-            }
-            t.strictEqual(program, 'Z:\\snake.exe')
-            cb(null, '2.3.4')
-          } else {
-            t.fail()
-          }
-        }
-        t.notEqual(args.indexOf('-2'), -1)
-        t.notEqual(args.indexOf('-c'), -1)
-        return cb(null, 'Z:\\snake.exe')
-      }
-      if (/sys\.executable/.test(args[args.length - 1])) {
-        cb(null, '/path/python')
-      } else if (/sys\.version_info/.test(args[args.length - 1])) {
-        cb(null, '3.0.0')
-      } else {
-        t.fail()
-      }
-    }
-    f.findPython()
-
-    function done (err) {
-      t.ok(/Could not find any Python/.test(err))
-      t.ok(/not supported/i.test(f.errorLog))
-    }
-  })
 
 test('find python - no python, no python launcher, good guess', function (t) {
   t.plan(4)
