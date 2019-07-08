@@ -1,6 +1,6 @@
 'use strict'
 
-var test = require('tap').test
+const test = require('tap').test
 const fs = require('fs')
 const path = require('path')
 const findVisualStudio = require('../lib/find-visualstudio')
@@ -525,11 +525,26 @@ test('look for VS2019 by version number', function (t) {
   finder.findVisualStudio()
 })
 
-test('look for VS2017 by installation path', function (t) {
+test('look for VS2019 by installation path', function (t) {
   t.plan(2)
 
   const finder = new TestVisualStudioFinder(semverV1,
     'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools',
+    (err, info) => {
+      t.strictEqual(err, null)
+      t.deepEqual(info.path,
+        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools')
+    })
+
+  allVsVersions(t, finder)
+  finder.findVisualStudio()
+})
+
+test('msvs_version match should be case insensitive', function (t) {
+  t.plan(2)
+
+  const finder = new TestVisualStudioFinder(semverV1,
+    'c:\\program files (x86)\\microsoft visual studio\\2019\\BUILDTOOLS',
     (err, info) => {
       t.strictEqual(err, null)
       t.deepEqual(info.path,
@@ -562,6 +577,22 @@ test('run on a usable VS Command Prompt', function (t) {
   const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
     t.strictEqual(err, null)
     t.deepEqual(info.path, 'C:\\VS2015')
+  })
+
+  allVsVersions(t, finder)
+  finder.findVisualStudio()
+})
+
+test('VCINSTALLDIR match should be case insensitive', function (t) {
+  t.plan(2)
+
+  process.env.VCINSTALLDIR =
+    'c:\\program files (x86)\\microsoft visual studio\\2019\\BUILDTOOLS\\VC'
+
+  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
+    t.strictEqual(err, null)
+    t.deepEqual(info.path,
+      'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools')
   })
 
   allVsVersions(t, finder)
