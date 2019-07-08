@@ -1,16 +1,16 @@
 'use strict'
 
 const test = require('tap').test
-const configure = require('../lib/configure')
+const findPython = require('../lib/find-python')
 const execFile = require('child_process').execFile
-const PythonFinder = configure.test.PythonFinder
+const PythonFinder = findPython.test.PythonFinder
 
 require('npmlog').level = 'warn'
 
 test('find python', function (t) {
   t.plan(4)
 
-  configure.test.findPython(null, function (err, found) {
+  findPython.test.findPython(null, function (err, found) {
     t.strictEqual(err, null)
     var proc = execFile(found, ['-V'], function (err, stdout, stderr) {
       t.strictEqual(err, null)
