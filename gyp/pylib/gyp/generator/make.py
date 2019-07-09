@@ -1193,6 +1193,46 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
                     part_of_all=True)
     bundle_deps.append(out)
 
+  def MacCFlags(self, xcodeFlags, userFlags):
+    """Combines and overrides xcode c-flags with user c-flags.
+    Args:
+      xcodeFlags (list of str): xcode c-flags
+      userFlags (list of str): user c-flags
+    Returns:
+      list of str: Combined and overridden c-flags
+    """
+    
+    #Return xcodeFlags if no userFlags
+    if not userFlags:
+      return xcodeFlags
+    
+    cFlagsDict = {}
+    cFlags = []
+    
+    #Seprate xcode c-flags into a dictionary with key->flag and value->arg
+    for flag in xcodeFlags:
+      flagArg = flag.split('=')
+      cFlagsDict[flagArg[0].strip()] = flagArg[1].strip() if len(flagArg) == 2 else None
+
+    #Update and overide xcode c-flags with user c-flags
+    for userFlag in userFlags:
+      flagArg = userFlag.split('=')
+      flag = flagArg[0].strip()
+      arg = flagArg[1].strip() if len(flagArg) == 2 else None
+    
+      if flag not in cFlagsDict or cFlagsDict[flag] != arg:
+        cFlagsDict[flag] = arg
+    
+    #Re-combine dict key and value and add to cFlags list
+    for flag in cFlagsDict:
+      arg = cFlagsDict[flag]
+      if not arg:
+        cFlags.append(flag)
+      else:
+        cFlags.append(flag+"="+arg)
+
+    
+    return cFlags
 
   def WriteSources(self, configs, deps, sources,
                    extra_outputs, extra_link_deps,
@@ -1215,9 +1255,9 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
           quoter=EscapeCppDefine)
 
       if self.flavor == 'mac':
-        cflags = self.xcode_settings.GetCflags(configname)
-        cflags_c = self.xcode_settings.GetCflagsC(configname)
-        cflags_cc = self.xcode_settings.GetCflagsCC(configname)
+        cflags = self.MacCFlags(self.xcode_settings.GetCflags(configname), config.get('cflags'))
+        cflags_c = self.MacCFlags(self.xcode_settings.GetCflagsC(configname), config.get('cflags_c'))
+        cflags_cc = self.MacCFlags(self.xcode_settings.GetCflagsCC(configname), config.get('cflags_cc'))
         cflags_objc = self.xcode_settings.GetCflagsObjC(configname)
         cflags_objcc = self.xcode_settings.GetCflagsObjCC(configname)
       else:
