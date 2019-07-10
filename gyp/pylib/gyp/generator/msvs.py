@@ -165,13 +165,23 @@ def _FixPath(path):
   Returns:
     The path with all slashes made into backslashes.
   """
-  if fixpath_prefix and path and not os.path.isabs(path) and not path[0] == '$':
+  if fixpath_prefix and path and not os.path.isabs(path) and not path[0] == '$' and not _IsWindowsAbsPath(path):
     path = os.path.join(fixpath_prefix, path)
   path = path.replace('/', '\\')
   path = _NormalizedSource(path)
   if path and path[-1] == '\\':
     path = path[:-1]
   return path
+
+
+def _IsWindowsAbsPath(path):
+  """
+  On Cygwin systems Python needs a little help determining if a path is an absolute Windows path or not, so that
+  it does not treat those as relative, which results in bad paths like:
+
+  '..\C:\<some path>\some_source_code_file.cc'
+  """
+  return path.startswith('c:') or path.startswith('C:')
 
 
 def _FixPaths(paths):
