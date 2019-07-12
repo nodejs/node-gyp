@@ -7,6 +7,8 @@
  * This allows compiled addons to work when the host executable is renamed.
  */
 
+#pragma unmanaged
+
 #ifdef _MSC_VER
 
 #ifndef WIN32_LEAN_AND_MEAN
