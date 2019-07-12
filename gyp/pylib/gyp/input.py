@@ -4,14 +4,8 @@
 
 from __future__ import print_function
 
-from compiler.ast import Const
-from compiler.ast import Dict
-from compiler.ast import Discard
-from compiler.ast import List
-from compiler.ast import Module
-from compiler.ast import Node
-from compiler.ast import Stmt
-import compiler
+import ast
+
 import gyp.common
 import gyp.simple_copy
 import multiprocessing
@@ -184,43 +178,39 @@ def CheckedEval(file_contents):
   Note that this is slower than eval() is.
   """
 
-  ast = compiler.parse(file_contents)
-  assert isinstance(ast, Module)
-  c1 = ast.getChildren()
-  assert c1[0] is None
-  assert isinstance(c1[1], Stmt)
-  c2 = c1[1].getChildren()
-  assert isinstance(c2[0], Discard)
-  c3 = c2[0].getChildren()
-  assert len(c3) == 1
-  return CheckNode(c3[0], [])
+  syntax_tree = ast.parse(file_contents)
+  assert isinstance(syntax_tree, ast.Module)
+  c1 = syntax_tree.body
+  assert len(c1) == 1
+  c2 = c1[0]
+  assert isinstance(c2, ast.Expr)
+  return CheckNode(c2.value, [])
 
 
 def CheckNode(node, keypath):
-  if isinstance(node, Dict):
+  if isinstance(node, ast.Dict):
     c = node.getChildren()
     dict = {}
-    for n in range(0, len(c), 2):
-      assert isinstance(c[n], Const)
-      key = c[n].getChildren()[0]
+    for key, value in zip(node.keys, node.values):
+      assert isinstance(key, ast.Str)
+      key = key.s
       if key in dict:
         raise GypError("Key '" + key + "' repeated at level " +
               repr(len(keypath) + 1) + " with key path '" +
               '.'.join(keypath) + "'")
       kp = list(keypath)  # Make a copy of the list for descending this node.
       kp.append(key)
-      dict[key] = CheckNode(c[n + 1], kp)
+      dict[key] = CheckNode(value, kp)
     return dict
-  elif isinstance(node, List):
-    c = node.getChildren()
+  elif isinstance(node, ast.List):
     children = []
-    for index, child in enumerate(c):
+    for index, child in enumerate(node.elts):
       kp = list(keypath)  # Copy list.
       kp.append(repr(index))
       children.append(CheckNode(child, kp))
     return children
-  elif isinstance(node, Const):
-    return node.getChildren()[0]
+  elif isinstance(node, ast.Str):
+    return node.s
   else:
     raise TypeError("Unknown AST node at key path '" + '.'.join(keypath) +
          "': " + repr(node))
@@ -954,8 +944,12 @@ def ExpandVariables(input, phase, variables, build_file):
       else:
         replacement = variables[contents]
 
+    if isinstance(replacement, bytes) and not isinstance(replacement, str):
+          replacement = replacement.decode("utf-8")  # done on Python 3 only
     if type(replacement) is list:
       for item in replacement:
+        if isinstance(item, bytes) and not isinstance(item, str):
+          item = item.decode("utf-8")  # done on Python 3 only
         if not contents[-1] == '/' and type(item) not in (str, int):
           raise GypError('Variable ' + contents +
                          ' must expand to a string or list of strings; ' +
@@ -1847,7 +1841,7 @@ def VerifyNoGYPFileCircularDependencies(targets):
   # Create a DependencyGraphNode for each gyp file containing a target.  Put
   # it into a dict for easy access.
   dependency_nodes = {}
-  for target in targets.iterkeys():
+  for target in targets:
     build_file = gyp.common.BuildFile(target)
     if not build_file in dependency_nodes:
       dependency_nodes[build_file] = DependencyGraphNode(build_file)
@@ -1878,7 +1872,7 @@ def VerifyNoGYPFileCircularDependencies(targets):
 
   # Files that have no dependencies are treated as dependent on root_node.
   root_node = DependencyGraphNode(None)
-  for build_file_node in dependency_nodes.itervalues():
+  for build_file_node in dependency_nodes.values():
     if len(build_file_node.dependencies) == 0:
       build_file_node.dependencies.append(root_node)
       root_node.dependents.append(build_file_node)
