@@ -1,3 +1,15 @@
+v5.0.3 2019-07-17
+=================
+
+* [[`66ad305775`](https://github.com/nodejs/node-gyp/commit/66ad305775)] - **python**: accept Python 3 conditionally (João Reis) [#1815](https://github.com/nodejs/node-gyp/pull/1815)
+* [[`7e7fce3fed`](https://github.com/nodejs/node-gyp/commit/7e7fce3fed)] - **python**: move Python detection to its own file (João Reis) [#1815](https://github.com/nodejs/node-gyp/pull/1815)
+* [[`e40c99e283`](https://github.com/nodejs/node-gyp/commit/e40c99e283)] - **src**: implement standard.js linting (Rod Vagg) [#1794](https://github.com/nodejs/node-gyp/pull/1794)
+* [[`bb92c761a9`](https://github.com/nodejs/node-gyp/commit/bb92c761a9)] - **test**: add Node.js 6 on Windows to Travis CI (João Reis) [#1812](https://github.com/nodejs/node-gyp/pull/1812)
+* [[`7fd924079f`](https://github.com/nodejs/node-gyp/commit/7fd924079f)] - **test**: increase tap timeout (João Reis) [#1812](https://github.com/nodejs/node-gyp/pull/1812)
+* [[`7e8127068f`](https://github.com/nodejs/node-gyp/commit/7e8127068f)] - **test**: cover supported node versions with travis (Rod Vagg) [#1809](https://github.com/nodejs/node-gyp/pull/1809)
+* [[`24109148df`](https://github.com/nodejs/node-gyp/commit/24109148df)] - **test**: downgrade to tap@^12 for continued Node 6 support (Rod Vagg) [#1808](https://github.com/nodejs/node-gyp/pull/1808)
+* [[`656117cc4a`](https://github.com/nodejs/node-gyp/commit/656117cc4a)] - **win**: make VS path match case-insensitive (João Reis) [#1806](https://github.com/nodejs/node-gyp/pull/1806)
+
 v5.0.2 2019-06-27
 =================
 
