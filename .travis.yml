@@ -28,51 +28,44 @@ matrix:
         PATH=/c/Python27:/c/Python27/Scripts:$PATH
         NODE_GYP_FORCE_PYTHON=/c/Python27/python.exe
       before_install: choco install python2
-    - name: "Node.js 6 & Python 3.7 on Linux"
-      python: 3.7
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
-      before_install: nvm install 6
-    - name: "Node.js 8 & Python 3.7 on Linux"
-      python: 3.7
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
-      before_install: nvm install 8
-    - name: "Node.js 10 & Python 3.7 on Linux"
-      python: 3.7
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
-      before_install: nvm install 10
-    - name: "Node.js 12 & Python 3.7 on Linux"
-      python: 3.7
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
-      before_install: nvm install 12
-    - name: "Node.js 12 & Python 3.7 on Windows"
+    - name: "Python 3.6 on Linux"
+      env: NODE_GYP_FORCE_PYTHON=python3.6 EXPERIMENTAL_NODE_GYP_PYTHON3=1
+      python: 3.6
+    - name: "Python 3.6 on macOS"
+      os: osx
+      language: cpp
+      env: NODE_GYP_FORCE_PYTHON=python3.6 EXPERIMENTAL_NODE_GYP_PYTHON3=1
+    - name: "Python 3.6 on Windows"
       os: windows
-      language: node_js
-      node_js: 12  # node
+      language: cpp
+      # language: node_js
+      # node_js: 12  # node
       env: >-
-        PATH=/c/Python37:/c/Python37/Scripts:$PATH
-        NODE_GYP_FORCE_PYTHON=/c/Python37/python.exe
+        PATH=/c/Python36:/c/Python36/Scripts:$PATH
+        NODE_GYP_FORCE_PYTHON=/c/Python36/python.exe
         EXPERIMENTAL_NODE_GYP_PYTHON3=1
-      before_install: choco install python
+      before_install: choco install python --version 3.6.8
   allow_failures:
-    - env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
+    - env: NODE_GYP_FORCE_PYTHON=python3.6 EXPERIMENTAL_NODE_GYP_PYTHON3=1
     - env: >-
-        PATH=/c/Python37:/c/Python37/Scripts:$PATH
-        NODE_GYP_FORCE_PYTHON=/c/Python37/python.exe
+        PATH=/c/Python36:/c/Python36/Scripts:$PATH
+        NODE_GYP_FORCE_PYTHON=/c/Python36/python.exe
         EXPERIMENTAL_NODE_GYP_PYTHON3=1
 install:
   #- pip install -r requirements.txt
-  - pip install flake8  # pytest  # add another testing frameworks later
+  - pip install flake8
 before_script:
   - flake8 --version
   # stop the build if there are Python syntax errors or undefined names
   - flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
   # exit-zero treats all errors as warnings.  Two space indentation is OK.  The GitHub editor is 127 chars wide
   - flake8 . --count --exit-zero --ignore=E111,E114,W503 --max-complexity=10 --max-line-length=127 --statistics
+  - echo "EXPERIMENTAL_NODE_GYP_PYTHON3 is ${EXPERIMENTAL_NODE_GYP_PYTHON3}"
+  - ${NODE_GYP_FORCE_PYTHON} --version || true
   - npm install
 script:
   - node -e 'require("npmlog").level="verbose"; require("./lib/find-python")(null,()=>{})'
   - npm test
-  #- pytest --capture=sys  # add other tests here
 notifications:
   on_success: change
   on_failure: change  # `always` will be the setting once code changes slow down
