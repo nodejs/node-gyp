@@ -64,10 +64,6 @@ matrix:
   allow_failures:
     - os: osx
       env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
-    - env: >-
-        PATH=/c/Python37:/c/Python37/Scripts:$PATH
-        NODE_GYP_FORCE_PYTHON=/c/Python37/python.exe
-        EXPERIMENTAL_NODE_GYP_PYTHON3=1
 install:
   #- pip install -r requirements.txt
   - pip install flake8  # pytest  # add another testing frameworks later
