@@ -21,7 +21,7 @@ def ParseTarget(target):
   return filename, target, suffix
 
 
-def LoadEdges(filename, targets):
+def LoadEdges(targets):
   """Load the edges map from the dump file, and filter it to only
   show targets in |targets| and their depedendents."""
 
@@ -92,7 +92,7 @@ def main():
     print('usage: %s target1 target2...' % (sys.argv[0]), file=sys.stderr)
     return 1
 
-  edges = LoadEdges('dump.json', sys.argv[1:])
+  edges = LoadEdges(sys.argv[1:])
 
   WriteGraph(edges)
   return 0

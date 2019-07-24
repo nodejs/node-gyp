@@ -14,12 +14,12 @@
 
 from __future__ import print_function
 
+__author__ = 'nsylvain (Nicolas Sylvain)'
+
 import os
 import re
 import sys
-import pretty_vcproj
-
-__author__ = 'nsylvain (Nicolas Sylvain)'
+from . import pretty_vcproj
 
 def BuildProject(project, built, projects, deps):
   # if all dependencies are done, we can build it, otherwise we try to build the
