@@ -45,7 +45,7 @@ matrix:
       python: 3.7
       env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
       before_install: nvm install 12
-    - name: "Node.js 12 & Python 3.7 on macOS"
+    - name: "Python 3.7 on macOS"
       os: osx
       osx_image: xcode11
       language: shell  # 'language: python' is not yet supported on macOS
