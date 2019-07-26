@@ -8,14 +8,6 @@
     'win_delay_load_hook': 'true',
     'product_prefix': '',
 
-    'conditions': [
-      [ 'node_engine=="chakracore"', {
-        'variables': {
-          'node_engine_include_dir%': 'deps/chakrashim/include'
-        },
-      }]
-    ],
-
     'include_dirs': [
       '<(node_root_dir)/include/node',
       '<(node_root_dir)/src',
@@ -89,6 +81,12 @@
     ],
 
     'conditions': [
+      [ 'node_engine=="chakracore"', {
+        'variables': {
+          'node_engine_include_dir%': 'deps/chakrashim/include'
+        },
+      }],
+
       [ 'OS=="mac"', {
         'defines': [
           '_DARWIN_USE_64_BIT_INODE=1'
