@@ -36,14 +36,18 @@ function checkCharmapValid () {
 }
 
 test('build simple addon', function (t) {
-  t.plan(3)
+  t.plan(2)
 
   // Set the loglevel otherwise the output disappears when run via 'npm test'
   var cmd = [ nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose' ]
   var proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
+    if (err) {
+      console.error('failed to run: ' + cmd.join(' '))
+      console.log(stderr)
+      t.fail(err)
+    }
     var logLines = stderr.toString().trim().split(/\r?\n/)
     var lastLine = logLines[logLines.length - 1]
-    t.strictEqual(err, null)
     t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
     t.strictEqual(runHello().trim(), 'world')
   })
