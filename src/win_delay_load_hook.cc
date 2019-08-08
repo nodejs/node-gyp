@@ -7,9 +7,9 @@
  * This allows compiled addons to work when the host executable is renamed.
  */
 
-#pragma unmanaged
-
 #ifdef _MSC_VER
+
+#pragma managed(push, off)
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -33,5 +33,7 @@ static FARPROC WINAPI load_exe_hook(unsigned int event, DelayLoadInfo* info) {
 }
 
 decltype(__pfnDliNotifyHook2) __pfnDliNotifyHook2 = load_exe_hook;
+
+#pragma managed(pop)
 
 #endif
