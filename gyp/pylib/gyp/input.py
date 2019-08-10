@@ -1073,7 +1073,7 @@ def EvalSingleCondition(
     cond_expr, true_dict, false_dict, phase, variables, build_file):
   """Returns true_dict if cond_expr evaluates to true, and false_dict
   otherwise."""
-  # Do expansions on the condition itself.  Since the conditon can naturally
+  # Do expansions on the condition itself.  Since the condition can naturally
   # contain variable references without needing to resort to GYP expansion
   # syntax, this is of dubious value for variables, but someone might want to
   # use a command expansion directly inside a condition.
@@ -1178,7 +1178,7 @@ def LoadVariablesFromVariablesDict(variables, the_dict, the_dict_key):
         continue
       if the_dict_key == 'variables' and variable_name in the_dict:
         # If the variable is set without a % in the_dict, and the_dict is a
-        # variables dict (making |variables| a varaibles sub-dict of a
+        # variables dict (making |variables| a variables sub-dict of a
         # variables dict), use the_dict's definition.
         value = the_dict[variable_name]
     else:
@@ -1864,7 +1864,7 @@ def VerifyNoGYPFileCircularDependencies(targets):
         continue
       dependency_node = dependency_nodes.get(dependency_build_file)
       if not dependency_node:
-        raise GypError("Dependancy '%s' not found" % dependency_build_file)
+        raise GypError("Dependency '%s' not found" % dependency_build_file)
       if dependency_node not in build_file_node.dependencies:
         build_file_node.dependencies.append(dependency_node)
         dependency_node.dependents.append(build_file_node)

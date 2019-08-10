@@ -574,7 +574,7 @@ class CMakeNamer(object):
   """Converts Gyp target names into CMake target names.
 
   CMake requires that target names be globally unique. One way to ensure
-  this is to fully qualify the names of the targets. Unfortunatly, this
+  this is to fully qualify the names of the targets. Unfortunately, this
   ends up with all targets looking like "chrome_chrome_gyp_chrome" instead
   of just "chrome". If this generator were only interested in building, it
   would be possible to fully qualify all target names, then create
