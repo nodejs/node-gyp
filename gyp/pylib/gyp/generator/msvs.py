@@ -3069,7 +3069,7 @@ def _FinalizeMSBuildSettings(spec, configuration):
   _ToolAppend(msbuild_settings, 'ResourceCompile',
               'AdditionalIncludeDirectories', resource_include_dirs)
   # Add in libraries, note that even for empty libraries, we want this
-  # set, to prevent inheriting default libraries from the enviroment.
+  # set, to prevent inheriting default libraries from the environment.
   _ToolSetOrAppend(msbuild_settings, 'Link', 'AdditionalDependencies',
                   libraries)
   _ToolAppend(msbuild_settings, 'Link', 'AdditionalLibraryDirectories',
