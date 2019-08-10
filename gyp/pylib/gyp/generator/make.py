@@ -12,7 +12,7 @@
 # all are sourced by the top-level Makefile.  This means that all
 # variables in .mk-files clobber one another.  Be careful to use :=
 # where appropriate for immediate evaluation, and similarly to watch
-# that you're not relying on a variable value to last beween different
+# that you're not relying on a variable value to last between different
 # .mk files.
 #
 # TODOs:

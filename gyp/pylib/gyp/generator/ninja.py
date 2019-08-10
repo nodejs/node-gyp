@@ -1821,7 +1821,7 @@ def GenerateOutputForConfig(target_list, target_dicts, data, params,
   # - The priority from low to high is gcc/g++, the 'make_global_settings' in
   #   gyp, the environment variable.
   # - If there is no 'make_global_settings' for CC.host/CXX.host or
-  #   'CC_host'/'CXX_host' enviroment variable, cc_host/cxx_host should be set
+  #   'CC_host'/'CXX_host' environment variable, cc_host/cxx_host should be set
   #   to cc/cxx.
   if flavor == 'win':
     ar = 'lib.exe'
