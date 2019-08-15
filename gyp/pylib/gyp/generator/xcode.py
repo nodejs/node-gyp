@@ -246,7 +246,7 @@ class XcodeProject(object):
         targets_for_all.append(xcode_target)
 
       if target_name.lower() == 'all':
-        has_custom_all = True;
+        has_custom_all = True
 
       # If this target has a 'run_as' attribute, add its target to the
       # targets, and add it to the test targets.
@@ -637,7 +637,7 @@ def GenerateOutput(target_list, target_dicts, data, params):
     pbxp = xcp.project
 
     # Set project-level attributes from multiple options
-    project_attributes = {};
+    project_attributes = {}
     if parallel_builds:
       project_attributes['BuildIndependentTargetsInParallel'] = 'YES'
     if upgrade_check_project_version:
@@ -776,7 +776,7 @@ def GenerateOutput(target_list, target_dicts, data, params):
     # logic all happens in ninja.  Don't bother creating the extra targets in
     # that case.
     if type != 'none' and (spec_actions or spec_rules) and not ninja_wrapper:
-      support_xccl = CreateXCConfigurationList(configuration_names);
+      support_xccl = CreateXCConfigurationList(configuration_names)
       support_target_suffix = generator_flags.get(
           'support_target_suffix', ' Support')
       support_target_properties = {
@@ -1171,7 +1171,7 @@ exit 1
         dest = '$(SRCROOT)/' + dest
 
       code_sign = int(copy_group.get('xcode_code_sign', 0))
-      settings = (None, '{ATTRIBUTES = (CodeSignOnCopy, ); }')[code_sign];
+      settings = (None, '{ATTRIBUTES = (CodeSignOnCopy, ); }')[code_sign]
 
       # Coalesce multiple "copies" sections in the same target with the same
       # "destination" property into the same PBXCopyFilesBuildPhase, otherwise

@@ -1225,16 +1225,16 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
         cflags_c = config.get('cflags_c')
         cflags_cc = config.get('cflags_cc')
 
-      self.WriteLn("# Flags passed to all source files.");
+      self.WriteLn("# Flags passed to all source files.")
       self.WriteList(cflags, 'CFLAGS_%s' % configname)
-      self.WriteLn("# Flags passed to only C files.");
+      self.WriteLn("# Flags passed to only C files.")
       self.WriteList(cflags_c, 'CFLAGS_C_%s' % configname)
-      self.WriteLn("# Flags passed to only C++ files.");
+      self.WriteLn("# Flags passed to only C++ files.")
       self.WriteList(cflags_cc, 'CFLAGS_CC_%s' % configname)
       if self.flavor == 'mac':
-        self.WriteLn("# Flags passed to only ObjC files.");
+        self.WriteLn("# Flags passed to only ObjC files.")
         self.WriteList(cflags_objc, 'CFLAGS_OBJC_%s' % configname)
-        self.WriteLn("# Flags passed to only ObjC++ files.");
+        self.WriteLn("# Flags passed to only ObjC++ files.")
         self.WriteList(cflags_objcc, 'CFLAGS_OBJCC_%s' % configname)
       includes = config.get('include_dirs')
       if includes:
@@ -1779,7 +1779,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
       cmddigest = hashlib.sha1(command if command else self.target).hexdigest()
       intermediate = "%s.intermediate" % cmddigest
       self.WriteLn('%s: %s' % (' '.join(outputs), intermediate))
-      self.WriteLn('\t%s' % '@:');
+      self.WriteLn('\t%s' % '@:')
       self.WriteLn('%s: %s' % ('.INTERMEDIATE', intermediate))
       self.WriteLn('%s: %s%s' %
                    (intermediate, ' '.join(inputs), force_append))
