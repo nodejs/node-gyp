@@ -539,7 +539,7 @@ def ExpandXcodeVariables(string, expansions):
   """
 
   matches = _xcode_variable_re.findall(string)
-  if matches == None:
+  if matches is None:
     return string
 
   matches.reverse()

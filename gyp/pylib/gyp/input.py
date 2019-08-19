@@ -155,7 +155,7 @@ def GetIncludedBuildFiles(build_file_path, aux_data, included=None):
   in the list will be relative to the current directory.
   """
 
-  if included == None:
+  if included is None:
     included = []
 
   if build_file_path in included:
@@ -1062,7 +1062,7 @@ def EvalCondition(condition, conditions_key, phase, variables, build_file):
     else:
       false_dict = None
       i = i + 2
-    if result == None:
+    if result is None:
       result = EvalSingleCondition(
           cond_expr, true_dict, false_dict, phase, variables, build_file)
 
@@ -1603,7 +1603,7 @@ class DependencyGraphNode(object):
 
   def DirectDependencies(self, dependencies=None):
     """Returns a list of just direct dependencies."""
-    if dependencies == None:
+    if dependencies is None:
       dependencies = []
 
     for dependency in self.dependencies:
@@ -1631,7 +1631,7 @@ class DependencyGraphNode(object):
     public entry point.
     """
 
-    if dependencies == None:
+    if dependencies is None:
       dependencies = []
 
     index = 0
