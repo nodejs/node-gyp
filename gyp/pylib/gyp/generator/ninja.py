@@ -726,7 +726,7 @@ class NinjaWriter(object):
           elif var == 'name':
             extra_bindings.append(('name', cygwin_munge(basename)))
           else:
-            assert var == None, repr(var)
+            assert var is None, repr(var)
 
         outputs = [self.GypPathToNinja(o, env) for o in outputs]
         if self.flavor == 'win':
