@@ -42,7 +42,7 @@ You will also need to install:
 
 #### Option 1
 
-Install all the required tools and configurations using Microsoft's [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) using `npm install --global --production windows-build-tools` from an elevated PowerShell or CMD.exe (run as Administrator).
+Install all the required tools and configurations using Microsoft's [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) using `npm install --global --production windows-build-tools@4.0.0` from an elevated PowerShell or CMD.exe (run as Administrator).
 
 #### Option 2
 
