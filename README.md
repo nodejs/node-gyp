@@ -35,8 +35,7 @@ You will also need to install:
 
    * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported) (already installed on macOS)
    * [Xcode](https://developer.apple.com/xcode/download/)
-     * You also need to install the `Command Line Tools` via Xcode. You can find this under the menu `Xcode -> Preferences -> Locations` (or by running `xcode-select --install` in your Terminal)
-       * This step will install `gcc` and the related toolchain containing `make`
+     * You also need to install the `XCode Command Line Tools` by running `xcode-select --install`. Alternatively, if you already have the full Xcode installed, you can find them under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`. This step will install `clang`, `clang++`, and `make`.
 
 ### On Windows
 
