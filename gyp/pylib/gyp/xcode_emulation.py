@@ -20,6 +20,8 @@ import sys
 import tempfile
 from gyp.common import GypError
 
+PY3 = bytes != str
+
 # Populated lazily by XcodeVersion, for efficiency, and to fix an issue when
 # "xcodebuild" is called too quickly (it has been found to return incorrect
 # version number).
@@ -1277,7 +1279,7 @@ def XcodeVersion():
   except:
     version = CLTVersion()
     if version:
-      version = re.match(r'(\d+\.\d+\.?\d*)', version).groups()[0]
+      version = ".".join(version.split(".")[:3])
     else:
       raise GypError("No Xcode or CLT version detected!")
     # The CLT has no build information, so we return an empty string.
@@ -1322,6 +1324,8 @@ def GetStdoutQuiet(cmdlist):
   Raises |GypError| if the command return with a non-zero return code."""
   job = subprocess.Popen(cmdlist, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out = job.communicate()[0]
+  if PY3:
+    out = out.decode("utf-8")
   if job.returncode != 0:
     raise GypError('Error %d running %s' % (job.returncode, cmdlist[0]))
   return out.rstrip('\n')
@@ -1332,6 +1336,8 @@ def GetStdout(cmdlist):
   Raises |GypError| if the command return with a non-zero return code."""
   job = subprocess.Popen(cmdlist, stdout=subprocess.PIPE)
   out = job.communicate()[0]
+  if PY3:
+    out = out.decode("utf-8")
   if job.returncode != 0:
     sys.stderr.write(out + '\n')
     raise GypError('Error %d running %s' % (job.returncode, cmdlist[0]))
