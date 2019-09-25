@@ -61,9 +61,6 @@ matrix:
         EXPERIMENTAL_NODE_GYP_PYTHON3=1
       before_install: choco install python
 
-  allow_failures:
-    - os: osx
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
 install:
   #- pip install -r requirements.txt
   - pip install flake8  # pytest  # add another testing frameworks later
