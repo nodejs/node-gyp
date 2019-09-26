@@ -1,3 +1,11 @@
+v6.0.0 2019-10-04
+=================
+
+* [[`f60ed47d14`](https://github.com/nodejs/node-gyp/commit/f60ed47d14)] - **travis**: add Python 3.5 and 3.6 tests on Linux (Christian Clauss) [#1903](https://github.com/nodejs/node-gyp/pull/1903)
+* [[`c763ca1838`](https://github.com/nodejs/node-gyp/commit/c763ca1838)] - **(SEMVER-MAJOR)** **doc**: Declare that node-gyp is Python 3 compatible (cclauss) [#1811](https://github.com/nodejs/node-gyp/pull/1811)
+* [[`3d1c60ab81`](https://github.com/nodejs/node-gyp/commit/3d1c60ab81)] - **(SEMVER-MAJOR)** **lib**: accept Python 3 by default (João Reis) [#1844](https://github.com/nodejs/node-gyp/pull/1844)
+* [[`c6e3b65a23`](https://github.com/nodejs/node-gyp/commit/c6e3b65a23)] - **(SEMVER-MAJOR)** **lib**: raise the minimum Python version from 2.6 to 2.7 (cclauss) [#1818](https://github.com/nodejs/node-gyp/pull/1818)
+
 v5.0.4 2019-09-27
 =================
 
