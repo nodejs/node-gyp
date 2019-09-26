@@ -1286,9 +1286,9 @@ def XcodeVersion():
     version_list = [version, '']
   version = version_list[0]
   build = version_list[-1]
-  # Be careful to convert "4.2" to "0420":
-  version = version.split()[-1].replace('.', '')
-  version = (version + '0' * (3 - len(version))).zfill(4)
+  # Be careful to convert "4.2" to "0420" and "10.0" to "1000":
+  version = format(''.join((version.split()[-1].split('.') + ['0', '0'])[:3]),
+                   '>04s')
   if build:
     build = build.split()[-1]
   XCODE_VERSION_CACHE = (version, build)
