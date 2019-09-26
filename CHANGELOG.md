@@ -1,3 +1,27 @@
+v5.0.4 2019-09-27
+=================
+
+* [[`1236869ffc`](https://github.com/nodejs/node-gyp/commit/1236869ffc)] - **gyp**: modify XcodeVersion() to convert "4.2" to "0420" and "10.0" to "1000" (Christian Clauss) [#1895](https://github.com/nodejs/node-gyp/pull/1895)
+* [[`36638afe48`](https://github.com/nodejs/node-gyp/commit/36638afe48)] - **gyp**: more decode stdout on Python 3 (cclauss) [#1894](https://github.com/nodejs/node-gyp/pull/1894)
+* [[`f753c167c5`](https://github.com/nodejs/node-gyp/commit/f753c167c5)] - **gyp**: decode stdout on Python 3 (cclauss) [#1890](https://github.com/nodejs/node-gyp/pull/1890)
+* [[`60a4083523`](https://github.com/nodejs/node-gyp/commit/60a4083523)] - **doc**: update xcode install instructions to match Node's BUILDING (Nhan Khong) [#1884](https://github.com/nodejs/node-gyp/pull/1884)
+* [[`19dbc9ac32`](https://github.com/nodejs/node-gyp/commit/19dbc9ac32)] - **deps**: update tar to 4.4.12 (Matheus Marchini) [#1889](https://github.com/nodejs/node-gyp/pull/1889)
+* [[`5f3ed92181`](https://github.com/nodejs/node-gyp/commit/5f3ed92181)] - **bin**: fix the usage instructions (Halit Ogunc) [#1888](https://github.com/nodejs/node-gyp/pull/1888)
+* [[`aab118edf1`](https://github.com/nodejs/node-gyp/commit/aab118edf1)] - **lib**: adding keep-alive header to download requests (Milad Farazmand) [#1863](https://github.com/nodejs/node-gyp/pull/1863)
+* [[`1186e89326`](https://github.com/nodejs/node-gyp/commit/1186e89326)] - **lib**: ignore non-critical os.userInfo() failures (Rod Vagg) [#1835](https://github.com/nodejs/node-gyp/pull/1835)
+* [[`785e527c3d`](https://github.com/nodejs/node-gyp/commit/785e527c3d)] - **doc**: fix missing argument for setting python path (lagorsse) [#1802](https://github.com/nodejs/node-gyp/pull/1802)
+* [[`a97615196c`](https://github.com/nodejs/node-gyp/commit/a97615196c)] - **gyp**: rm semicolons (Python != JavaScript) (MattIPv4) [#1858](https://github.com/nodejs/node-gyp/pull/1858)
+* [[`06019bac24`](https://github.com/nodejs/node-gyp/commit/06019bac24)] - **gyp**: assorted typo fixes (XhmikosR) [#1853](https://github.com/nodejs/node-gyp/pull/1853)
+* [[`3f4972c1ca`](https://github.com/nodejs/node-gyp/commit/3f4972c1ca)] - **gyp**: use "is" when comparing to None (Vladyslav Burzakovskyy) [#1860](https://github.com/nodejs/node-gyp/pull/1860)
+* [[`1cb4708073`](https://github.com/nodejs/node-gyp/commit/1cb4708073)] - **src,win**: improve unmanaged handling (Peter Sabath) [#1852](https://github.com/nodejs/node-gyp/pull/1852)
+* [[`5553cd910e`](https://github.com/nodejs/node-gyp/commit/5553cd910e)] - **gyp**: improve Windows+Cygwin compatibility (Jose Quijada) [#1817](https://github.com/nodejs/node-gyp/pull/1817)
+* [[`8bcb1fbb43`](https://github.com/nodejs/node-gyp/commit/8bcb1fbb43)] - **gyp**: Python 3 Windows fixes (João Reis) [#1843](https://github.com/nodejs/node-gyp/pull/1843)
+* [[`2e24d0a326`](https://github.com/nodejs/node-gyp/commit/2e24d0a326)] - **test**: accept Python 3 in test-find-python.js (João Reis) [#1843](https://github.com/nodejs/node-gyp/pull/1843)
+* [[`1267b4dc1c`](https://github.com/nodejs/node-gyp/commit/1267b4dc1c)] - **build**: add test run Python 3.7 on macOS (Christian Clauss) [#1843](https://github.com/nodejs/node-gyp/pull/1843)
+* [[`da1b031aa3`](https://github.com/nodejs/node-gyp/commit/da1b031aa3)] - **build**: import StringIO on Python 2 and Python 3 (Christian Clauss) [#1836](https://github.com/nodejs/node-gyp/pull/1836)
+* [[`fa0ed4aa42`](https://github.com/nodejs/node-gyp/commit/fa0ed4aa42)] - **build**: more Python 3 compat, replace compile with ast (cclauss) [#1820](https://github.com/nodejs/node-gyp/pull/1820)
+* [[`18d5c7c9d0`](https://github.com/nodejs/node-gyp/commit/18d5c7c9d0)] - **win,src**: update win\_delay\_load\_hook.cc to work with /clr (Ivan Petrovic) [#1819](https://github.com/nodejs/node-gyp/pull/1819)
+
 v5.0.3 2019-07-17
 =================
 
