@@ -11,6 +11,8 @@ import tempfile
 import sys
 import subprocess
 
+PY3 = bytes != str
+
 
 # A minimal memoizing decorator. It'll blow up if the args aren't immutable,
 # among other "problems".
@@ -623,7 +625,9 @@ def IsCygwin():
     out = subprocess.Popen("uname",
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT)
-    stdout,stderr = out.communicate()
+    stdout, stderr = out.communicate()
+    if PY3:
+      stdout = stdout.decode("utf-8")
     return "CYGWIN" in str(stdout)
   except Exception:
     return False
