@@ -8,13 +8,17 @@ import os
 import sys
 import subprocess
 
+PY3 = bytes != str
+
 # Below IsCygwin() function copied from pylib/gyp/common.py
 def IsCygwin():
   try:
     out = subprocess.Popen("uname",
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT)
-    stdout,stderr = out.communicate()
+    stdout, stderr = out.communicate()
+    if PY3:
+      stdout = stdout.decode("utf-8")
     return "CYGWIN" in str(stdout)
   except Exception:
     return False
@@ -27,7 +31,9 @@ def UnixifyPath(path):
     out = subprocess.Popen(["cygpath", "-u", path],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT)
-    stdout,stderr = out.communicate()
+    stdout, stderr = out.communicate()
+    if PY3:
+      stdout = stdout.decode("utf-8")
     return str(stdout)
   except Exception:
     return path
