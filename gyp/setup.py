@@ -7,13 +7,13 @@
 from setuptools import setup
 
 setup(
-  name='gyp',
-  version='0.1',
-  description='Generate Your Projects',
-  author='Chromium Authors',
-  author_email='chromium-dev@googlegroups.com',
-  url='http://code.google.com/p/gyp',
-  package_dir = {'': 'pylib'},
-  packages=['gyp', 'gyp.generator'],
-  entry_points = {'console_scripts': ['gyp=gyp:script_main'] }
+    name="gyp",
+    version="0.1",
+    description="Generate Your Projects",
+    author="Chromium Authors",
+    author_email="chromium-dev@googlegroups.com",
+    url="http://code.google.com/p/gyp",
+    package_dir={"": "pylib"},
+    packages=["gyp", "gyp.generator"],
+    entry_points={"console_scripts": ["gyp=gyp:script_main"]},
 )
