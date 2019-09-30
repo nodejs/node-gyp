@@ -293,7 +293,7 @@ test('test process release - process.release ~ node@4.0.0-rc.4 passed as argv[0]
 
   // note the missing 'v' on the arg, it should normalise when checking
   // whether we're on the default or not
-  var release = processRelease([ '4.0.0-rc.4' ], { opts: {} }, 'v4.0.0-rc.4', {
+  var release = processRelease(['4.0.0-rc.4'], { opts: {} }, 'v4.0.0-rc.4', {
     name: 'node',
     headersUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/node-v4.0.0-rc.4-headers.tar.gz'
   })
@@ -318,7 +318,7 @@ test('test process release - process.release ~ node@4.0.0-rc.4 - bogus string pa
 
   // additional arguments can be passed in on the commandline that should be ignored if they
   // are not specifying a valid version @ position 0
-  var release = processRelease([ 'this is no version!' ], { opts: {} }, 'v4.0.0-rc.4', {
+  var release = processRelease(['this is no version!'], { opts: {} }, 'v4.0.0-rc.4', {
     name: 'node',
     headersUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/node-v4.0.0-rc.4-headers.tar.gz'
   })
