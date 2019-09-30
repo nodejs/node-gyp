@@ -59,6 +59,12 @@ matrix:
         PATH=/c/Python37:/c/Python37/Scripts:$PATH
         NODE_GYP_FORCE_PYTHON=/c/Python37/python.exe
       before_install: choco install python
+    - name: "Run black --check on Python 3.7"
+      language: python
+      python: 3.7
+      install: pip install black
+      before_script: true  # bypass before_script defined below
+      script: black --check .
 
 install:
   #- pip install -r requirements.txt
