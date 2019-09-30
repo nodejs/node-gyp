@@ -181,6 +181,58 @@ test('test process release - process.release ~ node@4.1.23 / corp build', functi
   })
 })
 
+test('test process release - process.release ~ node@12.8.0 Windows', function (t) {
+  t.plan(2)
+
+  var release = processRelease([], { opts: {} }, 'v12.8.0', {
+    name: 'node',
+    sourceUrl: 'https://nodejs.org/download/release/v12.8.0/node-v12.8.0.tar.gz',
+    headersUrl: 'https://nodejs.org/download/release/v12.8.0/node-v12.8.0-headers.tar.gz',
+    libUrl: 'https://nodejs.org/download/release/v12.8.0/win-x64/node.lib'
+  })
+
+  t.equal(release.semver.version, '12.8.0')
+  delete release.semver
+
+  t.deepEqual(release, {
+    version: '12.8.0',
+    name: 'node',
+    baseUrl: 'https://nodejs.org/download/release/v12.8.0/',
+    tarballUrl: 'https://nodejs.org/download/release/v12.8.0/node-v12.8.0-headers.tar.gz',
+    shasumsUrl: 'https://nodejs.org/download/release/v12.8.0/SHASUMS256.txt',
+    versionDir: '12.8.0',
+    ia32: { libUrl: 'https://nodejs.org/download/release/v12.8.0/win-x86/node.lib', libPath: 'win-x86/node.lib' },
+    x64: { libUrl: 'https://nodejs.org/download/release/v12.8.0/win-x64/node.lib', libPath: 'win-x64/node.lib' },
+    arm64: { libUrl: 'https://nodejs.org/download/release/v12.8.0/win-arm64/node.lib', libPath: 'win-arm64/node.lib' }
+  })
+})
+
+test('test process release - process.release ~ node@12.8.0 Windows ARM64', function (t) {
+  t.plan(2)
+
+  var release = processRelease([], { opts: {} }, 'v12.8.0', {
+    name: 'node',
+    sourceUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/node-v12.8.0.tar.gz',
+    headersUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/node-v12.8.0-headers.tar.gz',
+    libUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/win-arm64/node.lib'
+  })
+
+  t.equal(release.semver.version, '12.8.0')
+  delete release.semver
+
+  t.deepEqual(release, {
+    version: '12.8.0',
+    name: 'node',
+    baseUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/',
+    tarballUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/node-v12.8.0-headers.tar.gz',
+    shasumsUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/SHASUMS256.txt',
+    versionDir: '12.8.0',
+    ia32: { libUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/win-x86/node.lib', libPath: 'win-x86/node.lib' },
+    x64: { libUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/win-x64/node.lib', libPath: 'win-x64/node.lib' },
+    arm64: { libUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/win-arm64/node.lib', libPath: 'win-arm64/node.lib' }
+  })
+})
+
 test('test process release - process.release ~ node@4.1.23 --target=0.10.40', function (t) {
   t.plan(2)
 
