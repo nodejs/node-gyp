@@ -59,6 +59,9 @@ class MSVSSolutionEntry(object):
     # Sort by name then guid (so things are in order on vs2008).
     return cmp((self.name, self.get_guid()), (other.name, other.get_guid()))
 
+  def __lt__(self, other):
+    return self.__cmp__(other) < 0
+
 
 class MSVSFolder(MSVSSolutionEntry):
   """Folder in a Visual Studio project or solution."""
