@@ -25,23 +25,23 @@ $ npm install -g node-gyp
 
 You will also need to install:
 
-NOTE: node-gyp is compatible with Python 2.7 and 3.7 but node itself is not yet compatible with Python 3.
+NOTE: node-gyp is compatible with Python v2.7, v3.5, v3.6, or v3.7 but node itself is not yet compatible with Python 3.
 
 ### On Unix
 
-   * `Python v2.7 or v3.7` (v3.5 and 3.6 may work but are not currently tested)
+   * `Python v2.7, v3.5, v3.6, or v3.7`
    * `make`
    * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
 
 ### On macOS
 
-   * `Python v2.7 or v3.7` (v3.5 and 3.6 may work but are not currently tested)
+   * `Python v2.7, v3.5, v3.6, or v3.7`
    * [Xcode](https://developer.apple.com/xcode/download/)
      * You also need to install the `XCode Command Line Tools` by running `xcode-select --install`. Alternatively, if you already have the full Xcode installed, you can find them under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`. This step will install `clang`, `clang++`, and `make`.
 
 ### On Windows
 
-Install the current version of Python from the [Microsoft Store package](https://docs.python.org/3.7/using/windows.html#the-microsoft-store-package).
+Install the current version of Python from the [Microsoft Store package](https://docs.python.org/3/using/windows.html#the-microsoft-store-package).
 
 #### Option 1
 
