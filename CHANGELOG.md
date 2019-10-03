@@ -1,3 +1,16 @@
+v5.0.5 2019-10-04
+=================
+
+* [[`3891391746`](https://github.com/nodejs/node-gyp/commit/3891391746)] - **doc**: reconcile README with Python 3 compat changes (Rod Vagg) [#1911](https://github.com/nodejs/node-gyp/pull/1911)
+* [[`07f81f1920`](https://github.com/nodejs/node-gyp/commit/07f81f1920)] - **lib**: accept Python 3 after Python 2 (Sam Roberts) [#1910](https://github.com/nodejs/node-gyp/pull/1910)
+* [[`04ce59f4a2`](https://github.com/nodejs/node-gyp/commit/04ce59f4a2)] - **doc**: clarify Python configuration, etc (Sam Roberts) [#1908](https://github.com/nodejs/node-gyp/pull/1908)
+* [[`01c46ee3df`](https://github.com/nodejs/node-gyp/commit/01c46ee3df)] - **gyp**: add \_\_lt\_\_ to MSVSSolutionEntry (João Reis) [#1904](https://github.com/nodejs/node-gyp/pull/1904)
+* [[`735d961b99`](https://github.com/nodejs/node-gyp/commit/735d961b99)] - **win**: support VS 2017 Desktop Express (João Reis) [#1902](https://github.com/nodejs/node-gyp/pull/1902)
+* [[`3834156a92`](https://github.com/nodejs/node-gyp/commit/3834156a92)] - **test**: add Python 3.5 and 3.6 tests on Linux (cclauss) [#1909](https://github.com/nodejs/node-gyp/pull/1909)
+* [[`1196e990d8`](https://github.com/nodejs/node-gyp/commit/1196e990d8)] - **src**: update to standard@14 (Rod Vagg) [#1899](https://github.com/nodejs/node-gyp/pull/1899)
+* [[`53ee7dfe89`](https://github.com/nodejs/node-gyp/commit/53ee7dfe89)] - **gyp**: fix undefined name: cflags --\> ldflags (Christian Clauss) [#1901](https://github.com/nodejs/node-gyp/pull/1901)
+* [[`5871dcf6c9`](https://github.com/nodejs/node-gyp/commit/5871dcf6c9)] - **src,win**: add support for fetching arm64 node.lib (Richard Townsend) [#1875](https://github.com/nodejs/node-gyp/pull/1875)
+
 v5.0.4 2019-09-27
 =================
 
