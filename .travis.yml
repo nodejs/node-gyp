@@ -31,33 +31,33 @@ matrix:
 
     - name: "Node.js 6 & Python 3.7 on Linux"
       python: 3.7
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
+      env: NODE_GYP_FORCE_PYTHON=python3
       before_install: nvm install 6
     - name: "Node.js 8 & Python 3.7 on Linux"
       python: 3.7
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
+      env: NODE_GYP_FORCE_PYTHON=python3
       before_install: nvm install 8
     - name: "Node.js 10 & Python 3.7 on Linux"
       python: 3.7
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
+      env: NODE_GYP_FORCE_PYTHON=python3
       before_install: nvm install 10
     - name: "Node.js 12 & Python 3.5 on Linux"
       python: 3.5
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
+      env: NODE_GYP_FORCE_PYTHON=python3
       before_install: nvm install 12
     - name: "Node.js 12 & Python 3.6 on Linux"
       python: 3.6
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
+      env: NODE_GYP_FORCE_PYTHON=python3
       before_install: nvm install 12
     - name: "Node.js 12 & Python 3.7 on Linux"
       python: 3.7
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
+      env: NODE_GYP_FORCE_PYTHON=python3
       before_install: nvm install 12
     - name: "Python 3.7 on macOS"
       os: osx
       #osx_image: xcode11
       language: shell  # 'language: python' is not yet supported on macOS
-      env: NODE_GYP_FORCE_PYTHON=python3 EXPERIMENTAL_NODE_GYP_PYTHON3=1
+      env: NODE_GYP_FORCE_PYTHON=python3
       before_install: HOMEBREW_NO_AUTO_UPDATE=1 brew install npm
     - name: "Node.js 12 & Python 3.7 on Windows"
       os: windows
@@ -66,7 +66,6 @@ matrix:
       env: >-
         PATH=/c/Python37:/c/Python37/Scripts:$PATH
         NODE_GYP_FORCE_PYTHON=/c/Python37/python.exe
-        EXPERIMENTAL_NODE_GYP_PYTHON3=1
       before_install: choco install python
 
 install:
@@ -79,6 +78,7 @@ before_script:
   # exit-zero treats all errors as warnings.  Two space indentation is OK.  The GitHub editor is 127 chars wide
   - flake8 . --count --exit-zero --ignore=E111,E114,W503 --max-complexity=10 --max-line-length=127 --statistics
   - npm install
+  - npm list
 script:
   - node -e 'require("npmlog").level="verbose"; require("./lib/find-python")(null,()=>{})'
   - npm test
