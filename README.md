@@ -1,9 +1,12 @@
 # `node-gyp` - Node.js native addon build tool
 
-`node-gyp` is a cross-platform command-line tool written in Node.js for compiling
-native addon modules for Node.js. It bundles the [gyp](https://gyp.gsrc.io)
-project used by the Chromium team and takes away the pain of dealing with the
-various differences in build platforms.
+`node-gyp` is a cross-platform command-line tool written in Node.js for
+compiling native addon modules for Node.js. It contains a fork of the
+[gyp](https://gyp.gsrc.io) project that was previously used by the Chromium
+team and takes away the pain of dealing with the various differences in build
+platforms.
+
+Note that `node-gyp` is _not_ used to build Node.js itself.
 
 Multiple target versions of Node.js are supported (i.e. `0.8`, ..., `4`, `5`, `6`,
 etc.), regardless of what version of Node.js is actually installed on your system
@@ -25,7 +28,9 @@ $ npm install -g node-gyp
 
 You will also need to install:
 
-NOTE: node-gyp is compatible with Python v2.7, v3.5, v3.6, or v3.7 but node itself is not yet compatible with Python 3.
+NOTE: node-gyp is compatible with Python v2.7, v3.5, v3.6, or v3.7. If the
+Python to use is not explicitly configured (see "Configuring Python Dependency"
+below) it will attempt to find a compatible Python executable.
 
 ### On Unix
 
@@ -75,6 +80,14 @@ value:
 ``` bash
 $ npm config set python /path/to/executable/python
 ```
+
+If the `PYTHON` environment variable is set to the path of a Python executable,
+it will be used if it is a compatible Python.
+
+If the `NODE_GYP_FORCE_PYTHON` environment variable is set to the path of a
+Python executable, it will be used instead of any of the other configured or
+builtin Python search paths. If its not a compatible Python, no further
+searching will be done.
 
 ## How to Use
 
