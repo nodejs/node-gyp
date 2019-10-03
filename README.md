@@ -27,13 +27,13 @@ You will also need to install:
 
 ### On Unix
 
-   * `python v2.7, v3.5, v3.6, or v3.7`
+   * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported)
    * `make`
    * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
 
 ### On macOS
 
-   * `python v2.7, v3.5, v3.6, or v3.7`
+   * `python` (`v2.7` recommended, `v3.x.x` is __*not*__ supported) (already installed on macOS)
    * [Xcode](https://developer.apple.com/xcode/download/)
      * You also need to install the `XCode Command Line Tools` by running `xcode-select --install`. Alternatively, if you already have the full Xcode installed, you can find them under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`. This step will install `clang`, `clang++`, and `make`.
 
@@ -62,7 +62,7 @@ If you have multiple Python versions installed, you can identify which Python
 version `node-gyp` uses by setting the `--python` variable:
 
 ``` bash
-$ node-gyp <command> --python /path/to/executable/python
+$ node-gyp <command> --python /path/to/executable/python2.7
 ```
 
 If `node-gyp` is called by way of `npm`, *and* you have multiple versions of
@@ -70,7 +70,7 @@ Python installed, then you can set `npm`'s 'python' config key to the appropriat
 value:
 
 ``` bash
-$ npm config set python /path/to/executable/python
+$ npm config set python /path/to/executable/python2.7
 ```
 
 ## How to Use
