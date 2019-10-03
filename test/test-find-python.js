@@ -159,6 +159,8 @@ test('find python - no python, use python launcher', function (t) {
     }
     if (/sys\.executable/.test(args[args.length - 1])) {
       cb(new Error('not found'))
+    } else if (f.winDefaultLocations.includes(program)) {
+      cb(new Error('not found'))
     } else if (/sys\.version_info/.test(args[args.length - 1])) {
       if (program === 'Z:\\snake.exe') {
         cb(null, '2.7.14')
@@ -178,24 +180,21 @@ test('find python - no python, use python launcher', function (t) {
 })
 
 test('find python - no python, no python launcher, good guess', function (t) {
-  t.plan(4)
+  t.plan(2)
 
-  var re = /C:[\\/]Python27[\\/]python[.]exe/
+  var re = /C:[\\/]Python37[\\/]python[.]exe/
   var f = new TestPythonFinder(null, done)
   f.win = true
 
   f.execFile = function (program, args, opts, cb) {
     if (program === 'py.exe') {
-      f.execFile = function (program, args, opts, cb) {
-        poison(f, 'execFile')
-        t.ok(re.test(program))
-        t.ok(/sys\.version_info/.test(args[args.length - 1]))
-        cb(null, '2.7.14')
-      }
       return cb(new Error('not found'))
     }
     if (/sys\.executable/.test(args[args.length - 1])) {
       cb(new Error('not found'))
+    } else if (re.test(program) &&
+               /sys\.version_info/.test(args[args.length - 1])) {
+      cb(null, '3.7.3')
     } else {
       t.fail()
     }
