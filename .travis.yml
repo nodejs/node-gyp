@@ -68,6 +68,14 @@ matrix:
       env: >-
         PATH=/c/Python37:/c/Python37/Scripts:$PATH
         NODE_GYP_FORCE_PYTHON=/c/Python37/python.exe
+      before_install: choco install python --version=3.7.4
+    - name: "Node.js 12 & Python 3.8 on Windows"
+      os: windows
+      language: node_js
+      node_js: 12  # node
+      env: >-
+        PATH=/c/Python38:/c/Python38/Scripts:$PATH
+        NODE_GYP_FORCE_PYTHON=/c/Python38/python.exe
       before_install: choco install python
 
 install:
