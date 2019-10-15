@@ -29,16 +29,16 @@ matrix:
         NODE_GYP_FORCE_PYTHON=/c/Python27/python.exe
       before_install: choco install python2
 
-    - name: "Node.js 6 & Python 3.7 on Linux"
-      python: 3.7
+    - name: "Node.js 6 & Python 3.8 on Linux"
+      python: 3.8
       env: NODE_GYP_FORCE_PYTHON=python3
       before_install: nvm install 6
-    - name: "Node.js 8 & Python 3.7 on Linux"
-      python: 3.7
+    - name: "Node.js 8 & Python 3.8 on Linux"
+      python: 3.8
       env: NODE_GYP_FORCE_PYTHON=python3
       before_install: nvm install 8
-    - name: "Node.js 10 & Python 3.7 on Linux"
-      python: 3.7
+    - name: "Node.js 10 & Python 3.8 on Linux"
+      python: 3.8
       env: NODE_GYP_FORCE_PYTHON=python3
       before_install: nvm install 10
 
@@ -52,6 +52,10 @@ matrix:
       before_install: nvm install 12
     - name: "Node.js 12 & Python 3.7 on Linux"
       python: 3.7
+      env: NODE_GYP_FORCE_PYTHON=python3
+      before_install: nvm install 12
+    - name: "Node.js 12 & Python 3.8 on Linux"
+      python: 3.8
       env: NODE_GYP_FORCE_PYTHON=python3
       before_install: nvm install 12
 
