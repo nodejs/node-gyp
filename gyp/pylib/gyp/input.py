@@ -240,7 +240,7 @@ def LoadOneBuildFile(build_file_path, data, aux_data, includes,
     if check:
       build_file_data = CheckedEval(build_file_contents)
     else:
-      build_file_data = eval(build_file_contents, {'__builtins__': None},
+      build_file_data = eval(build_file_contents, {'__builtins__': {}},
                              None)
   except SyntaxError as e:
     e.filename = build_file_path
@@ -1094,7 +1094,7 @@ def EvalSingleCondition(
     else:
       ast_code = compile(cond_expr_expanded, '<string>', 'eval')
       cached_conditions_asts[cond_expr_expanded] = ast_code
-    if eval(ast_code, {'__builtins__': None}, variables):
+    if eval(ast_code, {'__builtins__': {}}, variables):
       return true_dict
     return false_dict
   except SyntaxError as e:
