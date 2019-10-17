@@ -911,6 +911,7 @@ def ExpandVariables(input, phase, variables, build_file):
           p_stdout, p_stderr = p.communicate('')
 
           if p.wait() != 0 or p_stderr:
+            sys.stderr.write(p_stderr.decode('utf-8'))
             raise GypError("Call to '%s' returned exit status %d while in %s." %
                            (contents, p.returncode, build_file))
           replacement = p_stdout.rstrip()
