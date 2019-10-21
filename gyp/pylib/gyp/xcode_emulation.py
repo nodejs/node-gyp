@@ -437,7 +437,7 @@ class XcodeSettings(object):
     # most sensible route and should still do the right thing.
     try:
       return GetStdoutQuiet(['xcodebuild', '-version', '-sdk', sdk, infoitem])
-    except:
+    except GypError:
       pass
 
   def _SdkRoot(self, configname):
@@ -1135,7 +1135,7 @@ class XcodeSettings(object):
       return default_sdk_root
     try:
       all_sdks = GetStdout(['xcodebuild', '-showsdks'])
-    except:
+    except GypError:
       # If xcodebuild fails, there will be no valid SDKs
       return ''
     for line in all_sdks.splitlines():
@@ -1276,7 +1276,7 @@ def XcodeVersion():
     # checking that version.
     if len(version_list) < 2:
       raise GypError("xcodebuild returned unexpected results")
-  except:
+  except GypError:
     version = CLTVersion()
     if version:
       version = ".".join(version.split(".")[:3])
@@ -1314,7 +1314,7 @@ def CLTVersion():
     try:
       output = GetStdout(['/usr/sbin/pkgutil', '--pkg-info', key])
       return re.search(regex, output).groupdict()['version']
-    except:
+    except GypError:
       continue
 
 
