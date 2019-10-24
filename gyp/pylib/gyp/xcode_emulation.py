@@ -1263,10 +1263,12 @@ def XcodeVersion():
   #    Xcode 3.2.6
   #    Component versions: DevToolsCore-1809.0; DevToolsSupport-1806.0
   #    BuildVersion: 10M2518
-  # Convert that to '0463', '4H1503'.
+  # Convert that to ('0463', '4H1503') or ('0326', '10M2518').
   global XCODE_VERSION_CACHE
   if XCODE_VERSION_CACHE:
     return XCODE_VERSION_CACHE
+  version = ""
+  build = ""
   try:
     version_list = GetStdoutQuiet(['xcodebuild', '-version']).splitlines()
     # In some circumstances xcodebuild exits 0 but doesn't return
@@ -1276,21 +1278,16 @@ def XcodeVersion():
     # checking that version.
     if len(version_list) < 2:
       raise GypError("xcodebuild returned unexpected results")
-  except GypError:
-    version = CLTVersion()
-    if version:
-      version = ".".join(version.split(".")[:3])
-    else:
+    version = version_list[0].split()[-1]  # Last word on first line
+    build = version_list[-1].split()[-1]   # Last word on last line
+  except GypError:  # Xcode not installed so look for XCode Command Line Tools
+    version = CLTVersion()  # macOS Catalina returns 11.0.0.0.1.1567737322
+    if not version:
       raise GypError("No Xcode or CLT version detected!")
-    # The CLT has no build information, so we return an empty string.
-    version_list = [version, '']
-  version = version_list[0]
-  build = version_list[-1]
-  # Be careful to convert "4.2" to "0420" and "10.0" to "1000":
-  version = format(''.join((version.split()[-1].split('.') + ['0', '0'])[:3]),
-                   '>04s')
-  if build:
-    build = build.split()[-1]
+  # Be careful to convert "4.2.3" to "0423" and "11.0.0" to "1100":
+  version = version.split(".")[:3]  # Just major, minor, micro
+  version[0] = version[0].zfill(2)  # Add a leading zero if major is one digit
+  version = ("".join(version) + "00")[:4]  # Limit to exactly four characters
   XCODE_VERSION_CACHE = (version, build)
   return XCODE_VERSION_CACHE
 
