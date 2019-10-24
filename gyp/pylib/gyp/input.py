@@ -22,6 +22,7 @@ import traceback
 from gyp.common import GypError
 from gyp.common import OrderedSet
 
+PY3 = bytes != str
 
 # A list of types that are treated as linkable.
 linkable_types = [
@@ -909,6 +910,9 @@ def ExpandVariables(input, phase, variables, build_file):
                            (e, contents, build_file))
 
           p_stdout, p_stderr = p.communicate('')
+          if PY3:
+            p_stdout = p_stdout.decode('utf-8')
+            p_stderr = p_stderr.decode('utf-8')
 
           if p.wait() != 0 or p_stderr:
             sys.stderr.write(p_stderr)

@@ -25,6 +25,8 @@ import gyp.MSVSVersion as MSVSVersion
 from gyp.common import GypError
 from gyp.common import OrderedSet
 
+PY3 = bytes != str
+
 # TODO: Remove once bots are on 2.7, http://crbug.com/241769
 def _import_OrderedDict():
   import collections
@@ -124,6 +126,8 @@ def _GetDomainAndUserName():
       call = subprocess.Popen(['net', 'config', 'Workstation'],
                               stdout=subprocess.PIPE)
       config = call.communicate()[0]
+      if PY3:
+        config = config.decode('utf-8')
       username_re = re.compile(r'^User name\s+(\S+)', re.MULTILINE)
       username_match = username_re.search(config)
       if username_match:
