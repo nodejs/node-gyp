@@ -1,3 +1,21 @@
+v6.0.1 2019-11-01
+=================
+
+* [[`8ec2e681d5`](https://github.com/nodejs/node-gyp/commit/8ec2e681d5)] - **doc**: add macOS\_Catalina.md document (cclauss) [#1940](https://github.com/nodejs/node-gyp/pull/1940)
+* [[`1b11be63cc`](https://github.com/nodejs/node-gyp/commit/1b11be63cc)] - **gyp**: python3 fixes: utf8 decode, use of 'None' in eval (Wilfried Goesgens) [#1925](https://github.com/nodejs/node-gyp/pull/1925)
+* [[`c0282daa48`](https://github.com/nodejs/node-gyp/commit/c0282daa48)] - **gyp**: iteritems() -\> items() in compile\_commands\_json.py (cclauss) [#1947](https://github.com/nodejs/node-gyp/pull/1947)
+* [[`d8e09a1b6a`](https://github.com/nodejs/node-gyp/commit/d8e09a1b6a)] - **gyp**: make cmake python3 compatible (gengjiawen) [#1944](https://github.com/nodejs/node-gyp/pull/1944)
+* [[`9c0f3404f0`](https://github.com/nodejs/node-gyp/commit/9c0f3404f0)] - **gyp**: fix TypeError in XcodeVersion() (Christian Clauss) [#1939](https://github.com/nodejs/node-gyp/pull/1939)
+* [[`bb2eb72a3f`](https://github.com/nodejs/node-gyp/commit/bb2eb72a3f)] - **gyp**: finish decode stdout on Python 3 (Christian Clauss) [#1937](https://github.com/nodejs/node-gyp/pull/1937)
+* [[`f0693413d9`](https://github.com/nodejs/node-gyp/commit/f0693413d9)] - **src,win**: allow 403 errors for arm64 node.lib (Richard Lau) [#1934](https://github.com/nodejs/node-gyp/pull/1934)
+* [[`c60c22de58`](https://github.com/nodejs/node-gyp/commit/c60c22de58)] - **deps**: update deps to roughly match current npm@6 (Rod Vagg) [#1920](https://github.com/nodejs/node-gyp/pull/1920)
+* [[`b91718eefc`](https://github.com/nodejs/node-gyp/commit/b91718eefc)] - **test**: upgrade Linux Travis CI to Python 3.8 (Christian Clauss) [#1923](https://github.com/nodejs/node-gyp/pull/1923)
+* [[`3538a317b6`](https://github.com/nodejs/node-gyp/commit/3538a317b6)] - **doc**: adjustments to the README.md for new users (Dan Pike) [#1919](https://github.com/nodejs/node-gyp/pull/1919)
+* [[`4fff8458c0`](https://github.com/nodejs/node-gyp/commit/4fff8458c0)] - **travis**: ignore failed `brew upgrade npm`, update xcode (Christian Clauss) [#1932](https://github.com/nodejs/node-gyp/pull/1932)
+* [[`60e4488f08`](https://github.com/nodejs/node-gyp/commit/60e4488f08)] - **build**: avoid bare exceptions in xcode\_emulation.py (Christian Clauss) [#1932](https://github.com/nodejs/node-gyp/pull/1932)
+* [[`032db2a2d0`](https://github.com/nodejs/node-gyp/commit/032db2a2d0)] - **lib,install**: always download SHA sums on Windows (Sam Hughes) [#1926](https://github.com/nodejs/node-gyp/pull/1926)
+* [[`5a83630c33`](https://github.com/nodejs/node-gyp/commit/5a83630c33)] - **travis**: add Windows + Python 3.8 to the mix (Rod Vagg) [#1921](https://github.com/nodejs/node-gyp/pull/1921)
+
 v6.0.0 2019-10-04
 =================
 
