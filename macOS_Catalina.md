@@ -47,7 +47,6 @@ There are two main ways to install `node-gyp` on macOS:
 9. If the _acid test_ does _not_ pass then...
 10. `sudo xcode-select --reset`  # Enter root password.  No output is normal.
 11. Repeat step 7 above.  Is the path different this time?  Repeat the _acid test_.
-12. Add a comment to https://github.com/nodejs/node-gyp/issues/1927 so we can improve.
 
 ### Installing `node-gyp` using the Xcode Command Line Tools
 1. If the _acid test_ has not succeeded, then try `xcode-select --install`
@@ -62,7 +61,7 @@ There are two main ways to install `node-gyp` on macOS:
 9. Repeat step 5 above.  Is the path different this time?  Repeat the _acid test_.
 
 ### I did all that and the acid test still does not pass :-(
-1. `sudo rm -fm $(xcode-select -print-path)`  # Enter root password.  No output is normal.
+1. `sudo rm -rf $(xcode-select -print-path)`  # Enter root password.  No output is normal.
 2. `xcode-select --install`
 3. If the [_acid test_](#The-acid-test) still does _not_ pass then...
 4. Add a comment to https://github.com/nodejs/node-gyp/issues/1927 so we can improve.
