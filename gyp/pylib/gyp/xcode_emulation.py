@@ -855,7 +855,8 @@ class XcodeSettings(object):
       # These flags reflect the compilation options used by xcode to compile
       # extensions.
       ldflags.append('-lpkstart')
-      if XcodeVersion() < '0900':
+      xcode_version, _ = XcodeVersion()
+      if xcode_version < '0900':
         ldflags.append(sdk_root +
             '/System/Library/PrivateFrameworks/PlugInKit.framework/PlugInKit')
       ldflags.append('-fapplication-extension')
@@ -1088,8 +1089,8 @@ class XcodeSettings(object):
       cache = {}
       cache['BuildMachineOSBuild'] = self._BuildMachineOSBuild()
 
-      xcode, xcode_build = XcodeVersion()
-      cache['DTXcode'] = xcode
+      xcode_version, xcode_build = XcodeVersion()
+      cache['DTXcode'] = xcode_version
       cache['DTXcodeBuild'] = xcode_build
 
       sdk_root = self._SdkRoot(configname)
@@ -1126,7 +1127,7 @@ class XcodeSettings(object):
     project, then the environment variable was empty. Starting with this
     version, Xcode uses the name of the newest SDK installed.
     """
-    xcode_version, xcode_build = XcodeVersion()
+    xcode_version, _ = XcodeVersion()
     if xcode_version < '0500':
       return ''
     default_sdk_path = self._XcodeSdkPath('')
@@ -1521,7 +1522,8 @@ def _GetXcodeEnv(xcode_settings, built_products_dir, srcroot, configuration,
   install_name_base = xcode_settings.GetInstallNameBase()
   if install_name_base:
     env['DYLIB_INSTALL_NAME_BASE'] = install_name_base
-  if XcodeVersion() >= '0500' and not env.get('SDKROOT'):
+  xcode_version, _ = XcodeVersion()
+  if xcode_version >= '0500' and not env.get('SDKROOT'):
     sdk_root = xcode_settings._SdkRoot(configuration)
     if not sdk_root:
       sdk_root = xcode_settings._XcodeSdkPath('')
