@@ -1,5 +1,7 @@
 # Installation notes for macOS Catalina (v10.15)
 
+_This document specifically refers to upgrades from previous versions of macOS to Catalina (10.15). It should be removed from the source repository when Catalina ceases to be the latest macOS version or updated to deal with challenges involved in upgrades to the next version of macOS._
+
 Lessons learned from:
 * https://github.com/nodejs/node-gyp/issues/1779
 * https://github.com/nodejs/node-gyp/issues/1861
