@@ -54,7 +54,7 @@ There are two main ways to install `node-gyp` on macOS:
 1. If the _acid test_ has not succeeded, then try `xcode-select --install`
 2. Wait until the install process is _complete_.
 3. `softwareupdate -l`  # No listing is a good sign.
-    * If Xcode or Tools upgrades are listed, use "Software Upgrade" to install them.
+    * If Xcode or Tools upgrades are listed, use "Software Update" to install them.
 4. `xcode-select -version`  # Should return `xcode-select version 2370` or later.
 5. `xcode-select -print-path`  # Should return `/Library/Developer/CommandLineTools`
 6. Try the [_acid test_ steps above](#The-acid-test) to see if your Mac is ready.
