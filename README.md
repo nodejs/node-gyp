@@ -37,6 +37,7 @@ Depending on your operating system, you will need to install:
    * `Python v2.7, v3.5, v3.6, or v3.7`
    * [Xcode](https://developer.apple.com/xcode/download/)
      * You also need to install the `XCode Command Line Tools` by running `xcode-select --install`. Alternatively, if you already have the full Xcode installed, you can find them under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`. This step will install `clang`, `clang++`, and `make`.
+   * If your Mac has been _upgraded_ to macOS Catalina (10.15), please read [notes-on-macOS-Catalina.md](notes-on-macOS-Catalina.md).
 
 ### On Windows
 
