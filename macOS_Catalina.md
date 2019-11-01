@@ -33,7 +33,7 @@ As you go through the remainder of this document, at anytime you can try these `
 ### Two roads
 There are two main ways to install `node-gyp` on macOS:
 1. With the full Xcode (~7.6 GB download) from the `App Store` app.
-2. With the _much_ smaller Xcode Command Line Tools via `xcode-select -install`
+2. With the _much_ smaller Xcode Command Line Tools via `xcode-select --install`
 
 ### Installing `node-gyp` using the full Xcode
 1. `xcodebuild -version` should show `Xcode 11.1` or later.
