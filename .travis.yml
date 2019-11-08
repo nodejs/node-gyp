@@ -83,7 +83,7 @@ matrix:
 
 install:
   #- pip install -r requirements.txt
-  - pip install flake8  # pytest  # add another testing frameworks later
+  - pip install --upgrade flake8 pytest==4.6.6  # pytest 5 no longer supports legacy Python
 before_script:
   - flake8 --version
   # stop the build if there are Python syntax errors or undefined names
@@ -95,7 +95,7 @@ before_script:
 script:
   - node -e 'require("npmlog").level="verbose"; require("./lib/find-python")(null,()=>{})'
   - npm test
-  #- pytest --capture=sys  # add other tests here
+  - GYP_MSVS_VERSION=2015 GYP_MSVS_OVERRIDE_PATH="C:\\Dummy" pytest
 notifications:
   on_success: change
   on_failure: change  # `always` will be the setting once code changes slow down
