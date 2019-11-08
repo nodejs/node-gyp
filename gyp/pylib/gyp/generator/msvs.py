@@ -12,6 +12,8 @@ import re
 import subprocess
 import sys
 
+from collections import OrderedDict
+
 import gyp.common
 import gyp.easy_xml as easy_xml
 import gyp.generator.ninja as ninja_generator
@@ -26,16 +28,6 @@ from gyp.common import GypError
 from gyp.common import OrderedSet
 
 PY3 = bytes != str
-
-# TODO: Remove once bots are on 2.7, http://crbug.com/241769
-def _import_OrderedDict():
-  import collections
-  try:
-    return collections.OrderedDict
-  except AttributeError:
-    import gyp.ordered_dict
-    return gyp.ordered_dict.OrderedDict
-OrderedDict = _import_OrderedDict()
 
 
 # Regular expression for validating Visual Studio GUIDs.  If the GUID
@@ -179,7 +171,7 @@ def _FixPath(path):
 
 
 def _IsWindowsAbsPath(path):
-  """
+  r"""
   On Cygwin systems Python needs a little help determining if a path is an absolute Windows path or not, so that
   it does not treat those as relative, which results in bad paths like:
 
