@@ -38,7 +38,9 @@ There are two main ways to install `node-gyp` on macOS:
 ### Installing `node-gyp` using the full Xcode
 1. `xcodebuild -version` should show `Xcode 11.1` or later.
     * If not, then install/upgrade Xcode from the App Store app.
-2. Open the Xcode app and allow it to do an essential install of the most recent compiler tools.
+2. Open the Xcode app and...
+    * Under __Preferences > Locations__ select the tools if their location is empty.
+    * Allow Xcode app to do an essential install of the most recent compiler tools.
 3. Once all installations are _complete_, quit out of Xcode.
 4. `sudo xcodebuild -license accept`  # If you agree with the licensing terms.
 5. `softwareupdate -l`  # No listing is a good sign.
@@ -66,4 +68,7 @@ There are two main ways to install `node-gyp` on macOS:
 1. `sudo rm -rf $(xcode-select -print-path)`  # Enter root password.  No output is normal.
 2. `xcode-select --install`
 3. If the [_acid test_](#The-acid-test) still does _not_ pass then...
-4. Add a comment to https://github.com/nodejs/node-gyp/issues/1927 so we can improve.
+4. `npm explore npm -g -- npm install node-gyp@latest`
+5. `npm explore npm -g -- npm explore npm-lifecycle -- npm install node-gyp@latest`
+6. If the _acid test_ still does _not_ pass then...
+7. Add a comment to https://github.com/nodejs/node-gyp/issues/1927 so we can improve.
