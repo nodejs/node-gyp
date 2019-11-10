@@ -66,7 +66,7 @@ There are two main ways to install `node-gyp` on macOS:
 1. `sudo rm -rf $(xcode-select -print-path)`  # Enter root password.  No output is normal.
 2. `xcode-select --install`
 3. If the [_acid test_](#The-acid-test) still does _not_ pass then...
-4. npm explore npm -g -- npm install node-gyp@latest
-5. npm explore npm -g -- npm explore npm-lifecycle -- npm install node-gyp@latest
-6. If the [_acid test_](#The-acid-test) still does _not_ pass then...
+4. `npm explore npm -g -- npm install node-gyp@latest`
+5. `npm explore npm -g -- npm explore npm-lifecycle -- npm install node-gyp@latest`
+6. If the _acid test_ still does _not_ pass then...
 7. Add a comment to https://github.com/nodejs/node-gyp/issues/1927 so we can improve.
