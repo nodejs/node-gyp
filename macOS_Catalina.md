@@ -38,7 +38,9 @@ There are two main ways to install `node-gyp` on macOS:
 ### Installing `node-gyp` using the full Xcode
 1. `xcodebuild -version` should show `Xcode 11.1` or later.
     * If not, then install/upgrade Xcode from the App Store app.
-2. Open the Xcode app and allow it to do an essential install of the most recent compiler tools.
+2. Open the Xcode app and...
+    * Under __Preferences > Locations__ select the tools if their location is empty.
+    * Allow Xcode app to do an essential install of the most recent compiler tools.
 3. Once all installations are _complete_, quit out of Xcode.
 4. `sudo xcodebuild -license accept`  # If you agree with the licensing terms.
 5. `softwareupdate -l`  # No listing is a good sign.
