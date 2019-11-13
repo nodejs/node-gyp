@@ -96,7 +96,7 @@ before_script:
 script:
   - node -e 'require("npmlog").level="verbose"; require("./lib/find-python")(null,()=>{})'
   - npm test
-  - pytest
+  - GYP_MSVS_VERSION=2015 GYP_MSVS_OVERRIDE_PATH="C:\\Dummy" pytest
 notifications:
   on_success: change
   on_failure: change  # `always` will be the setting once code changes slow down
