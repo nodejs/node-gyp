@@ -18,8 +18,8 @@ jobs:
       language: shell  # 'language: python' is not yet supported on macOS
       env: NODE_GYP_FORCE_PYTHON=python2
       before_install:
-        - pyenv install 2.7
-        - pyenv global 2.7
+        - pyenv install 2.7.17
+        - pyenv global  2.7.17
     - name: "Node.js 6 & Python 2.7 on Windows"
       os: windows
       language: node_js
@@ -72,6 +72,9 @@ jobs:
       osx_image: xcode11.2
       language: shell  # 'language: python' is not yet supported on macOS
       env: NODE_GYP_FORCE_PYTHON=python3
+      before_install:
+        - pyenv install 3.8.0
+        - pyenv global  3.8.0
     - name: "Node.js 12 & Python 3.7 on Windows"
       os: windows
       language: node_js
