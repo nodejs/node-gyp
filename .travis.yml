@@ -1,7 +1,13 @@
 dist: xenial
 language: python
 cache: pip
-matrix:
+addons:
+  homebrew:
+    update: true
+    packages:
+    - npm
+    - pyenv
+jobs:
   include:
     - name: "Python 2.7 on Linux"
       env: NODE_GYP_FORCE_PYTHON=python2
@@ -11,7 +17,9 @@ matrix:
       osx_image: xcode11.2
       language: shell  # 'language: python' is not yet supported on macOS
       env: NODE_GYP_FORCE_PYTHON=python2
-      before_install: HOMEBREW_NO_AUTO_UPDATE=1 brew install npm
+      before_install:
+        - pyenv install 2.7
+        - pyenv global 2.7
     - name: "Node.js 6 & Python 2.7 on Windows"
       os: windows
       language: node_js
@@ -63,7 +71,6 @@ matrix:
       osx_image: xcode11.2
       language: shell  # 'language: python' is not yet supported on macOS
       env: NODE_GYP_FORCE_PYTHON=python3
-      before_install: HOMEBREW_NO_AUTO_UPDATE=1 brew upgrade npm || true
     - name: "Node.js 12 & Python 3.7 on Windows"
       os: windows
       language: node_js
