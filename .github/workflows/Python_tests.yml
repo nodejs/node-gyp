@@ -24,7 +24,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest  # -r requirements.txt
       - name: Lint with flake8
-        if: matrix.os == "ubuntu-latest"
+        if: matrix.os == 'ubuntu-latest'
         run: |
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
