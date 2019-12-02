@@ -201,7 +201,7 @@ class XcodeSettings(object):
           new_key = key.split("[")[0]
           settings[new_key] = settings[key]
       else:
-        print('Warning: Conditional keys not implemented, ignoring:', \
+        print('Warning: Conditional keys not implemented, ignoring:',
               ' '.join(conditional_keys))
       del settings[key]
 

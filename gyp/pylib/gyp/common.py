@@ -434,9 +434,7 @@ def GetFlavor(params):
     return flavors[sys.platform]
   if sys.platform.startswith('sunos'):
     return 'solaris'
-  if sys.platform.startswith('freebsd'):
-    return 'freebsd'
-  if sys.platform.startswith('dragonfly'):
+  if sys.platform.startswith(('dragonfly', 'freebsd')):
     return 'freebsd'
   if sys.platform.startswith('openbsd'):
     return 'openbsd'
@@ -444,9 +442,7 @@ def GetFlavor(params):
     return 'netbsd'
   if sys.platform.startswith('aix'):
     return 'aix'
-  if sys.platform.startswith('zos'):
-    return 'zos'
-  if sys.platform.startswith('os390'):
+  if sys.platform.startswith(('os390', 'zos')):
     return 'zos'
 
   return 'linux'

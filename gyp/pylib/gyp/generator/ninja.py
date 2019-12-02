@@ -490,7 +490,7 @@ class NinjaWriter(object):
         if self.flavor != 'mac' or len(self.archs) == 1:
           link_deps += [self.GypPathToNinja(o) for o in obj_outputs]
         else:
-          print("Warning: Actions/rules writing object files don't work with " \
+          print("Warning: Actions/rules writing object files don't work with "
                 "multiarch targets, dropping. (target %s)" % spec['target_name'])
     elif self.flavor == 'mac' and len(self.archs) > 1:
       link_deps = collections.defaultdict(list)
