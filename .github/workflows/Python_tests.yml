@@ -1,6 +1,6 @@
-# TODO: Enable os: windows-latest
-# TODO: Enable python-version: 3.5
-# TODO: Enable pytest --doctest-modules
+# TODO: Line 14, enable os: windows-latest
+# TODO: Line 15, enable python-version: 3.5
+# TODO: Line 36, enable pytest --doctest-modules
 
 name: Python_tests
 on: [push]
