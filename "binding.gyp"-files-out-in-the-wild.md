@@ -45,3 +45,4 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [nodecv](https://github.com/xudafeng/nodecv/blob/master/binding.gyp)
  * [magick-cli](https://github.com/NickNaso/magick-cli/blob/master/binding.gyp)
  * [sharp](https://github.com/lovell/sharp/blob/master/binding.gyp)
+ * [krb5](https://github.com/adaltas/node-krb5/blob/master/binding.gyp)
