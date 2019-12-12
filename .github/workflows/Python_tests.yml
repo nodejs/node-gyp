@@ -3,7 +3,7 @@
 # TODO: Line 36, enable pytest --doctest-modules
 
 name: Python_tests
-on: [push]
+on: [push, pull_request]
 jobs:
   Python_tests:
     runs-on: ${{ matrix.os }}
