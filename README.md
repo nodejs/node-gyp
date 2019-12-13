@@ -16,7 +16,7 @@ etc.), regardless of what version of Node.js is actually installed on your syste
 ## Features
 
  * The same build commands work on any of the supported platforms
- * Supports the targetting of different versions of Node.js
+ * Supports the targeting of different versions of Node.js
 
 ## Installation
 
