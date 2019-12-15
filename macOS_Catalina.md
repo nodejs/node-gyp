@@ -57,7 +57,7 @@ There are three ways to install the Xcode libraries `node-gyp` needs on macOS. P
     * If Xcode or Tools upgrades are listed, use "Software Update" to install them.
 4. `xcode-select -version`  # Should return `xcode-select version 2370` or later.
 5. `xcode-select -print-path`  # Should return `/Library/Developer/CommandLineTools`
-6. Try the [_acid test steps above](#The-acid-test) to see if your Mac is ready.
+6. Try the [_acid test_ steps above](#The-acid-test) to see if your Mac is ready.
 7. If the _acid test_ does _not_ pass then...
 8. `sudo xcode-select --reset`  # Enter root password.  No output is normal.
 9. Repeat step 5 above.  Is the path different this time?  Repeat the _acid test_.
