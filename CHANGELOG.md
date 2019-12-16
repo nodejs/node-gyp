@@ -1,3 +1,8 @@
+v5.0.7 2019-12-16
+=================
+
+Republish of v5.0.6 with unnecessary tarball removed from pack file.
+
 v5.0.6 2019-12-16
 =================
 
