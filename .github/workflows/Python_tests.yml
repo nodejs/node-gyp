@@ -1,5 +1,4 @@
 # TODO: Line 15, enable python-version: 3.5
-# TODO: Line 36, enable pytest --doctest-modules
 
 name: Python_tests
 on: [push, pull_request]
@@ -36,5 +35,5 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: bash
         run: GYP_MSVS_VERSION=2015 GYP_MSVS_OVERRIDE_PATH="C:\\Dummy" pytest
-      # - name: Run doctests with pytest
-      #   run: pytest --doctest-modules
+      - name: Run doctests with pytest
+        run: pytest --doctest-modules
