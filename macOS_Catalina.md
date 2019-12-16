@@ -1,6 +1,6 @@
 # Installation notes for macOS Catalina (v10.15)
 
-_This document specifically refers to upgrades from previous versions of macOS to Catalina (10.15). It should be removed from the source repository when Catalina ceases to be the latest macOS version or when Catalina has been fixed to solve these problems._
+_This document specifically refers to upgrades from previous versions of macOS to Catalina (10.15). It should be removed from the source repository when Catalina ceases to be the latest macOS version or when future Catalina versions no longer raise these issues._
 
 **Upgrading to macOS Catalina may cause normal `node-gyp` installations to fail.**
 
@@ -18,9 +18,9 @@ If `ProductVersion` is less then `10.15` then this document is not for you. Norm
 ### The acid test
 To see if `Xcode Command Line Tools` is installed in a way that will work with `node-gyp`, run:
 1. `/usr/sbin/pkgutil --packages | grep CL`
-    * This should return `com.apple.pkg.CLTools_Executables`. If it doesn't, this test failed.
+    * `com.apple.pkg.CLTools_Executables` should be listed. If it isn't, this test failed.
 2. `/usr/sbin/pkgutil --pkg-info com.apple.pkg.CLTools_Executables`
-    * This should return `version: 11.0.0` (or later). If it doesn't, this test failed.
+    * `version: 11.0.0` (or later) should be listed. If it isn't, this test failed.
     
 If both tests succeeded, _you are done_! You should be ready to install `node-gyp`.
 
