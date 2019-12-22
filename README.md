@@ -43,7 +43,7 @@ Depending on your operating system, you will need to install:
 
 ### On Windows
 
-Install the current version of Python from the [Microsoft Store package](https://docs.python.org/3/using/windows.html#the-microsoft-store-package).
+Install the current version of Python from the [Python Website](https://www.python.org/downloads/windows/).
 
 #### Option 1
 
