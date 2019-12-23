@@ -211,7 +211,7 @@ test('download headers (actual)', function (t) {
       process.release.name !== 'node' ||
       semver.prerelease(process.version) !== null ||
       semver.satisfies(process.version, '<10')) {
-    return t.skip('Skipping acutal download of headers due to test environment configuration')
+    return t.skip('Skipping actual download of headers due to test environment configuration')
   }
 
   t.plan(17)
