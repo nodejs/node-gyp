@@ -34,6 +34,7 @@ jobs:
         run: pytest
       - name: Test with pytest (Windows)
         if: matrix.os == 'windows-latest'
+        shell: bash
         run: GYP_MSVS_VERSION=2015 GYP_MSVS_OVERRIDE_PATH="C:\\Dummy" pytest
       # - name: Run doctests with pytest
       #   run: pytest --doctest-modules
