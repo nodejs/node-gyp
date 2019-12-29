@@ -1,6 +1,7 @@
 # `node-gyp` - Node.js native addon build tool
 
-[![Build Status](https://travis-ci.com/nodejs/node-gyp.svg?branch=master)](https://travis-ci.com/nodejs/node-gyp)
+[![Travis CI](https://travis-ci.com/nodejs/node-gyp.svg?branch=master)](https://travis-ci.com/nodejs/node-gyp)
+[![Build Status](https://github.com/nodejs/node-gyp/workflows/Python_tests/badge.svg)](https://github.com/nodejs/node-gyp/actions?workflow=Python_tests)
 
 `node-gyp` is a cross-platform command-line tool written in Node.js for
 compiling native addon modules for Node.js. It contains a fork of the
