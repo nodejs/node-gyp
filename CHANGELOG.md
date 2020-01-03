@@ -1,3 +1,22 @@
+v6.1.0 2019-01-??
+=================
+
+* [[`26cd6eaea6`](https://github.com/nodejs/node-gyp/commit/26cd6eaea6)] - **doc**: add GitHub Actions badge (#1994) (Rod Vagg) [#1994](https://github.com/nodejs/node-gyp/pull/1994)
+* [[`312c12ef4f`](https://github.com/nodejs/node-gyp/commit/312c12ef4f)] - **doc**: update macOS\_Catalina.md (#1992) (James Home) [#1992](https://github.com/nodejs/node-gyp/pull/1992)
+* [[`f7b6b6b77b`](https://github.com/nodejs/node-gyp/commit/f7b6b6b77b)] - **doc**: fix typo in README.md (#1985) (Suraneti Rodsuwan) [#1985](https://github.com/nodejs/node-gyp/pull/1985)
+* [[`6b8f2652dd`](https://github.com/nodejs/node-gyp/commit/6b8f2652dd)] - **doc**: add travis badge (Rod Vagg) [#1971](https://github.com/nodejs/node-gyp/pull/1971)
+* [[`20aa0b44f7`](https://github.com/nodejs/node-gyp/commit/20aa0b44f7)] - **doc**: macOS Catalina add two commands (Christian Clauss) [#1962](https://github.com/nodejs/node-gyp/pull/1962)
+* [[`3bcba2a01a`](https://github.com/nodejs/node-gyp/commit/3bcba2a01a)] - **(SEMVER-MINOR)** **lib**: noproxy support, match proxy detection to `request` (Matias Lopez) [#1978](https://github.com/nodejs/node-gyp/pull/1978)
+* [[`470cc2178e`](https://github.com/nodejs/node-gyp/commit/470cc2178e)] - **test**: remove old docker test harness (#1993) (Rod Vagg) [#1993](https://github.com/nodejs/node-gyp/pull/1993)
+* [[`31ecc8421d`](https://github.com/nodejs/node-gyp/commit/31ecc8421d)] - **test**: add Windows to GitHub Actions testing (#1996) (Christian Clauss) [#1996](https://github.com/nodejs/node-gyp/pull/1996)
+* [[`5a729e86ee`](https://github.com/nodejs/node-gyp/commit/5a729e86ee)] - **test**: fix typo in header download test (#2001) (Richard Lau) [#2001](https://github.com/nodejs/node-gyp/pull/2001)
+* [[`345c70e56d`](https://github.com/nodejs/node-gyp/commit/345c70e56d)] - **test**: direct python invocation & simpler pyenv (Matias Lopez) [#1979](https://github.com/nodejs/node-gyp/pull/1979)
+* [[`d6a7e0e1fb`](https://github.com/nodejs/node-gyp/commit/d6a7e0e1fb)] - **test**: fix macOS Travis on Python 2.7 & 3.7 (Christian Clauss) [#1979](https://github.com/nodejs/node-gyp/pull/1979)
+* [[`5a64e9bd32`](https://github.com/nodejs/node-gyp/commit/5a64e9bd32)] - **test**: initial Github Actions with Ubuntu & macOS (Christian Clauss) [#1985](https://github.com/nodejs/node-gyp/pull/1985)
+* [[`04da736d38`](https://github.com/nodejs/node-gyp/commit/04da736d38)] - **test**: fix Python unittests (cclauss) [#1961](https://github.com/nodejs/node-gyp/pull/1961)
+* [[`0670e5189d`](https://github.com/nodejs/node-gyp/commit/0670e5189d)] - **test**: add header download test (Rod Vagg) [#1796](https://github.com/nodejs/node-gyp/pull/1796)
+* [[`c506a6a150`](https://github.com/nodejs/node-gyp/commit/c506a6a150)] - **test**: configure proper devDir for invoking configure() (Rod Vagg) [#1796](https://github.com/nodejs/node-gyp/pull/1796)
+
 v6.0.1 2019-11-01
 =================
 
