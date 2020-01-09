@@ -209,7 +209,7 @@ namespace VisualStudioConfiguration
                 {
                     instances.Add(InstanceJson(rgelt[0]));
                 }
-                catch
+                catch (COMException)
                 {
                     // Ignore instances that can't be queried.
                 }
