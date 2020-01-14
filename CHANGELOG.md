@@ -1,4 +1,4 @@
-v6.1.0 2019-01-08
+v6.1.0 2020-01-08
 =================
 
 * [[`9a7dd16b76`](https://github.com/nodejs/node-gyp/commit/9a7dd16b76)] - **doc**: remove backticks from Python version list (Rod Vagg) [#2011](https://github.com/nodejs/node-gyp/pull/2011)
