@@ -63,15 +63,15 @@ There are three ways to install the Xcode libraries `node-gyp` needs on macOS. P
 9. Repeat step 5 above.  Is the path different this time?  Repeat the _acid test_.
 
 ### Installing `node-gyp` using the Xcode Command Line Tools via manual download
-1. Download the appropriate version of the "Command Line Tools for Xcode" for your version of Catalina from developer.apple.com/download. As of MacOS 10.15.2, that's [Command_Line_Tools_for_Xcode_11.3.dmg](https://download.developer.apple.com/Developer_Tools/Command_Line_Tools_for_Xcode_11.3/Command_Line_Tools_for_Xcode_11.3.dmg)
+1. Download the appropriate version of the "Command Line Tools for Xcode" for your version of Catalina from <https://developer.apple.com/download/more/>. As of MacOS 10.15.2, that's [Command_Line_Tools_for_Xcode_11.3.dmg](https://download.developer.apple.com/Developer_Tools/Command_Line_Tools_for_Xcode_11.3/Command_Line_Tools_for_Xcode_11.3.dmg)
 2. Install the package.
-3. Run the _acid test_.
+3. Run the [_acid test_ steps above](#The-acid-test).
 
 ### I did all that and the acid test still does not pass :-(
 1. `sudo rm -rf $(xcode-select -print-path)`  # Enter root password.  No output is normal.
 2. `sudo rm -rf /Library/Developer/CommandLineTools`  # Enter root password.
 2. `xcode-select --install`
-3. If the [_acid test_](#The-acid-test) still does _not_ pass then...
+3. If the [_acid test_ steps above](#The-acid-test) still does _not_ pass then...
 4. `npm explore npm -g -- npm install node-gyp@latest`
 5. `npm explore npm -g -- npm explore npm-lifecycle -- npm install node-gyp@latest`
 6. If the _acid test_ still does _not_ pass then...
