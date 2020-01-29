@@ -303,6 +303,9 @@ def _ConfigFullName(config_name, config_data):
 
 
 def _ConfigWindowsTargetPlatformVersion(config_data, version):
+  target_ver = config_data.get('msvs_windows_target_platform_version')
+  if target_ver and re.match(r'^\d+', target_ver):
+    return target_ver
   config_ver = config_data.get('msvs_windows_sdk_version')
   vers = [config_ver] if config_ver else version.compatible_sdks
   for ver in vers:
