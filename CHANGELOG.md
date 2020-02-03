@@ -47,6 +47,24 @@ v6.0.0 2019-10-04
 * [[`3d1c60ab81`](https://github.com/nodejs/node-gyp/commit/3d1c60ab81)] - **(SEMVER-MAJOR)** **lib**: accept Python 3 by default (João Reis) [#1844](https://github.com/nodejs/node-gyp/pull/1844)
 * [[`c6e3b65a23`](https://github.com/nodejs/node-gyp/commit/c6e3b65a23)] - **(SEMVER-MAJOR)** **lib**: raise the minimum Python version from 2.6 to 2.7 (cclauss) [#1818](https://github.com/nodejs/node-gyp/pull/1818)
 
+v5.1.0 2020-02-05
+=================
+
+* [[`f37a8b40d0`](https://github.com/nodejs/node-gyp/commit/f37a8b40d0)] - **doc**: add GitHub Actions badge (#1994) (Rod Vagg) [#1994](https://github.com/nodejs/node-gyp/pull/1994)
+* [[`cb3f6aae5e`](https://github.com/nodejs/node-gyp/commit/cb3f6aae5e)] - **doc**: update macOS\_Catalina.md (#1992) (James Home) [#1992](https://github.com/nodejs/node-gyp/pull/1992)
+* [[`0607596a4c`](https://github.com/nodejs/node-gyp/commit/0607596a4c)] - **doc**: fix typo in README.md (#1985) (Suraneti Rodsuwan) [#1985](https://github.com/nodejs/node-gyp/pull/1985)
+* [[`0d5a415a14`](https://github.com/nodejs/node-gyp/commit/0d5a415a14)] - **doc**: add travis badge (Rod Vagg) [#1971](https://github.com/nodejs/node-gyp/pull/1971)
+* [[`103740cd95`](https://github.com/nodejs/node-gyp/commit/103740cd95)] - **gyp**: list(dict) so we can del dict(key) while iterating (Christian Clauss) [#2009](https://github.com/nodejs/node-gyp/pull/2009)
+* [[`278dcddbdd`](https://github.com/nodejs/node-gyp/commit/278dcddbdd)] - **lib**: ignore VS instances that cause COMExceptions (Andrew Casey) [#2018](https://github.com/nodejs/node-gyp/pull/2018)
+* [[`1694907bbf`](https://github.com/nodejs/node-gyp/commit/1694907bbf)] - **lib**: compatibility with semver ≥ 7 (`new` for semver.Range) (Xavier Guimard) [#2006](https://github.com/nodejs/node-gyp/pull/2006)
+* [[`a3f1143514`](https://github.com/nodejs/node-gyp/commit/a3f1143514)] - **(SEMVER-MINOR)** **lib**: noproxy support, match proxy detection to `request` (Matias Lopez) [#1978](https://github.com/nodejs/node-gyp/pull/1978)
+* [[`52365819c7`](https://github.com/nodejs/node-gyp/commit/52365819c7)] - **test**: remove old docker test harness (#1993) (Rod Vagg) [#1993](https://github.com/nodejs/node-gyp/pull/1993)
+* [[`bc509c511d`](https://github.com/nodejs/node-gyp/commit/bc509c511d)] - **test**: add Windows to GitHub Actions testing (#1996) (Christian Clauss) [#1996](https://github.com/nodejs/node-gyp/pull/1996)
+* [[`91ee26dd48`](https://github.com/nodejs/node-gyp/commit/91ee26dd48)] - **test**: fix typo in header download test (#2001) (Richard Lau) [#2001](https://github.com/nodejs/node-gyp/pull/2001)
+* [[`0923f344c9`](https://github.com/nodejs/node-gyp/commit/0923f344c9)] - **test**: direct python invocation & simpler pyenv (Matias Lopez) [#1979](https://github.com/nodejs/node-gyp/pull/1979)
+* [[`32c8744b34`](https://github.com/nodejs/node-gyp/commit/32c8744b34)] - **test**: fix macOS Travis on Python 2.7 & 3.7 (Christian Clauss) [#1979](https://github.com/nodejs/node-gyp/pull/1979)
+* [[`fd4b1351e4`](https://github.com/nodejs/node-gyp/commit/fd4b1351e4)] - **test**: initial Github Actions with Ubuntu & macOS (Christian Clauss) [#1985](https://github.com/nodejs/node-gyp/pull/1985)
+
 v5.0.7 2019-12-16
 =================
 
