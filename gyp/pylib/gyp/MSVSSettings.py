@@ -467,7 +467,7 @@ def ConvertToMSBuildSettings(msvs_settings, stderr=sys.stderr):
             msvs_tool[msvs_setting](msvs_value, msbuild_settings)
           except ValueError as e:
             print('Warning: while converting %s/%s to MSBuild, '
-                              '%s' % (msvs_tool_name, msvs_setting, e), file=stderr)
+                  '%s' % (msvs_tool_name, msvs_setting, e), file=stderr)
         else:
           _ValidateExclusionSetting(msvs_setting,
                                     msvs_tool,
@@ -477,7 +477,7 @@ def ConvertToMSBuildSettings(msvs_settings, stderr=sys.stderr):
                                     stderr)
     else:
       print('Warning: unrecognized tool %s while converting to '
-                        'MSBuild.' % msvs_tool_name, file=stderr)
+            'MSBuild.' % msvs_tool_name, file=stderr)
   return msbuild_settings
 
 
@@ -598,6 +598,7 @@ _Same(_compile, 'UndefinePreprocessorDefinitions', _string_list)  # /U
 _Same(_compile, 'UseFullPaths', _boolean)  # /FC
 _Same(_compile, 'WholeProgramOptimization', _boolean)  # /GL
 _Same(_compile, 'XMLDocumentationFileName', _file_name)
+_Same(_compile, 'CompileAsWinRT', _boolean)  # /ZW
 
 _Same(_compile, 'AssemblerOutput',
       _Enumeration(['NoListing',

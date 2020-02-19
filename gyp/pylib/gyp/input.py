@@ -19,6 +19,7 @@ import sys
 import threading
 import time
 import traceback
+from distutils.version import StrictVersion
 from gyp.common import GypError
 from gyp.common import OrderedSet
 
@@ -30,6 +31,7 @@ linkable_types = [
   'shared_library',
   'loadable_module',
   'mac_kernel_extension',
+  'windows_driver',
 ]
 
 # A list of sections that contain links to other targets.
@@ -172,10 +174,8 @@ def GetIncludedBuildFiles(build_file_path, aux_data, included=None):
 
 def CheckedEval(file_contents):
   """Return the eval of a gyp file.
-
   The gyp file is restricted to dictionaries and lists only, and
   repeated keys are not allowed.
-
   Note that this is slower than eval() is.
   """
 
@@ -214,7 +214,7 @@ def CheckNode(node, keypath):
     return node.s
   else:
     raise TypeError("Unknown AST node at key path '" + '.'.join(keypath) +
-         "': " + repr(node))
+        "': " + repr(node))
 
 
 def LoadOneBuildFile(build_file_path, data, aux_data, includes,
@@ -881,6 +881,7 @@ def ExpandVariables(input, phase, variables, build_file):
           oldwd = os.getcwd()  # Python doesn't like os.open('.'): no fchdir.
           if build_file_dir:  # build_file_dir may be None (see above).
             os.chdir(build_file_dir)
+          sys.path.append(os.getcwd())
           try:
 
             parsed_contents = shlex.split(contents)
@@ -891,6 +892,7 @@ def ExpandVariables(input, phase, variables, build_file):
                              "module (%s): %s" % (parsed_contents[0], e))
             replacement = str(py_module.DoMain(parsed_contents[1:])).rstrip()
           finally:
+            sys.path.pop()
             os.chdir(oldwd)
           assert replacement != None
         elif command_string:
@@ -949,7 +951,7 @@ def ExpandVariables(input, phase, variables, build_file):
         replacement = variables[contents]
 
     if isinstance(replacement, bytes) and not isinstance(replacement, str):
-          replacement = replacement.decode("utf-8")  # done on Python 3 only
+      replacement = replacement.decode("utf-8")  # done on Python 3 only
     if type(replacement) is list:
       for item in replacement:
         if isinstance(item, bytes) and not isinstance(item, str):
@@ -1094,7 +1096,8 @@ def EvalSingleCondition(
     else:
       ast_code = compile(cond_expr_expanded, '<string>', 'eval')
       cached_conditions_asts[cond_expr_expanded] = ast_code
-    if eval(ast_code, {'__builtins__': {}}, variables):
+    env = {'__builtins__': {}, 'v': StrictVersion}
+    if eval(ast_code, env, variables):
       return true_dict
     return false_dict
   except SyntaxError as e:
@@ -1547,11 +1550,15 @@ class DependencyGraphNode(object):
     # dependents.
     flat_list = OrderedSet()
 
+    def ExtractNodeRef(node):
+      """Extracts the object that the node represents from the given node."""
+      return node.ref
+
     # in_degree_zeros is the list of DependencyGraphNodes that have no
     # dependencies not in flat_list.  Initially, it is a copy of the children
     # of this node, because when the graph was built, nodes with no
     # dependencies were made implicit dependents of the root node.
-    in_degree_zeros = set(self.dependents[:])
+    in_degree_zeros = sorted(self.dependents[:], key=ExtractNodeRef)
 
     while in_degree_zeros:
       # Nodes in in_degree_zeros have no dependencies not in flat_list, so they
@@ -1563,12 +1570,13 @@ class DependencyGraphNode(object):
 
       # Look at dependents of the node just added to flat_list.  Some of them
       # may now belong in in_degree_zeros.
-      for node_dependent in node.dependents:
+      for node_dependent in sorted(node.dependents, key=ExtractNodeRef):
         is_in_degree_zero = True
         # TODO: We want to check through the
         # node_dependent.dependencies list but if it's long and we
         # always start at the beginning, then we get O(n^2) behaviour.
-        for node_dependent_dependency in node_dependent.dependencies:
+        for node_dependent_dependency in (sorted(node_dependent.dependencies,
+                                                 key=ExtractNodeRef)):
           if not node_dependent_dependency.ref in flat_list:
             # The dependent one or more dependencies not in flat_list.  There
             # will be more chances to add it to flat_list when examining
@@ -1581,7 +1589,7 @@ class DependencyGraphNode(object):
           # All of the dependent's dependencies are already in flat_list.  Add
           # it to in_degree_zeros where it will be processed in a future
           # iteration of the outer loop.
-          in_degree_zeros.add(node_dependent)
+          in_degree_zeros += [node_dependent]
 
     return list(flat_list)
 
@@ -1737,12 +1745,13 @@ class DependencyGraphNode(object):
       dependencies.add(self.ref)
       return dependencies
 
-    # Executables, mac kernel extensions and loadable modules are already fully
-    # and finally linked. Nothing else can be a link dependency of them, there
-    # can only be dependencies in the sense that a dependent target might run
-    # an executable or load the loadable_module.
+    # Executables, mac kernel extensions, windows drivers and loadable modules
+    # are already fully and finally linked. Nothing else can be a link
+    # dependency of them, there can only be dependencies in the sense that a
+    # dependent target might run an executable or load the loadable_module.
     if not initial and target_type in ('executable', 'loadable_module',
-                                       'mac_kernel_extension'):
+                                       'mac_kernel_extension',
+                                       'windows_driver'):
       return dependencies
 
     # Shared libraries are already fully linked.  They should only be included
@@ -2038,7 +2047,7 @@ def MakePathRelative(to_file, fro_file, item):
         gyp.common.RelativePath(os.path.dirname(fro_file),
                                 os.path.dirname(to_file)),
                                 item)).replace('\\', '/')
-    if item[-1:] == '/':
+    if item.endswith('/'):
       ret += '/'
     return ret
 
@@ -2493,7 +2502,7 @@ def ValidateTargetType(target, target_dict):
   """
   VALID_TARGET_TYPES = ('executable', 'loadable_module',
                         'static_library', 'shared_library',
-                        'mac_kernel_extension', 'none')
+                        'mac_kernel_extension', 'none', 'windows_driver')
   target_type = target_dict.get('type', None)
   if target_type not in VALID_TARGET_TYPES:
     raise GypError("Target %s has an invalid target type '%s'.  "
@@ -2644,7 +2653,7 @@ def ValidateActionsInTarget(target, target_dict, build_file):
 def TurnIntIntoStrInDict(the_dict):
   """Given dict the_dict, recursively converts all integers into strings.
   """
-  # Use items instead of items because there's no need to try to look at
+  # Use items instead of iteritems because there's no need to try to look at
   # reinserted keys and their associated values.
   for k, v in the_dict.items():
     if type(v) is int:

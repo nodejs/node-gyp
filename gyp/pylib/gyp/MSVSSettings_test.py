@@ -6,13 +6,13 @@
 
 """Unit tests for the MSVSSettings.py file."""
 
-try:
-  from cStringIO import StringIO
-except ImportError:
-  from io import StringIO
-
 import unittest
 import gyp.MSVSSettings as MSVSSettings
+
+try:
+  from StringIO import StringIO  # Python 2
+except ImportError:
+  from io import StringIO  # Python 3
 
 
 class TestSequenceFunctions(unittest.TestCase):

@@ -7,6 +7,7 @@
 import hashlib
 import os
 import random
+from operator import attrgetter
 
 import gyp.common
 
@@ -59,9 +60,6 @@ class MSVSSolutionEntry(object):
     # Sort by name then guid (so things are in order on vs2008).
     return cmp((self.name, self.get_guid()), (other.name, other.get_guid()))
 
-  def __lt__(self, other):
-    return self.__cmp__(other) < 0
-
 
 class MSVSFolder(MSVSSolutionEntry):
   """Folder in a Visual Studio project or solution."""
@@ -89,7 +87,7 @@ class MSVSFolder(MSVSSolutionEntry):
     self.guid = guid
 
     # Copy passed lists (or set to empty lists)
-    self.entries = sorted(list(entries or []))
+    self.entries = sorted(entries or [], key=attrgetter('path'))
     self.items = list(items or [])
 
     self.entry_type_guid = ENTRY_TYPE_GUIDS['folder']
@@ -233,7 +231,7 @@ class MSVSSolution(object):
       if isinstance(e, MSVSFolder):
         entries_to_check += e.entries
 
-    all_entries = sorted(all_entries)
+    all_entries = sorted(all_entries, key=attrgetter('path'))
 
     # Open file and print header
     f = writer(self.path)
