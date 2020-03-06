@@ -44,7 +44,7 @@ Depending on your operating system, you will need to install:
 
 ### On Windows
 
-Install the current version of Python from the [Microsoft Store package](https://docs.python.org/3/using/windows.html#the-microsoft-store-package).
+Install the current version of Python from the [Microsoft Store package](https://docs.python.org/3/using/windows.html#the-microsoft-store-package) or through [Chocolatey](https://www.chocolatey.org/packages/python/).
 
 #### Option 1
 
@@ -56,6 +56,7 @@ Install tools and configuration manually:
    * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
    (using "Visual C++ build tools" workload) or [Visual Studio 2017 Community](https://visualstudio.microsoft.com/pl/thank-you-downloading-visual-studio/?sku=Community)
    (using the "Desktop development with C++" workload)
+     * The former can be executed with [Chocolatey](https://www.chocolatey.org/): `choco install visualstudio2017buildtools --params "--includeRecommended --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.140"`
    * Launch cmd, `npm config set msvs_version 2017`
 
    If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
