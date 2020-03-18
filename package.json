@@ -25,7 +25,7 @@
     "env-paths": "^2.2.0",
     "glob": "^7.1.4",
     "graceful-fs": "^4.2.2",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.3",
     "nopt": "^4.0.1",
     "npmlog": "^4.1.2",
     "request": "^2.88.0",
