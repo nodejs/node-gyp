@@ -102,7 +102,9 @@ before_script:
   - npm list
 script:
   - node -e 'require("npmlog").level="verbose"; require("./lib/find-python")(null,()=>{})'
-  - npm test
+  - node -version
+  # Standard no longer supports Node.js v6
+  - if [[ $(node -version) != 'v6.17.0' ]]; then npm test; fi
   - GYP_MSVS_VERSION=2015 GYP_MSVS_OVERRIDE_PATH="C:\\Dummy" python -m pytest
 notifications:
   on_success: change
