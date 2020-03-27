@@ -1,8 +1,8 @@
-# Installation notes for macOS Catalina (v10.15)
+# Installation notes for macOS Catalina (v10.15) Updates
 
 _This document specifically refers to upgrades from previous versions of macOS to Catalina (10.15). It should be removed from the source repository when Catalina ceases to be the latest macOS version or when future Catalina versions no longer raise these issues._
 
-**Upgrading to macOS Catalina may cause normal `node-gyp` installations to fail.**
+**Both upgrading to macOS Catalina and running a Software Update in Catalina may cause normal `node-gyp` installations to fail.**
 
 ### Is my Mac running macOS Catalina?
 Let's first make sure that your Mac is running Catalina:
@@ -52,15 +52,16 @@ There are three ways to install the Xcode libraries `node-gyp` needs on macOS. P
 
 ### Installing `node-gyp` using the Xcode Command Line Tools via `xcode-select --install`
 1. If the _acid test_ has not succeeded, then try `xcode-select --install`
-2. Wait until the install process is _complete_.
-3. `softwareupdate -l`  # No listing is a good sign.
+2. If the installation command returns `xcode-select: error: command line tools are already installed, use "Software Update" to install updates`, continue to [remove and reinstall](#i-did-all-that-and-the-acid-test-still-does-not-pass--)
+3. Wait until the install process is _complete_.
+4. `softwareupdate -l`  # No listing is a good sign.
     * If Xcode or Tools upgrades are listed, use "Software Update" to install them.
-4. `xcode-select -version`  # Should return `xcode-select version 2370` or later.
-5. `xcode-select -print-path`  # Should return `/Library/Developer/CommandLineTools`
-6. Try the [_acid test_ steps above](#The-acid-test) to see if your Mac is ready.
-7. If the _acid test_ does _not_ pass then...
-8. `sudo xcode-select --reset`  # Enter root password.  No output is normal.
-9. Repeat step 5 above.  Is the path different this time?  Repeat the _acid test_.
+5. `xcode-select -version`  # Should return `xcode-select version 2370` or later.
+6. `xcode-select -print-path`  # Should return `/Library/Developer/CommandLineTools`
+7. Try the [_acid test_ steps above](#The-acid-test) to see if your Mac is ready.
+8. If the _acid test_ does _not_ pass then...
+9. `sudo xcode-select --reset`  # Enter root password.  No output is normal.
+10. Repeat step 5 above.  Is the path different this time?  Repeat the _acid test_.
 
 ### Installing `node-gyp` using the Xcode Command Line Tools via manual download
 1. Download the appropriate version of the "Command Line Tools for Xcode" for your version of Catalina from <https://developer.apple.com/download/more/>. As of MacOS 10.15.3, that's [Command_Line_Tools_for_Xcode_11.3.1.dmg](https://download.developer.apple.com/Developer_Tools/Command_Line_Tools_for_Xcode_11.3.1/Command_Line_Tools_for_Xcode_11.3.1.dmg)
