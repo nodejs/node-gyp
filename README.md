@@ -48,7 +48,7 @@ Install the current version of Python from the [Microsoft Store package](https:/
 
 #### Option 1
 
-Install all the required tools and configurations using Microsoft's [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) using `npm install --global --production windows-build-tools` from an elevated PowerShell or CMD.exe (run as Administrator).
+Install all the required tools and configurations using Microsoft's [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) using `npm install --global --production windows-build-tools --vs2015` or `npm install --global --production windows-build-tools` from an elevated PowerShell or CMD.exe (run as Administrator).
 
 #### Option 2
 
@@ -56,7 +56,8 @@ Install tools and configuration manually:
    * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
    (using "Visual C++ build tools" workload) or [Visual Studio 2017 Community](https://visualstudio.microsoft.com/pl/thank-you-downloading-visual-studio/?sku=Community)
    (using the "Desktop development with C++" workload)
-   * Launch cmd, `npm config set msvs_version 2017`
+   * Download the Visual Studio 2015 build tools manually : [Visual Studio Build Tools 2015](https://www.microsoft.com/en-us/download/details.aspx?id=48159)
+   * Launch cmd, `npm config set msvs_version 2015 –global` or `npm config set msvs_version 2017`
 
    If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
 
