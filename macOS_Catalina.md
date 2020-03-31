@@ -1,4 +1,4 @@
-# Installation notes for macOS Catalina (v10.15) Updates
+# Installation notes for macOS Catalina (v10.15)
 
 _This document specifically refers to upgrades from previous versions of macOS to Catalina (10.15). It should be removed from the source repository when Catalina ceases to be the latest macOS version or when future Catalina versions no longer raise these issues._
 
