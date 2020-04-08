@@ -132,7 +132,7 @@ function errorMessage () {
 function issueMessage () {
   errorMessage()
   log.error('', ['Node-gyp failed to build your package.',
-    'Try to update npm and/or node-gyp and if it does not help file an issue with the package author.',
+    'Try to update npm and/or node-gyp and if it does not help file an issue with the package author.'
   ].join('\n'))
 }
 
