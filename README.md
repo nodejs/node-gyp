@@ -4,9 +4,9 @@
 [![Build Status](https://github.com/nodejs/node-gyp/workflows/Python_tests/badge.svg)](https://github.com/nodejs/node-gyp/actions?workflow=Python_tests)
 
 `node-gyp` is a cross-platform command-line tool written in Node.js for
-compiling native addon modules for Node.js. It contains a fork of the
-[gyp](https://gyp.gsrc.io) project that was previously used by the Chromium
-team, extended to support the development of Node.js native addons.
+compiling native addon modules for Node.js. It contains a vendored copy of the
+[gyp-next](https://github.com/nodejs/gyp-next) project that was previously used
+by the Chromium team, extended to support the development of Node.js native addons.
 
 Note that `node-gyp` is _not_ used to build Node.js itself.
 
