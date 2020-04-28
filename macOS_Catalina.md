@@ -18,27 +18,12 @@ If `ProductVersion` is less then `10.15` then this document is not for you. Norm
 ### The acid test
 To see if `Xcode Command Line Tools` is installed in a way that will work with `node-gyp`, run:
 ```
-/usr/sbin/pkgutil --pkgs |
-  grep -i com.apple.pkg.cltools |
-  head -n1 |
-  xargs -n1 /usr/sbin/pkgutil --pkg-info
+curl -L https://git.io/node-gyp:acid-test | bash
 ```
-
-Test output format is:
-```
-package-id: com.apple.pkg.CLTools_Executables
-version: 11.4.1.0.1.1586360307
-volume: /
-location: /
-install-time: 1587769775
-groups: com.apple.FindSystemFiles.pkg-group
-```
-**`version: 11.0.0` (or later) should be listed.**
-
-If test did not produce any output
-or expected version isn't listed, there is a problem with your Xcode Command Line Tools installation. [Continue to Solutions](#Solutions).
 
 If test succeeded, _you are done_! You should be ready to install `node-gyp`.
+
+If test failed, there is a problem with your Xcode Command Line Tools installation. [Continue to Solutions](#Solutions).
 
 ### Solutions
 There are three ways to install the Xcode libraries `node-gyp` needs on macOS. People running Catalina have had success with some but not others in a way that has been unpredictable. 
