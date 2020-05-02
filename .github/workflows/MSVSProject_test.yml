@@ -20,5 +20,5 @@ jobs:
         run: |
           # npm install --global --production windows-build-tools
           npm install -g node-gyp
-          Set-ExecutionPolicy Unrestricted
+          Set-ExecutionPolicy Unrestricted -Force
           npm install -g screeps
