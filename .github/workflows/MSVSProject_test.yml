@@ -8,13 +8,17 @@ jobs:
     strategy:
       fail-fast: false
       max-parallel: 1
+      matrix:
+        python-version: [2.7, 3.8]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
       - shell: powershell
         run: |
-          npm install --global --production windows-build-tools
+          # npm install --global --production windows-build-tools
           npm install -g node-gyp
           Set-ExecutionPolicy Unrestricted
           npm install -g screeps
