@@ -1,0 +1,20 @@
+# AttributeError: 'MSVSProject' object has no attribute 'items' #2058
+# https://github.com/nodejs/node-gyp/issues/2058#issuecomment-622660616
+name: MSVSProject_test
+on: [push, pull_request]
+jobs:
+  MSVSProject_test:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - uses: actions/setup-python@v1
+      - shell: powershell
+        run: |
+          npm install --global --production windows-build-tools
+          npm install -g node-gyp
+          Set-ExecutionPolicy Unrestricted
+          npm install -g screeps
