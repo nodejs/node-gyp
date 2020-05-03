@@ -18,7 +18,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - shell: powershell
         run: |
-          # npm install --global --production windows-build-tools
           npm install -g node-gyp
           Set-ExecutionPolicy Unrestricted -Force
-          npm install -g screeps
+          npm install --global screeps --force
