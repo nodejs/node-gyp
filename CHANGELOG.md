@@ -1,3 +1,31 @@
+v7.0.0 2020-06-03
+=================
+
+* [[`e18a61afc1`](https://github.com/nodejs/node-gyp/commit/e18a61afc1)] - **build**: shrink bloated addon binaries on windows (Shelley Vohr) [#2060](https://github.com/nodejs/node-gyp/pull/2060)
+* [[`4937722cf5`](https://github.com/nodejs/node-gyp/commit/4937722cf5)] - **(SEMVER-MAJOR)** **deps**: replace mkdirp with {recursive} mkdir (Rod Vagg) [#2123](https://github.com/nodejs/node-gyp/pull/2123)
+* [[`d45438a047`](https://github.com/nodejs/node-gyp/commit/d45438a047)] - **(SEMVER-MAJOR)** **deps**: update deps, match to npm@7 (Rod Vagg) [#2126](https://github.com/nodejs/node-gyp/pull/2126)
+* [[`ba4f34b7d6`](https://github.com/nodejs/node-gyp/commit/ba4f34b7d6)] - **doc**: update catalina xcode clt download link (Dario Vladovic) [#2133](https://github.com/nodejs/node-gyp/pull/2133)
+* [[`f7bfce96ed`](https://github.com/nodejs/node-gyp/commit/f7bfce96ed)] - **doc**: update acid test and introduce curl|bash test script (Dario Vladovic) [#2105](https://github.com/nodejs/node-gyp/pull/2105)
+* [[`e529f3309d`](https://github.com/nodejs/node-gyp/commit/e529f3309d)] - **doc**: update README to reflect upgrade to gyp-next (Ujjwal Sharma) [#2092](https://github.com/nodejs/node-gyp/pull/2092)
+* [[`9aed6286a3`](https://github.com/nodejs/node-gyp/commit/9aed6286a3)] - **doc**: give more attention to Catalina issues doc (Matheus Marchini) [#2134](https://github.com/nodejs/node-gyp/pull/2134)
+* [[`963f2a7b48`](https://github.com/nodejs/node-gyp/commit/963f2a7b48)] - **doc**: improve cataline discoverability for search engines (Matheus Marchini) [#2135](https://github.com/nodejs/node-gyp/pull/2135)
+* [[`7b75af349b`](https://github.com/nodejs/node-gyp/commit/7b75af349b)] - **doc**: add macOS Catalina software update info (Karl Horky) [#2078](https://github.com/nodejs/node-gyp/pull/2078)
+* [[`4f23c7bee2`](https://github.com/nodejs/node-gyp/commit/4f23c7bee2)] - **doc**: update link to the code of conduct (#2073) (Michaël Zasso) [#2073](https://github.com/nodejs/node-gyp/pull/2073)
+* [[`473cfa283f`](https://github.com/nodejs/node-gyp/commit/473cfa283f)] - **doc**: note in README that Python 3.8 is supported (#2072) (Michaël Zasso) [#2072](https://github.com/nodejs/node-gyp/pull/2072)
+* [[`e7402b4a7c`](https://github.com/nodejs/node-gyp/commit/e7402b4a7c)] - **doc**: update catalina xcode cli tools download link (#2044) (Dario Vladović) [#2044](https://github.com/nodejs/node-gyp/pull/2044)
+* [[`35de45984f`](https://github.com/nodejs/node-gyp/commit/35de45984f)] - **doc**: update catalina xcode cli tools download link; formatting (Jonathan Hult) [#2034](https://github.com/nodejs/node-gyp/pull/2034)
+* [[`48642191f5`](https://github.com/nodejs/node-gyp/commit/48642191f5)] - **doc**: add download link for Command Line Tools for Xcode (Przemysław Bitkowski) [#2029](https://github.com/nodejs/node-gyp/pull/2029)
+* [[`ae5b150051`](https://github.com/nodejs/node-gyp/commit/ae5b150051)] - **doc**: Catalina suggestion: remove /Library/Developer/CommandLineTools (Christian Clauss) [#2022](https://github.com/nodejs/node-gyp/pull/2022)
+* [[`d1dea13fe4`](https://github.com/nodejs/node-gyp/commit/d1dea13fe4)] - **doc**: fix changelog 6.1.0 release year to be 2020 (Quentin Vernot) [#2021](https://github.com/nodejs/node-gyp/pull/2021)
+* [[`6356117b08`](https://github.com/nodejs/node-gyp/commit/6356117b08)] - **doc, bin**: stop suggesting opening  node-gyp issues (Bartosz Sosnowski) [#2096](https://github.com/nodejs/node-gyp/pull/2096)
+* [[`a6b76a8b48`](https://github.com/nodejs/node-gyp/commit/a6b76a8b48)] - **gyp**: update gyp to 0.2.1 (Ujjwal Sharma) [#2092](https://github.com/nodejs/node-gyp/pull/2092)
+* [[`ebc34ec823`](https://github.com/nodejs/node-gyp/commit/ebc34ec823)] - **gyp**: update gyp to 0.2.0 (Ujjwal Sharma) [#2092](https://github.com/nodejs/node-gyp/pull/2092)
+* [[`972780bde7`](https://github.com/nodejs/node-gyp/commit/972780bde7)] - **(SEMVER-MAJOR)** **gyp**: sync code base with nodejs repo (#1975) (Michaël Zasso) [#1975](https://github.com/nodejs/node-gyp/pull/1975)
+* [[`c255ffbf6a`](https://github.com/nodejs/node-gyp/commit/c255ffbf6a)] - **lib**: drop "-2" flag for "py.exe" launcher (DeeDeeG) [#2131](https://github.com/nodejs/node-gyp/pull/2131)
+* [[`1f7e1e93b5`](https://github.com/nodejs/node-gyp/commit/1f7e1e93b5)] - **lib**: ignore VS instances that cause COMExceptions (Andrew Casey) [#2018](https://github.com/nodejs/node-gyp/pull/2018)
+* [[`741ab096d5`](https://github.com/nodejs/node-gyp/commit/741ab096d5)] - **test**: remove support for EOL versions of Node.js (Shelley Vohr)
+* [[`ca86ef2539`](https://github.com/nodejs/node-gyp/commit/ca86ef2539)] - **test**: bump actions/checkout from v1 to v2 (BSKY) [#2063](https://github.com/nodejs/node-gyp/pull/2063)
+
 v6.1.0 2020-01-08
 =================
 
