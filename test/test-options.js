@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const gyp = require('../lib/node-gyp')
+const Gyp = require('../lib/node-gyp')
 
 test('options in environment', (t) => {
   t.plan(1)
@@ -18,8 +18,8 @@ test('options in environment', (t) => {
   // Except loglevel.
   process.env.npm_config_loglevel = 'debug'
 
-  const g = gyp()
-  g.parseArgv(['rebuild']) // Also sets opts.argv.
+  const gyp = new Gyp()
+  gyp.parseArgv(['rebuild']) // Also sets opts.argv.
 
-  t.deepEqual(Object.keys(g.opts).sort(), ['argv', 'x'])
+  t.deepEqual(Object.keys(gyp.opts).sort(), ['argv', 'x'])
 })

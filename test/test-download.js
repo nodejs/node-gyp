@@ -3,6 +3,7 @@
 const { test } = require('tap')
 const { promisify } = require('util')
 const fs = require('fs').promises
+// TODO: removeme
 const fsOLD = require('fs')
 const path = require('path')
 const http = require('http')
@@ -14,7 +15,7 @@ const bl = require('bl')
 
 const install = require('../lib/install')
 const devDir = require('./common').devDir()
-const gyp = require('../lib/node-gyp')
+const Gyp = require('../lib/node-gyp')
 
 log.level = 'warn'
 
@@ -201,13 +202,13 @@ test('download headers (actual)', async (t) => {
   const expectedDir = path.join(devDir, process.version.replace(/^v/, ''))
   await rimraf(expectedDir)
 
-  const prog = gyp()
-  prog.parseArgv([])
-  prog.devDir = devDir
+  const gyp = new Gyp()
+  gyp.parseArgv([])
+  gyp.devDir = devDir
   log.level = 'warn'
 
   return new Promise((resolve, reject) => { // TODO: removeme
-    install(prog, [], (err) => {
+    install(gyp, [], (err) => {
       t.error(err)
 
       fsOLD.readFile(path.join(expectedDir, 'installVersion'), 'utf8', (err, data) => {

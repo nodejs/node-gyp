@@ -3,7 +3,7 @@
 const { test } = require('tap')
 const path = require('path')
 const devDir = require('./common').devDir()
-const gyp = require('../lib/node-gyp')
+const Gyp = require('../lib/node-gyp')
 const requireInject = require('require-inject')
 
 const configure = requireInject('../lib/configure', {
@@ -26,14 +26,14 @@ test('configure PYTHONPATH with no existing env', (t) => {
 
   delete process.env.PYTHONPATH
 
-  const prog = gyp()
-  prog.parseArgv([])
-  prog.spawn = () => {
+  const gyp = new Gyp()
+  gyp.parseArgv([])
+  gyp.spawn = () => {
     t.equal(process.env.PYTHONPATH, EXPECTED_PYPATH)
     return SPAWN_RESULT
   }
-  prog.devDir = devDir
-  configure(prog, [], t.fail)
+  gyp.devDir = devDir
+  configure(gyp, [], t.fail)
 })
 
 test('configure PYTHONPATH with existing env of one dir', (t) => {
@@ -42,9 +42,9 @@ test('configure PYTHONPATH with existing env of one dir', (t) => {
   const existingPath = path.join('a', 'b')
   process.env.PYTHONPATH = existingPath
 
-  const prog = gyp()
-  prog.parseArgv([])
-  prog.spawn = () => {
+  const gyp = new Gyp()
+  gyp.parseArgv([])
+  gyp.spawn = () => {
     t.equal(process.env.PYTHONPATH, [EXPECTED_PYPATH, existingPath].join(SEPARATOR))
 
     const dirs = process.env.PYTHONPATH.split(SEPARATOR)
@@ -52,8 +52,8 @@ test('configure PYTHONPATH with existing env of one dir', (t) => {
 
     return SPAWN_RESULT
   }
-  prog.devDir = devDir
-  configure(prog, [], t.fail)
+  gyp.devDir = devDir
+  configure(gyp, [], t.fail)
 })
 
 test('configure PYTHONPATH with existing env of multiple dirs', (t) => {
@@ -64,9 +64,9 @@ test('configure PYTHONPATH with existing env of multiple dirs', (t) => {
   const existingPath = [pythonDir1, pythonDir2].join(SEPARATOR)
   process.env.PYTHONPATH = existingPath
 
-  const prog = gyp()
-  prog.parseArgv([])
-  prog.spawn = () => {
+  const gyp = new Gyp()
+  gyp.parseArgv([])
+  gyp.spawn = () => {
     t.equal(process.env.PYTHONPATH, [EXPECTED_PYPATH, existingPath].join(SEPARATOR))
 
     const dirs = process.env.PYTHONPATH.split(SEPARATOR)
@@ -74,6 +74,6 @@ test('configure PYTHONPATH with existing env of multiple dirs', (t) => {
 
     return SPAWN_RESULT
   }
-  prog.devDir = devDir
-  configure(prog, [], t.fail)
+  gyp.devDir = devDir
+  configure(gyp, [], t.fail)
 })
