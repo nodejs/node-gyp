@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('tap').test
+const { test } = require('tap')
 const path = require('path')
 const devDir = require('./common').devDir()
 const gyp = require('../lib/node-gyp')

@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('tap').test
+const { test } = require('tap')
 const path = require('path')
 const fs = require('fs')
 const { execFileSync, execFile } = require('child_process')

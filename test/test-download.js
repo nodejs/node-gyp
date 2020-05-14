@@ -1,6 +1,6 @@
 'use strict'
 
-const test = require('tap').test
+const { test } = require('tap')
 const { promisify } = require('util')
 const fs = require('fs').promises
 const fsOLD = require('fs')
