@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "bindings": "^1.5.0",
+    "bl": "^4.0.2",
     "nan": "^2.14.0",
     "require-inject": "^1.4.4",
     "standard": "^14.3.1",

@@ -5,29 +5,30 @@ const path = require('path')
 const devDir = require('./common').devDir()
 const gyp = require('../lib/node-gyp')
 const requireInject = require('require-inject')
+
 const configure = requireInject('../lib/configure', {
   'graceful-fs': {
-    openSync: function () { return 0 },
-    closeSync: function () { },
-    writeFile: function (file, data, cb) { cb() },
-    stat: function (file, cb) { cb(null, {}) }
+    openSync: () => 0,
+    closeSync: () => {},
+    writeFile: (file, data, cb) => cb(),
+    stat: (file, cb) => cb(null, {})
   }
 })
 
-const EXPECTED_PYPATH = path.join(__dirname, '..', 'gyp', 'pylib')
+const EXPECTED_PYPATH = path.join(__dirname, '../gyp/pylib')
 const SEPARATOR = process.platform === 'win32' ? ';' : ':'
-const SPAWN_RESULT = { on: function () { } }
+const SPAWN_RESULT = { on: () => {} }
 
 require('npmlog').level = 'warn'
 
-test('configure PYTHONPATH with no existing env', function (t) {
+test('configure PYTHONPATH with no existing env', (t) => {
   t.plan(1)
 
   delete process.env.PYTHONPATH
 
-  var prog = gyp()
+  const prog = gyp()
   prog.parseArgv([])
-  prog.spawn = function () {
+  prog.spawn = () => {
     t.equal(process.env.PYTHONPATH, EXPECTED_PYPATH)
     return SPAWN_RESULT
   }
@@ -35,18 +36,18 @@ test('configure PYTHONPATH with no existing env', function (t) {
   configure(prog, [], t.fail)
 })
 
-test('configure PYTHONPATH with existing env of one dir', function (t) {
+test('configure PYTHONPATH with existing env of one dir', (t) => {
   t.plan(2)
 
-  var existingPath = path.join('a', 'b')
+  const existingPath = path.join('a', 'b')
   process.env.PYTHONPATH = existingPath
 
-  var prog = gyp()
+  const prog = gyp()
   prog.parseArgv([])
-  prog.spawn = function () {
+  prog.spawn = () => {
     t.equal(process.env.PYTHONPATH, [EXPECTED_PYPATH, existingPath].join(SEPARATOR))
 
-    var dirs = process.env.PYTHONPATH.split(SEPARATOR)
+    const dirs = process.env.PYTHONPATH.split(SEPARATOR)
     t.deepEqual(dirs, [EXPECTED_PYPATH, existingPath])
 
     return SPAWN_RESULT
@@ -55,20 +56,20 @@ test('configure PYTHONPATH with existing env of one dir', function (t) {
   configure(prog, [], t.fail)
 })
 
-test('configure PYTHONPATH with existing env of multiple dirs', function (t) {
+test('configure PYTHONPATH with existing env of multiple dirs', (t) => {
   t.plan(2)
 
-  var pythonDir1 = path.join('a', 'b')
-  var pythonDir2 = path.join('b', 'c')
-  var existingPath = [pythonDir1, pythonDir2].join(SEPARATOR)
+  const pythonDir1 = path.join('a', 'b')
+  const pythonDir2 = path.join('b', 'c')
+  const existingPath = [pythonDir1, pythonDir2].join(SEPARATOR)
   process.env.PYTHONPATH = existingPath
 
-  var prog = gyp()
+  const prog = gyp()
   prog.parseArgv([])
-  prog.spawn = function () {
+  prog.spawn = () => {
     t.equal(process.env.PYTHONPATH, [EXPECTED_PYPATH, existingPath].join(SEPARATOR))
 
-    var dirs = process.env.PYTHONPATH.split(SEPARATOR)
+    const dirs = process.env.PYTHONPATH.split(SEPARATOR)
     t.deepEqual(dirs, [EXPECTED_PYPATH, pythonDir1, pythonDir2])
 
     return SPAWN_RESULT

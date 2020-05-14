@@ -1,204 +1,186 @@
 'use strict'
 
 const test = require('tap').test
-const fs = require('fs')
+const { promisify } = require('util')
+const fs = require('fs').promises
+const fsOLD = require('fs')
 const path = require('path')
 const http = require('http')
 const https = require('https')
-const install = require('../lib/install')
 const semver = require('semver')
-const devDir = require('./common').devDir()
-const rimraf = require('rimraf')
-const gyp = require('../lib/node-gyp')
+const rimraf = promisify(require('rimraf'))
 const log = require('npmlog')
+const bl = require('bl')
+
+const install = require('../lib/install')
+const devDir = require('./common').devDir()
+const gyp = require('../lib/node-gyp')
 
 log.level = 'warn'
 
-test('download over http', function (t) {
-  t.plan(2)
+test('download over http', (t) => {
+  t.plan(3)
 
-  var server = http.createServer(function (req, res) {
+  const server = http.createServer((req, res) => {
     t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
+      `node-gyp v42 (node ${process.version})`)
     res.end('ok')
     server.close()
   })
 
-  var host = 'localhost'
-  server.listen(0, host, function () {
-    var port = this.address().port
-    var gyp = {
+  const host = 'localhost'
+  server.listen(0, host, () => {
+    const port = server.address().port
+    const gyp = {
       opts: {},
       version: '42'
     }
-    var url = 'http://' + host + ':' + port
-    var req = install.test.download(gyp, {}, url)
-    req.on('response', function (res) {
-      var body = ''
-      res.setEncoding('utf8')
-      res.on('data', function (data) {
-        body += data
-      })
-      res.on('end', function () {
-        t.strictEqual(body, 'ok')
-      })
+    const url = `http://${host}:${port}`
+    const req = install.test.download(gyp, {}, url)
+    req.on('response', (res) => {
+      res.pipe(bl((err, body) => {
+        t.error(err)
+        t.strictEqual(body.toString(), 'ok')
+      }))
     })
   })
 })
 
-test('download over https with custom ca', function (t) {
-  t.plan(3)
+test('download over https with custom ca', (t) => {
+  let cert, key
 
-  var cert = fs.readFileSync(path.join(__dirname, 'fixtures/server.crt'), 'utf8')
-  var key = fs.readFileSync(path.join(__dirname, 'fixtures/server.key'), 'utf8')
-
-  var cafile = path.join(__dirname, '/fixtures/ca.crt')
-  var ca = install.test.readCAFile(cafile)
-  t.strictEqual(ca.length, 1)
-
-  var options = { ca: ca, cert: cert, key: key }
-  var server = https.createServer(options, function (req, res) {
-    t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
-    res.end('ok')
-    server.close()
+  t.test('setup', async (t) => {
+    cert = await fs.readFile(path.join(__dirname, 'fixtures/server.crt'), 'utf8')
+    key = await fs.readFile(path.join(__dirname, 'fixtures/server.key'), 'utf8')
   })
 
-  server.on('clientError', function (err) {
-    throw err
-  })
+  return t.test('run', (t) => {
+    t.plan(4)
+    const cafile = path.join(__dirname, '/fixtures/ca.crt')
+    const ca = install.test.readCAFile(cafile)
+    t.strictEqual(ca.length, 1)
 
-  var host = 'localhost'
-  server.listen(8000, host, function () {
-    var port = this.address().port
-    var gyp = {
-      opts: { cafile: cafile },
-      version: '42'
-    }
-    var url = 'https://' + host + ':' + port
-    var req = install.test.download(gyp, {}, url)
-    req.on('response', function (res) {
-      var body = ''
-      res.setEncoding('utf8')
-      res.on('data', function (data) {
-        body += data
-      })
-      res.on('end', function () {
-        t.strictEqual(body, 'ok')
-      })
-    })
-  })
-})
-
-test('download over http with proxy', function (t) {
-  t.plan(2)
-
-  var server = http.createServer(function (req, res) {
-    t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
-    res.end('ok')
-    pserver.close(function () {
+    const options = { ca, cert, key }
+    const server = https.createServer(options, (req, res) => {
+      t.strictEqual(req.headers['user-agent'],
+        `node-gyp v42 (node ${process.version})`)
+      res.end('ok')
       server.close()
     })
-  })
 
-  var pserver = http.createServer(function (req, res) {
-    t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
-    res.end('proxy ok')
-    server.close(function () {
-      pserver.close()
+    server.on('clientError', (err) => {
+      throw err
+    })
+
+    const host = 'localhost'
+    server.listen(8000, host, () => {
+      const port = server.address().port
+      const gyp = {
+        opts: { cafile: cafile },
+        version: '42'
+      }
+      const url = `https://${host}:${port}`
+      const req = install.test.download(gyp, {}, url)
+      req.on('response', (res) => {
+        res.pipe(bl((err, body) => {
+          t.error(err)
+          t.strictEqual(body.toString(), 'ok')
+        }))
+      })
     })
   })
+})
 
-  var host = 'localhost'
-  server.listen(0, host, function () {
-    var port = this.address().port
-    pserver.listen(port + 1, host, function () {
-      var gyp = {
+test('download over http with proxy', (t) => {
+  t.plan(3)
+
+  const server = http.createServer((req, res) => {
+    t.strictEqual(req.headers['user-agent'],
+      `node-gyp v42 (node ${process.version})`)
+    res.end('ok')
+    pserver.close(() => server.close())
+  })
+
+  const pserver = http.createServer((req, res) => {
+    t.strictEqual(req.headers['user-agent'],
+      `node-gyp v42 (node ${process.version})`)
+    res.end('proxy ok')
+    server.close(() => pserver.close())
+  })
+
+  const host = 'localhost'
+  server.listen(0, host, () => {
+    const port = server.address().port
+    pserver.listen(port + 1, host, () => {
+      const gyp = {
         opts: {
-          proxy: 'http://' + host + ':' + (port + 1)
+          proxy: `http://${host}:${port + 1}`
         },
         version: '42'
       }
-      var url = 'http://' + host + ':' + port
-      var req = install.test.download(gyp, {}, url)
-      req.on('response', function (res) {
-        var body = ''
-        res.setEncoding('utf8')
-        res.on('data', function (data) {
-          body += data
-        })
-        res.on('end', function () {
-          t.strictEqual(body, 'proxy ok')
-        })
+      const url = `http://${host}:${port}`
+      const req = install.test.download(gyp, {}, url)
+      req.on('response', (res) => {
+        res.pipe(bl((err, body) => {
+          t.error(err)
+          t.strictEqual(body.toString(), 'proxy ok')
+        }))
       })
     })
   })
 })
 
-test('download over http with noproxy', function (t) {
-  t.plan(2)
+test('download over http with noproxy', (t) => {
+  t.plan(3)
 
-  var server = http.createServer(function (req, res) {
+  const server = http.createServer((req, res) => {
     t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
+      `node-gyp v42 (node ${process.version})`)
     res.end('ok')
-    pserver.close(function () {
-      server.close()
-    })
+    pserver.close(() => server.close())
   })
 
-  var pserver = http.createServer(function (req, res) {
+  const pserver = http.createServer((req, res) => {
     t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
+      `node-gyp v42 (node ${process.version})`)
     res.end('proxy ok')
-    server.close(function () {
-      pserver.close()
-    })
+    server.close(() => pserver.close())
   })
 
-  var host = 'localhost'
-  server.listen(0, host, function () {
-    var port = this.address().port
-    pserver.listen(port + 1, host, function () {
-      var gyp = {
+  const host = 'localhost'
+  server.listen(0, host, () => {
+    const port = server.address().port
+    pserver.listen(port + 1, host, () => {
+      const gyp = {
         opts: {
-          proxy: 'http://' + host + ':' + (port + 1),
+          proxy: `http://${host}:${(port + 1)}`,
           noproxy: 'localhost'
         },
         version: '42'
       }
-      var url = 'http://' + host + ':' + port
-      var req = install.test.download(gyp, {}, url)
-      req.on('response', function (res) {
-        var body = ''
-        res.setEncoding('utf8')
-        res.on('data', function (data) {
-          body += data
-        })
-        res.on('end', function () {
-          t.strictEqual(body, 'ok')
-        })
+      const url = `http://${host}:${port}`
+      const req = install.test.download(gyp, {}, url)
+      req.on('response', (res) => {
+        res.pipe(bl((err, body) => {
+          t.error(err)
+          t.strictEqual(body.toString(), 'ok')
+        }))
       })
     })
   })
 })
 
-test('download with missing cafile', function (t) {
+test('download with missing cafile', (t) => {
   t.plan(1)
-  var gyp = {
+  const gyp = {
     opts: { cafile: 'no.such.file' }
   }
-  try {
-    install.test.download(gyp, {}, 'http://bad/')
-  } catch (e) {
-    t.ok(/no.such.file/.test(e.message))
-  }
+
+  t.throws(() => { install.test.download(gyp, {}, 'http://bad/') }, /no.such.file/)
 })
 
-test('check certificate splitting', function (t) {
-  var cas = install.test.readCAFile(path.join(__dirname, 'fixtures/ca-bundle.crt'))
+test('check certificate splitting', (t) => {
+  const cas = install.test.readCAFile(path.join(__dirname, 'fixtures/ca-bundle.crt'))
   t.plan(2)
   t.strictEqual(cas.length, 2)
   t.notStrictEqual(cas[0], cas[1])
@@ -206,7 +188,7 @@ test('check certificate splitting', function (t) {
 
 // only run this test if we are running a version of Node with predictable version path behavior
 
-test('download headers (actual)', function (t) {
+test('download headers (actual)', async (t) => {
   if (process.env.FAST_TEST ||
       process.release.name !== 'node' ||
       semver.prerelease(process.version) !== null ||
@@ -214,26 +196,27 @@ test('download headers (actual)', function (t) {
     return t.skip('Skipping actual download of headers due to test environment configuration')
   }
 
-  t.plan(17)
+  t.plan(16)
 
   const expectedDir = path.join(devDir, process.version.replace(/^v/, ''))
-  rimraf(expectedDir, (err) => {
-    t.ifError(err)
+  await rimraf(expectedDir)
 
-    const prog = gyp()
-    prog.parseArgv([])
-    prog.devDir = devDir
-    log.level = 'warn'
+  const prog = gyp()
+  prog.parseArgv([])
+  prog.devDir = devDir
+  log.level = 'warn'
+
+  return new Promise((resolve, reject) => { // TODO: removeme
     install(prog, [], (err) => {
-      t.ifError(err)
+      t.error(err)
 
-      fs.readFile(path.join(expectedDir, 'installVersion'), 'utf8', (err, data) => {
-        t.ifError(err)
+      fsOLD.readFile(path.join(expectedDir, 'installVersion'), 'utf8', (err, data) => {
+        t.error(err)
         t.strictEqual(data, '9\n', 'correct installVersion')
       })
 
-      fs.readdir(path.join(expectedDir, 'include/node'), (err, list) => {
-        t.ifError(err)
+      fsOLD.readdir(path.join(expectedDir, 'include/node'), (err, list) => {
+        t.error(err)
 
         t.ok(list.includes('common.gypi'))
         t.ok(list.includes('config.gypi'))
@@ -247,8 +230,8 @@ test('download headers (actual)', function (t) {
         t.ok(list.includes('zlib.h'))
       })
 
-      fs.readFile(path.join(expectedDir, 'include/node/node_version.h'), 'utf8', (err, contents) => {
-        t.ifError(err)
+      fsOLD.readFile(path.join(expectedDir, 'include/node/node_version.h'), 'utf8', (err, contents) => {
+        t.error(err)
 
         const lines = contents.split('\n')
 
@@ -262,6 +245,7 @@ test('download headers (actual)', function (t) {
         }, '')
 
         t.strictEqual(version, process.version)
+        resolve()
       })
     })
   })
