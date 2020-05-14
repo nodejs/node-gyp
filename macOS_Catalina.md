@@ -31,7 +31,7 @@ There are three ways to install the Xcode libraries `node-gyp` needs on macOS. P
 
 1. With the full Xcode (~7.6 GB download) from the `App Store` app.
 2. With the _much_ smaller Xcode Command Line Tools via `xcode-select --install`
-3. With the _much_ smaller Xcode Command Line Tools via manual download. **For people running the latest version of Catalina (10.15.2 at the time of this writing), this has worked when the other two solutions haven't.**
+3. With the _much_ smaller Xcode Command Line Tools via manual download. **For people running the latest version of Catalina (10.15.2/10.15.4 at the time of this writing), this has worked when the other two solutions haven't.**
 
 ### Installing `node-gyp` using the full Xcode
 1. `xcodebuild -version` should show `Xcode 11.1` or later.
