@@ -146,14 +146,13 @@ test('find python - no python2, no python, unix', function (t) {
 })
 
 test('find python - no python, use python launcher', function (t) {
-  t.plan(4)
+  t.plan(3)
 
   var f = new TestPythonFinder(null, done)
   f.win = true
 
   f.execFile = function (program, args, opts, cb) {
     if (program === 'py.exe') {
-      t.notEqual(args.indexOf('-2'), -1)
       t.notEqual(args.indexOf('-c'), -1)
       return cb(null, 'Z:\\snake.exe')
     }
