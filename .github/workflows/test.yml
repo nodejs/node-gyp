@@ -30,9 +30,12 @@ jobs:
           python-version: ${{ matrix.python }}
         env:
           PYTHON_VERSION: ${{ matrix.python }}
+      - name: Add msbuild to PATH
+        if: matrix.os == 'windows-latest'
+        uses: microsoft/setup-msbuild@v1.0.0
       - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip flake8 pytest==4.6.6
+          python -m pip install --upgrade pip flake8 pytest
           npm install
       - name: Lint Python
         run: |
@@ -40,12 +43,6 @@ jobs:
           python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           python -m flake8 . --count --exit-zero --ignore=E111,E114,W503 --max-complexity=10 --max-line-length=127 --statistics
       - name: Run Tests
-        shell: bash
         run: |
-          echo "Testing with Python $(python --version 2>&1)"
           npm test
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            GYP_MSVS_VERSION=2015 GYP_MSVS_OVERRIDE_PATH="C:\\Dummy" python -m pytest
-          else
-            python -m pytest
-          fi
+          python -m pytest
