@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const fs = require('fs')
+const fs = require('fs').promises
 const path = require('path')
 const { VisualStudioFinder } = require('../lib/find-visualstudio').test
 
@@ -23,43 +23,29 @@ function poison (object, property) {
   Object.defineProperty(object, property, descriptor)
 }
 
-function TestVisualStudioFinder (...args) {
-  VisualStudioFinder.apply(this, args)
-}
+class TestVisualStudioFinder extends VisualStudioFinder {
+  constructor (...args) {
+    super(...args)
 
-TestVisualStudioFinder.prototype = Object.create(VisualStudioFinder.prototype)
-
-// Silence npmlog - remove for debugging
-TestVisualStudioFinder.prototype.log = {
-  silly: () => {},
-  verbose: () => {},
-  info: () => {},
-  warn: () => {},
-  error: () => {}
-}
-
-test('VS2013', (t) => {
-  t.plan(4)
-
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info, {
-      msBuild: 'C:\\MSBuild12\\MSBuild.exe',
-      path: 'C:\\VS2013',
-      sdk: null,
-      toolset: 'v120',
-      version: '12.0',
-      versionMajor: 12,
-      versionMinor: 0,
-      versionYear: 2013
-    })
-  })
-
-  finder.findVisualStudio2017OrNewer = (cb) => {
-    finder.parseData(new Error(), '', '', cb)
+    // Silence npmlog - remove for debugging
+    this.log = {
+      silly: () => {},
+      verbose: () => {},
+      info: () => {},
+      warn: () => {},
+      error: () => {}
+    }
   }
+}
 
-  finder.regSearchKeys = (keys, value, addOpts, cb) => {
+test('VS2013', async (t) => {
+  t.plan(3)
+
+  const finder = new TestVisualStudioFinder(semverV1, null)
+
+  finder.findVisualStudio2017OrNewer = async () => null
+
+  finder.regSearchKeys = async (keys, value, addOpts) => {
     for (const key of keys) {
       const fullName = `${key}\\${value}`
       switch (fullName) {
@@ -68,37 +54,42 @@ test('VS2013', (t) => {
           continue
         case 'HKLM\\Software\\Microsoft\\VisualStudio\\SxS\\VC7\\12.0':
           t.pass(`expected search for registry value ${fullName}`)
-          return cb(null, 'C:\\VS2013\\VC\\')
+          return 'C:\\VS2013\\VC\\'
         case 'HKLM\\Software\\Microsoft\\MSBuild\\ToolsVersions\\12.0\\MSBuildToolsPath':
           t.pass(`expected search for registry value ${fullName}`)
-          return cb(null, 'C:\\MSBuild12\\')
+          return 'C:\\MSBuild12\\'
         default:
           t.fail(`unexpected search for registry value ${fullName}`)
       }
     }
-    return cb(new Error())
+    throw new Error()
   }
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info, {
+    msBuild: 'C:\\MSBuild12\\MSBuild.exe',
+    path: 'C:\\VS2013',
+    sdk: null,
+    toolset: 'v120',
+    version: '12.0',
+    versionMajor: 12,
+    versionMinor: 0,
+    versionYear: 2013
+  })
 })
 
-test('VS2013 should not be found on new node versions', (t) => {
-  t.plan(2)
+test('VS2013 should not be found on new node versions', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder({
-    major: 10,
-    minor: 0,
-    patch: 0
-  }, null, (err, info) => {
-    t.ok(/find .* Visual Studio/i.test(err), 'expect error')
-    t.false(info, 'no data')
-  })
+  const finder = new TestVisualStudioFinder({ major: 10, minor: 0, patch: 0 }, null)
 
-  finder.findVisualStudio2017OrNewer = (cb) => {
+  finder.findVisualStudio2017OrNewer = async () => {
     const file = path.join(__dirname, 'fixtures/VS_2017_Unusable.txt')
-    const data = fs.readFileSync(file)
-    finder.parseData(null, data, '', cb)
+    const data = await fs.readFile(file)
+    return finder.parseData(data, '')
   }
-  finder.regSearchKeys = (keys, value, addOpts, cb) => {
+
+  finder.regSearchKeys = async (keys, value, addOpts) => {
     for (const key of keys) {
       const fullName = `${key}\\${value}`
       switch (fullName) {
@@ -109,81 +100,67 @@ test('VS2013 should not be found on new node versions', (t) => {
           t.fail(`unexpected search for registry value ${fullName}`)
       }
     }
-    return cb(new Error())
+    throw new Error()
   }
-  finder.findVisualStudio()
+
+  t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
 })
 
-test('VS2015', (t) => {
-  t.plan(4)
+test('VS2015', async (t) => {
+  t.plan(3)
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info, {
-      msBuild: 'C:\\MSBuild14\\MSBuild.exe',
-      path: 'C:\\VS2015',
-      sdk: null,
-      toolset: 'v140',
-      version: '14.0',
-      versionMajor: 14,
-      versionMinor: 0,
-      versionYear: 2015
-    })
-  })
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
-  finder.findVisualStudio2017OrNewer = (cb) => {
-    finder.parseData(new Error(), '', '', cb)
-  }
-  finder.regSearchKeys = (keys, value, addOpts, cb) => {
+  finder.findVisualStudio2017OrNewer = (cb) => null
+
+  finder.regSearchKeys = async (keys, value, addOpts) => {
     for (const key of keys) {
       const fullName = `${key}\\${value}`
       switch (fullName) {
         case 'HKLM\\Software\\Microsoft\\VisualStudio\\SxS\\VC7\\14.0':
           t.pass(`expected search for registry value ${fullName}`)
-          return cb(null, 'C:\\VS2015\\VC\\')
+          return 'C:\\VS2015\\VC\\'
         case 'HKLM\\Software\\Microsoft\\MSBuild\\ToolsVersions\\14.0\\MSBuildToolsPath':
           t.pass(`expected search for registry value ${fullName}`)
-          return cb(null, 'C:\\MSBuild14\\')
+          return 'C:\\MSBuild14\\'
         default:
           t.fail(`unexpected search for registry value ${fullName}`)
       }
     }
-    return cb(new Error())
+    throw new Error()
   }
-  finder.findVisualStudio()
-})
 
-test('error from PowerShell', (t) => {
-  t.plan(2)
-
-  const finder = new TestVisualStudioFinder(semverV1, null, null)
-
-  finder.parseData(new Error(), '', '', (info) => {
-    t.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
-    t.false(info, 'no data')
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info, {
+    msBuild: 'C:\\MSBuild14\\MSBuild.exe',
+    path: 'C:\\VS2015',
+    sdk: null,
+    toolset: 'v140',
+    version: '14.0',
+    versionMajor: 14,
+    versionMinor: 0,
+    versionYear: 2015
   })
 })
 
 test('empty output from PowerShell', (t) => {
   t.plan(2)
 
-  const finder = new TestVisualStudioFinder(semverV1, null, null)
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
-  finder.parseData(null, '', '', (info) => {
-    t.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
-    t.false(info, 'no data')
-  })
+  const info = finder.parseData(null, '', '')
+  t.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
+  t.false(info, 'no data')
 })
 
 test('output from PowerShell not JSON', (t) => {
   t.plan(2)
 
-  const finder = new TestVisualStudioFinder(semverV1, null, null)
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
-  finder.parseData(null, 'AAAABBBB', '', (info) => {
-    t.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
-    t.false(info, 'no data')
-  })
+  const info = finder.parseData(null, 'AAAABBBB', '')
+  t.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
+  t.false(info, 'no data')
 })
 
 test('wrong JSON from PowerShell', (t) => {
@@ -191,10 +168,9 @@ test('wrong JSON from PowerShell', (t) => {
 
   const finder = new TestVisualStudioFinder(semverV1, null, null)
 
-  finder.parseData(null, '{}', '', (info) => {
-    t.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
-    t.false(info, 'no data')
-  })
+  const info = finder.parseData(null, '{}', '')
+  t.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
+  t.false(info, 'no data')
 })
 
 test('empty JSON from PowerShell', (t) => {
@@ -202,10 +178,9 @@ test('empty JSON from PowerShell', (t) => {
 
   const finder = new TestVisualStudioFinder(semverV1, null, null)
 
-  finder.parseData(null, '[]', '', (info) => {
-    t.ok(/find .* Visual Studio/i.test(finder.errorLog[0]), 'expect error')
-    t.false(info, 'no data')
-  })
+  const info = finder.parseData('[]', '')
+  t.ok(/find .* Visual Studio/i.test(finder.errorLog[0]), 'expect error')
+  t.false(info, 'no data')
 })
 
 test('future version', (t) => {
@@ -213,7 +188,7 @@ test('future version', (t) => {
 
   const finder = new TestVisualStudioFinder(semverV1, null, null)
 
-  finder.parseData(null, JSON.stringify([{
+  const info = finder.parseData(JSON.stringify([{
     packages: [
       'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
       'Microsoft.VisualStudio.Component.Windows10SDK.17763',
@@ -221,210 +196,211 @@ test('future version', (t) => {
     ],
     path: 'C:\\VS',
     version: '9999.9999.9999.9999'
-  }]), '', (info) => {
-    t.ok(/unknown version/i.test(finder.errorLog[0]), 'expect error')
-    t.ok(/find .* Visual Studio/i.test(finder.errorLog[1]), 'expect error')
-    t.false(info, 'no data')
-  })
+  }]), '')
+
+  t.ok(/unknown version/i.test(finder.errorLog[0]), 'expect error')
+  t.ok(/find .* Visual Studio/i.test(finder.errorLog[1]), 'expect error')
+  t.false(info, 'no data')
 })
 
-test('single unusable VS2017', (t) => {
+test('single unusable VS2017', async (t) => {
   t.plan(3)
 
   const finder = new TestVisualStudioFinder(semverV1, null, null)
 
   const file = path.join(__dirname, 'fixtures/VS_2017_Unusable.txt')
-  const data = fs.readFileSync(file)
-  finder.parseData(null, data, '', (info) => {
-    t.ok(/checking/i.test(finder.errorLog[0]), 'expect error')
-    t.ok(/find .* Visual Studio/i.test(finder.errorLog[2]), 'expect error')
-    t.false(info, 'no data')
-  })
+  const data = await fs.readFile(file)
+  const info = finder.parseData(data, '')
+  t.ok(/checking/i.test(finder.errorLog[0]), 'expect error')
+  t.ok(/find .* Visual Studio/i.test(finder.errorLog[2]), 'expect error')
+  t.false(info, 'no data')
 })
 
-test('minimal VS2017 Build Tools', (t) => {
-  t.plan(2)
+test('minimal VS2017 Build Tools', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info, {
-      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\' +
-        'BuildTools\\MSBuild\\15.0\\Bin\\MSBuild.exe',
-      path:
-        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools',
-      sdk: '10.0.17134.0',
-      toolset: 'v141',
-      version: '15.9.28307.665',
-      versionMajor: 15,
-      versionMinor: 9,
-      versionYear: 2017
-    })
-  })
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
   poison(finder, 'regSearchKeys')
-  finder.findVisualStudio2017OrNewer = (cb) => {
+  finder.findVisualStudio2017OrNewer = async () => {
     const file = path.join(__dirname, 'fixtures/VS_2017_BuildTools_minimal.txt')
-    const data = fs.readFileSync(file)
-    finder.parseData(null, data, '', cb)
+    const data = await fs.readFile(file)
+    return finder.parseData(data, '')
   }
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+
+  t.deepEqual(info, {
+    msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\' +
+      'BuildTools\\MSBuild\\15.0\\Bin\\MSBuild.exe',
+    path:
+      'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools',
+    sdk: '10.0.17134.0',
+    toolset: 'v141',
+    version: '15.9.28307.665',
+    versionMajor: 15,
+    versionMinor: 9,
+    versionYear: 2017
+  })
 })
 
-test('VS2017 Community with C++ workload', (t) => {
-  t.plan(2)
+test('VS2017 Community with C++ workload', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info, {
-      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\' +
-        'Community\\MSBuild\\15.0\\Bin\\MSBuild.exe',
-      path:
-        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community',
-      sdk: '10.0.17763.0',
-      toolset: 'v141',
-      version: '15.9.28307.665',
-      versionMajor: 15,
-      versionMinor: 9,
-      versionYear: 2017
-    })
-  })
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
   poison(finder, 'regSearchKeys')
-  finder.findVisualStudio2017OrNewer = (cb) => {
+  finder.findVisualStudio2017OrNewer = async () => {
     const file = path.join(__dirname, 'fixtures/VS_2017_Community_workload.txt')
-    const data = fs.readFileSync(file)
-    finder.parseData(null, data, '', cb)
+    const data = await fs.readFile(file)
+    return finder.parseData(data, '')
   }
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+
+  t.deepEqual(info, {
+    msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\' +
+      'Community\\MSBuild\\15.0\\Bin\\MSBuild.exe',
+    path:
+      'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community',
+    sdk: '10.0.17763.0',
+    toolset: 'v141',
+    version: '15.9.28307.665',
+    versionMajor: 15,
+    versionMinor: 9,
+    versionYear: 2017
+  })
 })
 
-test('VS2017 Express', (t) => {
-  t.plan(2)
+test('VS2017 Express', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info, {
-      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\' +
-        'WDExpress\\MSBuild\\15.0\\Bin\\MSBuild.exe',
-      path:
-        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\WDExpress',
-      sdk: '10.0.17763.0',
-      toolset: 'v141',
-      version: '15.9.28307.858',
-      versionMajor: 15,
-      versionMinor: 9,
-      versionYear: 2017
-    })
-  })
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
   poison(finder, 'regSearchKeys')
-  finder.findVisualStudio2017OrNewer = (cb) => {
+  finder.findVisualStudio2017OrNewer = async () => {
     const file = path.join(__dirname, 'fixtures/VS_2017_Express.txt')
-    const data = fs.readFileSync(file)
-    finder.parseData(null, data, '', cb)
+    const data = await fs.readFile(file)
+    return finder.parseData(data, '')
   }
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+
+  t.deepEqual(info, {
+    msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\' +
+      'WDExpress\\MSBuild\\15.0\\Bin\\MSBuild.exe',
+    path:
+      'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\WDExpress',
+    sdk: '10.0.17763.0',
+    toolset: 'v141',
+    version: '15.9.28307.858',
+    versionMajor: 15,
+    versionMinor: 9,
+    versionYear: 2017
+  })
 })
 
-test('VS2019 Preview with C++ workload', (t) => {
-  t.plan(2)
+test('VS2019 Preview with C++ workload', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info, {
-      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
-        'Preview\\MSBuild\\Current\\Bin\\MSBuild.exe',
-      path:
-        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Preview',
-      sdk: '10.0.17763.0',
-      toolset: 'v142',
-      version: '16.0.28608.199',
-      versionMajor: 16,
-      versionMinor: 0,
-      versionYear: 2019
-    })
-  })
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
   poison(finder, 'regSearchKeys')
-  finder.findVisualStudio2017OrNewer = (cb) => {
+  finder.findVisualStudio2017OrNewer = async () => {
     const file = path.join(__dirname, 'fixtures/VS_2019_Preview.txt')
-    const data = fs.readFileSync(file)
-    finder.parseData(null, data, '', cb)
+    const data = await fs.readFile(file)
+    return finder.parseData(data, '')
   }
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+
+  t.deepEqual(info, {
+    msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
+      'Preview\\MSBuild\\Current\\Bin\\MSBuild.exe',
+    path:
+      'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Preview',
+    sdk: '10.0.17763.0',
+    toolset: 'v142',
+    version: '16.0.28608.199',
+    versionMajor: 16,
+    versionMinor: 0,
+    versionYear: 2019
+  })
 })
 
-test('minimal VS2019 Build Tools', (t) => {
-  t.plan(2)
+test('minimal VS2019 Build Tools', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info, {
-      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
-        'BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe',
-      path:
-        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools',
-      sdk: '10.0.17134.0',
-      toolset: 'v142',
-      version: '16.1.28922.388',
-      versionMajor: 16,
-      versionMinor: 1,
-      versionYear: 2019
-    })
-  })
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
   poison(finder, 'regSearchKeys')
-  finder.findVisualStudio2017OrNewer = (cb) => {
+  finder.findVisualStudio2017OrNewer = async () => {
     const file = path.join(__dirname, 'fixtures/VS_2019_BuildTools_minimal.txt')
-    const data = fs.readFileSync(file)
-    finder.parseData(null, data, '', cb)
+    const data = await fs.readFile(file)
+    return finder.parseData(data, '')
   }
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+
+  t.deepEqual(info, {
+    msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
+      'BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe',
+    path:
+      'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools',
+    sdk: '10.0.17134.0',
+    toolset: 'v142',
+    version: '16.1.28922.388',
+    versionMajor: 16,
+    versionMinor: 1,
+    versionYear: 2019
+  })
 })
 
-test('VS2019 Community with C++ workload', (t) => {
-  t.plan(2)
+test('VS2019 Community with C++ workload', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info, {
-      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
-        'Community\\MSBuild\\Current\\Bin\\MSBuild.exe',
-      path:
-        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community',
-      sdk: '10.0.17763.0',
-      toolset: 'v142',
-      version: '16.1.28922.388',
-      versionMajor: 16,
-      versionMinor: 1,
-      versionYear: 2019
-    })
-  })
-
+  const finder = new TestVisualStudioFinder(semverV1, null)
   poison(finder, 'regSearchKeys')
-  finder.findVisualStudio2017OrNewer = (cb) => {
+
+  finder.findVisualStudio2017OrNewer = async () => {
     const file = path.join(__dirname, 'fixtures/VS_2019_Community_workload.txt')
-    const data = fs.readFileSync(file)
-    finder.parseData(null, data, '', cb)
+    const data = await fs.readFile(file)
+    return finder.parseData(data, '')
   }
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+
+  t.deepEqual(info, {
+    msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
+      'Community\\MSBuild\\Current\\Bin\\MSBuild.exe',
+    path:
+      'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community',
+    sdk: '10.0.17763.0',
+    toolset: 'v142',
+    version: '16.1.28922.388',
+    versionMajor: 16,
+    versionMinor: 1,
+    versionYear: 2019
+  })
 })
 
 function allVsVersions (t, finder) {
-  finder.findVisualStudio2017OrNewer = (cb) => {
-    const data = JSON.stringify(
-      ['VS_2017_Unusable.txt',
-        'VS_2017_BuildTools_minimal.txt',
-        'VS_2017_Community_workload.txt',
-        'VS_2017_Express.txt',
-        'VS_2019_Preview.txt',
-        'VS_2019_BuildTools_minimal.txt',
-        'VS_2019_Community_workload.txt'
-      ].map((f) => JSON.parse(fs.readFileSync(path.join(__dirname, `fixtures/${f}`))))
-        .reduce((p, c) => p.concat(c), []))
-    finder.parseData(null, data, '', cb)
+  finder.findVisualStudio2017OrNewer = async () => {
+    const data = JSON.stringify((await Promise.all([
+      'VS_2017_Unusable.txt',
+      'VS_2017_BuildTools_minimal.txt',
+      'VS_2017_Community_workload.txt',
+      'VS_2017_Express.txt',
+      'VS_2019_Preview.txt',
+      'VS_2019_BuildTools_minimal.txt',
+      'VS_2019_Community_workload.txt'
+    ].map((f) => fs.readFile(path.join(__dirname, `fixtures/${f}`)))))
+      .map((c) => JSON.parse(c))
+      .reduce((p, c) => p.concat(c), []))
+    return finder.parseData(data, '')
   }
-  finder.regSearchKeys = (keys, value, addOpts, cb) => {
+
+  finder.regSearchKeys = async (keys, value, addOpts) => {
     for (const key of keys) {
       const fullName = `${key}\\${value}`
       switch (fullName) {
@@ -432,238 +408,211 @@ function allVsVersions (t, finder) {
         case 'HKLM\\Software\\Microsoft\\VisualStudio\\SxS\\VC7\\12.0':
           continue
         case 'HKLM\\Software\\Wow6432Node\\Microsoft\\VisualStudio\\SxS\\VC7\\12.0':
-          return cb(null, 'C:\\VS2013\\VC\\')
+          return 'C:\\VS2013\\VC\\'
         case 'HKLM\\Software\\Microsoft\\MSBuild\\ToolsVersions\\12.0\\MSBuildToolsPath':
-          return cb(null, 'C:\\MSBuild12\\')
+          return 'C:\\MSBuild12\\'
         case 'HKLM\\Software\\Wow6432Node\\Microsoft\\VisualStudio\\SxS\\VC7\\14.0':
-          return cb(null, 'C:\\VS2015\\VC\\')
+          return 'C:\\VS2015\\VC\\'
         case 'HKLM\\Software\\Microsoft\\MSBuild\\ToolsVersions\\14.0\\MSBuildToolsPath':
-          return cb(null, 'C:\\MSBuild14\\')
+          return 'C:\\MSBuild14\\'
         default:
           t.fail(`unexpected search for registry value ${fullName}`)
       }
     }
-    return cb(new Error())
+    throw new Error()
   }
 }
 
-test('fail when looking for invalid path', (t) => {
-  t.plan(2)
+test('fail when looking for invalid path', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, 'AABB', (err, info) => {
-    t.ok(/find .* Visual Studio/i.test(err), 'expect error')
-    t.false(info, 'no data')
-  })
+  const finder = new TestVisualStudioFinder(semverV1, 'AABB')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
 })
 
-test('look for VS2013 by version number', (t) => {
-  t.plan(2)
+test('look for VS2013 by version number', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, '2013', (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info.versionYear, 2013)
-  })
+  const finder = new TestVisualStudioFinder(semverV1, '2013')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.versionYear, 2013)
 })
 
-test('look for VS2013 by installation path', (t) => {
-  t.plan(2)
+test('look for VS2013 by installation path', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, 'C:\\VS2013',
-    (err, info) => {
-      t.strictEqual(err, null)
-      t.deepEqual(info.path, 'C:\\VS2013')
-    })
+  const finder = new TestVisualStudioFinder(semverV1, 'C:\\VS2013')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.path, 'C:\\VS2013')
 })
 
-test('look for VS2015 by version number', (t) => {
-  t.plan(2)
+test('look for VS2015 by version number', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, '2015', (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info.versionYear, 2015)
-  })
+  const finder = new TestVisualStudioFinder(semverV1, '2015')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.versionYear, 2015)
 })
 
-test('look for VS2015 by installation path', (t) => {
-  t.plan(2)
+test('look for VS2015 by installation path', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, 'C:\\VS2015',
-    (err, info) => {
-      t.strictEqual(err, null)
-      t.deepEqual(info.path, 'C:\\VS2015')
-    })
+  const finder = new TestVisualStudioFinder(semverV1, 'C:\\VS2015')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.path, 'C:\\VS2015')
 })
 
-test('look for VS2017 by version number', (t) => {
-  t.plan(2)
+test('look for VS2017 by version number', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, '2017', (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info.versionYear, 2017)
-  })
+  const finder = new TestVisualStudioFinder(semverV1, '2017')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.versionYear, 2017)
 })
 
-test('look for VS2017 by installation path', (t) => {
-  t.plan(2)
+test('look for VS2017 by installation path', async (t) => {
+  t.plan(1)
 
   const finder = new TestVisualStudioFinder(semverV1,
-    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community',
-    (err, info) => {
-      t.strictEqual(err, null)
-      t.deepEqual(info.path,
-        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community')
-    })
+    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.path,
+    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community')
 })
 
-test('look for VS2019 by version number', (t) => {
-  t.plan(2)
+test('look for VS2019 by version number', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, '2019', (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info.versionYear, 2019)
-  })
+  const finder = new TestVisualStudioFinder(semverV1, '2019')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.versionYear, 2019)
 })
 
-test('look for VS2019 by installation path', (t) => {
-  t.plan(2)
+test('look for VS2019 by installation path', async (t) => {
+  t.plan(1)
 
   const finder = new TestVisualStudioFinder(semverV1,
-    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools',
-    (err, info) => {
-      t.strictEqual(err, null)
-      t.deepEqual(info.path,
-        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools')
-    })
+    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.path,
+    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools')
 })
 
-test('msvs_version match should be case insensitive', (t) => {
-  t.plan(2)
+test('msvs_version match should be case insensitive', async (t) => {
+  t.plan(1)
 
   const finder = new TestVisualStudioFinder(semverV1,
-    'c:\\program files (x86)\\microsoft visual studio\\2019\\BUILDTOOLS',
-    (err, info) => {
-      t.strictEqual(err, null)
-      t.deepEqual(info.path,
-        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools')
-    })
+    'c:\\program files (x86)\\microsoft visual studio\\2019\\BUILDTOOLS')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.path,
+    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools')
 })
 
-test('latest version should be found by default', (t) => {
-  t.plan(2)
+test('latest version should be found by default', async (t) => {
+  t.plan(1)
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info.versionYear, 2019)
-  })
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.versionYear, 2019)
 })
 
-test('run on a usable VS Command Prompt', (t) => {
-  t.plan(2)
+test('run on a usable VS Command Prompt', async (t) => {
+  t.plan(1)
 
   process.env.VCINSTALLDIR = 'C:\\VS2015\\VC'
   // VSINSTALLDIR is not defined on Visual C++ Build Tools 2015
   delete process.env.VSINSTALLDIR
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info.path, 'C:\\VS2015')
-  })
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.path, 'C:\\VS2015')
 })
 
-test('VCINSTALLDIR match should be case insensitive', (t) => {
-  t.plan(2)
+test('VCINSTALLDIR match should be case insensitive', async (t) => {
+  t.plan(1)
 
   process.env.VCINSTALLDIR =
     'c:\\program files (x86)\\microsoft visual studio\\2019\\BUILDTOOLS\\VC'
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.strictEqual(err, null)
-    t.deepEqual(info.path,
-      'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools')
-  })
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.path,
+    'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools')
 })
 
-test('run on a unusable VS Command Prompt', (t) => {
-  t.plan(2)
+test('run on a unusable VS Command Prompt', async (t) => {
+  t.plan(1)
 
   process.env.VCINSTALLDIR =
     'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildToolsUnusable\\VC'
 
-  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
-    t.ok(/find .* Visual Studio/i.test(err), 'expect error')
-    t.false(info, 'no data')
-  })
+  const finder = new TestVisualStudioFinder(semverV1, null)
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
 })
 
-test('run on a VS Command Prompt with matching msvs_version', (t) => {
-  t.plan(2)
+test('run on a VS Command Prompt with matching msvs_version', async (t) => {
+  t.plan(1)
 
   process.env.VCINSTALLDIR = 'C:\\VS2015\\VC'
 
-  const finder = new TestVisualStudioFinder(semverV1, 'C:\\VS2015',
-    (err, info) => {
-      t.strictEqual(err, null)
-      t.deepEqual(info.path, 'C:\\VS2015')
-    })
+  const finder = new TestVisualStudioFinder(semverV1, 'C:\\VS2015')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  const info = await finder.findVisualStudio()
+  t.deepEqual(info.path, 'C:\\VS2015')
 })
 
-test('run on a VS Command Prompt with mismatched msvs_version', (t) => {
-  t.plan(2)
+test('run on a VS Command Prompt with mismatched msvs_version', async (t) => {
+  t.plan(1)
 
   process.env.VCINSTALLDIR =
     'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC'
 
-  const finder = new TestVisualStudioFinder(semverV1, 'C:\\VS2015',
-    (err, info) => {
-      t.ok(/find .* Visual Studio/i.test(err), 'expect error')
-      t.false(info, 'no data')
-    })
+  const finder = new TestVisualStudioFinder(semverV1, 'C:\\VS2015')
 
   allVsVersions(t, finder)
-  finder.findVisualStudio()
+
+  t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
 })

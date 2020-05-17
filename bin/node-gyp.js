@@ -83,10 +83,13 @@ async function chdir (gyp) {
   }
 }
 
+const asyncCommands = [
+  'clean'
+]
+
 async function execute (gyp) {
   while (true) {
     const command = gyp.todo.shift()
-    console.log('command', command)
     if (!command) {
       // done!
       completed = true
@@ -94,31 +97,54 @@ async function execute (gyp) {
       return
     }
 
-    // TODO: removeme
-    await new Promise((resolve, reject) => {
-      gyp.commands[command.name](command.args, (err, ...args) => {
-        if (err) {
-          log.error(command.name + ' error')
-          log.error('stack', err.stack)
-          errorMessage()
-          log.error('not ok')
-          return process.exit(1)
-        }
+    if (asyncCommands.includes(command.name)) {
+      try {
+        const result = await gyp.commands[command.name](command.args)
 
         if (command.name === 'list') {
-          const versions = args[0]
+          const versions = result[0]
           if (versions.length > 0) {
             versions.forEach((version) => console.log(version))
           } else {
             console.log('No node development files installed. Use `node-gyp install` to install a version.')
           }
-        } else if (args.length >= 1) {
-          console.log.apply(console, args)
+        } else if (Array.isArray(result) && result.length) {
+          console.log.apply(console, result)
         }
+      } catch (err) {
+        log.error(command.name + ' error')
+        log.error('stack', err.stack)
+        errorMessage()
+        log.error('not ok')
+        return process.exit(1)
+      }
+    } else {
+      // TODO: removeme
+      await new Promise((resolve, reject) => {
+        gyp.commands[command.name](command.args, (err, ...args) => {
+          if (err) {
+            log.error(command.name + ' error')
+            log.error('stack', err.stack)
+            errorMessage()
+            log.error('not ok')
+            return process.exit(1)
+          }
 
-        resolve()
+          if (command.name === 'list') {
+            const versions = args[0]
+            if (versions.length > 0) {
+              versions.forEach((version) => console.log(version))
+            } else {
+              console.log('No node development files installed. Use `node-gyp install` to install a version.')
+            }
+          } else if (args.length >= 1) {
+            console.log.apply(console, args)
+          }
+
+          resolve()
+        })
       })
-    })
+    }
   }
 }
 
