@@ -103,7 +103,7 @@ test('VS2013 should not be found on new node versions', async (t) => {
     throw new Error()
   }
 
-  t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
+  return t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
 })
 
 test('VS2015', async (t) => {
@@ -430,7 +430,7 @@ test('fail when looking for invalid path', async (t) => {
 
   allVsVersions(t, finder)
 
-  t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
+  return t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
 })
 
 test('look for VS2013 by version number', async (t) => {
@@ -588,7 +588,7 @@ test('run on a unusable VS Command Prompt', async (t) => {
 
   allVsVersions(t, finder)
 
-  t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
+  return t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
 })
 
 test('run on a VS Command Prompt with matching msvs_version', async (t) => {
@@ -614,5 +614,5 @@ test('run on a VS Command Prompt with mismatched msvs_version', async (t) => {
 
   allVsVersions(t, finder)
 
-  t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
+  return t.rejects(() => finder.findVisualStudio(), /find .* Visual Studio/i, 'expect error')
 })

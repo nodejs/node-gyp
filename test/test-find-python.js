@@ -8,24 +8,27 @@ const { findPython, PythonFinder } = require('../lib/find-python').test
 
 require('npmlog').level = 'warn'
 
-test('find python', (t) => {
-  t.plan(4)
+test('find python', async (t) => {
+  t.plan(2)
 
-  findPython(null, (err, found) => {
-    t.strictEqual(err, null)
+  const found = await findPython(null)
+  const { stdout, stderr } = await new Promise((resolve, reject) => {
     const proc = execFile(found, ['-V'], (err, stdout, stderr) => {
-      t.strictEqual(err, null)
-      if (/Python 2/.test(stderr)) {
-        t.strictEqual(stdout, '')
-        t.ok(/Python 2/.test(stderr))
-      } else {
-        t.ok(/Python 3/.test(stdout))
-        t.strictEqual(stderr, '')
+      if (err) {
+        return reject(err)
       }
+      resolve({ stdout, stderr })
     })
     proc.stdout.setEncoding('utf-8')
     proc.stderr.setEncoding('utf-8')
   })
+  if (/Python 2/.test(stderr)) {
+    t.strictEqual(stdout, '')
+    t.ok(/Python 2/.test(stderr))
+  } else {
+    t.ok(/Python 3/.test(stdout))
+    t.strictEqual(stderr, '')
+  }
 })
 
 function poison (object, property) {
@@ -42,30 +45,27 @@ function poison (object, property) {
   Object.defineProperty(object, property, descriptor)
 }
 
-function TestPythonFinder (...args) {
-  PythonFinder.apply(this, args)
+class TestPythonFinder extends PythonFinder {
+  constructor (...args) {
+    super(...args)
+
+    // Silence npmlog - remove for debugging
+    this.log = {
+      silly: () => {},
+      verbose: () => {},
+      info: () => {},
+      warn: () => {},
+      error: () => {}
+    }
+
+    delete this.env.NODE_GYP_FORCE_PYTHON
+  }
 }
 
-TestPythonFinder.prototype = Object.create(PythonFinder.prototype)
+test('find python - python', async (t) => {
+  t.plan(5)
 
-// Silence npmlog - remove for debugging
-TestPythonFinder.prototype.log = {
-  silly: () => {},
-  verbose: () => {},
-  info: () => {},
-  warn: () => {},
-  error: () => {}
-}
-
-delete TestPythonFinder.prototype.env.NODE_GYP_FORCE_PYTHON
-
-test('find python - python', (t) => {
-  t.plan(6)
-
-  const f = new TestPythonFinder('python', (err, python) => {
-    t.strictEqual(err, null)
-    t.strictEqual(python, '/path/python')
-  })
+  const f = new TestPythonFinder('python')
 
   f.execFile = (program, args, opts, cb) => {
     f.execFile = (program, args, opts, cb) => {
@@ -74,22 +74,19 @@ test('find python - python', (t) => {
       t.ok(/sys\.version_info/.test(args[1]))
       cb(null, '2.7.15')
     }
-    t.strictEqual(program,
-      process.platform === 'win32' ? '"python"' : 'python')
+    t.strictEqual(program, process.platform === 'win32' ? '"python"' : 'python')
     t.ok(/sys\.executable/.test(args[1]))
     cb(null, '/path/python')
   }
 
-  f.findPython()
+  const python = await f.findPython()
+  t.strictEqual(python, '/path/python')
 })
 
-test('find python - python too old', (t) => {
+test('find python - python too old', async (t) => {
   t.plan(2)
 
-  const f = new TestPythonFinder(null, (err) => {
-    t.ok(/Could not find any Python/.test(err))
-    t.ok(/not supported/i.test(f.errorLog))
-  })
+  const f = new TestPythonFinder(null)
 
   f.execFile = (program, args, opts, cb) => {
     if (/sys\.executable/.test(args[args.length - 1])) {
@@ -101,16 +98,14 @@ test('find python - python too old', (t) => {
     }
   }
 
-  f.findPython()
+  await t.rejects(() => f.findPython(), /Could not find any Python/)
+  t.ok(/not supported/i.test(f.errorLog))
 })
 
-test('find python - no python', (t) => {
+test('find python - no python', async (t) => {
   t.plan(2)
 
-  const f = new TestPythonFinder(null, (err) => {
-    t.ok(/Could not find any Python/.test(err))
-    t.ok(/not in PATH/.test(f.errorLog))
-  })
+  const f = new TestPythonFinder(null)
 
   f.execFile = (program, args, opts, cb) => {
     if (/sys\.executable/.test(args[args.length - 1])) {
@@ -122,17 +117,14 @@ test('find python - no python', (t) => {
     }
   }
 
-  f.findPython()
+  await t.rejects(() => f.findPython(), /Could not find any Python/)
+  t.ok(/not in PATH/.test(f.errorLog))
 })
 
-test('find python - no python2, no python, unix', (t) => {
+test('find python - no python2, no python, unix', async (t) => {
   t.plan(2)
 
-  const f = new TestPythonFinder(null, (err) => {
-    t.ok(/Could not find any Python/.test(err))
-    t.ok(/not in PATH/.test(f.errorLog))
-  })
-
+  const f = new TestPythonFinder(null)
   f.checkPyLauncher = t.fail
   f.win = false
 
@@ -144,16 +136,14 @@ test('find python - no python2, no python, unix', (t) => {
     }
   }
 
-  f.findPython()
+  await t.rejects(() => f.findPython(), /Could not find any Python/)
+  t.ok(/not in PATH/.test(f.errorLog))
 })
 
-test('find python - no python, use python launcher', (t) => {
-  t.plan(4)
+test('find python - no python, use python launcher', async (t) => {
+  t.plan(3)
 
-  const f = new TestPythonFinder(null, (err, python) => {
-    t.strictEqual(err, null)
-    t.strictEqual(python, 'Z:\\snake.exe')
-  })
+  const f = new TestPythonFinder(null)
   f.win = true
 
   f.execFile = (program, args, opts, cb) => {
@@ -177,17 +167,15 @@ test('find python - no python, use python launcher', (t) => {
     }
   }
 
-  f.findPython()
+  const python = await f.findPython()
+  t.strictEqual(python, 'Z:\\snake.exe')
 })
 
-test('find python - no python, no python launcher, good guess', (t) => {
-  t.plan(2)
+test('find python - no python, no python launcher, good guess', async (t) => {
+  t.plan(1)
 
   const re = /C:[\\/]Python37[\\/]python[.]exe/
-  const f = new TestPythonFinder(null, (err, python) => {
-    t.strictEqual(err, null)
-    t.ok(re.test(python))
-  })
+  const f = new TestPythonFinder(null)
   f.win = true
 
   f.execFile = (program, args, opts, cb) => {
@@ -204,16 +192,14 @@ test('find python - no python, no python launcher, good guess', (t) => {
     }
   }
 
-  f.findPython()
+  const python = await f.findPython()
+  t.ok(re.test(python))
 })
 
-test('find python - no python, no python launcher, bad guess', (t) => {
+test('find python - no python, no python launcher, bad guess', async (t) => {
   t.plan(2)
 
-  const f = new TestPythonFinder(null, (err) => {
-    t.ok(/Could not find any Python/.test(err))
-    t.ok(/not in PATH/.test(f.errorLog))
-  })
+  const f = new TestPythonFinder(null)
   f.win = true
 
   f.execFile = (program, args, opts, cb) => {
@@ -226,5 +212,6 @@ test('find python - no python, no python launcher, bad guess', (t) => {
     }
   }
 
-  f.findPython()
+  await t.rejects(() => f.findPython(), /Could not find any Python/)
+  t.ok(/not in PATH/.test(f.errorLog))
 })
