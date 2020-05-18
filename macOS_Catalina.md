@@ -64,7 +64,7 @@ There are three ways to install the Xcode libraries `node-gyp` needs on macOS. P
 10. Repeat step 5 above.  Is the path different this time?  Repeat the _acid test_.
 
 ### Installing `node-gyp` using the Xcode Command Line Tools via manual download
-1. Download the appropriate version of the "Command Line Tools for Xcode" for your version of Catalina from <https://developer.apple.com/download/more/>. As of MacOS 10.15.3, that's [Command_Line_Tools_for_Xcode_11.3.1.dmg](https://download.developer.apple.com/Developer_Tools/Command_Line_Tools_for_Xcode_11.3.1/Command_Line_Tools_for_Xcode_11.3.1.dmg)
+1. Download the appropriate version of the "Command Line Tools for Xcode" for your version of Catalina from <https://developer.apple.com/download/more/>. As of MacOS 10.15.5, that's [Command_Line_Tools_for_Xcode_11.5.dmg](https://download.developer.apple.com/Developer_Tools/Command_Line_Tools_for_Xcode_11.5/Command_Line_Tools_for_Xcode_11.5.dmg)
 2. Install the package.
 3. Run the [_acid test_ steps above](#The-acid-test).
 
