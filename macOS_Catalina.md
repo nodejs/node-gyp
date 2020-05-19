@@ -2,7 +2,11 @@
 
 _This document specifically refers to upgrades from previous versions of macOS to Catalina (10.15). It should be removed from the source repository when Catalina ceases to be the latest macOS version or when future Catalina versions no longer raise these issues._
 
-**Both upgrading to macOS Catalina and running a Software Update in Catalina may cause normal `node-gyp` installations to fail.**
+**Both upgrading to macOS Catalina and running a Software Update in Catalina may cause normal `node-gyp` installations to fail. This might manifest as the following error during `npm install`:**
+
+```console
+gyp: No Xcode or CLT version detected!
+```
 
 ### Is my Mac running macOS Catalina?
 Let's first make sure that your Mac is running Catalina:
