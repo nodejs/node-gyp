@@ -5,19 +5,7 @@ _This document specifically refers to upgrades from previous versions of macOS t
 **Both upgrading to macOS Catalina and running a Software Update in Catalina may cause normal `node-gyp` installations to fail. This might manifest as the following error during `npm install`:**
 
 ```console
-No receipt for 'com.apple.pkg.CLTools_Executables' found at '/'.
-
-No receipt for 'com.apple.pkg.DeveloperToolsCLILeo' found at '/'.
-
-No receipt for 'com.apple.pkg.DeveloperToolsCLI' found at '/'.
-
 gyp: No Xcode or CLT version detected!
-gyp ERR! configure error
-gyp ERR! stack Error: `gyp` failed with exit code: 1
-gyp ERR! stack     at ChildProcess.onCpExit (/Users/wtodd/.nvm/versions/node/v13.10.1/lib/node_modules/npm/node_modules/node-gyp/lib/configure.js:351:16)
-gyp ERR! stack     at ChildProcess.emit (events.js:316:20)
-gyp ERR! stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:275:12)
-gyp ERR! System Darwin 19.4.0
 ```
 
 ### Is my Mac running macOS Catalina?
