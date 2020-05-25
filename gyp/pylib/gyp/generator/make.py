@@ -928,9 +928,9 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
       else:
         self.WriteLn('quiet_cmd_%s = ACTION %s $@' % (name, name))
       if len(dirs) > 0:
-        command = 'mkdir -p %s' % ' '.join(dirs) + '; ' + command
+        command = 'mkdir -p %s' % ' '.join('"%s"' % d for d in dirs) + '; ' + command
 
-      cd_action = 'cd %s; ' % Sourceify(self.path or '.')
+      cd_action = 'cd "%s"; ' % Sourceify(self.path or '.')
 
       # command and cd_action get written to a toplevel variable called
       # cmd_foo. Toplevel variables can't handle things that change per
@@ -944,8 +944,8 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
       # libraries, but until everything is made cross-compile safe, also use
       # target libraries.
       # TODO(piman): when everything is cross-compile safe, remove lib.target
-      self.WriteLn('cmd_%s = LD_LIBRARY_PATH=$(builddir)/lib.host:'
-                   '$(builddir)/lib.target:$$LD_LIBRARY_PATH; '
+      self.WriteLn('cmd_%s = LD_LIBRARY_PATH="$(builddir)/lib.host:'
+                   '$(builddir)/lib.target:$$LD_LIBRARY_PATH"; '
                    'export LD_LIBRARY_PATH; '
                    '%s%s'
                    % (name, cd_action, command))
@@ -1065,8 +1065,8 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
                   for ac in rule['action']]
         mkdirs = ''
         if len(dirs) > 0:
-          mkdirs = 'mkdir -p %s; ' % ' '.join(dirs)
-        cd_action = 'cd %s; ' % Sourceify(self.path or '.')
+          mkdirs = 'mkdir -p %s; ' % ' '.join('"%s"' % d for d in dirs)
+        cd_action = 'cd "%s"; ' % Sourceify(self.path or '.')
 
         # action, cd_action, and mkdirs get written to a toplevel variable
         # called cmd_foo. Toplevel variables can't handle things that change
