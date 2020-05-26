@@ -1541,6 +1541,13 @@ def CLTVersion():
         except GypError:
             continue
 
+    regex = re.compile('Command Line Tools for Xcode\s+(?P<version>\S+)')
+    try:
+        output = GetStdout(['/usr/sbin/softwareupdate', '--history'])
+        return re.search(regex, output).groupdict()['version']
+    except:
+        return None
+
 
 def GetStdoutQuiet(cmdlist):
     """Returns the content of standard output returned by invoking |cmdlist|.
