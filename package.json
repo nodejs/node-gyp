@@ -43,7 +43,7 @@
     "nan": "^2.14.1",
     "require-inject": "^1.4.4",
     "standard": "^14.3.4",
-    "tap": "^12.7.0"
+    "tap": "^14.10.7"
   },
   "scripts": {
     "lint": "standard */*.js test/**/*.js",
