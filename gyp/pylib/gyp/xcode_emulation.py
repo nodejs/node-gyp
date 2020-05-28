@@ -1545,7 +1545,7 @@ def CLTVersion():
     try:
         output = GetStdout(['/usr/sbin/softwareupdate', '--history'])
         return re.search(regex, output).groupdict()['version']
-    except:
+    except (GypError, OSError):
         return None
 
 
