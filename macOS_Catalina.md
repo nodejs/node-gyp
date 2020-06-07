@@ -1,5 +1,5 @@
 # Installation notes for macOS Catalina (v10.15)
-# [node-gyp v7](https://github.com/nodejs/node-gyp/releases) should solve the [`gyp: No Xcode or CLT version detected!`](https://github.com/nodejs/node-gyp/issues?q=is%3Aissue+label%3A%22gyp%3A+No+Xcode+or+CLT+version+detected%21%22+is%3Aclosed) issue.
+### [node-gyp v7](https://github.com/nodejs/node-gyp/releases) should solve the [`gyp: No Xcode or CLT version detected!`](https://github.com/nodejs/node-gyp/issues?q=is%3Aissue+label%3A%22gyp%3A+No+Xcode+or+CLT+version+detected%21%22+is%3Aclosed) issue.
 
 _This document specifically refers to upgrades from previous versions of macOS to Catalina (10.15). It should be removed from the source repository when Catalina ceases to be the latest macOS version or when future Catalina versions no longer raise these issues._
 
