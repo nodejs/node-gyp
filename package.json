@@ -34,7 +34,7 @@
     "which": "^2.0.2"
   },
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 10.12.0"
   },
   "devDependencies": {
     "bindings": "^1.5.0",
