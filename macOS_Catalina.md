@@ -1,5 +1,4 @@
 # Installation notes for macOS Catalina (v10.15)
-### [node-gyp v7](https://github.com/nodejs/node-gyp/releases) should solve the [`gyp: No Xcode or CLT version detected!`](https://github.com/nodejs/node-gyp/issues?q=is%3Aissue+label%3A%22gyp%3A+No+Xcode+or+CLT+version+detected%21%22+is%3Aclosed) issue.
 
 _This document specifically refers to upgrades from previous versions of macOS to Catalina (10.15). It should be removed from the source repository when Catalina ceases to be the latest macOS version or when future Catalina versions no longer raise these issues._
 
@@ -8,6 +7,21 @@ _This document specifically refers to upgrades from previous versions of macOS t
 ```console
 gyp: No Xcode or CLT version detected!
 ```
+
+## node-gyp v7
+
+The newest release of `node-gyp` should solve this problem. If you are using `node-gyp` directly then you should be able to install v7 and use it as-is.
+
+If you need to use `node-gyp` from within `npm` (e.g. through `npm install`), you will have to install `node-gyp` (either globally with `-g` or to a predictable location) and tell `npm` where the new version is. Either use:
+
+* `npm config set node_gyp <path to node-gyp>`; or
+* run `npm` with an environment variable prefix: `npm_config_node_gyp=<path to node-gyp> npm install`
+
+Where "path to node-gyp" is to the `node-gyp` executable which may be a symlink in your global bin directory (e.g. `/usr/local/bin/node-gyp`), or a path to the `node-gyp` installation directory and the `bin/node-gyp.js` file within it (e.g. `/usr/local/lib/node_modules/node-gyp/bin/node-gyp.js`).
+
+**If you use `npm config set` to change your global `node_gyp` you are responsible for keeping it up to date and can't rely on `npm` to give you a newer version when available.** Use `npm config delete node_gyp` to unset this configuration option.
+
+## Fixing Catalina for older versions of `node-gyp`
 
 ### Is my Mac running macOS Catalina?
 Let's first make sure that your Mac is running Catalina:
@@ -31,7 +45,7 @@ If test succeeded, _you are done_! You should be ready to install `node-gyp`.
 If test failed, there is a problem with your Xcode Command Line Tools installation. [Continue to Solutions](#Solutions).
 
 ### Solutions
-There are three ways to install the Xcode libraries `node-gyp` needs on macOS. People running Catalina have had success with some but not others in a way that has been unpredictable. 
+There are three ways to install the Xcode libraries `node-gyp` needs on macOS. People running Catalina have had success with some but not others in a way that has been unpredictable.
 
 1. With the full Xcode (~7.6 GB download) from the `App Store` app.
 2. With the _much_ smaller Xcode Command Line Tools via `xcode-select --install`
