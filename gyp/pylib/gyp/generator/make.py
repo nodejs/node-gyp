@@ -1342,7 +1342,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
             )
 
             if self.flavor == "mac":
-                cflags = self.xcode_settings.GetCflags(configname, arch=config.get('xcode_configuration_platform'))
+                cflags = self.xcode_settings.GetCflags(configname)
                 cflags_c = self.xcode_settings.GetCflagsC(configname)
                 cflags_cc = self.xcode_settings.GetCflagsCC(configname)
                 cflags_objc = self.xcode_settings.GetCflagsObjC(configname)
@@ -1637,7 +1637,6 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
                         configname,
                         generator_default_variables["PRODUCT_DIR"],
                         lambda p: Sourceify(self.Absolutify(p)),
-                        arch=config.get('xcode_configuration_platform')
                     )
 
                     # TARGET_POSTBUILDS_$(BUILDTYPE) is added to postbuilds later on.
