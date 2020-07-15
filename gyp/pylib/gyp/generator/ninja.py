@@ -78,7 +78,7 @@ def QuoteShellArgument(arg, flavor):
     """Quote a string such that it will be interpreted as a single argument
   by the shell."""
     # Rather than attempting to enumerate the bad shell characters, just
-    # whitelist common OK ones and quote anything else.
+    # allow common OK ones and quote anything else.
     if re.match(r"^[a-zA-Z0-9_=.\\/-]+$", arg):
         return arg  # No quoting necessary.
     if flavor == "win":
@@ -1481,16 +1481,18 @@ class NinjaWriter(object):
         library_dirs = config.get("library_dirs", [])
         if self.flavor == "win":
             library_dirs = [
-                self.msvs_settings.ConvertVSMacros(l, config_name) for l in library_dirs
+                self.msvs_settings.ConvertVSMacros(library_dir, config_name)
+                for library_dir in library_dirs
             ]
             library_dirs = [
-                "/LIBPATH:" + QuoteShellArgument(self.GypPathToNinja(l), self.flavor)
-                for l in library_dirs
+                "/LIBPATH:"
+                + QuoteShellArgument(self.GypPathToNinja(library_dir), self.flavor)
+                for library_dir in library_dirs
             ]
         else:
             library_dirs = [
-                QuoteShellArgument("-L" + self.GypPathToNinja(l), self.flavor)
-                for l in library_dirs
+                QuoteShellArgument("-L" + self.GypPathToNinja(library_dir), self.flavor)
+                for library_dir in library_dirs
             ]
 
         libraries = gyp.common.uniquer(
