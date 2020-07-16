@@ -20,7 +20,7 @@ args = parser.parse_args()
 tar_url = BASE_URL + args.tag + ".tar.gz"
 
 changed_files = subprocess.check_output(["git", "diff", "--name-only"]).strip()
-if len(changed_files) is not 0:
+if changed_files:
   raise Exception("Can't update gyp while you have uncommitted changes in node-gyp")
 
 with tempfile.TemporaryDirectory() as tmp_dir:
@@ -29,7 +29,8 @@ with tempfile.TemporaryDirectory() as tmp_dir:
   with open(tar_file, 'wb') as f:
     print("Downloading gyp-next@" + args.tag + " into temporary directory...")
     print("From: " + tar_url)
-    f.write(urllib.request.urlopen(tar_url).read())
+    with urllib.request.urlopen(tar_url) as in_file:
+        f.write(in_file.read())
 
     print("Unzipping...")
     with tarfile.open(tar_file, "r:gz") as tar_ref:
