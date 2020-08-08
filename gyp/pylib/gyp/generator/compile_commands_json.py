@@ -63,7 +63,7 @@ def AddCommandsForTarget(cwd, target, params, per_config_commands):
         # TODO(bnoordhuis) Handle generated source files.
         extensions = (".c", ".cc", ".cpp", ".cxx")
         sources = target.get("sources", [])
-        sources = [s for s in sources if s.endswith(extensions)]
+        sources = [s for s in target.get("sources", []) if s.endswith(extensions)]
 
         def resolve(filename):
             return os.path.abspath(os.path.join(cwd, filename))
