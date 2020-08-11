@@ -1,3 +1,13 @@
+v7.1.0 2020-08-12
+=================
+
+* [[`aaf33c3029`](https://github.com/nodejs/node-gyp/commit/aaf33c3029)] - **build**: add update-gyp script (Samuel Attard) [#2167](https://github.com/nodejs/node-gyp/pull/2167)
+* * [[`3baa4e4172`](https://github.com/nodejs/node-gyp/commit/3baa4e4172)] - **(SEMVER-MINOR)** **gyp**: update gyp to 0.4.0 (Samuel Attard) [#2165](https://github.com/nodejs/node-gyp/pull/2165)
+* * [[`f461d56c53`](https://github.com/nodejs/node-gyp/commit/f461d56c53)] - **(SEMVER-MINOR)** **build**: support apple silicon (arm64 darwin) builds (Samuel Attard) [#2165](https://github.com/nodejs/node-gyp/pull/2165)
+* * [[`ee6fa7d3bc`](https://github.com/nodejs/node-gyp/commit/ee6fa7d3bc)] - **docs**: note that node-gyp@7 should solve Catalina CLT issues (Rod Vagg) [#2156](https://github.com/nodejs/node-gyp/pull/2156)
+* * [[`4fc8ff179d`](https://github.com/nodejs/node-gyp/commit/4fc8ff179d)] - **doc**: silence curl for macOS Catalina acid test (Chia Wei Ong) [#2150](https://github.com/nodejs/node-gyp/pull/2150)
+* * [[`7857cb2eb1`](https://github.com/nodejs/node-gyp/commit/7857cb2eb1)] - **deps**: increase "engines" to "node" : "\>= 10.12.0" (DeeDeeG) [#2153](https://github.com/nodejs/node-gyp/pull/2153)
+
 v7.0.0 2020-06-03
 =================
 
