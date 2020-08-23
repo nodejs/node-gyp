@@ -22,15 +22,16 @@
   "bin": "./bin/node-gyp.js",
   "main": "./lib/node-gyp.js",
   "dependencies": {
+    "caseless": "^0.12.0",
     "env-paths": "^2.2.0",
     "glob": "^7.1.4",
     "graceful-fs": "^4.2.3",
     "nopt": "^5.0.0",
     "npmlog": "^4.1.2",
-    "request": "^2.88.2",
     "rimraf": "^3.0.2",
     "semver": "^7.3.2",
     "tar": "^6.0.2",
+    "tunnel-agent": "^0.6.0",
     "which": "^2.0.2"
   },
   "engines": {
