@@ -1,0 +1,48 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [10.x, 12.x, 14.x]
+        python: [2.7, 3.6, 3.7, 3.8]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Use Python ${{ matrix.python }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+        env:
+          PYTHON_VERSION: ${{ matrix.python }}
+      - name: Add msbuild to PATH
+        if: matrix.os == 'windows-latest'
+        uses: microsoft/setup-msbuild@v1.0.0
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip flake8 pytest
+          npm install
+      - name: Lint Python
+        run: |
+          python -m flake8 --version
+          python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          python -m flake8 . --count --exit-zero --ignore=E111,E114,W503 --max-complexity=10 --max-line-length=127 --statistics
+      - name: Run Tests
+        run: |
+          npm test
+          python -m pytest
