@@ -45,6 +45,6 @@
   },
   "scripts": {
     "lint": "standard */*.js test/**/*.js",
-    "test": "npm run lint && tap --timeout=120 test/test-*"
+    "test": "tap --timeout=120 test/test-*"
   }
 }
