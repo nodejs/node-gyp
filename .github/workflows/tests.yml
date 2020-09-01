@@ -51,7 +51,7 @@ jobs:
       - name: Run node tests (Linux and macOS)
         if: matrix.os != 'windows-latest'
         run: |
-          npm test
+          npm run test:ci
       - name: Run python tests (Linux and macOS)
         if: matrix.os != 'windows-latest'
         run: |
@@ -60,7 +60,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: bash
         run: |
-          GYP_MSVS_VERSION=2015 GYP_MSVS_OVERRIDE_PATH="C:\\Dummy" npm test
+          GYP_MSVS_VERSION=2015 GYP_MSVS_OVERRIDE_PATH="C:\\Dummy" npm run test:ci
       - name: Run python tests (Windows)
         if: matrix.os == 'windows-latest'
         shell: bash
