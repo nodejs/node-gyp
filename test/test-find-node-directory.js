@@ -15,7 +15,7 @@ test('test find-node-directory - node install', function (t) {
   for (var next = 0; next < platforms.length; next++) {
     var processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
     t.equal(
-      findNodeDirectory('/x/deps/npm/node_modules/node-gyp/lib', processObj),
+      findNodeDirectory('/x/deps/npm/node_modules/node-nnabt/lib', processObj),
       path.join('/x'))
   }
 })
@@ -31,11 +31,11 @@ test('test find-node-directory - node build', function (t) {
     var processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
     if (platforms[next] === 'win32') {
       t.equal(
-        findNodeDirectory('/y/node_modules/npm/node_modules/node-gyp/lib',
+        findNodeDirectory('/y/node_modules/npm/node_modules/node-nnabt/lib',
           processObj), path.join('/y'))
     } else {
       t.equal(
-        findNodeDirectory('/y/lib/node_modules/npm/node_modules/node-gyp/lib',
+        findNodeDirectory('/y/lib/node_modules/npm/node_modules/node-nnabt/lib',
           processObj), path.join('/y'))
     }
   }
@@ -48,7 +48,7 @@ test('test find-node-directory - node in bin directory', function (t) {
   for (var next = 0; next < platforms.length; next++) {
     var processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
     t.equal(
-      findNodeDirectory('/nothere/npm/node_modules/node-gyp/lib', processObj),
+      findNodeDirectory('/nothere/npm/node_modules/node-nnabt/lib', processObj),
       path.join('/x/y'))
   }
 })
@@ -69,7 +69,7 @@ test('test find-node-directory - node in build release dir', function (t) {
     }
 
     t.equal(
-      findNodeDirectory('/nothere/npm/node_modules/node-gyp/lib', processObj),
+      findNodeDirectory('/nothere/npm/node_modules/node-nnabt/lib', processObj),
       path.join('/x/y'))
   }
 })
@@ -87,7 +87,7 @@ test('test find-node-directory - node in Debug release dir', function (t) {
     }
 
     t.equal(
-      findNodeDirectory('/nothere/npm/node_modules/node-gyp/lib', processObj),
+      findNodeDirectory('/nothere/npm/node_modules/node-nnabt/lib', processObj),
       path.join('/a/b'))
   }
 })
@@ -113,7 +113,7 @@ test('test find-node-directory - node install', function (t) {
   for (var next = 0; next < platforms.length; next++) {
     var processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
     t.equal(
-      findNodeDirectory('/x/y/z/a/b/c/deps/npm/node_modules/node-gyp/lib',
+      findNodeDirectory('/x/y/z/a/b/c/deps/npm/node_modules/node-nnabt/lib',
         processObj), path.join('/x/y/z/a/b/c'))
   }
 })

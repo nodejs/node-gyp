@@ -1,0 +1,226 @@
+/*
+	Copyright (c) 2011 Google Inc. All rights reserved.
+	Use of this source code is governed by a BSD-style license that can be
+	found in the LICENSE file.
+	
+	nnabt.xclangspec
+	GYP language specification for Xcode 3
+
+	There is not much documentation available regarding the format
+	of .xclangspec files. As a starting point, see for instance the
+	outdated documentation at:
+	http://maxao.free.fr/xcode-plugin-interface/specifications.html
+	and the files in:
+	/Developer/Library/PrivateFrameworks/XcodeEdit.framework/Versions/A/Resources/
+
+	Place this file in directory:
+	~/Library/Application Support/Developer/Shared/Xcode/Specifications/
+*/
+
+(
+
+    {
+        Identifier = "xcode.lang.nnabt.keyword";
+        Syntax = {
+            Words = (
+                "and",
+                "or",
+                "<!",
+                "<",
+             );
+            Type = "xcode.syntax.keyword";
+        };
+    },
+
+    {
+        Identifier = "xcode.lang.nnabt.target.declarator";
+        Syntax = {
+        	Words = (
+        		"'target_name'",
+        	);
+            Type = "xcode.syntax.identifier.type";
+        };
+    },
+
+	{
+		Identifier = "xcode.lang.nnabt.string.singlequote";
+		Syntax = {
+			IncludeRules = (
+				"xcode.lang.string",
+				"xcode.lang.nnabt.keyword",
+				"xcode.lang.number",
+			);
+			Start = "'";
+			End = "'";
+		};
+	},
+	
+	{
+		Identifier = "xcode.lang.nnabt.comma";
+		Syntax = {
+			Words = ( ",", );
+			
+		};
+	},
+
+	{
+		Identifier = "xcode.lang.nnabt";
+		Description = "GYP Coloring";
+		BasedOn = "xcode.lang.simpleColoring";
+		IncludeInMenu = YES;
+		Name = "GYP";
+		Syntax = {
+			Tokenizer = "xcode.lang.nnabt.lexer.toplevel";
+			IncludeRules = (
+				"xcode.lang.nnabt.dictionary",
+			);
+			Type = "xcode.syntax.plain";
+		};
+	},
+
+	// The following rule returns tokens to the other rules
+	{
+		Identifier = "xcode.lang.nnabt.lexer";
+		Syntax = {
+			IncludeRules = (
+				"xcode.lang.nnabt.comment",
+				"xcode.lang.string",
+				'xcode.lang.nnabt.targetname.declarator',
+				"xcode.lang.nnabt.string.singlequote",
+				"xcode.lang.number",
+				"xcode.lang.nnabt.comma",
+			);
+		};
+	},
+
+	{
+		Identifier = "xcode.lang.nnabt.lexer.toplevel";
+		Syntax = {
+			IncludeRules = (
+				"xcode.lang.nnabt.comment",
+			);
+		};
+	},
+
+	{
+        Identifier = "xcode.lang.nnabt.assignment";
+        Syntax = {
+            Tokenizer = "xcode.lang.nnabt.lexer";
+            Rules = (
+            	"xcode.lang.nnabt.assignment.lhs",
+            	":",
+                "xcode.lang.nnabt.assignment.rhs",
+            );
+        };
+       
+    },
+    
+    {
+        Identifier = "xcode.lang.nnabt.target.declaration";
+        Syntax = {
+            Tokenizer = "xcode.lang.nnabt.lexer";
+            Rules = (
+                "xcode.lang.nnabt.target.declarator",
+                ":",
+                "xcode.lang.nnabt.target.name",
+            );
+        };
+   },
+   
+   {
+        Identifier = "xcode.lang.nnabt.target.name";
+        Syntax = {
+            Tokenizer = "xcode.lang.nnabt.lexer";
+            Rules = (
+                "xcode.lang.nnabt.string.singlequote",
+            );
+        	Type = "xcode.syntax.definition.function";
+        };
+    },
+    
+	{
+        Identifier = "xcode.lang.nnabt.assignment.lhs";
+        Syntax = {
+            Tokenizer = "xcode.lang.nnabt.lexer";
+            Rules = (
+            	"xcode.lang.nnabt.string.singlequote",
+            );
+         	Type = "xcode.syntax.identifier.type";
+        };
+    },
+    
+    {
+        Identifier = "xcode.lang.nnabt.assignment.rhs";
+        Syntax = {
+        	Tokenizer = "xcode.lang.nnabt.lexer";
+            Rules = (
+            	"xcode.lang.nnabt.string.singlequote?",
+                "xcode.lang.nnabt.array?",
+				"xcode.lang.nnabt.dictionary?",
+				"xcode.lang.number?",
+            );
+        };
+    },
+
+	{
+		Identifier = "xcode.lang.nnabt.dictionary";
+		Syntax = {
+			Tokenizer = "xcode.lang.nnabt.lexer";
+			Start = "{";
+			End = "}";
+			Foldable = YES;
+			Recursive = YES;
+			IncludeRules = (
+				"xcode.lang.nnabt.target.declaration",
+				"xcode.lang.nnabt.assignment",
+			);
+		};
+	},
+
+	{
+		Identifier = "xcode.lang.nnabt.array";
+		Syntax = {
+			Tokenizer = "xcode.lang.nnabt.lexer";
+			Start = "[";
+			End = "]";
+			Foldable = YES;
+			Recursive = YES;
+			IncludeRules = (
+				"xcode.lang.nnabt.array",
+				"xcode.lang.nnabt.dictionary",
+				"xcode.lang.nnabt.string.singlequote",
+			);
+		};
+	},
+
+    {
+        Identifier = "xcode.lang.nnabt.todo.mark";
+        Syntax = {
+            StartChars = "T";
+            Match = (
+                "^\(TODO\(.*\):[ \t]+.*\)$",       // include "TODO: " in the markers list
+            );
+            // This is the order of captures. All of the match strings above need the same order.
+            CaptureTypes = (
+                "xcode.syntax.mark"
+            );
+            Type = "xcode.syntax.comment";
+        };
+    },
+
+	{
+		Identifier = "xcode.lang.nnabt.comment";
+		BasedOn = "xcode.lang.comment"; // for text macros
+		Syntax = {
+			Start = "#";
+			End = "\n";
+			IncludeRules = (
+				"xcode.lang.url",
+				"xcode.lang.url.mail",
+				"xcode.lang.comment.mark",
+				"xcode.lang.nnabt.todo.mark",
+			);
+			Type = "xcode.syntax.comment";
+		};
+	},
+)

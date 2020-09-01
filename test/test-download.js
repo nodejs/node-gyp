@@ -9,7 +9,7 @@ const install = require('../lib/install')
 const semver = require('semver')
 const devDir = require('./common').devDir()
 const rimraf = require('rimraf')
-const gyp = require('../lib/node-gyp')
+const nnabt = require('../lib/node-nnabt')
 const log = require('npmlog')
 
 log.level = 'warn'
@@ -19,7 +19,7 @@ test('download over http', function (t) {
 
   var server = http.createServer(function (req, res) {
     t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
+      'node-nnabt v42 (node ' + process.version + ')')
     res.end('ok')
     server.close()
   })
@@ -27,12 +27,12 @@ test('download over http', function (t) {
   var host = 'localhost'
   server.listen(0, host, function () {
     var port = this.address().port
-    var gyp = {
+    var nnabt = {
       opts: {},
       version: '42'
     }
     var url = 'http://' + host + ':' + port
-    var req = install.test.download(gyp, {}, url)
+    var req = install.test.download(nnabt, {}, url)
     req.on('response', function (res) {
       var body = ''
       res.setEncoding('utf8')
@@ -59,7 +59,7 @@ test('download over https with custom ca', function (t) {
   var options = { ca: ca, cert: cert, key: key }
   var server = https.createServer(options, function (req, res) {
     t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
+      'node-nnabt v42 (node ' + process.version + ')')
     res.end('ok')
     server.close()
   })
@@ -71,12 +71,12 @@ test('download over https with custom ca', function (t) {
   var host = 'localhost'
   server.listen(8000, host, function () {
     var port = this.address().port
-    var gyp = {
+    var nnabt = {
       opts: { cafile: cafile },
       version: '42'
     }
     var url = 'https://' + host + ':' + port
-    var req = install.test.download(gyp, {}, url)
+    var req = install.test.download(nnabt, {}, url)
     req.on('response', function (res) {
       var body = ''
       res.setEncoding('utf8')
@@ -95,7 +95,7 @@ test('download over http with proxy', function (t) {
 
   var server = http.createServer(function (req, res) {
     t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
+      'node-nnabt v42 (node ' + process.version + ')')
     res.end('ok')
     pserver.close(function () {
       server.close()
@@ -104,7 +104,7 @@ test('download over http with proxy', function (t) {
 
   var pserver = http.createServer(function (req, res) {
     t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
+      'node-nnabt v42 (node ' + process.version + ')')
     res.end('proxy ok')
     server.close(function () {
       pserver.close()
@@ -115,14 +115,14 @@ test('download over http with proxy', function (t) {
   server.listen(0, host, function () {
     var port = this.address().port
     pserver.listen(port + 1, host, function () {
-      var gyp = {
+      var nnabt = {
         opts: {
           proxy: 'http://' + host + ':' + (port + 1)
         },
         version: '42'
       }
       var url = 'http://' + host + ':' + port
-      var req = install.test.download(gyp, {}, url)
+      var req = install.test.download(nnabt, {}, url)
       req.on('response', function (res) {
         var body = ''
         res.setEncoding('utf8')
@@ -142,7 +142,7 @@ test('download over http with noproxy', function (t) {
 
   var server = http.createServer(function (req, res) {
     t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
+      'node-nnabt v42 (node ' + process.version + ')')
     res.end('ok')
     pserver.close(function () {
       server.close()
@@ -151,7 +151,7 @@ test('download over http with noproxy', function (t) {
 
   var pserver = http.createServer(function (req, res) {
     t.strictEqual(req.headers['user-agent'],
-      'node-gyp v42 (node ' + process.version + ')')
+      'node-nnabt v42 (node ' + process.version + ')')
     res.end('proxy ok')
     server.close(function () {
       pserver.close()
@@ -162,7 +162,7 @@ test('download over http with noproxy', function (t) {
   server.listen(0, host, function () {
     var port = this.address().port
     pserver.listen(port + 1, host, function () {
-      var gyp = {
+      var nnabt = {
         opts: {
           proxy: 'http://' + host + ':' + (port + 1),
           noproxy: 'localhost'
@@ -170,7 +170,7 @@ test('download over http with noproxy', function (t) {
         version: '42'
       }
       var url = 'http://' + host + ':' + port
-      var req = install.test.download(gyp, {}, url)
+      var req = install.test.download(nnabt, {}, url)
       req.on('response', function (res) {
         var body = ''
         res.setEncoding('utf8')
@@ -187,11 +187,11 @@ test('download over http with noproxy', function (t) {
 
 test('download with missing cafile', function (t) {
   t.plan(1)
-  var gyp = {
+  var nnabt = {
     opts: { cafile: 'no.such.file' }
   }
   try {
-    install.test.download(gyp, {}, 'http://bad/')
+    install.test.download(nnabt, {}, 'http://bad/')
   } catch (e) {
     t.ok(/no.such.file/.test(e.message))
   }
@@ -220,7 +220,7 @@ test('download headers (actual)', function (t) {
   rimraf(expectedDir, (err) => {
     t.ifError(err)
 
-    const prog = gyp()
+    const prog = nnabt()
     prog.parseArgv([])
     prog.devDir = devDir
     log.level = 'warn'
@@ -235,8 +235,8 @@ test('download headers (actual)', function (t) {
       fs.readdir(path.join(expectedDir, 'include/node'), (err, list) => {
         t.ifError(err)
 
-        t.ok(list.includes('common.gypi'))
-        t.ok(list.includes('config.gypi'))
+        t.ok(list.includes('common.nnabti'))
+        t.ok(list.includes('config.nnabti'))
         t.ok(list.includes('node.h'))
         t.ok(list.includes('node_version.h'))
         t.ok(list.includes('openssl'))

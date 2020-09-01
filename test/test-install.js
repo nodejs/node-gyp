@@ -16,19 +16,19 @@ test('EACCES retry once', function (t) {
     t.ok(true)
   }
 
-  var gyp = {}
-  gyp.devDir = __dirname
-  gyp.opts = {}
-  gyp.opts.ensure = true
-  gyp.commands = {}
-  gyp.commands.install = function (argv, cb) {
-    install(fs, gyp, argv, cb)
+  var nnabt = {}
+  nnabt.devDir = __dirname
+  nnabt.opts = {}
+  nnabt.opts.ensure = true
+  nnabt.commands = {}
+  nnabt.commands.install = function (argv, cb) {
+    install(fs, nnabt, argv, cb)
   }
-  gyp.commands.remove = function (argv, cb) {
+  nnabt.commands.remove = function (argv, cb) {
     cb()
   }
 
-  gyp.commands.install([], function (err) {
+  nnabt.commands.install([], function (err) {
     t.ok(true)
     if (/"pre" versions of node cannot be installed/.test(err.message)) {
       t.ok(true)

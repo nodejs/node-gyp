@@ -3,7 +3,7 @@
 const test = require('tap').test
 const path = require('path')
 const devDir = require('./common').devDir()
-const gyp = require('../lib/node-gyp')
+const nnabt = require('../lib/node-nnabt')
 const requireInject = require('require-inject')
 const configure = requireInject('../lib/configure', {
   'graceful-fs': {
@@ -15,7 +15,7 @@ const configure = requireInject('../lib/configure', {
   }
 })
 
-const EXPECTED_PYPATH = path.join(__dirname, '..', 'gyp', 'pylib')
+const EXPECTED_PYPATH = path.join(__dirname, '..', 'nnabt', 'pylib')
 const SEPARATOR = process.platform === 'win32' ? ';' : ':'
 const SPAWN_RESULT = { on: function () { } }
 
@@ -26,7 +26,7 @@ test('configure PYTHONPATH with no existing env', function (t) {
 
   delete process.env.PYTHONPATH
 
-  var prog = gyp()
+  var prog = nnabt()
   prog.parseArgv([])
   prog.spawn = function () {
     t.equal(process.env.PYTHONPATH, EXPECTED_PYPATH)
@@ -42,7 +42,7 @@ test('configure PYTHONPATH with existing env of one dir', function (t) {
   var existingPath = path.join('a', 'b')
   process.env.PYTHONPATH = existingPath
 
-  var prog = gyp()
+  var prog = nnabt()
   prog.parseArgv([])
   prog.spawn = function () {
     t.equal(process.env.PYTHONPATH, [EXPECTED_PYPATH, existingPath].join(SEPARATOR))
@@ -64,7 +64,7 @@ test('configure PYTHONPATH with existing env of multiple dirs', function (t) {
   var existingPath = [pythonDir1, pythonDir2].join(SEPARATOR)
   process.env.PYTHONPATH = existingPath
 
-  var prog = gyp()
+  var prog = nnabt()
   prog.parseArgv([])
   prog.spawn = function () {
     t.equal(process.env.PYTHONPATH, [EXPECTED_PYPATH, existingPath].join(SEPARATOR))

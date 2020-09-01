@@ -1,11 +1,11 @@
 <!--
 Thank you for reporting an issue!
 
-Remember, this issue tracker is for reporting issues ONLY with node-gyp.
+Remember, this issue tracker is for reporting issues ONLY with node-nnabt.
 
 If you have an issue installing a specific module, please file an issue on
 that module's issue tracker (`npm issues modulename`). Open issue here only if
-you are sure this is an issue with node-gyp, not with the module you are
+you are sure this is an issue with node-nnabt, not with the module you are
 trying to build.
 
 Fill out the form below. We probably won't investigate an issue that does not
@@ -18,13 +18,13 @@ provide the basic information we require.
 * **Compiler**: <!-- `cc -v` (UNIX) or `msbuild /version & cl` (Windows) -->
 * **Module**: <!-- what you tried to build/install -->
 
-<details><summary>Verbose output (from npm or node-gyp):</summary>
+<details><summary>Verbose output (from npm or node-nnabt):</summary>
 
 ```
 Paste your log here, between the backticks. It can be:
   - npm --verbose output,
   - or contents of npm-debug.log,
-  - or output of node-gyp rebuild --verbose.
+  - or output of node-nnabt rebuild --verbose.
 Include the command you were trying to run.
 
 This should look like this:

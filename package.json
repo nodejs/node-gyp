@@ -1,5 +1,5 @@
 {
-  "name": "node-gyp",
+  "name": "node-nnabt",
   "description": "Node.js native addon build tool",
   "license": "MIT",
   "keywords": [
@@ -9,18 +9,18 @@
     "c",
     "c++",
     "bindings",
-    "gyp"
+    "nnabt"
   ],
   "version": "7.1.0",
   "installVersion": 9,
   "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nodejs/node-gyp.git"
+    "url": "git://github.com/nodejs/node-nnabt.git"
   },
   "preferGlobal": true,
-  "bin": "./bin/node-gyp.js",
-  "main": "./lib/node-gyp.js",
+  "bin": "./bin/node-nnabt.js",
+  "main": "./lib/node-nnabt.js",
   "dependencies": {
     "env-paths": "^2.2.0",
     "glob": "^7.1.4",

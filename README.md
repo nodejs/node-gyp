@@ -1,18 +1,18 @@
-# `node-gyp` - Node.js native addon build tool
+# `node-nnabt` - Node.js native addon build tool
 
-[![Travis CI](https://travis-ci.com/nodejs/node-gyp.svg?branch=master)](https://travis-ci.com/nodejs/node-gyp)
-[![Build Status](https://github.com/nodejs/node-gyp/workflows/Python_tests/badge.svg)](https://github.com/nodejs/node-gyp/actions?workflow=Python_tests)
+[![Travis CI](https://travis-ci.com/nodejs/node-nnabt.svg?branch=master)](https://travis-ci.com/nodejs/node-nnabt)
+[![Build Status](https://github.com/nodejs/node-nnabt/workflows/Python_tests/badge.svg)](https://github.com/nodejs/node-nnabt/actions?workflow=Python_tests)
 
-`node-gyp` is a cross-platform command-line tool written in Node.js for
+`node-nnabt` is a cross-platform command-line tool written in Node.js for
 compiling native addon modules for Node.js. It contains a vendored copy of the
-[gyp-next](https://github.com/nodejs/gyp-next) project that was previously used
+[nnabt-next](https://github.com/nodejs/nnabt-next) project that was previously used
 by the Chromium team, extended to support the development of Node.js native addons.
 
-Note that `node-gyp` is _not_ used to build Node.js itself.
+Note that `node-nnabt` is _not_ used to build Node.js itself.
 
 Multiple target versions of Node.js are supported (i.e. `0.8`, ..., `4`, `5`, `6`,
 etc.), regardless of what version of Node.js is actually installed on your system
-(`node-gyp` downloads the necessary development files or headers for the target version).
+(`node-nnabt` downloads the necessary development files or headers for the target version).
 
 ## Features
 
@@ -21,10 +21,10 @@ etc.), regardless of what version of Node.js is actually installed on your syste
 
 ## Installation
 
-You can install `node-gyp` using `npm`:
+You can install `node-nnabt` using `npm`:
 
 ``` bash
-$ npm install -g node-gyp
+$ npm install -g node-nnabt
 ```
 
 Depending on your operating system, you will need to install:
@@ -65,17 +65,17 @@ Install tools and configuration manually:
 
 ### Configuring Python Dependency
 
-`node-gyp` requires that you have installed a compatible version of Python, one of: v2.7, v3.5, v3.6,
+`node-nnabt` requires that you have installed a compatible version of Python, one of: v2.7, v3.5, v3.6,
 v3.7, or v3.8. If you have multiple Python versions installed, you can identify which Python
-version `node-gyp` should use in one of the following ways:
+version `node-nnabt` should use in one of the following ways:
 
 1. by setting the `--python` command-line option, e.g.:
 
 ``` bash
-$ node-gyp <command> --python /path/to/executable/python
+$ node-nnabt <command> --python /path/to/executable/python
 ```
 
-2. If `node-gyp` is called by way of `npm`, *and* you have multiple versions of
+2. If `node-nnabt` is called by way of `npm`, *and* you have multiple versions of
 Python installed, then you can set `npm`'s 'python' config key to the appropriate
 value:
 
@@ -103,23 +103,23 @@ The next step is to generate the appropriate project build files for the current
 platform. Use `configure` for that:
 
 ``` bash
-$ node-gyp configure
+$ node-nnabt configure
 ```
 
 Auto-detection fails for Visual C++ Build Tools 2015, so `--msvs_version=2015`
 needs to be added (not needed when run by npm as configured above):
 ``` bash
-$ node-gyp configure --msvs_version=2015
+$ node-nnabt configure --msvs_version=2015
 ```
 
-__Note__: The `configure` step looks for a `binding.gyp` file in the current
-directory to process. See below for instructions on creating a `binding.gyp` file.
+__Note__: The `configure` step looks for a `binding.nnabt` file in the current
+directory to process. See below for instructions on creating a `binding.nnabt` file.
 
 Now you will have either a `Makefile` (on Unix platforms) or a `vcxproj` file
 (on Windows) in the `build/` directory. Next, invoke the `build` command:
 
 ``` bash
-$ node-gyp build
+$ node-nnabt build
 ```
 
 Now you have your compiled `.node` bindings file! The compiled bindings end up
@@ -129,13 +129,13 @@ you can require the `.node` file with Node.js and run your tests!
 __Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
 `-d`) switch when running either the `configure`, `build` or `rebuild` commands.
 
-## The `binding.gyp` file
+## The `binding.nnabt` file
 
-A `binding.gyp` file describes the configuration to build your module, in a
+A `binding.nnabt` file describes the configuration to build your module, in a
 JSON-like format. This file gets placed in the root of your package, alongside
 `package.json`.
 
-A barebones `gyp` file appropriate for building a Node.js addon could look like:
+A barebones `nnabt` file appropriate for building a Node.js addon could look like:
 
 ```python
 {
@@ -150,17 +150,17 @@ A barebones `gyp` file appropriate for building a Node.js addon could look like:
 
 ## Further reading
 
-Some additional resources for Node.js native addons and writing `gyp` configuration files:
+Some additional resources for Node.js native addons and writing `nnabt` configuration files:
 
  * ["Going Native" a nodeschool.io tutorial](http://nodeschool.io/#goingnative)
  * ["Hello World" node addon example](https://github.com/nodejs/node/tree/master/test/addons/hello-world)
- * [gyp user documentation](https://gyp.gsrc.io/docs/UserDocumentation.md)
- * [gyp input format reference](https://gyp.gsrc.io/docs/InputFormatReference.md)
- * [*"binding.gyp" files out in the wild* wiki page](https://github.com/nodejs/node-gyp/wiki/%22binding.gyp%22-files-out-in-the-wild)
+ * [nnabt user documentation](https://nnabt.gsrc.io/docs/UserDocumentation.md)
+ * [nnabt input format reference](https://nnabt.gsrc.io/docs/InputFormatReference.md)
+ * [*"binding.nnabt" files out in the wild* wiki page](https://github.com/nodejs/node-nnabt/wiki/%22binding.nnabt%22-files-out-in-the-wild)
 
 ## Commands
 
-`node-gyp` responds to the following commands:
+`node-nnabt` responds to the following commands:
 
 | **Command**   | **Description**
 |:--------------|:---------------------------------------------------------------
@@ -176,7 +176,7 @@ Some additional resources for Node.js native addons and writing `gyp` configurat
 
 ## Command Options
 
-`node-gyp` accepts the following command options:
+`node-nnabt` accepts the following command options:
 
 | **Command**                       | **Description**
 |:----------------------------------|:------------------------------------------
@@ -210,34 +210,34 @@ Some additional resources for Node.js native addons and writing `gyp` configurat
 Use the form `npm_config_OPTION_NAME` for any of the command options listed
 above (dashes in option names should be replaced by underscores).
 
-For example, to set `devdir` equal to `/tmp/.gyp`, you would:
+For example, to set `devdir` equal to `/tmp/.nnabt`, you would:
 
 Run this on Unix:
 
 ```bash
-$ export npm_config_devdir=/tmp/.gyp
+$ export npm_config_devdir=/tmp/.nnabt
 ```
 
 Or this on Windows:
 
 ```console
-> set npm_config_devdir=c:\temp\.gyp
+> set npm_config_devdir=c:\temp\.nnabt
 ```
 
 ### `npm` configuration
 
 Use the form `OPTION_NAME` for any of the command options listed above.
 
-For example, to set `devdir` equal to `/tmp/.gyp`, you would run:
+For example, to set `devdir` equal to `/tmp/.nnabt`, you would run:
 
 ```bash
-$ npm config set [--global] devdir /tmp/.gyp
+$ npm config set [--global] devdir /tmp/.nnabt
 ```
 
-**Note:** Configuration set via `npm` will only be used when `node-gyp`
-is run via `npm`, not when `node-gyp` is run directly.
+**Note:** Configuration set via `npm` will only be used when `node-nnabt`
+is run via `npm`, not when `node-nnabt` is run directly.
 
 ## License
 
-`node-gyp` is available under the MIT license. See the [LICENSE
+`node-nnabt` is available under the MIT license. See the [LICENSE
 file](LICENSE) for details.

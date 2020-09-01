@@ -1,3 +1,3 @@
 const envPaths = require('env-paths')
 
-module.exports.devDir = () => envPaths('node-gyp', { suffix: '' }).cache
+module.exports.devDir = () => envPaths('node-nnabt', { suffix: '' }).cache

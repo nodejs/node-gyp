@@ -1,10 +1,10 @@
-# Contributing to node-gyp
+# Contributing to node-nnabt
 
 ## Code of Conduct
 
 Please read the
 [Code of Conduct](https://github.com/nodejs/admin/blob/master/CODE_OF_CONDUCT.md)
-which explains the minimum behavior expectations for node-gyp contributors.
+which explains the minimum behavior expectations for node-nnabt contributors.
 
 <a id="developers-certificate-of-origin"></a>
 ## Developer's Certificate of Origin 1.1

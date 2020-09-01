@@ -1,6 +1,6 @@
-gyp/test
+nnabt/test
 node_modules
-test/.node-gyp
+test/.node-nnabt
 .ncu
 .nyc_output
 package-lock.json

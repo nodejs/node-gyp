@@ -6,7 +6,7 @@ const fs = require('graceful-fs')
 const childProcess = require('child_process')
 const os = require('os')
 const addonPath = path.resolve(__dirname, 'node_modules', 'hello_world')
-const nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
+const nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-nnabt.js')
 const execFileSync = childProcess.execFileSync || require('./process-exec-sync')
 const execFile = childProcess.execFile
 
@@ -44,7 +44,7 @@ test('build simple addon', function (t) {
     var logLines = stderr.toString().trim().split(/\r?\n/)
     var lastLine = logLines[logLines.length - 1]
     t.strictEqual(err, null)
-    t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
+    t.strictEqual(lastLine, 'nnabt info ok', 'should end in ok')
     t.strictEqual(runHello().trim(), 'world')
   })
   proc.stdout.setEncoding('utf-8')
@@ -73,7 +73,7 @@ test('build simple addon in path with non-ascii characters', function (t) {
   t.plan(3)
 
   var data
-  var configPath = path.join(addonPath, 'build', 'config.gypi')
+  var configPath = path.join(addonPath, 'build', 'config.nnabti')
   try {
     data = fs.readFileSync(configPath, 'utf8')
   } catch (err) {
@@ -116,7 +116,7 @@ test('build simple addon in path with non-ascii characters', function (t) {
     var logLines = stderr.toString().trim().split(/\r?\n/)
     var lastLine = logLines[logLines.length - 1]
     t.strictEqual(err, null)
-    t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
+    t.strictEqual(lastLine, 'nnabt info ok', 'should end in ok')
     t.strictEqual(runHello().trim(), 'world')
   })
   proc.stdout.setEncoding('utf-8')
@@ -141,7 +141,7 @@ test('addon works with renamed host executable', function (t) {
     var logLines = stderr.toString().trim().split(/\r?\n/)
     var lastLine = logLines[logLines.length - 1]
     t.strictEqual(err, null)
-    t.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
+    t.strictEqual(lastLine, 'nnabt info ok', 'should end in ok')
     t.strictEqual(runHello(notNodePath).trim(), 'world')
     fs.unlinkSync(notNodePath)
   })
