@@ -1,4 +1,7 @@
-name: Node Tests
+# TODO: Line 20, enable python-version: 3.5
+# TODO: Line 69, enable pytest --doctest-modules
+
+name: Tests
 
 on:
   push:
@@ -33,16 +36,35 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install --no-progress
-      - name: Lint with standard
+          pip install flake8 pytest
+      - name: Lint node
         if: matrix.os == 'ubuntu-latest'
         run: |
           npm run lint
-      - name: Test with tap (Linux and macOS)
+      - name: Lint python
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Run node tests (Linux and macOS)
         if: matrix.os != 'windows-latest'
         run: |
           npm test
-      - name: Test with tap (Windows)
+      - name: Run python tests (Linux and macOS)
+        if: matrix.os != 'windows-latest'
+        run: |
+          python -m pytest
+      - name: Run node tests (Windows)
         if: matrix.os == 'windows-latest'
         shell: bash
         run: |
           GYP_MSVS_VERSION=2015 GYP_MSVS_OVERRIDE_PATH="C:\\Dummy" npm test
+      - name: Run python tests (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: bash
+        run: |
+          GYP_MSVS_VERSION=2015 GYP_MSVS_OVERRIDE_PATH="C:\\Dummy" python -m pytest
+      # - name: Run doctests with pytest
+      #   run: pytest --doctest-modules
