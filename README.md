@@ -21,10 +21,10 @@ etc.), regardless of what version of Node.js is actually installed on your syste
 
 ## Installation
 
-You can install `node-gyp` using `npm`:
+You can install `node-gyp` using `npm`(run as root/admin):
 
 ``` bash
-$ npm install -g node-gyp
+npm install -g node-gyp
 ```
 
 Depending on your operating system, you will need to install:
