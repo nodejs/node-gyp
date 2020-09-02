@@ -1,4 +1,4 @@
-# TODO: Line 50, enable pytest --doctest-modules
+# TODO: Line 47, enable pytest --doctest-modules
 
 name: Tests
 on: [push, pull_request]
@@ -32,11 +32,8 @@ jobs:
       - name: Set Windows environment
         if: matrix.os == 'windows-latest'
         run:
-          echo ::set-env name=GYP_MSVS_VERSION::2015
-          echo ::set-env name=GYP_MSVS_OVERRIDE_PATH::C:\\Dummy
-      - name: Run Node tests
-        run: |
-          npm test
+          echo '::set-env name=GYP_MSVS_VERSION::2015'
+          echo '::set-env name=GYP_MSVS_OVERRIDE_PATH::C:\\Dummy'
       - name: Lint Python
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -49,3 +46,6 @@ jobs:
           python -m pytest
       # - name: Run doctests with pytest
       #   run: python -m pytest --doctest-modules
+      - name: Run Node tests
+        run: |
+          npm test
