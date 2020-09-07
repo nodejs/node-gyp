@@ -10,7 +10,7 @@ test('options in environment', function (t) {
   const keys = [
     'argv',
     'x',
-    ...Object.keys(process.env).filter(/^npm_config_/.test)
+    ...Object.keys(process.env).filter(key => /^npm_config_/.test(key))
   ].sort()
 
   // Zero-length keys should get filtered out.
