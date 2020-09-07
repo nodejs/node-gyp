@@ -11,7 +11,7 @@ test('options in environment', function (t) {
     .filter(function (key) { return /^npm_config_/.test(key) })
     .forEach(function (key) {
       console.log(key, process.env[key])
-      delete process.env[key]
+      process.env[key] = undefined
     })
 
   console.log('npm_config_cache!', process.env.npm_config_cache)
