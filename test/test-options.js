@@ -7,14 +7,11 @@ test('options in environment', function (t) {
   t.plan(1)
 
   // `npm test` dumps a ton of npm_config_* variables in the environment.
-  Object.keys(process.env)
-    .filter(function (key) { return /^npm_config_/.test(key) })
-    .forEach(function (key) {
-      console.log(key, process.env[key])
-      process.env[key] = undefined
-    })
-
-  console.log('npm_config_cache!', process.env.npm_config_cache)
+  const keys = [
+    'argv',
+    'x',
+    ...Object.keys(process.env).filter(/^npm_config_/.test)
+  ].sort()
 
   // Zero-length keys should get filtered out.
   process.env.npm_config_ = '42'
@@ -26,5 +23,5 @@ test('options in environment', function (t) {
   var g = gyp()
   g.parseArgv(['rebuild']) // Also sets opts.argv.
 
-  t.deepEqual(Object.keys(g.opts).sort(), ['argv', 'x'])
+  t.deepEqual(Object.keys(g.opts).sort(), keys)
 })
