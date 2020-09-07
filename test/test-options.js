@@ -11,7 +11,7 @@ test('options in environment', function (t) {
     .filter(function (key) { return /^npm_config_/.test(key) })
     .forEach(function (key) { delete process.env[key] })
 
-  console.log(process.env);
+  console.log(process.env)
 
   // Zero-length keys should get filtered out.
   process.env.npm_config_ = '42'
@@ -23,7 +23,7 @@ test('options in environment', function (t) {
   var g = gyp()
   g.parseArgv(['rebuild']) // Also sets opts.argv.
 
-  console.log(g.opts);
+  console.log(g.opts)
 
   t.deepEqual(Object.keys(g.opts).sort(), ['argv', 'x'])
 })
