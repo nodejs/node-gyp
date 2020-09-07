@@ -17,6 +17,7 @@ test('options in environment', function (t) {
     'x',
     ...Object.keys(process.env)
       .filter(key => /^npm_config_/.test(key))
+      .map(key => key.substring('npm_config_'.length))
   ].sort()
 
   // Zero-length keys should get filtered out.
