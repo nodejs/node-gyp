@@ -8,9 +8,9 @@ jobs:
       fail-fast: false		
       max-parallel: 15
       matrix:
-        node: [10.x, 12.x, 14.x]
-        python: [3.6, 3.7, 3.8]
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        node: [12.x]
+        python: [3.8]
+        os: [windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
