@@ -13,8 +13,8 @@ test('options in environment', function (t) {
       console.log(key, process.env[key])
       delete process.env[key]
     })
-  
-  console.log(key, process.env.npm_config_cache)
+
+  console.log('npm_config_cache!', process.env.npm_config_cache)
 
   // Zero-length keys should get filtered out.
   process.env.npm_config_ = '42'
