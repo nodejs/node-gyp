@@ -158,7 +158,7 @@ test('check certificate splitting', async (t) => {
 
 // only run this test if we are running a version of Node with predictable version path behavior
 
-test('download headers (actual)', async (t) => {
+test('download headers (actual)', (t) => {
   if (process.env.FAST_TEST ||
       process.release.name !== 'node' ||
       semver.prerelease(process.version) !== null ||
