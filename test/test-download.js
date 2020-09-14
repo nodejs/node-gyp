@@ -93,7 +93,8 @@ test('download over http with proxy', (t) => {
     pserver.listen(port + 1, host, async () => {
       const gyp = {
         opts: {
-          proxy: `http://${host}:${port + 1}`
+          proxy: `http://${host}:${port + 1}`,
+          noproxy: 'bad'
         },
         version: '42'
       }
