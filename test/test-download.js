@@ -1,8 +1,9 @@
 'use strict'
 
-const test = require('tap').test
+const { test } = require('tap')
 const fs = require('fs')
 const path = require('path')
+const util = require('util')
 const http = require('http')
 const https = require('https')
 const install = require('../lib/install')
@@ -31,7 +32,7 @@ test('download over http', (t) => {
       version: '42'
     }
     const url = `http://${host}:${port}`
-    const res = await install.test.download(gyp, {}, url)
+    const res = await install.test.download(gyp, url)
     t.strictEqual(await res.text(), 'ok')
     resolve()
   }))
@@ -66,7 +67,7 @@ test('download over https with custom ca', async (t) => {
       version: '42'
     }
     const url = `https://${host}:${port}`
-    const res = await install.test.download(gyp, {}, url)
+    const res = await install.test.download(gyp, url)
     t.strictEqual(await res.text(), 'ok')
     resolve()
   }))
@@ -97,7 +98,7 @@ test('download over http with proxy', (t) => {
         version: '42'
       }
       const url = `http://${host}:${port}`
-      const res = await install.test.download(gyp, {}, url)
+      const res = await install.test.download(gyp, url)
       t.strictEqual(await res.text(), 'proxy ok')
       resolve()
     })
@@ -130,7 +131,7 @@ test('download over http with noproxy', (t) => {
         version: '42'
       }
       const url = `http://${host}:${port}`
-      const res = await install.test.download(gyp, {}, url)
+      const res = await install.test.download(gyp, url)
       t.strictEqual(await res.text(), 'ok')
       resolve()
     })
@@ -158,7 +159,7 @@ test('check certificate splitting', async (t) => {
 
 // only run this test if we are running a version of Node with predictable version path behavior
 
-test('download headers (actual)', (t) => {
+test('download headers (actual)', async (t) => {
   if (process.env.FAST_TEST ||
       process.release.name !== 'node' ||
       semver.prerelease(process.version) !== null ||
@@ -166,55 +167,46 @@ test('download headers (actual)', (t) => {
     return t.skip('Skipping actual download of headers due to test environment configuration')
   }
 
-  t.plan(17)
+  t.plan(12)
 
   const expectedDir = path.join(devDir, process.version.replace(/^v/, ''))
-  rimraf(expectedDir, (err) => {
-    t.ifError(err)
+  await util.promisify(rimraf)(expectedDir)
 
-    const prog = gyp()
-    prog.parseArgv([])
-    prog.devDir = devDir
-    log.level = 'warn'
-    install(prog, [], (err) => {
-      t.ifError(err)
+  const prog = gyp()
+  prog.parseArgv([])
+  prog.devDir = devDir
+  log.level = 'warn'
+  await util.promisify(install)(prog, [])
 
-      fs.readFile(path.join(expectedDir, 'installVersion'), 'utf8', (err, data) => {
-        t.ifError(err)
-        t.strictEqual(data, '9\n', 'correct installVersion')
-      })
+  const [data, list, contents] = await Promise.all([
+    fs.promises.readFile(path.join(expectedDir, 'installVersion'), 'utf8'),
+    fs.promises.readdir(path.join(expectedDir, 'include/node')),
+    fs.promises.readFile(path.join(expectedDir, 'include/node/node_version.h'), 'utf8')
+  ])
 
-      fs.readdir(path.join(expectedDir, 'include/node'), (err, list) => {
-        t.ifError(err)
+  t.strictEqual(data, '9\n', 'correct installVersion')
 
-        t.ok(list.includes('common.gypi'))
-        t.ok(list.includes('config.gypi'))
-        t.ok(list.includes('node.h'))
-        t.ok(list.includes('node_version.h'))
-        t.ok(list.includes('openssl'))
-        t.ok(list.includes('uv'))
-        t.ok(list.includes('uv.h'))
-        t.ok(list.includes('v8-platform.h'))
-        t.ok(list.includes('v8.h'))
-        t.ok(list.includes('zlib.h'))
-      })
+  t.ok(list.includes('common.gypi'))
+  t.ok(list.includes('config.gypi'))
+  t.ok(list.includes('node.h'))
+  t.ok(list.includes('node_version.h'))
+  t.ok(list.includes('openssl'))
+  t.ok(list.includes('uv'))
+  t.ok(list.includes('uv.h'))
+  t.ok(list.includes('v8-platform.h'))
+  t.ok(list.includes('v8.h'))
+  t.ok(list.includes('zlib.h'))
 
-      fs.readFile(path.join(expectedDir, 'include/node/node_version.h'), 'utf8', (err, contents) => {
-        t.ifError(err)
+  const lines = contents.split('\n')
 
-        const lines = contents.split('\n')
+  // extract the 3 version parts from the defines to build a valid version string and
+  // and check them against our current env version
+  const version = ['major', 'minor', 'patch'].reduce((version, type) => {
+    const re = new RegExp(`^#define\\sNODE_${type.toUpperCase()}_VERSION`)
+    const line = lines.find((l) => re.test(l))
+    const i = line ? parseInt(line.replace(/^[^0-9]+([0-9]+).*$/, '$1'), 10) : 'ERROR'
+    return `${version}${type !== 'major' ? '.' : 'v'}${i}`
+  }, '')
 
-        // extract the 3 version parts from the defines to build a valid version string and
-        // and check them against our current env version
-        const version = ['major', 'minor', 'patch'].reduce((version, type) => {
-          const re = new RegExp(`^#define\\sNODE_${type.toUpperCase()}_VERSION`)
-          const line = lines.find((l) => re.test(l))
-          const i = line ? parseInt(line.replace(/^[^0-9]+([0-9]+).*$/, '$1'), 10) : 'ERROR'
-          return `${version}${type !== 'major' ? '.' : 'v'}${i}`
-        }, '')
-
-        t.strictEqual(version, process.version)
-      })
-    })
-  })
+  t.strictEqual(version, process.version)
 })
