@@ -174,7 +174,7 @@ test('download headers (actual)', async (t) => {
   const prog = gyp()
   prog.parseArgv([])
   prog.devDir = devDir
-  log.level = 'warn'
+  log.level = 'verbose'
   await util.promisify(install)(prog, [])
 
   const data = await fs.promises.readFile(path.join(expectedDir, 'installVersion'), 'utf8')
