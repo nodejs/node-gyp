@@ -10,6 +10,7 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace VisualStudioConfiguration
 {
@@ -196,12 +197,13 @@ namespace VisualStudioConfiguration
             int pceltFetched;
             ISetupInstance2[] rgelt = new ISetupInstance2[1];
             List<string> instances = new List<string>();
+
             while (true)
             {
                 e.Next(1, rgelt, out pceltFetched);
                 if (pceltFetched <= 0)
                 {
-                    Console.WriteLine(String.Format("[{0}]", string.Join(",", instances.ToArray())));
+                    Console.Write(String.Format("[{0}]", string.Join(",", instances.ToArray())));
                     return;
                 }
 
@@ -216,6 +218,25 @@ namespace VisualStudioConfiguration
             }
         }
 
+        private static string CheckInstance(ISetupPackageReference package)
+        {
+            // Visual Studio Community 2017 component directory:
+            // https://www.visualstudio.com/en-us/productinfo/vs2017-install-product-Community.workloads
+            String Win10SDKVer = null;
+
+            const string Win10SDKPrefix = "Microsoft.VisualStudio.Component.Windows10SDK.";
+            String id = package.GetId();
+            if (id.StartsWith(Win10SDKPrefix))
+            {
+                String[] parts = id.Substring(Win10SDKPrefix.Length).Split('.');
+                String foundSdkVer = parts[4];
+                Win10SDKVer = String.Compare(Win10SDKVer, foundSdkVer) > 0 ? Win10SDKVer : foundSdkVer;
+                return String.Format("{0}.{1}", id, Win10SDKVer);
+            }
+            // "Microsoft.VisualStudio.Component.Windows81SDK" as well
+            return id;
+        }
+
         private static string JsonString(string s)
         {
             return "\"" + s.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";
@@ -225,7 +246,6 @@ namespace VisualStudioConfiguration
         {
             // Visual Studio component directory:
             // https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids
-
             StringBuilder json = new StringBuilder();
             json.Append("{");
 
@@ -238,12 +258,40 @@ namespace VisualStudioConfiguration
             List<string> packages = new List<string>();
             foreach (ISetupPackageReference package in setupInstance2.GetPackages())
             {
-                string id = JsonString(package.GetId());
+                string id = JsonString(CheckInstance(package));
                 packages.Add(id);
             }
-            json.Append(String.Format("\"packages\":[{0}]", string.Join(",", packages.ToArray())));
+            json.Append(String.Format("\"packages\":[{0}", string.Join(",", packages.ToArray())));
 
-            json.Append("}");
+            String jsonResultString = json.ToString(); 
+            if (!jsonResultString.Contains("Windows10SDK"))
+            {
+                System.Diagnostics.Process cmd = new System.Diagnostics.Process();
+                cmd.StartInfo.FileName = "cmd.exe";
+                cmd.StartInfo.RedirectStandardInput = true;
+                cmd.StartInfo.RedirectStandardOutput = true;
+                cmd.StartInfo.CreateNoWindow = true;
+                cmd.StartInfo.UseShellExecute = false;
+                cmd.Start();
+
+                cmd.StandardInput.WriteLine("@echo off");
+                cmd.StandardInput.Flush();
+                cmd.StandardInput.WriteLine(
+                    String.Format("{0}\\VC\\Auxiliary\\Build\\vcvarsall.bat x64", path) 
+                );
+                cmd.StandardInput.Flush();
+                cmd.StandardInput.WriteLine("@echo %UCRTVersion%");
+                cmd.StandardInput.Flush();
+                cmd.StandardInput.Close();
+                cmd.WaitForExit();
+                String SDKFullText = cmd.StandardOutput.ReadToEnd();
+                int pos = SDKFullText.IndexOf("[Version ");
+                String SDKVersion = SDKFullText.Substring(pos + 14, 5);
+                json.Append(String.Format(",\"Microsoft.VisualStudio.Component.Windows10SDK.{0}\"", SDKVersion));
+                cmd.Close();
+            }
+            json.Append("]}");
+
             return json.ToString();
         }
     }
