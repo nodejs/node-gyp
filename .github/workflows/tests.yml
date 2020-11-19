@@ -31,7 +31,7 @@ jobs:
           pip install flake8 pytest
       - name: Set Windows environment
         if: matrix.os == 'windows-latest'
-        run:
+        run: |
           echo 'GYP_MSVS_VERSION=2015' >> $GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $GITHUB_ENV
       - name: Lint Python
