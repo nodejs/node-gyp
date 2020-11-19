@@ -32,8 +32,8 @@ jobs:
       - name: Set Windows environment
         if: matrix.os == 'windows-latest'
         run: |
-          echo 'GYP_MSVS_VERSION=2015' >> $GITHUB_ENV
-          echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $GITHUB_ENV
+          Set-Variable -Name "GYP_MSVS_VERSION" -Value "2015"
+          Set-Variable -Name "GYP_MSVS_OVERRIDE_PATH" -Value "C:\\Dummy"
       - name: Lint Python
         if: matrix.os == 'ubuntu-latest'
         run: |
