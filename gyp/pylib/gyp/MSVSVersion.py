@@ -550,8 +550,8 @@ def SelectVisualStudioVersion(version="auto", allow_fallback=True):
         "2019": ("16.0",),
     }
     print('ENV OVERRIDES: \n')
-    print(os.environ.get("GYP_MSVS_OVERRIDE_PATH"))
-    print(os.environ.get("GYP_MSVS_VERSION"))
+    for key in ("GYP_MSVS_OVERRIDE_PATH", "GYP_MSVS_VERSION"):
+        print("{}: {}".format(key, os.environ.get(key)))
     override_path = os.environ.get("GYP_MSVS_OVERRIDE_PATH")
     if override_path:
         msvs_version = os.environ.get("GYP_MSVS_VERSION")
