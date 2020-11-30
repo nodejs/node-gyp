@@ -32,6 +32,7 @@ jobs:
       - name: Set Windows environment
         if: matrix.os == 'windows-latest'
         run: |
+          import os
           os.environ["GYP_MSVS_VERSION"] = "2015"
           os.environ["GYP_MSVS_OVERRIDE_PATH"] = "C:\\Dummy"
         shell: python
