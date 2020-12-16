@@ -71,7 +71,7 @@ version `node-gyp` should use in one of the following ways:
 1. by setting the `--python` command-line option, e.g.:
 
 ``` bash
-$ node-gyp <command> --python /path/to/executable/python
+node-gyp <command> --python /path/to/executable/python
 ```
 
 2. If `node-gyp` is called by way of `npm`, *and* you have multiple versions of
@@ -79,7 +79,7 @@ Python installed, then you can set `npm`'s 'python' config key to the appropriat
 value:
 
 ``` bash
-$ npm config set python /path/to/executable/python
+npm config set python /path/to/executable/python
 ```
 
 3. If the `PYTHON` environment variable is set to the path of a Python executable,
@@ -95,20 +95,20 @@ searching will be done.
 To compile your native addon, first go to its root directory:
 
 ``` bash
-$ cd my_node_addon
+cd my_node_addon
 ```
 
 The next step is to generate the appropriate project build files for the current
 platform. Use `configure` for that:
 
 ``` bash
-$ node-gyp configure
+node-gyp configure
 ```
 
 Auto-detection fails for Visual C++ Build Tools 2015, so `--msvs_version=2015`
 needs to be added (not needed when run by npm as configured above):
 ``` bash
-$ node-gyp configure --msvs_version=2015
+node-gyp configure --msvs_version=2015
 ```
 
 __Note__: The `configure` step looks for a `binding.gyp` file in the current
@@ -118,7 +118,7 @@ Now you will have either a `Makefile` (on Unix platforms) or a `vcxproj` file
 (on Windows) in the `build/` directory. Next, invoke the `build` command:
 
 ``` bash
-$ node-gyp build
+node-gyp build
 ```
 
 Now you have your compiled `.node` bindings file! The compiled bindings end up
@@ -214,13 +214,13 @@ For example, to set `devdir` equal to `/tmp/.gyp`, you would:
 Run this on Unix:
 
 ```bash
-$ export npm_config_devdir=/tmp/.gyp
+export npm_config_devdir=/tmp/.gyp
 ```
 
 Or this on Windows:
 
 ```console
-> set npm_config_devdir=c:\temp\.gyp
+set npm_config_devdir=c:\temp\.gyp
 ```
 
 ### `npm` configuration
@@ -230,7 +230,7 @@ Use the form `OPTION_NAME` for any of the command options listed above.
 For example, to set `devdir` equal to `/tmp/.gyp`, you would run:
 
 ```bash
-$ npm config set [--global] devdir /tmp/.gyp
+npm config set [--global] devdir /tmp/.gyp
 ```
 
 **Note:** Configuration set via `npm` will only be used when `node-gyp`
