@@ -208,12 +208,14 @@ test('new-find-python', { buffered: true }, (t) => {
 
       execFile(path, ['-V'], (err, stdout, stderr) => {
         t.false(err)
+        console.log('stdout:' + stdout)
+        console.log('stderr:' + stderr)
 
         if (stderr.includes('Python 2')) {
           t.strictEqual(stdout, '')
           t.ok(stderr.includes('Python 2'))
         } else {
-          t.ok(stderr.includes('Python 3'))
+          t.ok(stdout.includes('Python 3'))
           t.strictEqual(stderr, '')
         }
 
