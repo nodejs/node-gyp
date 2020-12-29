@@ -40,7 +40,7 @@ To see if `Xcode Command Line Tools` is installed in a way that will work with `
 curl -sL https://github.com/nodejs/node-gyp/raw/master/macOS_Catalina_acid_test.sh | bash
 ```
 
-If test succeeded, _you are done_! You should be ready to install `node-gyp`.
+If test succeeded, _you are done_! You should be ready to [install](https://github.com/nodejs/node-gyp#installation) `node-gyp`.
 
 If test failed, there is a problem with your Xcode Command Line Tools installation. [Continue to Solutions](#Solutions).
 
