@@ -486,7 +486,9 @@ class AndroidMkWriter:
                     self.LocalPathify(os.path.join(copy["destination"], filename))
                 )
 
-                self.WriteLn(f"{output}: {path} $(GYP_TARGET_DEPENDENCIES) | $(ACP)")
+                self.WriteLn(
+                    f"{output}: {path} $(GYP_TARGET_DEPENDENCIES) | $(ACP)"
+                )
                 self.WriteLn("\t@echo Copying: $@")
                 self.WriteLn("\t$(hide) mkdir -p $(dir $@)")
                 self.WriteLn("\t$(hide) $(ACP) -rpf $< $@")
