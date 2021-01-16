@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   Tests:
     strategy:
-      fail-fast: false		
+      fail-fast: false
       max-parallel: 15
       matrix:
         node: [10.x, 12.x, 14.x]
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
       - name: Use Python ${{ matrix.python }}
