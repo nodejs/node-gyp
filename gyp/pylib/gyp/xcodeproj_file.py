@@ -144,13 +144,9 @@ import re
 import struct
 import sys
 
-try:
-    basestring, cmp, unicode
-except NameError:  # Python 3
-    basestring = unicode = str
 
-    def cmp(x, y):
-        return (x > y) - (x < y)
+def cmp(x, y):
+    return (x > y) - (x < y)
 
 
 # See XCObject._EncodeString.  This pattern is used to determine when a string
@@ -199,7 +195,7 @@ def ConvertVariablesToShellSyntax(input_string):
     return re.sub(r"\$\((.*?)\)", "${\\1}", input_string)
 
 
-class XCObject(object):
+class XCObject:
     """The abstract base of all class types used in Xcode project files.
 
   Class variables:
@@ -301,8 +297,8 @@ class XCObject(object):
         try:
             name = self.Name()
         except NotImplementedError:
-            return "<%s at 0x%x>" % (self.__class__.__name__, id(self))
-        return "<%s %r at 0x%x>" % (self.__class__.__name__, name, id(self))
+            return "<{} at 0x{:x}>".format(self.__class__.__name__, id(self))
+        return "<{} {!r} at 0x{:x}>".format(self.__class__.__name__, name, id(self))
 
     def Copy(self):
         """Make a copy of this object.
@@ -325,7 +321,7 @@ class XCObject(object):
                     that._properties[key] = new_value
                 else:
                     that._properties[key] = value
-            elif isinstance(value, (basestring, int)):
+            elif isinstance(value, (str, int)):
                 that._properties[key] = value
             elif isinstance(value, list):
                 if is_strong:
@@ -616,7 +612,7 @@ class XCObject(object):
             comment = value.Comment()
         elif isinstance(value, str):
             printable += self._EncodeString(value)
-        elif isinstance(value, basestring):
+        elif isinstance(value, str):
             printable += self._EncodeString(value.encode("utf-8"))
         elif isinstance(value, int):
             printable += str(value)
@@ -791,7 +787,7 @@ class XCObject(object):
                     )
                 for item in value:
                     if not isinstance(item, property_type) and not (
-                        isinstance(item, basestring) and property_type == str
+                        isinstance(item, str) and property_type == str
                     ):
                         # Accept unicode where str is specified.  str is treated as
                         # UTF-8-encoded.
@@ -806,7 +802,7 @@ class XCObject(object):
                             + item.__class__.__name__
                         )
             elif not isinstance(value, property_type) and not (
-                isinstance(value, basestring) and property_type == str
+                isinstance(value, str) and property_type == str
             ):
                 # Accept unicode where str is specified.  str is treated as
                 # UTF-8-encoded.
@@ -827,7 +823,7 @@ class XCObject(object):
                         self._properties[property] = value.Copy()
                     else:
                         self._properties[property] = value
-                elif isinstance(value, (basestring, int)):
+                elif isinstance(value, (str, int)):
                     self._properties[property] = value
                 elif isinstance(value, list):
                     if is_strong:
@@ -2185,7 +2181,7 @@ class PBXCopyFilesBuildPhase(XCBuildPhase):
             relative_path = path[1:]
         else:
             raise ValueError(
-                "Can't use path %s in a %s" % (path, self.__class__.__name__)
+                f"Can't use path {path} in a {self.__class__.__name__}"
             )
 
         self._properties["dstPath"] = relative_path
@@ -2250,8 +2246,8 @@ class PBXContainerItemProxy(XCObject):
 
     def __repr__(self):
         props = self._properties
-        name = "%s.gyp:%s" % (props["containerPortal"].Name(), props["remoteInfo"])
-        return "<%s %r at 0x%x>" % (self.__class__.__name__, name, id(self))
+        name = "{}.gyp:{}".format(props["containerPortal"].Name(), props["remoteInfo"])
+        return "<{} {!r} at 0x{:x}>".format(self.__class__.__name__, name, id(self))
 
     def Name(self):
         # Admittedly not the best name, but it's what Xcode uses.
@@ -2288,7 +2284,7 @@ class PBXTargetDependency(XCObject):
 
     def __repr__(self):
         name = self._properties.get("name") or self._properties["target"].Name()
-        return "<%s %r at 0x%x>" % (self.__class__.__name__, name, id(self))
+        return "<{} {!r} at 0x{:x}>".format(self.__class__.__name__, name, id(self))
 
     def Name(self):
         # Admittedly not the best name, but it's what Xcode uses.

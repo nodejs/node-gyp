@@ -18,7 +18,7 @@ def main(args):
     executor.Dispatch(args)
 
 
-class FlockTool(object):
+class FlockTool:
     """This class emulates the 'flock' command."""
 
     def Dispatch(self, args):
