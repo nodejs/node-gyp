@@ -6,7 +6,6 @@
 
 """Pretty-prints the contents of a GYP file."""
 
-from __future__ import print_function
 
 import sys
 import re
@@ -34,7 +33,7 @@ def mask_comments(input):
 
 
 def quote_replace(matchobj):
-    return "%s%s%s%s" % (
+    return "{}{}{}{}".format(
         matchobj.group(1),
         matchobj.group(2),
         "x" * len(matchobj.group(3)),
