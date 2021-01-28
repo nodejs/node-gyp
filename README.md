@@ -30,7 +30,7 @@ Depending on your operating system, you will need to install:
 
 ### On Unix
 
-   * Python v3.5, v3.6, v3.7, v3.8, or v3.9
+   * Python v3.6, v3.7, v3.8, or v3.9
    * `make`
    * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
 
@@ -38,7 +38,7 @@ Depending on your operating system, you will need to install:
 
 **ATTENTION**: If your Mac has been _upgraded_ to macOS Catalina (10.15), please read [macOS_Catalina.md](macOS_Catalina.md).
 
-   * Python v3.5, v3.6, v3.7, v3.8, or v3.9
+   * Python v3.6, v3.7, v3.8, or v3.9
    * [Xcode](https://developer.apple.com/xcode/download/)
      * You also need to install the `XCode Command Line Tools` by running `xcode-select --install`. Alternatively, if you already have the full Xcode installed, you can find them under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`. This step will install `clang`, `clang++`, and `make`.
 
@@ -58,8 +58,8 @@ Install tools and configuration manually:
 
 ### Configuring Python Dependency
 
-`node-gyp` requires that you have installed a compatible version of Python, one of: v3.5, v3.6,
-v3.7, v3.8, or v3.9. If you have multiple Python versions installed, you can identify which Python
+`node-gyp` requires that you have installed a compatible version of Python, one of: v3.6, v3.7,
+v3.8, or v3.9. If you have multiple Python versions installed, you can identify which Python
 version `node-gyp` should use in one of the following ways:
 
 1. by setting the `--python` command-line option, e.g.:
