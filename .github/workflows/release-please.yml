@@ -2,8 +2,6 @@ on:
   push:
     branches:
       - master
-      # todo(gengjiawen) debugging thing
-      - feature/changelog
 name: release-please
 jobs:
   release-please:
