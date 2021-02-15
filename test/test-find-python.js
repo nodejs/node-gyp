@@ -153,7 +153,7 @@ test('find python - no python, use python launcher', function (t) {
 
   f.execFile = function (program, args, opts, cb) {
     if (program === 'py.exe') {
-      t.notEqual(args.indexOf('-2'), -1)
+      t.notEqual(args.indexOf('-3'), -1)
       t.notEqual(args.indexOf('-c'), -1)
       return cb(null, 'Z:\\snake.exe')
     }
