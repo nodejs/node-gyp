@@ -1,0 +1,15 @@
+on:
+  push:
+    branches:
+      - master
+name: release-please
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v2
+        id: release
+        with:
+          package-name: node-gyp
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
