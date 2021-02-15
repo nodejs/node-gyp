@@ -1,10 +1,10 @@
+name: release-please
 on:
   push:
     branches:
       - master
       # todo(gengjiawen) debugging thing
       - feature/changelog
-name: release-please
 jobs:
   release-please:
     runs-on: ubuntu-latest
