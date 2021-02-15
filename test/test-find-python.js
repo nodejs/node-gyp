@@ -10,19 +10,15 @@ const PythonFinder = findPython.test.PythonFinder
 require('npmlog').level = 'warn'
 
 test('find python', function (t) {
-  t.plan(4)
+  t.plan(5)
 
   findPython.test.findPython(null, function (err, found) {
     t.strictEqual(err, null)
     var proc = execFile(found, ['-V'], function (err, stdout, stderr) {
       t.strictEqual(err, null)
-      if (/Python 2/.test(stderr)) {
-        t.strictEqual(stdout, '')
-        t.ok(/Python 2/.test(stderr))
-      } else {
-        t.ok(/Python 3/.test(stdout))
-        t.strictEqual(stderr, '')
-      }
+      t.notOk(/Python 2/.test(stderr))
+      t.ok(/Python 3/.test(stdout))
+      t.strictEqual(stderr, '')
     })
     proc.stdout.setEncoding('utf-8')
     proc.stderr.setEncoding('utf-8')
