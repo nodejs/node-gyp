@@ -66,7 +66,7 @@ test('find python - python', function (t) {
       poison(f, 'execFile')
       t.strictEqual(program, '/path/python')
       t.ok(/sys\.version_info/.test(args[1]))
-      cb(null, '2.7.15')
+      cb(null, '3.9.1')
     }
     t.strictEqual(program,
       process.platform === 'win32' ? '"python"' : 'python')
@@ -162,7 +162,7 @@ test('find python - no python, use python launcher', function (t) {
       cb(new Error('not found'))
     } else if (/sys\.version_info/.test(args[args.length - 1])) {
       if (program === 'Z:\\snake.exe') {
-        cb(null, '2.7.14')
+        cb(null, '3.9.0')
       } else {
         t.fail()
       }
