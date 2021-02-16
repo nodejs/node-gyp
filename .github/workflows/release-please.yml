@@ -18,9 +18,9 @@ jobs:
           changelog-types: >
               [{"type":"feat","section":"Features","hidden":false},
                 {"type":"fix","section":"Bug Fixes","hidden":false},
-                {"type":"gyp","section":"Core","hidden":false}]
-                {"type":"lib","section":"Core","hidden":false}]
-                {"type":"deps","section":"Core","hidden":false}]
+                {"type":"gyp","section":"Core","hidden":false}],
+                {"type":"lib","section":"Core","hidden":false}],
+                {"type":"deps","section":"Core","hidden":false}],
                 {"type":"doc","section":"Miscellaneous","hidden":false}]
 
 
