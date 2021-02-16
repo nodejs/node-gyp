@@ -21,6 +21,6 @@ jobs:
                 {"type":"gyp","section":"Core","hidden":false},
                 {"type":"lib","section":"Core","hidden":false},
                 {"type":"deps","section":"Core","hidden":false},
-                {"type":"doc","section":"Miscellaneous","hidden":false}]
+                {"type":"doc","section":"Doc","hidden":false}]
 
 
