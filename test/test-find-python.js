@@ -178,9 +178,9 @@ test('find python - no python, use python launcher', function (t) {
 test('find python - no python, no python launcher, good guess', function (t) {
   t.plan(2)
 
-  var re = /C:[\\/]Python37[\\/]python[.]exe/
   var f = new TestPythonFinder(null, done)
   f.win = true
+  const expectedProgram = f.winDefaultLocations[0]
 
   f.execFile = function (program, args, opts, cb) {
     if (program === 'py.exe') {
@@ -188,7 +188,7 @@ test('find python - no python, no python launcher, good guess', function (t) {
     }
     if (/sys\.executable/.test(args[args.length - 1])) {
       cb(new Error('not found'))
-    } else if (re.test(program) &&
+    } else if (program === expectedProgram &&
                /sys\.version_info/.test(args[args.length - 1])) {
       cb(null, '3.7.3')
     } else {
@@ -199,7 +199,7 @@ test('find python - no python, no python launcher, good guess', function (t) {
 
   function done (err, python) {
     t.strictEqual(err, null)
-    t.ok(re.test(python))
+    t.ok(python === expectedProgram)
   }
 })
 
