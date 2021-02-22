@@ -16,7 +16,6 @@ test('find python', function (t) {
     t.strictEqual(err, null)
     var proc = execFile(found, ['-V'], function (err, stdout, stderr) {
       t.strictEqual(err, null)
-      t.notOk(/Python 2/.test(stderr))
       t.ok(/Python 3/.test(stdout))
       t.strictEqual(stderr, '')
     })
