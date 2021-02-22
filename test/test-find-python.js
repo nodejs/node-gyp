@@ -10,7 +10,7 @@ const PythonFinder = findPython.test.PythonFinder
 require('npmlog').level = 'warn'
 
 test('find python', function (t) {
-  t.plan(5)
+  t.plan(4)
 
   findPython.test.findPython(null, function (err, found) {
     t.strictEqual(err, null)
