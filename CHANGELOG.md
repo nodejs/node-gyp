@@ -1,3 +1,22 @@
+v8.0.0 2021-03-19
+=================
+
+* [[`0d8a6f1b19`](https://github.com/nodejs/node-gyp/commit/0d8a6f1b19)] - **ci**: update actions/setup-node to v2 (#2302) (Sora Morimoto) [#2302](https://github.com/nodejs/node-gyp/pull/2302)
+* [[`15a5c7d45b`](https://github.com/nodejs/node-gyp/commit/15a5c7d45b)] - **ci**: migrate deprecated grammar (#2285) (Jiawen Geng) [#2285](https://github.com/nodejs/node-gyp/pull/2285)
+* [[`06ddde27f9`](https://github.com/nodejs/node-gyp/commit/06ddde27f9)] - **deps**: sync mutual dependencies with npm (DeeDeeG) [#2348](https://github.com/nodejs/node-gyp/pull/2348)
+* [[`a5fd1f41e3`](https://github.com/nodejs/node-gyp/commit/a5fd1f41e3)] - **doc**: add downloads badge (#2352) (Jiawen Geng) [#2352](https://github.com/nodejs/node-gyp/pull/2352)
+* [[`cc1cbce056`](https://github.com/nodejs/node-gyp/commit/cc1cbce056)] - **doc**: update macOS\_Catalina.md (#2293) (iMrLopez) [#2293](https://github.com/nodejs/node-gyp/pull/2293)
+* [[`6287118fc4`](https://github.com/nodejs/node-gyp/commit/6287118fc4)] - **doc**: updated README.md to copy easily (#2281) (மனோஜ்குமார் பழனிச்சாமி) [#2281](https://github.com/nodejs/node-gyp/pull/2281)
+* [[`66c0f04467`](https://github.com/nodejs/node-gyp/commit/66c0f04467)] - **doc**: add missing `sudo` to Catalina doc (Karl Horky) [#2244](https://github.com/nodejs/node-gyp/pull/2244)
+* [[`0da2e0140d`](https://github.com/nodejs/node-gyp/commit/0da2e0140d)] - **gyp**: update gyp to v0.8.1 (#2355) (DeeDeeG) [#2355](https://github.com/nodejs/node-gyp/pull/2355)
+* [[`0093ec8646`](https://github.com/nodejs/node-gyp/commit/0093ec8646)] - **gyp**: Improve our flake8 linting tests (Christian Clauss) [#2356](https://github.com/nodejs/node-gyp/pull/2356)
+* [[`a78b584236`](https://github.com/nodejs/node-gyp/commit/a78b584236)] - **(SEMVER-MAJOR)** **gyp**: remove support for Python 2 (#2300) (Christian Clauss) [#2300](https://github.com/nodejs/node-gyp/pull/2300)
+* [[`c3c510d89e`](https://github.com/nodejs/node-gyp/commit/c3c510d89e)] - **gyp**: update gyp to v0.8.0 (#2318) (Christian Clauss) [#2318](https://github.com/nodejs/node-gyp/pull/2318)
+* [[`9e1397c52e`](https://github.com/nodejs/node-gyp/commit/9e1397c52e)] - **(SEMVER-MAJOR)** **gyp**: update gyp to v0.7.0 (#2284) (Jiawen Geng) [#2284](https://github.com/nodejs/node-gyp/pull/2284)
+* [[`1bd18f3e77`](https://github.com/nodejs/node-gyp/commit/1bd18f3e77)] - **(SEMVER-MAJOR)** **lib**: drop Python 2 support in find-python.js (#2333) (DeeDeeG) [#2333](https://github.com/nodejs/node-gyp/pull/2333)
+* [[`e81602ef55`](https://github.com/nodejs/node-gyp/commit/e81602ef55)] - **(SEMVER-MAJOR)** **lib**: migrate requests to fetch (#2220) (Matias Lopez) [#2220](https://github.com/nodejs/node-gyp/pull/2220)
+* [[`392b7760b4`](https://github.com/nodejs/node-gyp/commit/392b7760b4)] - **lib**: avoid changing process.config (#2322) (Michaël Zasso) [#2322](https://github.com/nodejs/node-gyp/pull/2322)
+
 v7.1.2 2020-10-17
 =================
 
