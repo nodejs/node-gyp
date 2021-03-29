@@ -1,4 +1,4 @@
-# TODO: Line 47, enable pytest --doctest-modules
+# TODO: Line 43, enable pytest --doctest-modules
 
 name: Tests
 on: [push, pull_request]
@@ -36,16 +36,10 @@ jobs:
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Lint Python
         if: matrix.os == 'ubuntu-latest'
-        run: |
-          # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        run: flake8 . --ignore=E203,W503  --max-complexity=101 --max-line-length=88 --show-source --statistics
       - name: Run Python tests
-        run: |
-          python -m pytest
+        run: python -m pytest
       # - name: Run doctests with pytest
       #   run: python -m pytest --doctest-modules
       - name: Run Node tests
-        run: |
-          npm test
+        run: npm test
