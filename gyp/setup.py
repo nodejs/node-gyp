@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Copyright (c) 2009 Google Inc. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
@@ -15,7 +15,7 @@ with open(path.join(here, "README.md")) as in_file:
 
 setup(
     name="gyp-next",
-    version="0.8.0",
+    version="0.8.1",
     description="A fork of the GYP build system for use in the Node.js projects",
     long_description=long_description,
     long_description_content_type="text/markdown",
