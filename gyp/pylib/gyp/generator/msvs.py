@@ -3276,9 +3276,9 @@ def _GetMSBuildPropertyGroup(spec, label, properties):
             # append to the default value. I.e. PATH=$(PATH);other_path
             edges.update(
                 {
-                        v
-                        for v in MSVS_VARIABLE_REFERENCE.findall(value)
-                        if v in properties and v != node
+                    v
+                    for v in MSVS_VARIABLE_REFERENCE.findall(value)
+                    if v in properties and v != node
                 }
             )
         return edges
