@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.8.1](https://www.github.com/nodejs/gyp-next/compare/v0.8.0...v0.8.1) (2021-02-18)
+
+
+### Bug Fixes
+
+* update shebang lines from python to python3 ([#94](https://www.github.com/nodejs/gyp-next/issues/94)) ([a1b0d41](https://www.github.com/nodejs/gyp-next/commit/a1b0d4171a8049a4ab7a614202063dec332f2df4))
+
 ## [0.8.0](https://www.github.com/nodejs/gyp-next/compare/v0.7.0...v0.8.0) (2021-01-15)
 
 

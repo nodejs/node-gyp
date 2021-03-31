@@ -22,9 +22,11 @@ import sys
 _msvs_validators = {}
 _msbuild_validators = {}
 
+
 # A dictionary of settings converters. The key is the tool name, the value is
 # a dictionary mapping setting names to conversion functions.
 _msvs_to_msbuild_converters = {}
+
 
 # Tool name mapping from MSVS to MSBuild.
 _msbuild_name_of_tool = {}
