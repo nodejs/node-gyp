@@ -1,4 +1,4 @@
-v8.0.0 2021-03-19
+v8.0.0 2021-04-03
 =================
 
 * [[`0d8a6f1b19`](https://github.com/nodejs/node-gyp/commit/0d8a6f1b19)] - **ci**: update actions/setup-node to v2 (#2302) (Sora Morimoto) [#2302](https://github.com/nodejs/node-gyp/pull/2302)
