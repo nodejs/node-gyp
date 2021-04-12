@@ -95,7 +95,7 @@ test('new-find-python', { buffered: true }, (t) => {
       const pythonFinderInstance = new PythonFinder(null, (err, path) => {
         if (err) {
           t.fail(
-            `musn't produce any errors if execFile doesn't produced error. ${err}`
+            `mustn't produce any errors if execFile doesn't produced error. ${err}`
           )
         } else {
           t.strictEqual(path, testString)

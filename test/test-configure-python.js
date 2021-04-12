@@ -5,7 +5,7 @@ const path = require('path')
 const devDir = require('./common').devDir()
 const gyp = require('../lib/node-gyp')
 const requireInject = require('require-inject')
-const configure = requireInject('../lib/configure', {
+const configure = requireInject('../lib/configure.js', {
   'graceful-fs': {
     openSync: function () { return 0 },
     closeSync: function () { },

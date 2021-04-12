@@ -3,7 +3,7 @@
 const test = require('tap').test
 const path = require('path')
 const requireInject = require('require-inject')
-const configure = requireInject('../lib/configure', {
+const configure = requireInject('../lib/configure.js', {
   'graceful-fs': {
     closeSync: function () { return undefined },
     openSync: function (path) {
