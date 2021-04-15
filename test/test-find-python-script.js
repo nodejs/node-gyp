@@ -63,7 +63,7 @@ function check (err, stdout, stderr) {
 test('find-python-script', { buffered: false }, (t) => {
   t.plan(checks.length)
 
-  //? may be more elegant way to copy and pass context
+  // ? may be more elegant way to pass context
   // context for check functions
   const ctx = {
     t: t,

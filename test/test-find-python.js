@@ -1,6 +1,7 @@
 'use strict'
 
-const test = require('tap').test
+const tap = require('tap')
+const { test } = tap
 const findPython = require('../lib/find-python')
 const execFile = require('child_process').execFile
 const PythonFinder = findPython.test.PythonFinder
@@ -21,28 +22,45 @@ const testString = 'python one love♥'
 const testVersions = {
   outdated: '2.0.0',
   normal: '3.9.0',
-  testError: new Error('test error'),
+  testError: new Error('test error')
+}
+
+function strictDeepEqual (received, wanted) {
+  let result = false
+
+  for (let i = 0; i < received.length; i++) {
+    if (Array.isArray(received[i]) && Array.isArray(wanted[i])) {
+      result = strictDeepEqual(received[i], wanted[i])
+    } else {
+      result = received[i] === wanted[i]
+    }
+
+    if (!result) {
+      return result
+    }
+  }
+
+  return result
 }
 
 /**
  * @typedef OptionsObj
- * @property {boolean} shouldProduceError pass test error to callback
- * @property {boolean} checkingPyLauncher
- * @property {boolean} isPythonOutdated return outdated version
- * @property {boolean} checkingWinDefaultPathes
+ * @property {boolean} [shouldProduceError] pass test error to callback
+ * @property {boolean} [checkingPyLauncher]
+ * @property {boolean} [isPythonOutdated] return outdated version
+ * @property {boolean} [checkingWinDefaultPathes]
  *
  */
 
 /**
- *
- * @param {OptionsObj} optionsObj
+ * @param {OptionsObj} [optionsObj]
  */
-function TestExecFile(optionsObj) {
+function TestExecFile (optionsObj) {
   /**
    *
    * @this {PythonFinder}
    */
-  return function testExecFile(exec, args, options, callback) {
+  return function testExecFile (exec, args, options, callback) {
     if (!(optionsObj ? optionsObj.shouldProduceError : false)) {
       if (args === this.argsVersion) {
         if (optionsObj ? optionsObj.checkingWinDefaultPathes : false) {
@@ -57,7 +75,8 @@ function TestExecFile(optionsObj) {
           callback(null, testVersions.normal, null)
         }
       } else if (
-        args === this.win ? `"${this.argsExecutable}"` : this.argsExecutable
+        // DONE: map through argsExecutable to check that all args are equals
+        strictDeepEqual(args, this.argsExecutable.map((arg) => `"${arg}"`))
       ) {
         if (optionsObj ? optionsObj.checkingPyLauncher : false) {
           if (
@@ -71,7 +90,8 @@ function TestExecFile(optionsObj) {
         } else if (optionsObj ? optionsObj.checkingWinDefaultPathes : false) {
           callback(new Error('not found'))
         } else {
-          callback(null, testString, null)
+          // should be trimmed
+          callback(null, testString + '\n', null)
         }
       } else {
         throw new Error(
@@ -94,7 +114,7 @@ are: ${args};\n\nValid are: \n${this.argsExecutable}\n${this.argsVersion}`
  * @param {OptionsObj} optionsObj
  */
 
-test('new-find-python', { buffered: true }, (t) => {
+test('find-python', { buffered: true }, (t) => {
   t.test('whole module tests', (t) => {
     t.test('python found', (t) => {
       const pythonFinderInstance = new PythonFinder(null, (err, path) => {
@@ -133,7 +153,7 @@ test('new-find-python', { buffered: true }, (t) => {
       })
 
       pythonFinderInstance.execFile = TestExecFile({
-        shouldProduceError: true,
+        shouldProduceError: true
       })
 
       pythonFinderInstance.findPython()
@@ -152,7 +172,7 @@ test('new-find-python', { buffered: true }, (t) => {
       pythonFinderInstance.checkPyLauncher = t.fail
 
       pythonFinderInstance.execFile = TestExecFile({
-        shouldProduceError: true,
+        shouldProduceError: true
       })
 
       pythonFinderInstance.findPython()
@@ -170,7 +190,7 @@ test('new-find-python', { buffered: true }, (t) => {
       pythonFinderInstance.win = true
 
       pythonFinderInstance.execFile = TestExecFile({
-        checkingPyLauncher: true,
+        checkingPyLauncher: true
       })
 
       pythonFinderInstance.findPython()
@@ -188,7 +208,7 @@ test('new-find-python', { buffered: true }, (t) => {
         pythonFinderInstance.win = true
 
         pythonFinderInstance.execFile = TestExecFile({
-          checkingWinDefaultPathes: true,
+          checkingWinDefaultPathes: true
         })
         pythonFinderInstance.findPython()
       }
