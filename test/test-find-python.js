@@ -76,7 +76,7 @@ function TestExecFile (optionsObj) {
         }
       } else if (
         // DONE: map through argsExecutable to check that all args are equals
-        strictDeepEqual(args, this.argsExecutable.map((arg) => `"${arg}"`))
+        strictDeepEqual(args, this.win ? this.argsExecutable.map((arg) => `"${arg}"`) : this.argsExecutable)
       ) {
         if (optionsObj ? optionsObj.checkingPyLauncher : false) {
           if (
