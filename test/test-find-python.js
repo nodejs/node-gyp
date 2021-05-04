@@ -303,14 +303,14 @@ test('find-python', { buffered: true }, (t) => {
       t.end()
     })
 
-    await t.test(`test with path contain "${testString}"`, async (t) => {
+    await t.test(`test with path containing "${testString}"`, async (t) => {
       // making fixture
       paths.testDir = fs.mkdtempSync(path.resolve(paths.baseDir, 'node_modules', 'pythonFindTestFolder-'))
 
       // using "junction" to avoid permission error
       fs.symlinkSync(paths.pythonDir, path.resolve(paths.testDir, testString), 'junction')
-      console.log('🚀 ~ file: test-find-python.js ~ line 312 ~ awaitt.test ~ path.resolve(paths.testDir, testString)', path.resolve(paths.testDir, testString))
-      console.log('🚀 ~ file: test-find-python.js ~ line 312 ~ awaitt.test ~ paths.pythonDir', paths.pythonDir)
+      console.log('🚀 ~ file: test-find-python.js ~ line 312 ~ await.test ~ path.resolve(paths.testDir, testString)', path.resolve(paths.testDir, testString))
+      console.log('🚀 ~ file: test-find-python.js ~ line 312 ~ await.test ~ paths.pythonDir', paths.pythonDir)
 
       const { pythonFinderInstance, result } = promisifyPythonFinder(path.resolve(paths.testDir, 'python'))
 
