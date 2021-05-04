@@ -3,10 +3,12 @@
 const tap = require('tap')
 const { test } = tap
 const findPython = require('../lib/find-python')
-const execFile = require('child_process').execFile
+const cp = require('child_process')
 const PythonFinder = findPython.test.PythonFinder
-
+const util = require('util')
+const path = require('path')
 const npmlog = require('npmlog')
+const fs = require('fs')
 npmlog.level = 'silent'
 
 // what final error message displayed in terminal should contain
@@ -123,7 +125,7 @@ test('find-python', { buffered: true }, (t) => {
             `mustn't produce any errors if execFile doesn't produced error. ${err}`
           )
         } else {
-          t.strictEqual(path, testString)
+          t.equal(path, testString)
           t.end()
         }
       })
@@ -161,9 +163,9 @@ test('find-python', { buffered: true }, (t) => {
 
     t.test('no python, unix', (t) => {
       const pythonFinderInstance = new PythonFinder(null, (err, path) => {
-        t.false(path)
+        t.notOk(path)
 
-        t.true(err)
+        t.ok(err)
         t.ok(err.message.includes(finalErrorMessage))
         t.end()
       })
@@ -180,9 +182,9 @@ test('find-python', { buffered: true }, (t) => {
 
     t.test('no python, use python launcher', (t) => {
       const pythonFinderInstance = new PythonFinder(null, (err, path) => {
-        t.strictEqual(err, null)
+        t.equal(err, null)
 
-        t.strictEqual(path, testString)
+        t.equal(path, testString)
 
         t.end()
       })
@@ -200,8 +202,8 @@ test('find-python', { buffered: true }, (t) => {
       'no python, no python launcher, checking win default locations',
       (t) => {
         const pythonFinderInstance = new PythonFinder(null, (err, path) => {
-          t.strictEqual(err, null)
-          t.true(pythonFinderInstance.winDefaultLocations.includes(path))
+          t.equal(err, null)
+          t.ok(pythonFinderInstance.winDefaultLocations.includes(path))
           t.end()
         })
 
@@ -216,9 +218,9 @@ test('find-python', { buffered: true }, (t) => {
 
     t.test('python is setted from config', (t) => {
       const pythonFinderInstance = new PythonFinder(testString, (err, path) => {
-        t.strictEqual(err, null)
+        t.equal(err, null)
 
-        t.strictEqual(path, testString)
+        t.equal(path, testString)
 
         t.end()
       })
@@ -232,24 +234,97 @@ test('find-python', { buffered: true }, (t) => {
     t.end()
   })
 
-  // TODO: make symlink to python with utf-8 chars
-  t.test('real testing (trying to find real python exec)', (t) => {
-    const pythonFinderInstance = new PythonFinder(null, (err, path) => {
-      t.strictEqual(err, null)
+  // DONE: make symlink to python with utf-8 chars
+  t.test('real testing', async (t) => {
+    const paths = {
+      python: '',
+      pythonDir: '',
+      testDir: '',
+      baseDir: __dirname
+    }
 
-      execFile(path, ['-V'], (err, stdout, stderr) => {
-        t.false(err)
-        console.log('stdout:' + stdout)
-        console.log('stderr:' + stderr)
+    const execFile = util.promisify(cp.execFile)
 
-        t.ok(stdout.includes('Python 3'))
-        t.strictEqual(stderr, '')
+    // a bit tricky way to make PythonFinder promisified
+    function promisifyPythonFinder (config) {
+      let pythonFinderInstance
 
-        t.end()
+      const result = new Promise((resolve, reject) => {
+        pythonFinderInstance = new PythonFinder(config, (err, path) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(path)
+          }
+        })
       })
+
+      return { pythonFinderInstance, result }
+    }
+
+    async function testPythonPath (t, pythonPath) {
+      try {
+        const { stderr, stdout } = await execFile(pythonPath, ['-V'])
+
+        console.log('stdout:', stdout)
+        console.log('stderr:', stderr)
+
+        if (t.ok(stdout.includes('Python 3'), 'is it python with major version 3') &&
+              t.equal(stderr, '', 'is stderr empty')) {
+          return true
+        }
+
+        return false
+      } catch (err) {
+        t.equal(err, null, 'is error null')
+        return false
+      }
+    }
+
+    // await is needed because test func is async
+    await t.test('trying to find real python exec', async (t) => {
+      const { pythonFinderInstance, result } = promisifyPythonFinder(null)
+
+      try {
+        pythonFinderInstance.findPython()
+
+        const pythonPath = await result
+
+        if (t.ok(await testPythonPath(t, pythonPath), 'is path valid')) {
+          // stdout contain output of "python -V" command, not python path
+          // using found path as trusted
+          paths.python = pythonPath
+          paths.pythonDir = path.join(paths.python, '../')
+        }
+      } catch (err) {
+        t.notOk(err, 'are we having error')
+      }
+
+      t.end()
     })
 
-    pythonFinderInstance.findPython()
+    await t.test(`test with path contain "${testString}"`, async (t) => {
+      // making fixture
+      paths.testDir = fs.mkdtempSync(path.resolve(paths.baseDir, 'node_modules', 'pythonFindTestFolder-'))
+
+      // using "junction" to avoid permission error
+      fs.symlinkSync(paths.pythonDir, path.resolve(paths.testDir, testString), 'junction')
+
+      const { pythonFinderInstance, result } = promisifyPythonFinder(path.resolve(paths.testDir, 'python'))
+
+      pythonFinderInstance.findPython()
+
+      const pythonPath = await result
+
+      t.ok(await testPythonPath(t, pythonPath), 'is path valid')
+
+      t.end()
+    })
+
+    // remove fixture
+    fs.rmSync(paths.testDir, { recursive: true })
+
+    t.end()
   })
 
   t.end()

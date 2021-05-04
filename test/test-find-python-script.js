@@ -46,7 +46,7 @@ const options = {
 function check (err, stdout, stderr) {
   const { t, exec } = this
   if (!err && !stderr) {
-    t.true(
+    t.ok(
       stdout.trim(),
       `${exec.name}: check path ${exec.path} equals ${stdout.trim()}`
     )
