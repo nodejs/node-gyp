@@ -309,6 +309,8 @@ test('find-python', { buffered: true }, (t) => {
 
       // using "junction" to avoid permission error
       fs.symlinkSync(paths.pythonDir, path.resolve(paths.testDir, testString), 'junction')
+      console.log('🚀 ~ file: test-find-python.js ~ line 312 ~ awaitt.test ~ path.resolve(paths.testDir, testString)', path.resolve(paths.testDir, testString))
+      console.log('🚀 ~ file: test-find-python.js ~ line 312 ~ awaitt.test ~ paths.pythonDir', paths.pythonDir)
 
       const { pythonFinderInstance, result } = promisifyPythonFinder(path.resolve(paths.testDir, 'python'))
 
@@ -322,7 +324,12 @@ test('find-python', { buffered: true }, (t) => {
     })
 
     // remove fixture
-    fs.rmSync(paths.testDir, { recursive: true })
+    if (fs.rmSync) {
+      fs.rmSync(paths.testDir, { recursive: true })
+    } else {
+      //
+      require('./rm.js')(paths.testDir)
+    }
 
     t.end()
   })
