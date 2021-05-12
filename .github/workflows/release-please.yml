@@ -35,5 +35,4 @@ jobs:
             {"type":"chore","section":"Miscellaneous","hidden":false},
             {"type":"refactor","section":"Miscellaneous","hidden":false},
             {"type":"ci","section":"Miscellaneous","hidden":false},
-            {"type":"travis","section":"Miscellaneous","hidden":false},
             {"type":"meta","section":"Miscellaneous","hidden":false}]
