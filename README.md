@@ -1,5 +1,8 @@
 # `node-gyp` - Node.js native addon build tool
 
+[![Travis CI](https://travis-ci.com/nodejs/node-gyp.svg?branch=master)](https://travis-ci.com/nodejs/node-gyp)
+[![Build Status](https://github.com/nodejs/node-gyp/workflows/Python_tests/badge.svg)](https://github.com/nodejs/node-gyp/actions?workflow=Python_tests)
+
 `node-gyp` is a cross-platform command-line tool written in Node.js for
 compiling native addon modules for Node.js. It contains a fork of the
 [gyp](https://gyp.gsrc.io) project that was previously used by the Chromium
@@ -14,7 +17,7 @@ etc.), regardless of what version of Node.js is actually installed on your syste
 ## Features
 
  * The same build commands work on any of the supported platforms
- * Supports the targetting of different versions of Node.js
+ * Supports the targeting of different versions of Node.js
 
 ## Installation
 
@@ -28,15 +31,16 @@ Depending on your operating system, you will need to install:
 
 ### On Unix
 
-   * `Python v2.7, v3.5, v3.6, or v3.7`
+   * Python v2.7, v3.5, v3.6, v3.7, or v3.8
    * `make`
    * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
 
 ### On macOS
 
-   * `Python v2.7, v3.5, v3.6, or v3.7`
+   * Python v2.7, v3.5, v3.6, v3.7, or v3.8
    * [Xcode](https://developer.apple.com/xcode/download/)
      * You also need to install the `XCode Command Line Tools` by running `xcode-select --install`. Alternatively, if you already have the full Xcode installed, you can find them under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`. This step will install `clang`, `clang++`, and `make`.
+   * If your Mac has been _upgraded_ to macOS Catalina (10.15), please read [macOS_Catalina.md](macOS_Catalina.md).
 
 ### On Windows
 
@@ -61,7 +65,7 @@ Install tools and configuration manually:
 ### Configuring Python Dependency
 
 `node-gyp` requires that you have installed a compatible version of Python, one of: v2.7, v3.5, v3.6,
-or v3.7. If you have multiple Python versions installed, you can identify which Python
+v3.7, or v3.8. If you have multiple Python versions installed, you can identify which Python
 version `node-gyp` should use in one of the following ways:
 
 1. by setting the `--python` command-line option, e.g.:
@@ -190,7 +194,8 @@ Some additional resources for Node.js native addons and writing `gyp` configurat
 | `--devdir=$path`                  | SDK download directory (default is OS cache directory)
 | `--ensure`                        | Don't reinstall headers if already present
 | `--dist-url=$url`                 | Download header tarball from custom URL
-| `--proxy=$url`                    | Set HTTP proxy for downloading header tarball
+| `--proxy=$url`                    | Set HTTP(S) proxy for downloading header tarball
+| `--noproxy=$urls`                 | Set urls to ignore proxies when downloading header tarball
 | `--cafile=$cafile`                | Override default CA chain (to download tarball)
 | `--nodedir=$path`                 | Set the path to the node source code
 | `--python=$path`                  | Set path to the Python binary

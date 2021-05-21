@@ -199,8 +199,8 @@ def GetAllDefines(target_list, target_dicts, data, config_name, params,
   """Calculate the defines for a project.
 
   Returns:
-    A dict that includes explicit defines declared in gyp files along with all of
-    the default defines that the compiler uses.
+    A dict that includes explicit defines declared in gyp files along with all
+    of the default defines that the compiler uses.
   """
 
   # Get defines declared in the gyp files.

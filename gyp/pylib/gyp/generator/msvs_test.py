@@ -7,10 +7,11 @@
 
 import gyp.generator.msvs as msvs
 import unittest
+
 try:
-  from cStringIO import StringIO
+  from StringIO import StringIO  # Python 2
 except ImportError:
-  from io import StringIO
+  from io import StringIO  # Python 3
 
 
 class TestSequenceFunctions(unittest.TestCase):

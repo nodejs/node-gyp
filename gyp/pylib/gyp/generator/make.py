@@ -149,7 +149,7 @@ cmd_alink_thin = rm -f $@ && $(AR.$(TOOLSET)) crsT $@ $(filter %.o,$^)
 # special "figure out circular dependencies" flags around the entire
 # input list during linking.
 quiet_cmd_link = LINK($(TOOLSET)) $@
-cmd_link = $(LINK.$(TOOLSET)) $(GYP_LDFLAGS) $(LDFLAGS.$(TOOLSET)) -o $@ -Wl,--start-group $(LD_INPUTS) $(LIBS) -Wl,--end-group
+cmd_link = $(LINK.$(TOOLSET)) -o $@ $(GYP_LDFLAGS) $(LDFLAGS.$(TOOLSET)) -Wl,--start-group $(LD_INPUTS) $(LIBS) -Wl,--end-group
 
 # We support two kinds of shared objects (.so):
 # 1) shared_library, which is just bundling together many dependent libraries
@@ -168,10 +168,10 @@ cmd_link = $(LINK.$(TOOLSET)) $(GYP_LDFLAGS) $(LDFLAGS.$(TOOLSET)) -o $@ -Wl,--s
 # - Set SONAME to the library filename so our binaries don't reference
 # the local, absolute paths used on the link command-line.
 quiet_cmd_solink = SOLINK($(TOOLSET)) $@
-cmd_solink = $(LINK.$(TOOLSET)) -shared $(GYP_LDFLAGS) $(LDFLAGS.$(TOOLSET)) -Wl,-soname=$(@F) -o $@ -Wl,--whole-archive $(LD_INPUTS) -Wl,--no-whole-archive $(LIBS)
+cmd_solink = $(LINK.$(TOOLSET)) -o $@ -shared $(GYP_LDFLAGS) $(LDFLAGS.$(TOOLSET)) -Wl,-soname=$(@F) -Wl,--whole-archive $(LD_INPUTS) -Wl,--no-whole-archive $(LIBS)
 
 quiet_cmd_solink_module = SOLINK_MODULE($(TOOLSET)) $@
-cmd_solink_module = $(LINK.$(TOOLSET)) -shared $(GYP_LDFLAGS) $(LDFLAGS.$(TOOLSET)) -Wl,-soname=$(@F) -o $@ -Wl,--start-group $(filter-out FORCE_DO_CMD, $^) -Wl,--end-group $(LIBS)
+cmd_solink_module = $(LINK.$(TOOLSET)) -o $@ -shared $(GYP_LDFLAGS) $(LDFLAGS.$(TOOLSET)) -Wl,-soname=$(@F) -Wl,--start-group $(filter-out FORCE_DO_CMD, $^) -Wl,--end-group $(LIBS)
 """
 
 LINK_COMMANDS_MAC = """\
@@ -381,17 +381,17 @@ endef
 # - quiet_cmd_foo is the brief-output summary of the command.
 
 quiet_cmd_cc = CC($(TOOLSET)) $@
-cmd_cc = $(CC.$(TOOLSET)) $(GYP_CFLAGS) $(DEPFLAGS) $(CFLAGS.$(TOOLSET)) -c -o $@ $<
+cmd_cc = $(CC.$(TOOLSET)) -o $@ $< $(GYP_CFLAGS) $(DEPFLAGS) $(CFLAGS.$(TOOLSET)) -c
 
 quiet_cmd_cxx = CXX($(TOOLSET)) $@
-cmd_cxx = $(CXX.$(TOOLSET)) $(GYP_CXXFLAGS) $(DEPFLAGS) $(CXXFLAGS.$(TOOLSET)) -c -o $@ $<
+cmd_cxx = $(CXX.$(TOOLSET)) -o $@ $< $(GYP_CXXFLAGS) $(DEPFLAGS) $(CXXFLAGS.$(TOOLSET)) -c
 %(extra_commands)s
 quiet_cmd_touch = TOUCH $@
 cmd_touch = touch $@
 
 quiet_cmd_copy = COPY $@
 # send stderr to /dev/null to ignore messages when linking directories.
-cmd_copy = rm -rf "$@" && cp %(copy_archive_args)s "$<" "$@"
+cmd_copy = ln -f "$<" "$@" 2>/dev/null || (rm -rf "$@" && cp %(copy_archive_args)s "$<" "$@")
 
 %(link_commands)s
 """
@@ -950,7 +950,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
                    '%s%s'
                    % (name, cd_action, command))
       self.WriteLn()
-      outputs = [self.Absolutify(output) for output in outputs]
+      outputs = [self.Absolutify(o) for o in outputs]
       # The makefile rules are all relative to the top dir, but the gyp actions
       # are defined relative to their containing dir.  This replaces the obj
       # variable for the action rule with an absolute version so that the output
@@ -1040,7 +1040,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
         outputs = [gyp.xcode_emulation.ExpandEnvVars(o, env) for o in outputs]
         inputs = [gyp.xcode_emulation.ExpandEnvVars(i, env) for i in inputs]
 
-        outputs = [self.Absolutify(output) for output in outputs]
+        outputs = [self.Absolutify(o) for o in outputs]
         all_outputs += outputs
         # Only write the 'obj' and 'builddir' rules for the "primary" output
         # (:1); it's superfluous for the "extra outputs", and this avoids
@@ -1383,7 +1383,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
       target = '%s.stamp' % target
     elif self.type != 'executable':
       print("ERROR: What output file should be generated?",
-             "type", self.type, "target", target)
+            "type", self.type, "target", target)
 
     target_prefix = spec.get('product_prefix', target_prefix)
     target = spec.get('product_name', target)
@@ -1776,7 +1776,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
       # - The multi-output rule will have an do-nothing recipe.
 
       # Hash the target name to avoid generating overlong filenames.
-      cmddigest = hashlib.sha1(command if command else self.target).hexdigest()
+      cmddigest = hashlib.sha1((command or self.target).encode('utf-8')).hexdigest()
       intermediate = "%s.intermediate" % cmddigest
       self.WriteLn('%s: %s' % (' '.join(outputs), intermediate))
       self.WriteLn('\t%s' % '@:')
@@ -1951,13 +1951,11 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
     """Returns the location of the final output for an installable target."""
     # Xcode puts shared_library results into PRODUCT_DIR, and some gyp files
     # rely on this. Emulate this behavior for mac.
-
-    # XXX(TooTallNate): disabling this code since we don't want this behavior...
-    #if (self.type == 'shared_library' and
-    #    (self.flavor != 'mac' or self.toolset != 'target')):
-    #  # Install all shared libs into a common directory (per toolset) for
-    #  # convenient access with LD_LIBRARY_PATH.
-    #  return '$(builddir)/lib.%s/%s' % (self.toolset, self.alias)
+    if (self.type == 'shared_library' and
+        (self.flavor != 'mac' or self.toolset != 'target')):
+      # Install all shared libs into a common directory (per toolset) for
+      # convenient access with LD_LIBRARY_PATH.
+      return '$(builddir)/lib.%s/%s' % (self.toolset, self.alias)
     return '$(builddir)/' + self.alias
 
 
