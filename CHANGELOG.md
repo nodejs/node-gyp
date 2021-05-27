@@ -1,5 +1,26 @@
 # Changelog
 
+### [8.0.1](https://www.github.com/nodejs/node-gyp/compare/v8.0.0...v8.0.1) (2021-05-27)
+
+
+### Miscellaneous
+
+* add `release-please-action` for automated releases ([#2395](https://www.github.com/nodejs/node-gyp/issues/2395)) ([07e9d7c](https://www.github.com/nodejs/node-gyp/commit/07e9d7c7ee80ba119ea760c635f72fd8e7efe198))
+
+
+### Doc
+
+* fix v8.0.0 release date ([4b83c3d](https://www.github.com/nodejs/node-gyp/commit/4b83c3de7300457919d53f26d96ea9ad6f6bedd8))
+* remove redundant version info ([#2403](https://www.github.com/nodejs/node-gyp/issues/2403)) ([1423670](https://www.github.com/nodejs/node-gyp/commit/14236709de64b100a424396b91a5115639daa0ef))
+* Update README.md Visual Studio Community page polski to auto ([#2371](https://www.github.com/nodejs/node-gyp/issues/2371)) ([1b4697a](https://www.github.com/nodejs/node-gyp/commit/1b4697abf69ef574a48faf832a7098f4c6c224a5))
+
+
+### Core
+
+* fail gracefully if we can't find the username ([#2375](https://www.github.com/nodejs/node-gyp/issues/2375)) ([fca4795](https://www.github.com/nodejs/node-gyp/commit/fca4795512c67dc8420aaa0d913b5b89a4b147f3))
+* log as yes/no whether build dir was created ([#2370](https://www.github.com/nodejs/node-gyp/issues/2370)) ([245dee5](https://www.github.com/nodejs/node-gyp/commit/245dee5b62581309946872ae253226ea3a42c0e3))
+* update gyp to v0.9.1 ([#2402](https://www.github.com/nodejs/node-gyp/issues/2402)) ([4d03652](https://www.github.com/nodejs/node-gyp/commit/4d036526c5347ad6fb0394993bda05f8260f7ae4))
+
 ## v8.0.0 2021-04-03
 
 * [[`0d8a6f1b19`](https://github.com/nodejs/node-gyp/commit/0d8a6f1b19)] - **ci**: update actions/setup-node to v2 (#2302) (Sora Morimoto) [#2302](https://github.com/nodejs/node-gyp/pull/2302)
