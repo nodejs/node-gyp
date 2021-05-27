@@ -138,7 +138,9 @@ a project file is output.
 """
 
 import gyp.common
+from functools import cmp_to_key
 import hashlib
+from operator import attrgetter
 import posixpath
 import re
 import struct
@@ -423,6 +425,8 @@ class XCObject:
       """
 
             hash.update(struct.pack(">i", len(data)))
+            if isinstance(data, str):
+                data = data.encode("utf-8")
             hash.update(data)
 
         if seed_hash is None:
@@ -1483,7 +1487,7 @@ class PBXGroup(XCHierarchicalElement):
 
     def SortGroup(self):
         self._properties["children"] = sorted(
-            self._properties["children"], cmp=lambda x, y: x.Compare(y)
+            self._properties["children"], key=cmp_to_key(lambda x, y: x.Compare(y))
         )
 
         # Recurse.
@@ -2891,7 +2895,7 @@ class PBXProject(XCContainerPortal):
         # according to their defined order.
         self._properties["mainGroup"]._properties["children"] = sorted(
             self._properties["mainGroup"]._properties["children"],
-            cmp=lambda x, y: x.CompareRootGroup(y),
+            key=cmp_to_key(lambda x, y: x.CompareRootGroup(y)),
         )
 
         # Sort everything else by putting group before files, and going
@@ -2986,9 +2990,7 @@ class PBXProject(XCContainerPortal):
             # Xcode seems to sort this list case-insensitively
             self._properties["projectReferences"] = sorted(
                 self._properties["projectReferences"],
-                cmp=lambda x, y: cmp(
-                    x["ProjectRef"].Name().lower(), y["ProjectRef"].Name().lower()
-                ),
+                key=lambda x: x["ProjectRef"].Name().lower
             )
         else:
             # The link already exists.  Pull out the relevnt data.
@@ -3120,7 +3122,8 @@ class PBXProject(XCContainerPortal):
             product_group = ref_dict["ProductGroup"]
             product_group._properties["children"] = sorted(
                 product_group._properties["children"],
-                cmp=lambda x, y, rp=remote_products: CompareProducts(x, y, rp),
+                key=cmp_to_key(
+                    lambda x, y, rp=remote_products: CompareProducts(x, y, rp)),
             )
 
 
@@ -3155,7 +3158,7 @@ class XCProjectFile(XCObject):
         else:
             self._XCPrint(file, 0, "{\n")
         for property, value in sorted(
-            self._properties.items(), cmp=lambda x, y: cmp(x, y)
+            self._properties.items()
         ):
             if property == "objects":
                 self._PrintObjects(file)
@@ -3183,7 +3186,7 @@ class XCProjectFile(XCObject):
             self._XCPrint(file, 0, "\n")
             self._XCPrint(file, 0, "/* Begin " + class_name + " section */\n")
             for object in sorted(
-                objects_by_class[class_name], cmp=lambda x, y: cmp(x.id, y.id)
+                objects_by_class[class_name], key=attrgetter("id")
             ):
                 object.Print(file)
             self._XCPrint(file, 0, "/* End " + class_name + " section */\n")
