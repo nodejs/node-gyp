@@ -1,11 +1,54 @@
-v7.1.2 2020-10-17
-=================
+# Changelog
+
+## [8.1.0](https://www.github.com/nodejs/node-gyp/compare/v8.0.0...v8.1.0) (2021-05-28)
+
+
+### Features
+
+* **gyp:** update gyp to v0.9.1 ([#2402](https://www.github.com/nodejs/node-gyp/issues/2402)) ([814b1b0](https://www.github.com/nodejs/node-gyp/commit/814b1b0eda102afb9fc87e81638a9cf5b650bb10))
+
+
+### Miscellaneous
+
+* add `release-please-action` for automated releases ([#2395](https://www.github.com/nodejs/node-gyp/issues/2395)) ([07e9d7c](https://www.github.com/nodejs/node-gyp/commit/07e9d7c7ee80ba119ea760c635f72fd8e7efe198))
+
+
+### Core
+
+* fail gracefully if we can't find the username ([#2375](https://www.github.com/nodejs/node-gyp/issues/2375)) ([fca4795](https://www.github.com/nodejs/node-gyp/commit/fca4795512c67dc8420aaa0d913b5b89a4b147f3))
+* log as yes/no whether build dir was created ([#2370](https://www.github.com/nodejs/node-gyp/issues/2370)) ([245dee5](https://www.github.com/nodejs/node-gyp/commit/245dee5b62581309946872ae253226ea3a42c0e3))
+
+
+### Doc
+
+* fix v8.0.0 release date ([4b83c3d](https://www.github.com/nodejs/node-gyp/commit/4b83c3de7300457919d53f26d96ea9ad6f6bedd8))
+* remove redundant version info ([#2403](https://www.github.com/nodejs/node-gyp/issues/2403)) ([1423670](https://www.github.com/nodejs/node-gyp/commit/14236709de64b100a424396b91a5115639daa0ef))
+* Update README.md Visual Studio Community page polski to auto ([#2371](https://www.github.com/nodejs/node-gyp/issues/2371)) ([1b4697a](https://www.github.com/nodejs/node-gyp/commit/1b4697abf69ef574a48faf832a7098f4c6c224a5))
+
+## v8.0.0 2021-04-03
+
+* [[`0d8a6f1b19`](https://github.com/nodejs/node-gyp/commit/0d8a6f1b19)] - **ci**: update actions/setup-node to v2 (#2302) (Sora Morimoto) [#2302](https://github.com/nodejs/node-gyp/pull/2302)
+* [[`15a5c7d45b`](https://github.com/nodejs/node-gyp/commit/15a5c7d45b)] - **ci**: migrate deprecated grammar (#2285) (Jiawen Geng) [#2285](https://github.com/nodejs/node-gyp/pull/2285)
+* [[`06ddde27f9`](https://github.com/nodejs/node-gyp/commit/06ddde27f9)] - **deps**: sync mutual dependencies with npm (DeeDeeG) [#2348](https://github.com/nodejs/node-gyp/pull/2348)
+* [[`a5fd1f41e3`](https://github.com/nodejs/node-gyp/commit/a5fd1f41e3)] - **doc**: add downloads badge (#2352) (Jiawen Geng) [#2352](https://github.com/nodejs/node-gyp/pull/2352)
+* [[`cc1cbce056`](https://github.com/nodejs/node-gyp/commit/cc1cbce056)] - **doc**: update macOS\_Catalina.md (#2293) (iMrLopez) [#2293](https://github.com/nodejs/node-gyp/pull/2293)
+* [[`6287118fc4`](https://github.com/nodejs/node-gyp/commit/6287118fc4)] - **doc**: updated README.md to copy easily (#2281) (மனோஜ்குமார் பழனிச்சாமி) [#2281](https://github.com/nodejs/node-gyp/pull/2281)
+* [[`66c0f04467`](https://github.com/nodejs/node-gyp/commit/66c0f04467)] - **doc**: add missing `sudo` to Catalina doc (Karl Horky) [#2244](https://github.com/nodejs/node-gyp/pull/2244)
+* [[`0da2e0140d`](https://github.com/nodejs/node-gyp/commit/0da2e0140d)] - **gyp**: update gyp to v0.8.1 (#2355) (DeeDeeG) [#2355](https://github.com/nodejs/node-gyp/pull/2355)
+* [[`0093ec8646`](https://github.com/nodejs/node-gyp/commit/0093ec8646)] - **gyp**: Improve our flake8 linting tests (Christian Clauss) [#2356](https://github.com/nodejs/node-gyp/pull/2356)
+* [[`a78b584236`](https://github.com/nodejs/node-gyp/commit/a78b584236)] - **(SEMVER-MAJOR)** **gyp**: remove support for Python 2 (#2300) (Christian Clauss) [#2300](https://github.com/nodejs/node-gyp/pull/2300)
+* [[`c3c510d89e`](https://github.com/nodejs/node-gyp/commit/c3c510d89e)] - **gyp**: update gyp to v0.8.0 (#2318) (Christian Clauss) [#2318](https://github.com/nodejs/node-gyp/pull/2318)
+* [[`9e1397c52e`](https://github.com/nodejs/node-gyp/commit/9e1397c52e)] - **(SEMVER-MAJOR)** **gyp**: update gyp to v0.7.0 (#2284) (Jiawen Geng) [#2284](https://github.com/nodejs/node-gyp/pull/2284)
+* [[`1bd18f3e77`](https://github.com/nodejs/node-gyp/commit/1bd18f3e77)] - **(SEMVER-MAJOR)** **lib**: drop Python 2 support in find-python.js (#2333) (DeeDeeG) [#2333](https://github.com/nodejs/node-gyp/pull/2333)
+* [[`e81602ef55`](https://github.com/nodejs/node-gyp/commit/e81602ef55)] - **(SEMVER-MAJOR)** **lib**: migrate requests to fetch (#2220) (Matias Lopez) [#2220](https://github.com/nodejs/node-gyp/pull/2220)
+* [[`392b7760b4`](https://github.com/nodejs/node-gyp/commit/392b7760b4)] - **lib**: avoid changing process.config (#2322) (Michaël Zasso) [#2322](https://github.com/nodejs/node-gyp/pull/2322)
+
+## v7.1.2 2020-10-17
 
 * [[`096e3aded5`](https://github.com/nodejs/node-gyp/commit/096e3aded5)] - **gyp**: update gyp to 0.6.2 (Myles Borins) [#2241](https://github.com/nodejs/node-gyp/pull/2241)
 * [[`54f97cd243`](https://github.com/nodejs/node-gyp/commit/54f97cd243)] - **doc**: add cmd to reset `xcode-select` to initial state (Valera Rozuvan) [#2235](https://github.com/nodejs/node-gyp/pull/2235)
 
-v7.1.1 2020-10-15
-=================
+## v7.1.1 2020-10-15
 
 This release restores the location of shared library builds to the pre-v7
 location. In v7.0.0 until this release, shared library outputs were placed
@@ -22,8 +65,7 @@ We consider this a bug-fix rather than semver-major change.
 * [[`2317dc400c`](https://github.com/nodejs/node-gyp/commit/2317dc400c)] - **ci**: switch to GitHub Actions (Shelley Vohr) [#2210](https://github.com/nodejs/node-gyp/pull/2210)
 * [[`2cca9b74f7`](https://github.com/nodejs/node-gyp/commit/2cca9b74f7)] - **doc**: drop the --production flag for installing windows-build-tools (DeeDeeG) [#2206](https://github.com/nodejs/node-gyp/pull/2206)
 
-v7.1.0 2020-08-12
-=================
+## v7.1.0 2020-08-12
 
 * [[`aaf33c3029`](https://github.com/nodejs/node-gyp/commit/aaf33c3029)] - **build**: add update-gyp script (Samuel Attard) [#2167](https://github.com/nodejs/node-gyp/pull/2167)
 * * [[`3baa4e4172`](https://github.com/nodejs/node-gyp/commit/3baa4e4172)] - **(SEMVER-MINOR)** **gyp**: update gyp to 0.4.0 (Samuel Attard) [#2165](https://github.com/nodejs/node-gyp/pull/2165)
@@ -32,8 +74,7 @@ v7.1.0 2020-08-12
 * * [[`4fc8ff179d`](https://github.com/nodejs/node-gyp/commit/4fc8ff179d)] - **doc**: silence curl for macOS Catalina acid test (Chia Wei Ong) [#2150](https://github.com/nodejs/node-gyp/pull/2150)
 * * [[`7857cb2eb1`](https://github.com/nodejs/node-gyp/commit/7857cb2eb1)] - **deps**: increase "engines" to "node" : "\>= 10.12.0" (DeeDeeG) [#2153](https://github.com/nodejs/node-gyp/pull/2153)
 
-v7.0.0 2020-06-03
-=================
+## v7.0.0 2020-06-03
 
 * [[`e18a61afc1`](https://github.com/nodejs/node-gyp/commit/e18a61afc1)] - **build**: shrink bloated addon binaries on windows (Shelley Vohr) [#2060](https://github.com/nodejs/node-gyp/pull/2060)
 * [[`4937722cf5`](https://github.com/nodejs/node-gyp/commit/4937722cf5)] - **(SEMVER-MAJOR)** **deps**: replace mkdirp with {recursive} mkdir (Rod Vagg) [#2123](https://github.com/nodejs/node-gyp/pull/2123)
@@ -60,8 +101,7 @@ v7.0.0 2020-06-03
 * [[`741ab096d5`](https://github.com/nodejs/node-gyp/commit/741ab096d5)] - **test**: remove support for EOL versions of Node.js (Shelley Vohr)
 * [[`ca86ef2539`](https://github.com/nodejs/node-gyp/commit/ca86ef2539)] - **test**: bump actions/checkout from v1 to v2 (BSKY) [#2063](https://github.com/nodejs/node-gyp/pull/2063)
 
-v6.1.0 2020-01-08
-=================
+## v6.1.0 2020-01-08
 
 * [[`9a7dd16b76`](https://github.com/nodejs/node-gyp/commit/9a7dd16b76)] - **doc**: remove backticks from Python version list (Rod Vagg) [#2011](https://github.com/nodejs/node-gyp/pull/2011)
 * [[`26cd6eaea6`](https://github.com/nodejs/node-gyp/commit/26cd6eaea6)] - **doc**: add GitHub Actions badge (#1994) (Rod Vagg) [#1994](https://github.com/nodejs/node-gyp/pull/1994)
@@ -82,8 +122,7 @@ v6.1.0 2020-01-08
 * [[`0670e5189d`](https://github.com/nodejs/node-gyp/commit/0670e5189d)] - **test**: add header download test (Rod Vagg) [#1796](https://github.com/nodejs/node-gyp/pull/1796)
 * [[`c506a6a150`](https://github.com/nodejs/node-gyp/commit/c506a6a150)] - **test**: configure proper devDir for invoking configure() (Rod Vagg) [#1796](https://github.com/nodejs/node-gyp/pull/1796)
 
-v6.0.1 2019-11-01
-=================
+## v6.0.1 2019-11-01
 
 * [[`8ec2e681d5`](https://github.com/nodejs/node-gyp/commit/8ec2e681d5)] - **doc**: add macOS\_Catalina.md document (cclauss) [#1940](https://github.com/nodejs/node-gyp/pull/1940)
 * [[`1b11be63cc`](https://github.com/nodejs/node-gyp/commit/1b11be63cc)] - **gyp**: python3 fixes: utf8 decode, use of 'None' in eval (Wilfried Goesgens) [#1925](https://github.com/nodejs/node-gyp/pull/1925)
@@ -100,8 +139,7 @@ v6.0.1 2019-11-01
 * [[`032db2a2d0`](https://github.com/nodejs/node-gyp/commit/032db2a2d0)] - **lib,install**: always download SHA sums on Windows (Sam Hughes) [#1926](https://github.com/nodejs/node-gyp/pull/1926)
 * [[`5a83630c33`](https://github.com/nodejs/node-gyp/commit/5a83630c33)] - **travis**: add Windows + Python 3.8 to the mix (Rod Vagg) [#1921](https://github.com/nodejs/node-gyp/pull/1921)
 
-v6.0.0 2019-10-04
-=================
+## v6.0.0 2019-10-04
 
 * [[`dd0e97ef0b`](https://github.com/nodejs/node-gyp/commit/dd0e97ef0b)] - **(SEMVER-MAJOR)** **lib**: try to find `python` after `python3` (Sam Roberts) [#1907](https://github.com/nodejs/node-gyp/pull/1907)
 * [[`f60ed47d14`](https://github.com/nodejs/node-gyp/commit/f60ed47d14)] - **travis**: add Python 3.5 and 3.6 tests on Linux (Christian Clauss) [#1903](https://github.com/nodejs/node-gyp/pull/1903)
@@ -109,8 +147,7 @@ v6.0.0 2019-10-04
 * [[`3d1c60ab81`](https://github.com/nodejs/node-gyp/commit/3d1c60ab81)] - **(SEMVER-MAJOR)** **lib**: accept Python 3 by default (João Reis) [#1844](https://github.com/nodejs/node-gyp/pull/1844)
 * [[`c6e3b65a23`](https://github.com/nodejs/node-gyp/commit/c6e3b65a23)] - **(SEMVER-MAJOR)** **lib**: raise the minimum Python version from 2.6 to 2.7 (cclauss) [#1818](https://github.com/nodejs/node-gyp/pull/1818)
 
-v5.1.1 2020-05-25
-=================
+## v5.1.1 2020-05-25
 
 * [[`bdd3a79abe`](https://github.com/nodejs/node-gyp/commit/bdd3a79abe)] - **build**: shrink bloated addon binaries on windows (Shelley Vohr) [#2060](https://github.com/nodejs/node-gyp/pull/2060)
 * [[`1f2ba75bc0`](https://github.com/nodejs/node-gyp/commit/1f2ba75bc0)] - **doc**: add macOS Catalina software update info (Karl Horky) [#2078](https://github.com/nodejs/node-gyp/pull/2078)
@@ -123,8 +160,7 @@ v5.1.1 2020-05-25
 * [[`2b6fc3c8d6`](https://github.com/nodejs/node-gyp/commit/2b6fc3c8d6)] - **doc, bin**: stop suggesting opening  node-gyp issues (Bartosz Sosnowski) [#2096](https://github.com/nodejs/node-gyp/pull/2096)
 * [[`a876ae58ad`](https://github.com/nodejs/node-gyp/commit/a876ae58ad)] - **test**: bump actions/checkout from v1 to v2 (BSKY) [#2063](https://github.com/nodejs/node-gyp/pull/2063)
 
-v5.1.0 2020-02-05
-=================
+## v5.1.0 2020-02-05
 
 * [[`f37a8b40d0`](https://github.com/nodejs/node-gyp/commit/f37a8b40d0)] - **doc**: add GitHub Actions badge (#1994) (Rod Vagg) [#1994](https://github.com/nodejs/node-gyp/pull/1994)
 * [[`cb3f6aae5e`](https://github.com/nodejs/node-gyp/commit/cb3f6aae5e)] - **doc**: update macOS\_Catalina.md (#1992) (James Home) [#1992](https://github.com/nodejs/node-gyp/pull/1992)
@@ -141,13 +177,11 @@ v5.1.0 2020-02-05
 * [[`32c8744b34`](https://github.com/nodejs/node-gyp/commit/32c8744b34)] - **test**: fix macOS Travis on Python 2.7 & 3.7 (Christian Clauss) [#1979](https://github.com/nodejs/node-gyp/pull/1979)
 * [[`fd4b1351e4`](https://github.com/nodejs/node-gyp/commit/fd4b1351e4)] - **test**: initial Github Actions with Ubuntu & macOS (Christian Clauss) [#1985](https://github.com/nodejs/node-gyp/pull/1985)
 
-v5.0.7 2019-12-16
-=================
+## v5.0.7 2019-12-16
 
 Republish of v5.0.6 with unnecessary tarball removed from pack file.
 
-v5.0.6 2019-12-16
-=================
+## v5.0.6 2019-12-16
 
 * [[`cdec00286f`](https://github.com/nodejs/node-gyp/commit/cdec00286f)] - **doc**: adjustments to the README.md for new users (Dan Pike) [#1919](https://github.com/nodejs/node-gyp/pull/1919)
 * [[`b7c8233ef2`](https://github.com/nodejs/node-gyp/commit/b7c8233ef2)] - **test**: fix Python unittests (cclauss) [#1961](https://github.com/nodejs/node-gyp/pull/1961)
@@ -168,8 +202,7 @@ v5.0.6 2019-12-16
 * [[`7edf7658fa`](https://github.com/nodejs/node-gyp/commit/7edf7658fa)] - **lib,install**: always download SHA sums on Windows (Sam Hughes) [#1926](https://github.com/nodejs/node-gyp/pull/1926)
 * [[`69056d04fe`](https://github.com/nodejs/node-gyp/commit/69056d04fe)] - **travis**: add Windows + Python 3.8 to the mix (Rod Vagg) [#1921](https://github.com/nodejs/node-gyp/pull/1921)
 
-v5.0.5 2019-10-04
-=================
+## v5.0.5 2019-10-04
 
 * [[`3891391746`](https://github.com/nodejs/node-gyp/commit/3891391746)] - **doc**: reconcile README with Python 3 compat changes (Rod Vagg) [#1911](https://github.com/nodejs/node-gyp/pull/1911)
 * [[`07f81f1920`](https://github.com/nodejs/node-gyp/commit/07f81f1920)] - **lib**: accept Python 3 after Python 2 (Sam Roberts) [#1910](https://github.com/nodejs/node-gyp/pull/1910)
@@ -181,8 +214,7 @@ v5.0.5 2019-10-04
 * [[`53ee7dfe89`](https://github.com/nodejs/node-gyp/commit/53ee7dfe89)] - **gyp**: fix undefined name: cflags --\> ldflags (Christian Clauss) [#1901](https://github.com/nodejs/node-gyp/pull/1901)
 * [[`5871dcf6c9`](https://github.com/nodejs/node-gyp/commit/5871dcf6c9)] - **src,win**: add support for fetching arm64 node.lib (Richard Townsend) [#1875](https://github.com/nodejs/node-gyp/pull/1875)
 
-v5.0.4 2019-09-27
-=================
+## v5.0.4 2019-09-27
 
 * [[`1236869ffc`](https://github.com/nodejs/node-gyp/commit/1236869ffc)] - **gyp**: modify XcodeVersion() to convert "4.2" to "0420" and "10.0" to "1000" (Christian Clauss) [#1895](https://github.com/nodejs/node-gyp/pull/1895)
 * [[`36638afe48`](https://github.com/nodejs/node-gyp/commit/36638afe48)] - **gyp**: more decode stdout on Python 3 (cclauss) [#1894](https://github.com/nodejs/node-gyp/pull/1894)
@@ -205,8 +237,7 @@ v5.0.4 2019-09-27
 * [[`fa0ed4aa42`](https://github.com/nodejs/node-gyp/commit/fa0ed4aa42)] - **build**: more Python 3 compat, replace compile with ast (cclauss) [#1820](https://github.com/nodejs/node-gyp/pull/1820)
 * [[`18d5c7c9d0`](https://github.com/nodejs/node-gyp/commit/18d5c7c9d0)] - **win,src**: update win\_delay\_load\_hook.cc to work with /clr (Ivan Petrovic) [#1819](https://github.com/nodejs/node-gyp/pull/1819)
 
-v5.0.3 2019-07-17
-=================
+## v5.0.3 2019-07-17
 
 * [[`66ad305775`](https://github.com/nodejs/node-gyp/commit/66ad305775)] - **python**: accept Python 3 conditionally (João Reis) [#1815](https://github.com/nodejs/node-gyp/pull/1815)
 * [[`7e7fce3fed`](https://github.com/nodejs/node-gyp/commit/7e7fce3fed)] - **python**: move Python detection to its own file (João Reis) [#1815](https://github.com/nodejs/node-gyp/pull/1815)
@@ -217,8 +248,7 @@ v5.0.3 2019-07-17
 * [[`24109148df`](https://github.com/nodejs/node-gyp/commit/24109148df)] - **test**: downgrade to tap@^12 for continued Node 6 support (Rod Vagg) [#1808](https://github.com/nodejs/node-gyp/pull/1808)
 * [[`656117cc4a`](https://github.com/nodejs/node-gyp/commit/656117cc4a)] - **win**: make VS path match case-insensitive (João Reis) [#1806](https://github.com/nodejs/node-gyp/pull/1806)
 
-v5.0.2 2019-06-27
-=================
+## v5.0.2 2019-06-27
 
 * [[`2761afbf73`](https://github.com/nodejs/node-gyp/commit/2761afbf73)] - **build,test**: add duplicate symbol test (Gabriel Schulhof) [#1689](https://github.com/nodejs/node-gyp/pull/1689)
 * [[`82f129d6de`](https://github.com/nodejs/node-gyp/commit/82f129d6de)] - **gyp**: replace optparse to argparse (KiYugadgeter) [#1591](https://github.com/nodejs/node-gyp/pull/1591)
@@ -237,14 +267,12 @@ v5.0.2 2019-06-27
 * [[`1597c84aad`](https://github.com/nodejs/node-gyp/commit/1597c84aad)] - **test**: use Travis CI to run tests on every pull request (cclauss) [#1752](https://github.com/nodejs/node-gyp/pull/1752)
 * [[`dd9bf929ac`](https://github.com/nodejs/node-gyp/commit/dd9bf929ac)] - **zos**: update compiler options (Shuowang (Wayne) Zhang) [#1768](https://github.com/nodejs/node-gyp/pull/1768)
 
-v5.0.1 2019-06-20
-=================
+## v5.0.1 2019-06-20
 
 * [[`e3861722ed`](https://github.com/nodejs/node-gyp/commit/e3861722ed)] - **doc**: document --jobs max (David Sanders) [#1770](https://github.com/nodejs/node-gyp/pull/1770)
 * [[`1cfdb28886`](https://github.com/nodejs/node-gyp/commit/1cfdb28886)] - **lib**: reintroduce support for iojs file naming for releases \>= 1 && \< 4 (Samuel Attard) [#1777](https://github.com/nodejs/node-gyp/pull/1777)
 
-v5.0.0 2019-06-13
-=================
+## v5.0.0 2019-06-13
 
 * [[`8a83972743`](https://github.com/nodejs/node-gyp/commit/8a83972743)] - **(SEMVER-MAJOR)** **bin**: follow XDG OS conventions for storing data (Selwyn) [#1570](https://github.com/nodejs/node-gyp/pull/1570)
 * [[`9e46872ea3`](https://github.com/nodejs/node-gyp/commit/9e46872ea3)] - **bin,lib**: remove extra comments/lines/spaces (Jon Moss) [#1508](https://github.com/nodejs/node-gyp/pull/1508)
@@ -282,16 +310,14 @@ v5.0.0 2019-06-13
 * [[`721dc7d314`](https://github.com/nodejs/node-gyp/commit/721dc7d314)] - Add ARM64 to MSBuild /Platform logic (Jon Kunkee) [#1655](https://github.com/nodejs/node-gyp/pull/1655)
 * [[`a5b7410497`](https://github.com/nodejs/node-gyp/commit/a5b7410497)] - Add ESLint no-unused-vars rule (Jon Moss) [#1497](https://github.com/nodejs/node-gyp/pull/1497)
 
-v4.0.0 2019-04-24
-=================
+## v4.0.0 2019-04-24
 
 * [[`ceed5cbe10`](https://github.com/nodejs/node-gyp/commit/ceed5cbe10)] - **deps**: updated tar package version to 4.4.8 (Pobegaylo Maksim) [#1713](https://github.com/nodejs/node-gyp/pull/1713)
 * [[`374519e066`](https://github.com/nodejs/node-gyp/commit/374519e066)] - **(SEMVER-MAJOR)** Upgrade to tar v3 (isaacs) [#1212](https://github.com/nodejs/node-gyp/pull/1212)
 * [[`e6699d13cd`](https://github.com/nodejs/node-gyp/commit/e6699d13cd)] - **test**: fix addon test for Node.js 12 and V8 7.4 (Richard Lau) [#1705](https://github.com/nodejs/node-gyp/pull/1705)
 * [[`0c6bf530a0`](https://github.com/nodejs/node-gyp/commit/0c6bf530a0)] - **lib**: use print() for python version detection (GreenAddress) [#1534](https://github.com/nodejs/node-gyp/pull/1534)
 
-v3.8.0 2018-08-09
-=================
+## v3.8.0 2018-08-09
 
 * [[`c5929cb4fe`](https://github.com/nodejs/node-gyp/commit/c5929cb4fe)] - **doc**: update Xcode preferences tab name. (Ivan Daniluk) [#1330](https://github.com/nodejs/node-gyp/pull/1330)
 * [[`8b488da8b9`](https://github.com/nodejs/node-gyp/commit/8b488da8b9)] - **doc**: update link to commit guidelines (Jonas Hermsmeier) [#1456](https://github.com/nodejs/node-gyp/pull/1456)
@@ -310,8 +336,7 @@ v3.8.0 2018-08-09
 * [[`969447c5bd`](https://github.com/nodejs/node-gyp/commit/969447c5bd)] - **deps**: bump request to 2.8.7, fixes heok/hawk issues (Rohit Hazra) [#1492](https://github.com/nodejs/node-gyp/pull/1492)
 * [[`340403ccfe`](https://github.com/nodejs/node-gyp/commit/340403ccfe)] - **win**: improve parsing of SDK version (Alessandro Vergani) [#1516](https://github.com/nodejs/node-gyp/pull/1516)
 
-v3.7.0 2018-06-08
-=================
+## v3.7.0 2018-06-08
 
 * [[`84cea7b30d`](https://github.com/nodejs/node-gyp/commit/84cea7b30d)] - Remove unused gyp test scripts. (Ben Noordhuis) [#1458](https://github.com/nodejs/node-gyp/pull/1458)
 * [[`0540e4ec63`](https://github.com/nodejs/node-gyp/commit/0540e4ec63)] - **gyp**: escape spaces in filenames in make generator (Jeff Senn) [#1436](https://github.com/nodejs/node-gyp/pull/1436)
@@ -335,14 +360,12 @@ v3.7.0 2018-06-08
 * [[`f27599193a`](https://github.com/nodejs/node-gyp/commit/f27599193a)] - **gyp**: update xml string encoding conversion (Liu Chao) [#1203](https://github.com/nodejs/node-gyp/pull/1203)
 * [[`0a07e481f7`](https://github.com/nodejs/node-gyp/commit/0a07e481f7)] - **configure**: don't set ensure if tarball is set (Gibson Fahnestock) [#1220](https://github.com/nodejs/node-gyp/pull/1220)
 
-v3.6.3 2018-06-08
-=================
+## v3.6.3 2018-06-08
 
 * [[`90cd2e8da9`](https://github.com/nodejs/node-gyp/commit/90cd2e8da9)] - **gyp**: fix regex to match multi-digit versions (Jonas Hermsmeier) [#1455](https://github.com/nodejs/node-gyp/pull/1455)
 * [[`7900122337`](https://github.com/nodejs/node-gyp/commit/7900122337)] - deps: pin `request` version range (Refael Ackerman) [#1300](https://github.com/nodejs/node-gyp/pull/1300)
 
-v3.6.2 2017-06-01
-=================
+## v3.6.2 2017-06-01
 
 * [[`72afdd62cd`](https://github.com/nodejs/node-gyp/commit/72afdd62cd)] - **build**: rename copyNodeLib() to doBuild() (Liu Chao) [#1206](https://github.com/nodejs/node-gyp/pull/1206)
 * [[`bad903ac70`](https://github.com/nodejs/node-gyp/commit/bad903ac70)] - **win**: more robust parsing of SDK version (Refael Ackermann) [#1198](https://github.com/nodejs/node-gyp/pull/1198)
@@ -351,8 +374,7 @@ v3.6.2 2017-06-01
 * [[`0913b2dd99`](https://github.com/nodejs/node-gyp/commit/0913b2dd99)] - **build, win**: use target_arch to link with node.lib (Pavel Medvedev) [#964](https://github.com/nodejs/node-gyp/pull/964)
 * [[`c307b302f7`](https://github.com/nodejs/node-gyp/commit/c307b302f7)] - **doc**: blorb about setting `npm_config_OPTION_NAME` (Refael Ackermann) [#1185](https://github.com/nodejs/node-gyp/pull/1185)
 
-v3.6.1 2017-04-30
-=================
+## v3.6.1 2017-04-30
 
 * [[`49801716c2`](https://github.com/nodejs/node-gyp/commit/49801716c2)] - **test**: fix test-find-python on v0.10.x buildbot. (Ben Noordhuis) [#1172](https://github.com/nodejs/node-gyp/pull/1172)
 * [[`a83a3801fc`](https://github.com/nodejs/node-gyp/commit/a83a3801fc)] - **test**: fix test/test-configure-python on AIX (Richard Lau) [#1131](https://github.com/nodejs/node-gyp/pull/1131)
@@ -360,8 +382,7 @@ v3.6.1 2017-04-30
 * [[`c09cf7671e`](https://github.com/nodejs/node-gyp/commit/c09cf7671e)] - **doc**: add a note for using `configure` on Windows (Vse Mozhet Byt) [#1152](https://github.com/nodejs/node-gyp/pull/1152)
 * [[`da9cb5f411`](https://github.com/nodejs/node-gyp/commit/da9cb5f411)] - Delete superfluous .patch files. (Ben Noordhuis) [#1122](https://github.com/nodejs/node-gyp/pull/1122)
 
-v3.6.0 2017-03-16
-=================
+## v3.6.0 2017-03-16
 
 * [[`ae141e1906`](https://github.com/nodejs/node-gyp/commit/ae141e1906)] - **win**: find and setup for VS2017 (Refael Ackermann) [#1130](https://github.com/nodejs/node-gyp/pull/1130)
 * [[`ec5fc36a80`](https://github.com/nodejs/node-gyp/commit/ec5fc36a80)] - Add support to build node.js with chakracore for ARM. (Kunal Pathak) [#873](https://github.com/nodejs/node-gyp/pull/873)
@@ -369,9 +390,7 @@ v3.6.0 2017-03-16
 * [[`93d7fa83c8`](https://github.com/nodejs/node-gyp/commit/93d7fa83c8)] - Upgrade semver dependency. (Ben Noordhuis) [#1107](https://github.com/nodejs/node-gyp/pull/1107)
 * [[`ff9a6fadfd`](https://github.com/nodejs/node-gyp/commit/ff9a6fadfd)] - Update link of gyp as Google code is shutting down (Peter Dave Hello) [#1061](https://github.com/nodejs/node-gyp/pull/1061)
 
-
-v3.5.0 2017-01-10
-=================
+## v3.5.0 2017-01-10
 
 * [[`762d19a39e`](https://github.com/nodejs/node-gyp/commit/762d19a39e)] - \[doc\] merge History.md and CHANGELOG.md (Rod Vagg) 
 * [[`80fc5c3d31`](https://github.com/nodejs/node-gyp/commit/80fc5c3d31)] - Fix deprecated dependency warning (Simone Primarosa) [#1069](https://github.com/nodejs/node-gyp/pull/1069)
@@ -385,8 +404,7 @@ v3.5.0 2017-01-10
 * [[`9c8d275526`](https://github.com/nodejs/node-gyp/commit/9c8d275526)] - Add --devdir flag. (Ben Noordhuis) [#916](https://github.com/nodejs/node-gyp/pull/916)
 * [[`f6eab1f9e4`](https://github.com/nodejs/node-gyp/commit/f6eab1f9e4)] - **doc**: add windows-build-tools to readme (Felix Rieseberg) [#970](https://github.com/nodejs/node-gyp/pull/970)
 
-v3.4.0 2016-06-28
-=================
+## v3.4.0 2016-06-28
 
 * [[`ce5fd04e94`](https://github.com/nodejs/node-gyp/commit/ce5fd04e94)] - **deps**: update minimatch version (delphiactual) [#961](https://github.com/nodejs/node-gyp/pull/961)
 * [[`77383ddd85`](https://github.com/nodejs/node-gyp/commit/77383ddd85)] - Replace fs.accessSync call to fs.statSync (Richard Lau) [#955](https://github.com/nodejs/node-gyp/pull/955)
@@ -406,13 +424,11 @@ v3.4.0 2016-06-28
 * [[`625c1515f9`](https://github.com/nodejs/node-gyp/commit/625c1515f9)] - **gyp**: inherit CC/CXX for CC/CXX.host (Johan Bergström) [#908](https://github.com/nodejs/node-gyp/pull/908)
 * [[`3bcb1720e4`](https://github.com/nodejs/node-gyp/commit/3bcb1720e4)] - Add support for the Python launcher on Windows (Patrick Westerhoff) [#894](https://github.com/nodejs/node-gyp/pull/894
 
-v3.3.1 2016-03-04
-=================
+## v3.3.1 2016-03-04
 
 * [[`a981ef847a`](https://github.com/nodejs/node-gyp/commit/a981ef847a)] - **gyp**: fix android generator (Robert Chiras) [#889](https://github.com/nodejs/node-gyp/pull/889)
 
-v3.3.0 2016-02-16
-=================
+## v3.3.0 2016-02-16
 
 * [[`818d854a4d`](https://github.com/nodejs/node-gyp/commit/818d854a4d)] - Introduce NODEJS_ORG_MIRROR and IOJS_ORG_MIRROR (Rod Vagg) [#878](https://github.com/nodejs/node-gyp/pull/878)
 * [[`d1e4cc4b62`](https://github.com/nodejs/node-gyp/commit/d1e4cc4b62)] - **(SEMVER-MINOR)** Download headers tarball for ~0.12.10 || ~0.10.42 (Rod Vagg) [#877](https://github.com/nodejs/node-gyp/pull/877)
@@ -421,14 +437,12 @@ v3.3.0 2016-02-16
 * [[`8c4b0ffa50`](https://github.com/nodejs/node-gyp/commit/8c4b0ffa50)] - **(SEMVER-MINOR)** Add --cafile command line option. (Ben Noordhuis) [#837](https://github.com/nodejs/node-gyp/pull/837)
 * [[`b3ad43498e`](https://github.com/nodejs/node-gyp/commit/b3ad43498e)] - **(SEMVER-MINOR)** Make download() function testable. (Ben Noordhuis) [#837](https://github.com/nodejs/node-gyp/pull/837)
 
-v3.2.1 2015-12-03
-=================
+## v3.2.1 2015-12-03
 
 * [[`ab89b477c4`](https://github.com/nodejs/node-gyp/commit/ab89b477c4)] - Upgrade gyp to b3cef02. (Ben Noordhuis) [#831](https://github.com/nodejs/node-gyp/pull/831)
 * [[`90078ecb17`](https://github.com/nodejs/node-gyp/commit/90078ecb17)] - Define WIN32_LEAN_AND_MEAN conditionally. (Ben Noordhuis) [#824](https://github.com/nodejs/node-gyp/pull/824)
 
-v3.2.0 2015-11-25
-=================
+## v3.2.0 2015-11-25
 
 * [[`268f1ca4c7`](https://github.com/nodejs/node-gyp/commit/268f1ca4c7)] - Use result of `which` when searching for python. (Refael Ackermann) [#668](https://github.com/nodejs/node-gyp/pull/668)
 * [[`817ed9bd78`](https://github.com/nodejs/node-gyp/commit/817ed9bd78)] - Add test for python executable search logic. (Ben Noordhuis) [#756](https://github.com/nodejs/node-gyp/pull/756)
@@ -437,8 +451,7 @@ v3.2.0 2015-11-25
 * [[`a8d441a0a2`](https://github.com/nodejs/node-gyp/commit/a8d441a0a2)] - Update README for Windows 10 support. (Jason Williams) [#766](https://github.com/nodejs/node-gyp/pull/766)
 * [[`d1d6015276`](https://github.com/nodejs/node-gyp/commit/d1d6015276)] - Update broken links and switch to HTTPS. (andrew morton) 
 
-v3.1.0 2015-11-14
-=================
+## v3.1.0 2015-11-14
 
 * [[`9049241f91`](https://github.com/nodejs/node-gyp/commit/9049241f91)] - **gyp**: don't use links at all, just copy the files instead (Nathan Zadoks)
 * [[`8ef90348d1`](https://github.com/nodejs/node-gyp/commit/8ef90348d1)] - **gyp**: apply https://codereview.chromium.org/11361103/ (Nathan Rajlich)
@@ -448,24 +461,20 @@ v3.1.0 2015-11-14
 * [[`2ac7de02c4`](https://github.com/nodejs/node-gyp/commit/2ac7de02c4)] - Fix infinite loop with zero-length options. (Ben Noordhuis) [#745](https://github.com/nodejs/node-gyp/pull/745)
 * [[`101bed639b`](https://github.com/nodejs/node-gyp/commit/101bed639b)] - This platform value came from debian package, and now the value (Jérémy Lal) [#738](https://github.com/nodejs/node-gyp/pull/738)
 
-v3.0.3 2015-09-14
-=================
+## v3.0.3 2015-09-14
 
 * [[`ad827cda30`](https://github.com/nodejs/node-gyp/commit/ad827cda30)] - tarballUrl global and && when checking for iojs (Lars-Magnus Skog) [#729](https://github.com/nodejs/node-gyp/pull/729)
 
-v3.0.2 2015-09-12
-=================
+## v3.0.2 2015-09-12
 
 * [[`6e8c3bf3c6`](https://github.com/nodejs/node-gyp/commit/6e8c3bf3c6)] - add back support for passing additional cmdline args (Rod Vagg) [#723](https://github.com/nodejs/node-gyp/pull/723)
 * [[`ff82f2f3b9`](https://github.com/nodejs/node-gyp/commit/ff82f2f3b9)] - fixed broken link in docs to Visual Studio 2013 download (simon-p-r) [#722](https://github.com/nodejs/node-gyp/pull/722)
 
-v3.0.1 2015-09-08
-=================
+## v3.0.1 2015-09-08
 
 * [[`846337e36b`](https://github.com/nodejs/node-gyp/commit/846337e36b)] - normalise versions for target == this comparison (Rod Vagg) [#716](https://github.com/nodejs/node-gyp/pull/716)
 
-v3.0.0 2015-09-08
-=================
+## v3.0.0 2015-09-08
 
 * [[`9720d0373c`](https://github.com/nodejs/node-gyp/commit/9720d0373c)] - remove node_modules from tree (Rod Vagg) [#711](https://github.com/nodejs/node-gyp/pull/711)
 * [[`6dcf220db7`](https://github.com/nodejs/node-gyp/commit/6dcf220db7)] - test version major directly, don't use semver.satisfies() (Rod Vagg) [#711](https://github.com/nodejs/node-gyp/pull/711)
@@ -477,8 +486,7 @@ v3.0.0 2015-09-08
 * [[`85ed107565`](https://github.com/nodejs/node-gyp/commit/85ed107565)] - Merge pull request #664 from othiym23/othiym23/allow-semver-5 (Nathan Rajlich)
 * [[`0c720d234c`](https://github.com/nodejs/node-gyp/commit/0c720d234c)] - allow semver@5 (Forrest L Norvell)
 
-2.0.2 / 2015-07-14
-==================
+## 2.0.2 / 2015-07-14
 
   * Use HTTPS for dist url (#656, @SonicHedgehog)
   * Merge pull request #648 from nevosegal/master
@@ -491,14 +499,12 @@ v3.0.0 2015-09-08
     src/win_delay_load_hook.c, and fixes of the long relative path issue on Win32.
     Fixes #636 (#637, @lygstate).
 
-2.0.1 / 2015-05-28
-==================
+## 2.0.1 / 2015-05-28
 
   * configure: try/catch the semver range.test() call
   * README: update for visual studio 2013 (#510, @samccone)
 
-2.0.0 / 2015-05-24
-==================
+## 2.0.0 / 2015-05-24
 
   * configure: check for python2 executable by default, fallback to python
   * configure: don't clobber existing $PYTHONPATH
