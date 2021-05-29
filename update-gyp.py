@@ -43,4 +43,4 @@ with tempfile.TemporaryDirectory() as tmp_dir:
         )
 
 subprocess.check_output(["git", "add", "gyp"], cwd=CHECKOUT_PATH)
-subprocess.check_output(["git", "commit", "-m", "gyp: update gyp to " + args.tag])
+subprocess.check_output(["git", "commit", "-m", "feat(gyp): update gyp to " + args.tag])
