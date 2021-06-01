@@ -23,12 +23,6 @@ modify on current Windows. Therefore, run the following commands __inside a `cmd
 
 First we need to find the location of `node`. If you don't already know the location that `node.exe` got installed to, then run:
 ```bash
-$ npm install -g which
-$ which node
-```
-
-As an alternative to the above, those on Windows Server 2003 and later (this includes Windows 7) can run:
-```bash
 $ where node
 ```
 
