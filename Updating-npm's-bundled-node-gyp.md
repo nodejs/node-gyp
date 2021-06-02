@@ -26,22 +26,27 @@ First we need to find the location of `node`. If you don't already know the loca
 $ where node
 ```
 
-Now `cd` to the directory that `node.exe` is contained in, and with `node_modules\npm` at the end. i.e.:
+Now `cd` to the directory that `node.exe` is contained in i.e.:
 ```bash
-$ cd "C:\Program Files\nodejs\node_modules\npm"
+$ cd "C:\Program Files\nodejs"
 ```
 
-Now you can run:
+Now we need to know your version of `npm`:
 ```bash
-$ npm install node-gyp@latest
+npm --version
 ```
 
-Now `cd` to the `npm-lifecycle` directory:
+If your npm version is ___7 or greater___, do:
 ```bash
-$ cd node_modules\npm-lifecycle
+cd node_modules\npm\node_modules\@npmcli\run-script
 ```
 
-Now you can finally run (again):
+If your npm version is ___less than 7___, do:
+```bash
+cd node_modules\npm\node_modules\npm-lifecycle
+```
+
+Finish by running:
 ```bash
 $ npm install node-gyp@latest
 ```
