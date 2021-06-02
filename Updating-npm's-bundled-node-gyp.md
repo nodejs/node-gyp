@@ -9,9 +9,23 @@ _won't_ do the trick since npm will still continue to use its internal copy over
 
 So instead:
 
+## Version of npm
+
+We need to start by knowing your version of `npm`:
+```bash
+npm --version
+```
+
 ## Linux, Mac OS X, Solaris, etc.
 
 Unix is easy. Just run the following command. Use `sudo` if necessary.
+
+If your npm is version ___7___, do:
+```bash
+$ [sudo] npm explore npm/node_modules/@npmcli/run-script -g -- npm_config_global=false npm install node-gyp@latest
+```
+
+Else if your npm is version ___less than 7___, do:
 ```bash
 $ [sudo] npm explore npm/node_modules/npm-lifecycle -g -- npm install node-gyp@latest
 ```
@@ -26,17 +40,12 @@ First we need to find the location of `node`. If you don't already know the loca
 $ where node
 ```
 
-Now `cd` to the directory that `node.exe` is contained in i.e.:
+Now `cd` to the directory that `node.exe` is contained in e.g.:
 ```bash
 $ cd "C:\Program Files\nodejs"
 ```
 
-Now we need to know your version of `npm`:
-```bash
-npm --version
-```
-
-If your npm version is ___7 or greater___, do:
+If your npm version is ___7___, do:
 ```bash
 cd node_modules\npm\node_modules\@npmcli\run-script
 ```
