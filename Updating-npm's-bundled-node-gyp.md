@@ -50,7 +50,7 @@ If your npm version is ___7___, do:
 cd node_modules\npm\node_modules\@npmcli\run-script
 ```
 
-If your npm version is ___less than 7___, do:
+Else if your npm version is ___less than 7___, do:
 ```bash
 cd node_modules\npm\node_modules\npm-lifecycle
 ```
