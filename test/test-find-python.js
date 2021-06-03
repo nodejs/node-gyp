@@ -55,6 +55,12 @@ function strictDeepEqual (received, wanted) {
  */
 
 /**
+ * implement custom childProcess.execFile for testing proposes
+ *
+ * ! ***DO NOT FORGET TO OVERRIDE DEFAULT `PythonFinder.execFile` AFTER INSTANCING `PythonFinder`***
+ *
+ * TODO: do overriding if automotive way
+ *
  * @param {OptionsObj} [optionsObj]
  */
 function TestExecFile (optionsObj) {
@@ -63,15 +69,16 @@ function TestExecFile (optionsObj) {
    * @this {PythonFinder}
    */
   return function testExecFile (exec, args, options, callback) {
-    if (!(optionsObj ? optionsObj.shouldProduceError : false)) {
+    if (!(optionsObj && optionsObj.shouldProduceError)) {
+      // when checking version in checkExecPath, thus need to use PythonFinder.argsVersion
       if (args === this.argsVersion) {
-        if (optionsObj ? optionsObj.checkingWinDefaultPathes : false) {
+        if (optionsObj && optionsObj.checkingWinDefaultPathes) {
           if (this.winDefaultLocations.includes(exec)) {
             callback(null, testVersions.normal)
           } else {
             callback(new Error('not found'))
           }
-        } else if (optionsObj ? optionsObj.isPythonOutdated : false) {
+        } else if (optionsObj && optionsObj.isPythonOutdated) {
           callback(null, testVersions.outdated, null)
         } else {
           callback(null, testVersions.normal, null)
@@ -80,7 +87,7 @@ function TestExecFile (optionsObj) {
         // DONE: map through argsExecutable to check that all args are equals
         strictDeepEqual(args, this.win ? this.argsExecutable.map((arg) => `"${arg}"`) : this.argsExecutable)
       ) {
-        if (optionsObj ? optionsObj.checkingPyLauncher : false) {
+        if (optionsObj && optionsObj.checkingPyLauncher) {
           if (
             exec === 'py.exe' ||
             exec === (this.win ? '"python"' : 'python')
@@ -89,10 +96,13 @@ function TestExecFile (optionsObj) {
           } else {
             callback(new Error('not found'))
           }
-        } else if (optionsObj ? optionsObj.checkingWinDefaultPathes : false) {
+        } else if (optionsObj && optionsObj.checkingWinDefaultPathes) {
+          // return "not found" for regular checks (env-vars etc.)
+          // which are running twice:
+          // first to get path, second to check it
           callback(new Error('not found'))
         } else {
-          // should be trimmed
+          // returned string should be trimmed
           callback(null, testString + '\n', null)
         }
       } else {
