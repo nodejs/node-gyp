@@ -1,339 +1,348 @@
 'use strict'
 
-var test = require('tape')
-var path = require('path')
-var configure = require('../lib/configure')
-var execFile = require('child_process').execFile
-var PythonFinder = configure.test.PythonFinder
+const tap = require('tap')
+const { test } = tap
+const findPython = require('../lib/find-python')
+const cp = require('child_process')
+const PythonFinder = findPython.test.PythonFinder
+const util = require('util')
+const path = require('path')
+const npmlog = require('npmlog')
+const fs = require('fs')
+npmlog.level = 'silent'
 
-test('find python', function (t) {
-  t.plan(4)
+// what final error message displayed in terminal should contain
+const finalErrorMessage = 'Could not find any Python'
 
-  configure.test.findPython('python', function (err, found) {
-    t.strictEqual(err, null)
-    var proc = execFile(found, ['-V'], function (err, stdout, stderr) {
-      t.strictEqual(err, null)
-      t.strictEqual(stdout, '')
-      t.ok(/Python 2/.test(stderr))
+//! don't forget manually call pythonFinderInstance.findPython()
+
+// String emulating path command or anything else with spaces
+// and UTF-8 characters.
+// Is returned by execFile
+//! USE FOR ALL STRINGS
+const testString = 'python one love♥'
+const testVersions = {
+  outdated: '2.0.0',
+  normal: '3.9.0',
+  testError: new Error('test error')
+}
+
+function strictDeepEqual (received, wanted) {
+  let result = false
+
+  for (let i = 0; i < received.length; i++) {
+    if (Array.isArray(received[i]) && Array.isArray(wanted[i])) {
+      result = strictDeepEqual(received[i], wanted[i])
+    } else {
+      result = received[i] === wanted[i]
+    }
+
+    if (!result) {
+      return result
+    }
+  }
+
+  return result
+}
+
+/**
+ * @typedef OptionsObj
+ * @property {boolean} [shouldProduceError] pass test error to callback
+ * @property {boolean} [checkingPyLauncher]
+ * @property {boolean} [isPythonOutdated] return outdated version
+ * @property {boolean} [checkingWinDefaultPathes]
+ *
+ */
+
+/**
+ * implement custom childProcess.execFile for testing proposes
+ *
+ * ! ***DO NOT FORGET TO OVERRIDE DEFAULT `PythonFinder.execFile` AFTER INSTANCING `PythonFinder`***
+ *
+ * TODO: do overriding if automotive way
+ *
+ * @param {OptionsObj} [optionsObj]
+ */
+function TestExecFile (optionsObj) {
+  /**
+   *
+   * @this {PythonFinder}
+   */
+  return function testExecFile (exec, args, options, callback) {
+    if (!(optionsObj && optionsObj.shouldProduceError)) {
+      // when checking version in checkExecPath, thus need to use PythonFinder.argsVersion
+      if (args === this.argsVersion) {
+        if (optionsObj && optionsObj.checkingWinDefaultPathes) {
+          if (this.winDefaultLocations.includes(exec)) {
+            callback(null, testVersions.normal)
+          } else {
+            callback(new Error('not found'))
+          }
+        } else if (optionsObj && optionsObj.isPythonOutdated) {
+          callback(null, testVersions.outdated, null)
+        } else {
+          callback(null, testVersions.normal, null)
+        }
+      } else if (
+        // DONE: map through argsExecutable to check that all args are equals
+        strictDeepEqual(args, this.win ? this.argsExecutable.map((arg) => `"${arg}"`) : this.argsExecutable)
+      ) {
+        if (optionsObj && optionsObj.checkingPyLauncher) {
+          if (
+            exec === 'py.exe' ||
+            exec === (this.win ? '"python"' : 'python')
+          ) {
+            callback(null, testString, null)
+          } else {
+            callback(new Error('not found'))
+          }
+        } else if (optionsObj && optionsObj.checkingWinDefaultPathes) {
+          // return "not found" for regular checks (env-vars etc.)
+          // which are running twice:
+          // first to get path, second to check it
+          callback(new Error('not found'))
+        } else {
+          // returned string should be trimmed
+          callback(null, testString + '\n', null)
+        }
+      } else {
+        throw new Error(
+          `invalid arguments are provided! provided args 
+are: ${args};\n\nValid are: \n${this.argsExecutable}\n${this.argsVersion}`
+        )
+      }
+    } else {
+      const testError = new Error(
+        `test error ${testString}; optionsObj: ${optionsObj}`
+      )
+      callback(testError)
+    }
+  }
+}
+
+/**
+ *
+ * @param {boolean} isPythonOutdated if true will return outdated version of python
+ * @param {OptionsObj} optionsObj
+ */
+
+test('find-python', { buffered: true }, (t) => {
+  t.test('whole module tests', (t) => {
+    t.test('python found', (t) => {
+      const pythonFinderInstance = new PythonFinder(null, (err, path) => {
+        if (err) {
+          t.fail(
+            `mustn't produce any errors if execFile doesn't produced error. ${err}`
+          )
+        } else {
+          t.equal(path, testString)
+          t.end()
+        }
+      })
+      pythonFinderInstance.execFile = TestExecFile()
+
+      pythonFinderInstance.findPython()
     })
-    proc.stdout.setEncoding('utf-8')
-    proc.stderr.setEncoding('utf-8')
+
+    t.test('outdated version of python found', (t) => {
+      const pythonFinderInstance = new PythonFinder(null, (err, path) => {
+        if (!err) {
+          t.fail("mustn't return path for outdated version")
+        } else {
+          t.end()
+        }
+      })
+
+      pythonFinderInstance.execFile = TestExecFile({ isPythonOutdated: true })
+
+      pythonFinderInstance.findPython()
+    })
+
+    t.test('no python on computer', (t) => {
+      const pythonFinderInstance = new PythonFinder(null, (err, path) => {
+        t.ok(err.message.includes(finalErrorMessage))
+        t.end()
+      })
+
+      pythonFinderInstance.execFile = TestExecFile({
+        shouldProduceError: true
+      })
+
+      pythonFinderInstance.findPython()
+    })
+
+    t.test('no python, unix', (t) => {
+      const pythonFinderInstance = new PythonFinder(null, (err, path) => {
+        t.notOk(path)
+
+        t.ok(err)
+        t.ok(err.message.includes(finalErrorMessage))
+        t.end()
+      })
+
+      pythonFinderInstance.win = false
+      pythonFinderInstance.checkPyLauncher = t.fail
+
+      pythonFinderInstance.execFile = TestExecFile({
+        shouldProduceError: true
+      })
+
+      pythonFinderInstance.findPython()
+    })
+
+    t.test('no python, use python launcher', (t) => {
+      const pythonFinderInstance = new PythonFinder(null, (err, path) => {
+        t.equal(err, null)
+
+        t.equal(path, testString)
+
+        t.end()
+      })
+
+      pythonFinderInstance.win = true
+
+      pythonFinderInstance.execFile = TestExecFile({
+        checkingPyLauncher: true
+      })
+
+      pythonFinderInstance.findPython()
+    })
+
+    t.test(
+      'no python, no python launcher, checking win default locations',
+      (t) => {
+        const pythonFinderInstance = new PythonFinder(null, (err, path) => {
+          t.equal(err, null)
+          t.ok(pythonFinderInstance.winDefaultLocations.includes(path))
+          t.end()
+        })
+
+        pythonFinderInstance.win = true
+
+        pythonFinderInstance.execFile = TestExecFile({
+          checkingWinDefaultPathes: true
+        })
+        pythonFinderInstance.findPython()
+      }
+    )
+
+    t.test('python is setted from config', (t) => {
+      const pythonFinderInstance = new PythonFinder(testString, (err, path) => {
+        t.equal(err, null)
+
+        t.equal(path, testString)
+
+        t.end()
+      })
+
+      pythonFinderInstance.win = true
+
+      pythonFinderInstance.execFile = TestExecFile()
+      pythonFinderInstance.findPython()
+    })
+
+    t.end()
   })
-})
 
-function poison(object, property) {
-  function fail() {
-    throw new Error('Property ' + property + ' should not have been accessed.')
-  }
-  var descriptor = {
-    configurable: true,
-    enumerable: false,
-    writable: true,
-    getter: fail,
-    setter: fail,
-  }
-  Object.defineProperty(object, property, descriptor)
-}
-
-// Work around a v0.10.x CI issue where path.resolve() on UNIX systems prefixes
-// Windows paths with the current working directory.  v0.12 and up are free of
-// this issue because they use path.win32.resolve() which does the right thing.
-var resolve = path.win32 && path.win32.resolve || function() {
-  function rstrip(s) { return s.replace(/\\+$/, '') }
-  return [].slice.call(arguments).map(rstrip).join('\\')
-}
-
-function TestPythonFinder() { PythonFinder.apply(this, arguments) }
-TestPythonFinder.prototype = Object.create(PythonFinder.prototype)
-poison(TestPythonFinder.prototype, 'env')
-poison(TestPythonFinder.prototype, 'execFile')
-poison(TestPythonFinder.prototype, 'resolve')
-poison(TestPythonFinder.prototype, 'stat')
-poison(TestPythonFinder.prototype, 'which')
-poison(TestPythonFinder.prototype, 'win')
-
-test('find python - python', function (t) {
-  t.plan(5)
-
-  var f = new TestPythonFinder('python', done)
-  f.which = function(program, cb) {
-    t.strictEqual(program, 'python')
-    cb(null, program)
-  }
-  f.execFile = function(program, args, opts, cb) {
-    t.strictEqual(program, 'python')
-    t.ok(/import sys/.test(args[1]))
-    cb(null, '2.7.0')
-  }
-  f.checkPython()
-
-  function done(err, python) {
-    t.strictEqual(err, null)
-    t.strictEqual(python, 'python')
-  }
-})
-
-test('find python - python too old', function (t) {
-  t.plan(4)
-
-  var f = new TestPythonFinder('python', done)
-  f.which = function(program, cb) {
-    t.strictEqual(program, 'python')
-    cb(null, program)
-  }
-  f.execFile = function(program, args, opts, cb) {
-    t.strictEqual(program, 'python')
-    t.ok(/import sys/.test(args[1]))
-    cb(null, '2.3.4')
-  }
-  f.checkPython()
-
-  function done(err, python) {
-    t.ok(/is not supported by gyp/.test(err))
-  }
-})
-
-test('find python - python too new', function (t) {
-  t.plan(4)
-
-  var f = new TestPythonFinder('python', done)
-  f.which = function(program, cb) {
-    t.strictEqual(program, 'python')
-    cb(null, program)
-  }
-  f.execFile = function(program, args, opts, cb) {
-    t.strictEqual(program, 'python')
-    t.ok(/import sys/.test(args[1]))
-    cb(null, '3.0.0')
-  }
-  f.checkPython()
-
-  function done(err, python) {
-    t.ok(/is not supported by gyp/.test(err))
-  }
-})
-
-test('find python - no python', function (t) {
-  t.plan(2)
-
-  var f = new TestPythonFinder('python', done)
-  f.which = function(program, cb) {
-    t.strictEqual(program, 'python')
-    cb(new Error('not found'))
-  }
-  f.checkPython()
-
-  function done(err, python) {
-    t.ok(/Can't find Python executable/.test(err))
-  }
-})
-
-test('find python - no python2', function (t) {
-  t.plan(6)
-
-  var f = new TestPythonFinder('python2', done)
-  f.which = function(program, cb) {
-    f.which = function(program, cb) {
-      t.strictEqual(program, 'python')
-      cb(null, program)
+  // DONE: make symlink to python with utf-8 chars
+  t.test('real testing', async (t) => {
+    const paths = {
+      python: '',
+      pythonDir: '',
+      testDir: '',
+      baseDir: __dirname
     }
-    t.strictEqual(program, 'python2')
-    cb(new Error('not found'))
-  }
-  f.execFile = function(program, args, opts, cb) {
-    t.strictEqual(program, 'python')
-    t.ok(/import sys/.test(args[1]))
-    cb(null, '2.7.0')
-  }
-  f.checkPython()
 
-  function done(err, python) {
-    t.strictEqual(err, null)
-    t.strictEqual(python, 'python')
-  }
-})
+    const execFile = util.promisify(cp.execFile)
 
-test('find python - no python2, no python, unix', function (t) {
-  t.plan(3)
+    // a bit tricky way to make PythonFinder promisified
+    function promisifyPythonFinder (config) {
+      let pythonFinderInstance
 
-  var f = new TestPythonFinder('python2', done)
-  poison(f, 'checkPythonLauncher')
-  f.win = false
+      const result = new Promise((resolve, reject) => {
+        pythonFinderInstance = new PythonFinder(config, (err, path) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(path)
+          }
+        })
+      })
 
-  f.which = function(program, cb) {
-    f.which = function(program, cb) {
-      t.strictEqual(program, 'python')
-      cb(new Error('not found'))
+      return { pythonFinderInstance, result }
     }
-    t.strictEqual(program, 'python2')
-    cb(new Error('not found'))
-  }
-  f.checkPython()
 
-  function done(err, python) {
-    t.ok(/Can't find Python executable/.test(err))
-  }
-})
+    async function testPythonPath (t, pythonPath) {
+      try {
+        const { stderr, stdout } = await execFile(pythonPath, ['-V'])
 
-test('find python - no python, use python launcher', function (t) {
-  t.plan(8)
+        console.log('stdout:', stdout)
+        console.log('stderr:', stderr)
 
-  var f = new TestPythonFinder('python', done)
-  f.env = {}
-  f.win = true
+        if (t.ok(stdout.includes('Python 3'), 'is it python with major version 3') &&
+              t.equal(stderr, '', 'is stderr empty')) {
+          return true
+        }
 
-  f.which = function(program, cb) {
-    t.strictEqual(program, 'python')
-    cb(new Error('not found'))
-  }
-  f.execFile = function(program, args, opts, cb) {
-    f.execFile = function(program, args, opts, cb) {
-      t.strictEqual(program, 'Z:\\snake.exe')
-      t.ok(/import sys/.test(args[1]))
-      cb(null, '2.7.0')
-    }
-    t.strictEqual(program, 'py.exe')
-    t.notEqual(args.indexOf('-2'), -1)
-    t.notEqual(args.indexOf('-c'), -1)
-    cb(null, 'Z:\\snake.exe')
-  }
-  f.checkPython()
-
-  function done(err, python) {
-    t.strictEqual(err, null)
-    t.strictEqual(python, 'Z:\\snake.exe')
-  }
-})
-
-test('find python - python 3, use python launcher', function (t) {
-  t.plan(10)
-
-  var f = new TestPythonFinder('python', done)
-  f.env = {}
-  f.win = true
-
-  f.which = function(program, cb) {
-    t.strictEqual(program, 'python')
-    cb(null, program)
-  }
-  f.execFile = function(program, args, opts, cb) {
-    f.execFile = function(program, args, opts, cb) {
-      f.execFile = function(program, args, opts, cb) {
-        t.strictEqual(program, 'Z:\\snake.exe')
-        t.ok(/import sys/.test(args[1]))
-        cb(null, '2.7.0')
+        return false
+      } catch (err) {
+        t.equal(err, null, 'is error null')
+        return false
       }
-      t.strictEqual(program, 'py.exe')
-      t.notEqual(args.indexOf('-2'), -1)
-      t.notEqual(args.indexOf('-c'), -1)
-      cb(null, 'Z:\\snake.exe')
     }
-    t.strictEqual(program, 'python')
-    t.ok(/import sys/.test(args[1]))
-    cb(null, '3.0.0')
-  }
-  f.checkPython()
 
-  function done(err, python) {
-    t.strictEqual(err, null)
-    t.strictEqual(python, 'Z:\\snake.exe')
-  }
-})
+    // await is needed because test func is async
+    await t.test('trying to find real python exec', async (t) => {
+      const { pythonFinderInstance, result } = promisifyPythonFinder(null)
 
-test('find python - python 3, use python launcher, python 2 too old',
-     function (t) {
-  t.plan(9)
+      try {
+        pythonFinderInstance.findPython()
 
-  var f = new TestPythonFinder('python', done)
-  f.checkedPythonLauncher = false
-  f.env = {}
-  f.win = true
+        const pythonPath = await result
 
-  f.which = function(program, cb) {
-    t.strictEqual(program, 'python')
-    cb(null, program)
-  }
-  f.execFile = function(program, args, opts, cb) {
-    f.execFile = function(program, args, opts, cb) {
-      f.execFile = function(program, args, opts, cb) {
-        t.strictEqual(program, 'Z:\\snake.exe')
-        t.ok(/import sys/.test(args[1]))
-        cb(null, '2.3.4')
+        if (t.ok(await testPythonPath(t, pythonPath), 'is path valid')) {
+          // stdout contain output of "python -V" command, not python path
+          // using found path as trusted
+          paths.python = pythonPath
+          paths.pythonDir = path.join(paths.python, '../')
+        }
+      } catch (err) {
+        t.notOk(err, 'are we having error')
       }
-      t.strictEqual(program, 'py.exe')
-      t.notEqual(args.indexOf('-2'), -1)
-      t.notEqual(args.indexOf('-c'), -1)
-      cb(null, 'Z:\\snake.exe')
+
+      t.end()
+    })
+
+    await t.test(`test with path containing "${testString}"`, async (t) => {
+      // making fixture
+      paths.testDir = fs.mkdtempSync(path.resolve(paths.baseDir, 'node_modules', 'pythonFindTestFolder-'))
+
+      // using "junction" to avoid permission error
+      fs.symlinkSync(paths.pythonDir, path.resolve(paths.testDir, testString), 'junction')
+      console.log('🚀 ~ file: test-find-python.js ~ line 312 ~ await.test ~ path.resolve(paths.testDir, testString)', path.resolve(paths.testDir, testString))
+      console.log('🚀 ~ file: test-find-python.js ~ line 312 ~ await.test ~ paths.pythonDir', paths.pythonDir)
+
+      const { pythonFinderInstance, result } = promisifyPythonFinder(path.resolve(paths.testDir, 'python'))
+
+      pythonFinderInstance.findPython()
+
+      const pythonPath = await result
+
+      t.ok(await testPythonPath(t, pythonPath), 'is path valid')
+
+      t.end()
+    })
+
+    // remove fixture
+    if (fs.rmSync) {
+      fs.rmSync(paths.testDir, { recursive: true })
+    } else {
+      //
+      require('./rm.js')(paths.testDir)
     }
-    t.strictEqual(program, 'python')
-    t.ok(/import sys/.test(args[1]))
-    cb(null, '3.0.0')
-  }
-  f.checkPython()
 
-  function done(err, python) {
-    t.ok(/is not supported by gyp/.test(err))
-  }
-})
+    t.end()
+  })
 
-test('find python - no python, no python launcher, good guess', function (t) {
-  t.plan(6)
-
-  var re = /C:[\\\/]Python27[\\\/]python[.]exe/
-  var f = new TestPythonFinder('python', done)
-  f.env = {}
-  f.win = true
-
-  f.which = function(program, cb) {
-    t.strictEqual(program, 'python')
-    cb(new Error('not found'))
-  }
-  f.execFile = function(program, args, opts, cb) {
-    f.execFile = function(program, args, opts, cb) {
-      t.ok(re.test(program))
-      t.ok(/import sys/.test(args[1]))
-      cb(null, '2.7.0')
-    }
-    t.strictEqual(program, 'py.exe')
-    cb(new Error('not found'))
-  }
-  f.resolve = resolve
-  f.stat = function(path, cb) {
-    t.ok(re.test(path))
-    cb(null, {})
-  }
-  f.checkPython()
-
-  function done(err, python) {
-    t.ok(re.test(python))
-  }
-})
-
-test('find python - no python, no python launcher, bad guess', function (t) {
-  t.plan(4)
-
-  var f = new TestPythonFinder('python', done)
-  f.env = { SystemDrive: 'Z:\\' }
-  f.win = true
-
-  f.which = function(program, cb) {
-    t.strictEqual(program, 'python')
-    cb(new Error('not found'))
-  }
-  f.execFile = function(program, args, opts, cb) {
-    t.strictEqual(program, 'py.exe')
-    cb(new Error('not found'))
-  }
-  f.resolve = resolve
-  f.stat = function(path, cb) {
-    t.ok(/Z:[\\\/]Python27[\\\/]python.exe/.test(path))
-    var err = new Error('not found')
-    err.code = 'ENOENT'
-    cb(err)
-  }
-  f.checkPython()
-
-  function done(err, python) {
-    t.ok(/Can't find Python executable/.test(err))
-  }
+  t.end()
 })

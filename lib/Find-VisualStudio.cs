@@ -3,10 +3,13 @@
 // See accompanying file LICENSE at https://github.com/node4good/windows-autoconf
 
 // Usage:
-// powershell -ExecutionPolicy Unrestricted -Version "2.0" -Command "&{Add-Type -Path Find-VS2017.cs; [VisualStudioConfiguration.Main]::Query()}"
+// powershell -ExecutionPolicy Unrestricted -Command "Add-Type -Path Find-VisualStudio.cs; [VisualStudioConfiguration.Main]::PrintJson()"
+// This script needs to be compatible with PowerShell v2 to run on Windows 2008R2 and Windows 7.
+
 using System;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace VisualStudioConfiguration
 {
@@ -184,7 +187,7 @@ namespace VisualStudioConfiguration
 
     public static class Main
     {
-        public static void Query()
+        public static void PrintJson()
         {
             ISetupConfiguration query = new SetupConfiguration();
             ISetupConfiguration2 query2 = (ISetupConfiguration2)query;
@@ -192,82 +195,56 @@ namespace VisualStudioConfiguration
 
             int pceltFetched;
             ISetupInstance2[] rgelt = new ISetupInstance2[1];
-            StringBuilder log = new StringBuilder();
+            List<string> instances = new List<string>();
             while (true)
             {
                 e.Next(1, rgelt, out pceltFetched);
                 if (pceltFetched <= 0)
                 {
-                    Console.WriteLine(String.Format("{{\"log\":\"{0}\"}}", log.ToString()));
+                    Console.WriteLine(String.Format("[{0}]", string.Join(",", instances.ToArray())));
                     return;
                 }
-                if (CheckInstance(rgelt[0], ref log))
-                    return;
+
+                try
+                {
+                    instances.Add(InstanceJson(rgelt[0]));
+                }
+                catch (COMException)
+                {
+                    // Ignore instances that can't be queried.
+                }
             }
         }
 
-        private static bool CheckInstance(ISetupInstance2 setupInstance2, ref StringBuilder log)
+        private static string JsonString(string s)
         {
-            // Visual Studio Community 2017 component directory:
-            // https://www.visualstudio.com/en-us/productinfo/vs2017-install-product-Community.workloads
+            return "\"" + s.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";
+        }
 
-            string path = setupInstance2.GetInstallationPath().Replace("\\", "\\\\");
-            log.Append(String.Format("Found installation at: {0}\\n", path));
+        private static string InstanceJson(ISetupInstance2 setupInstance2)
+        {
+            // Visual Studio component directory:
+            // https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids
 
-            bool hasMSBuild = false;
-            bool hasVCTools = false;
-            uint Win10SDKVer = 0;
-            bool hasWin8SDK = false;
+            StringBuilder json = new StringBuilder();
+            json.Append("{");
 
+            string path = JsonString(setupInstance2.GetInstallationPath());
+            json.Append(String.Format("\"path\":{0},", path));
+
+            string version = JsonString(setupInstance2.GetInstallationVersion());
+            json.Append(String.Format("\"version\":{0},", version));
+
+            List<string> packages = new List<string>();
             foreach (ISetupPackageReference package in setupInstance2.GetPackages())
             {
-                const string Win10SDKPrefix = "Microsoft.VisualStudio.Component.Windows10SDK.";
-
-                string id = package.GetId();
-                if (id == "Microsoft.VisualStudio.VC.MSBuild.Base")
-                    hasMSBuild = true;
-                else if (id == "Microsoft.VisualStudio.Component.VC.Tools.x86.x64")
-                    hasVCTools = true;
-                else if (id.StartsWith(Win10SDKPrefix)) {
-                    string[] parts = id.Substring(Win10SDKPrefix.Length).Split('.');
-                    if (parts.Length > 1 && parts[1] != "Desktop")
-                        continue;
-                    uint foundSdkVer;
-                    if (UInt32.TryParse(parts[0], out foundSdkVer))
-                        Win10SDKVer = Math.Max(Win10SDKVer, foundSdkVer);
-                } else if (id == "Microsoft.VisualStudio.Component.Windows81SDK")
-                    hasWin8SDK = true;
-                else
-                    continue;
-
-                log.Append(String.Format("  - Found {0}\\n", id));
+                string id = JsonString(package.GetId());
+                packages.Add(id);
             }
+            json.Append(String.Format("\"packages\":[{0}]", string.Join(",", packages.ToArray())));
 
-            if (!hasMSBuild)
-                log.Append("  - Missing Visual Studio C++ core features (Microsoft.VisualStudio.VC.MSBuild.Base)\\n");
-            if (!hasVCTools)
-                log.Append("  - Missing VC++ 2017 v141 toolset (x86,x64) (Microsoft.VisualStudio.Component.VC.Tools.x86.x64)\\n");
-            if ((Win10SDKVer == 0) && (!hasWin8SDK))
-                log.Append("  - Missing a Windows SDK (Microsoft.VisualStudio.Component.Windows10SDK.* or Microsoft.VisualStudio.Component.Windows81SDK)\\n");
-
-            if (hasMSBuild && hasVCTools)
-            {
-                if (Win10SDKVer > 0)
-                {
-                    log.Append("  - Using this installation with Windows 10 SDK"/*\\n*/);
-                    Console.WriteLine(String.Format("{{\"log\":\"{0}\",\"path\":\"{1}\",\"sdk\":\"10.0.{2}.0\"}}", log.ToString(), path, Win10SDKVer));
-                    return true;
-                }
-                else if (hasWin8SDK)
-                {
-                    log.Append("  - Using this installation with Windows 8.1 SDK"/*\\n*/);
-                    Console.WriteLine(String.Format("{{\"log\":\"{0}\",\"path\":\"{1}\",\"sdk\":\"8.1\"}}", log.ToString(), path));
-                    return true;
-                }
-            }
-
-            log.Append("  - Some required components are missing, not using this installation\\n");
-            return false;
+            json.Append("}");
+            return json.ToString();
         }
     }
 }
