@@ -8,21 +8,22 @@ const path = require('path')
 
 require('npmlog').level = 'warn'
 
-//* can use name as short descriptions
+//* name can be used as short descriptions
 
 /**
  * @typedef Check
- * @property {string} path - path to execurtable or command
+ * @property {string} path - path to executable or command
  * @property {string} name - very little description
  */
 
+// TODO: add symlinks to python which will contain utf-8 chars
 /**
  * @type {Check[]}
  */
 const checks = [
   { path: process.env.PYTHON, name: 'env var PYTHON' },
-  { path: process.env.python2, name: 'env var python2' },
-  { path: 'python3', name: 'env var python3' }
+  { path: 'python3', name: 'python3 in PATH' },
+  { path: 'python', name: 'python in PATH' }
 ]
 const args = [path.resolve('./lib/find-python-script.py')]
 const options = {
@@ -32,7 +33,7 @@ const options = {
 /**
   Getting output from find-python-script.py,
   compare it to path provided to terminal.
-  If equale - test pass
+  If equals - test pass
 
   runs for all checks
 
@@ -40,29 +41,29 @@ const options = {
   @argument {Error} err - exec error
   @argument {string} stdout - stdout buffer of child process
   @argument {string} stderr
-  @this {{t, exec: Check}}
+  @this {{t: Tap, exec: Check}}
  */
 function check (err, stdout, stderr) {
   const { t, exec } = this
   if (!err && !stderr) {
-    t.strictEqual(
+    t.ok(
       stdout.trim(),
-      exec.path,
       `${exec.name}: check path ${exec.path} equals ${stdout.trim()}`
     )
   } else {
     // @ts-ignore
-    if (err.code === 9009) {
+    if (err.code === 9009 || err.code === 'ENOENT') {
       t.skip(`skipped: ${exec.name} file not found`)
     } else {
-      t.fail(`error: ${err}\n\nstderr: ${stderr}`)
+      t.skip(`error: ${err}\n\nstderr: ${stderr}`)
     }
   }
 }
 
-test('find-python-script', (t) => {
+test('find-python-script', { buffered: false }, (t) => {
   t.plan(checks.length)
 
+  // ? may be more elegant way to pass context
   // context for check functions
   const ctx = {
     t: t,
@@ -73,7 +74,7 @@ test('find-python-script', (t) => {
     // checking if env var exist
     if (!(exec.path === undefined || exec.path === null)) {
       ctx.exec = exec
-      // passing ctx as coppied object to make properties immutable from here
+      // passing ctx as copied object to make properties immutable from here
       const boundedCheck = check.bind(Object.assign({}, ctx))
       execFile(exec.path, args, options, boundedCheck)
     } else {
