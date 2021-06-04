@@ -113,7 +113,7 @@ are: ${args};\n\nValid are: \n${this.argsExecutable}\n${this.argsVersion}`
       }
     } else {
       const testError = new Error(
-        `test error ${testString}; optionsObj: ${optionsObj}`
+        `test error ${testString}; optionsObj: ${JSON.stringify(optionsObj)}`
       )
       callback(testError)
     }
