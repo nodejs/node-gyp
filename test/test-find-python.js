@@ -9,6 +9,9 @@ const util = require('util')
 const path = require('path')
 const npmlog = require('npmlog')
 const fs = require('fs')
+// just comment this line to see log output
+// useful to not to test output by hand
+// ! keep uncommented when  committing
 npmlog.level = 'silent'
 
 // what final error message displayed in terminal should contain
@@ -317,7 +320,7 @@ test('find-python', { buffered: true }, (t) => {
       // making fixture
       paths.testDir = fs.mkdtempSync(path.resolve(paths.baseDir, 'node_modules', 'pythonFindTestFolder-'))
 
-      // using "junction" to avoid permission error
+      // using "junction" to avoid permission error on windows (ignored on other platforms)
       fs.symlinkSync(paths.pythonDir, path.resolve(paths.testDir, testString), 'junction')
       console.log('🚀 ~ file: test-find-python.js ~ line 312 ~ await.test ~ path.resolve(paths.testDir, testString)', path.resolve(paths.testDir, testString))
       console.log('🚀 ~ file: test-find-python.js ~ line 312 ~ await.test ~ paths.pythonDir', paths.pythonDir)
