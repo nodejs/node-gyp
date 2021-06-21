@@ -144,13 +144,15 @@ A barebones `gyp` file appropriate for building a Node.js addon could look like:
 
 ## Further reading
 
+The **[docs](./docs/)** directory contains additional documentation on specific node-gyp topics that may be useful if you are experiencing problems installing or building addons using node-gyp.
+
 Some additional resources for Node.js native addons and writing `gyp` configuration files:
 
  * ["Going Native" a nodeschool.io tutorial](http://nodeschool.io/#goingnative)
  * ["Hello World" node addon example](https://github.com/nodejs/node/tree/master/test/addons/hello-world)
  * [gyp user documentation](https://gyp.gsrc.io/docs/UserDocumentation.md)
  * [gyp input format reference](https://gyp.gsrc.io/docs/InputFormatReference.md)
- * [*"binding.gyp" files out in the wild* wiki page](https://github.com/nodejs/node-gyp/wiki/%22binding.gyp%22-files-out-in-the-wild)
+ * [*"binding.gyp" files out in the wild* wiki page](./docs/"binding.gyp"-files-out-in-the-wild.md)
 
 ## Commands
 
