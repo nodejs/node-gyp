@@ -83,7 +83,7 @@ We consider this a bug-fix rather than semver-major change.
 * [[`f7bfce96ed`](https://github.com/nodejs/node-gyp/commit/f7bfce96ed)] - **doc**: update acid test and introduce curl|bash test script (Dario Vladovic) [#2105](https://github.com/nodejs/node-gyp/pull/2105)
 * [[`e529f3309d`](https://github.com/nodejs/node-gyp/commit/e529f3309d)] - **doc**: update README to reflect upgrade to gyp-next (Ujjwal Sharma) [#2092](https://github.com/nodejs/node-gyp/pull/2092)
 * [[`9aed6286a3`](https://github.com/nodejs/node-gyp/commit/9aed6286a3)] - **doc**: give more attention to Catalina issues doc (Matheus Marchini) [#2134](https://github.com/nodejs/node-gyp/pull/2134)
-* [[`963f2a7b48`](https://github.com/nodejs/node-gyp/commit/963f2a7b48)] - **doc**: improve cataline discoverability for search engines (Matheus Marchini) [#2135](https://github.com/nodejs/node-gyp/pull/2135)
+* [[`963f2a7b48`](https://github.com/nodejs/node-gyp/commit/963f2a7b48)] - **doc**: improve Catalina discoverability for search engines (Matheus Marchini) [#2135](https://github.com/nodejs/node-gyp/pull/2135)
 * [[`7b75af349b`](https://github.com/nodejs/node-gyp/commit/7b75af349b)] - **doc**: add macOS Catalina software update info (Karl Horky) [#2078](https://github.com/nodejs/node-gyp/pull/2078)
 * [[`4f23c7bee2`](https://github.com/nodejs/node-gyp/commit/4f23c7bee2)] - **doc**: update link to the code of conduct (#2073) (Michaël Zasso) [#2073](https://github.com/nodejs/node-gyp/pull/2073)
 * [[`473cfa283f`](https://github.com/nodejs/node-gyp/commit/473cfa283f)] - **doc**: note in README that Python 3.8 is supported (#2072) (Michaël Zasso) [#2072](https://github.com/nodejs/node-gyp/pull/2072)
