@@ -1,11 +1,7 @@
 # TODO: Line 43, enable pytest --doctest-modules
 
 name: Tests
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 jobs:
   Tests:
     strategy:
