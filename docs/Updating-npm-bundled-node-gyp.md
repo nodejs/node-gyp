@@ -4,7 +4,7 @@
 not running a [current version of node-gyp](https://github.com/nodejs/node-gyp/releases).
 
 `npm` bundles its own, internal, copy of `node-gyp`. This internal copy is independent of any globally installed copy of node-gyp that
-you may have installed via `npm install -g node-gyp`.
+may have been installed via `npm install -g node-gyp`.
 
 This means that while `node-gyp` doesn't get installed into your `$PATH` by default, npm still keeps its own copy to invoke when you
 attempt to `npm install` a native add-on.
