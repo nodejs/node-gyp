@@ -1,3 +1,8 @@
+# Updating the npm-bundled version of node-gyp
+
+[Many issues](https://github.com/nodejs/node-gyp/labels/ERR%21%20node-gyp%20-v%20%3C%3D%20v5.1.0) are opened by users who are
+not running a [current version of node-gyp](https://github.com/nodejs/node-gyp/releases).
+
 `npm` bundles its own, internal, copy of `node-gyp`. This internal copy is independent of any globally installed copy of node-gyp that
 you may have installed via `npm install -g node-gyp`.
 
