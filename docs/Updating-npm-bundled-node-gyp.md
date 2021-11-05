@@ -33,7 +33,7 @@ for /f "delims=" %P in ('npm prefix -g') do npm config set node_gyp"%P\node_modu
 ### Powershell
 ```
 npm install --global node-gyp@latest
-npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gypjs"}
+npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
 ```
 
 ## Undo
