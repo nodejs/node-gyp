@@ -27,7 +27,7 @@ npm config set node_gyp $(npm prefix -g)/lib/node_modules/node-gyp/bin/node-gyp.
 ### Windows Command Prompt
 ```
 npm install --global node-gyp@latest
-for /f "delims=" %P in ('npm prefix -g') do npm config set node_gyp"%P\node_modules\node-gyp\bin\node-gyp.js"
+for /f "delims=" %P in ('npm prefix -g') do npm config set node_gyp "%P\node_modules\node-gyp\bin\node-gyp.js"
 ```
 
 ### Powershell
