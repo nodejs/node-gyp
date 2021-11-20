@@ -126,14 +126,13 @@ def prettyprint_input(lines):
             line = line.strip("\r\n\t ")  # Otherwise doesn't strip \r on Unix.
             if len(line) > 0:
                 (brace_diff, after) = count_braces(line)
-                if brace_diff != 0:
-                    if after:
-                        print(" " * (basic_offset * indent) + line)
-                        indent += brace_diff
-                    else:
-                        indent += brace_diff
-                        print(" " * (basic_offset * indent) + line)
+                if brace_diff == 0:
+                    print(" " * (basic_offset * indent) + line)
+                elif after:
+                    print(" " * (basic_offset * indent) + line)
+                    indent += brace_diff
                 else:
+                    indent += brace_diff
                     print(" " * (basic_offset * indent) + line)
             else:
                 print("")

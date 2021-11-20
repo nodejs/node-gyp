@@ -12,7 +12,6 @@
    It outputs the resulting xml to stdout.
 """
 
-
 import os
 import sys
 
@@ -21,7 +20,7 @@ from xml.dom.minidom import Node
 
 __author__ = "nsylvain (Nicolas Sylvain)"
 ARGUMENTS = None
-REPLACEMENTS = dict()
+REPLACEMENTS = {}
 
 
 def cmp(x, y):
@@ -49,10 +48,7 @@ class CmpNode:
                 # We first sort by name, if present.
                 node_string += node.getAttribute("Name")
 
-                all_nodes = []
-                for (name, value) in node.attributes.items():
-                    all_nodes.append((name, value))
-
+                all_nodes = [(name, value) for (name, value) in node.attributes.items()]
                 all_nodes.sort(CmpTuple())
                 for (name, value) in all_nodes:
                     node_string += name
@@ -72,10 +68,7 @@ def PrettyPrintNode(node, indent=0):
     if node.childNodes:
         node.normalize()
     # Get the number of attributes
-    attr_count = 0
-    if node.attributes:
-        attr_count = node.attributes.length
-
+    attr_count = node.attributes.length if node.attributes else 0
     # Print the main tag
     if attr_count == 0:
         print("{}<{}>".format(" " * indent, node.nodeName))
@@ -198,10 +191,13 @@ def CleanupVcproj(node):
     # Insert the nodes in the correct order.
     for new_node in node_array:
         # But don't append empty tool node.
-        if new_node.nodeName == "Tool":
-            if new_node.attributes and new_node.attributes.length == 1:
-                # This one was empty.
-                continue
+        if (
+            new_node.nodeName == "Tool"
+            and new_node.attributes
+            and new_node.attributes.length == 1
+        ):
+            # This one was empty.
+            continue
         if new_node.nodeName == "UserMacro":
             continue
         node.appendChild(new_node)

@@ -15,16 +15,14 @@ generator_wants_static_library_dependencies_adjusted = False
 
 generator_filelist_paths = {}
 
-generator_default_variables = {}
-for dirname in [
+generator_default_variables = {dirname: "dir" for dirname in [
     "INTERMEDIATE_DIR",
     "SHARED_INTERMEDIATE_DIR",
     "PRODUCT_DIR",
     "LIB_DIR",
     "SHARED_LIB_DIR",
-]:
-    # Some gyp steps fail if these are empty(!).
-    generator_default_variables[dirname] = "dir"
+]}
+# Some gyp steps fail if these are empty(!).
 for unused in [
     "RULE_INPUT_PATH",
     "RULE_INPUT_ROOT",
@@ -97,7 +95,6 @@ def GenerateOutput(target_list, target_dicts, data, params):
     except KeyError:
         filepath = "."
     filename = os.path.join(filepath, "dump.json")
-    f = open(filename, "w")
-    json.dump(edges, f)
-    f.close()
+    with open(filename, "w") as f:
+        json.dump(edges, f)
     print("Wrote json to %s." % filename)

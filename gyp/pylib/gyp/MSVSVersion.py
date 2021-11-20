@@ -69,7 +69,7 @@ class VisualStudioVersion:
 
     def ProjectExtension(self):
         """Returns the file extension for the project."""
-        return self.uses_vcxproj and ".vcxproj" or ".vcproj"
+        return ".vcxproj" if self.uses_vcxproj else ".vcproj"
 
     def Path(self):
         """Returns the path to Visual Studio installation."""
@@ -473,8 +473,8 @@ def _DetectVisualStudioVersions(versions_to_check, force_express):
             r"HKLM\Software\Microsoft\VCExpress\%s" % version,
             r"HKLM\Software\Wow6432Node\Microsoft\VCExpress\%s" % version,
         ]
-        for index in range(len(keys)):
-            path = _RegistryGetValue(keys[index], "InstallDir")
+        for key_ in keys:
+            path = _RegistryGetValue(key_, "InstallDir")
             if not path:
                 continue
             path = _ConvertToCygpath(path)
@@ -504,8 +504,8 @@ def _DetectVisualStudioVersions(versions_to_check, force_express):
             r"HKLM\Software\Microsoft\VisualStudio\SxS\VS7",
             r"HKLM\Software\Wow6432Node\Microsoft\VisualStudio\SxS\VS7",
         ]
-        for index in range(len(keys)):
-            path = _RegistryGetValue(keys[index], version)
+        for key in keys:
+            path = _RegistryGetValue(key, version)
             if not path:
                 continue
             path = _ConvertToCygpath(path)

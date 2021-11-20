@@ -24,10 +24,8 @@ def LoadEdges(filename, targets):
     """Load the edges map from the dump file, and filter it to only
   show targets in |targets| and their depedendents."""
 
-    file = open("dump.json")
-    edges = json.load(file)
-    file.close()
-
+    with open("dump.json") as file:
+        edges = json.load(file)
     # Copy out only the edges we're interested in from the full edge list.
     target_edges = {}
     to_visit = targets[:]
