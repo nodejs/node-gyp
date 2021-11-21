@@ -21,7 +21,7 @@ generator_default_variables = {dirname: "dir" for dirname in [
     "PRODUCT_DIR",
     "LIB_DIR",
     "SHARED_LIB_DIR",
-]}
+)}
 # Some gyp steps fail if these are empty(!).
 for unused in [
     "RULE_INPUT_PATH",
