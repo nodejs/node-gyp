@@ -95,6 +95,6 @@ def GenerateOutput(target_list, target_dicts, data, params):
     except KeyError:
         filepath = "."
     filename = os.path.join(filepath, "dump.json")
-    with open(filename, "w") as f:
-        json.dump(edges, f)
+    with open(filename, "w") as out_file:
+        json.dump(edges, out_file)
     print("Wrote json to %s." % filename)
