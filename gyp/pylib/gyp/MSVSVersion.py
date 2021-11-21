@@ -473,8 +473,8 @@ def _DetectVisualStudioVersions(versions_to_check, force_express):
             r"HKLM\Software\Microsoft\VCExpress\%s" % version,
             r"HKLM\Software\Wow6432Node\Microsoft\VCExpress\%s" % version,
         ]
-        for key_ in keys:
-            path = _RegistryGetValue(key_, "InstallDir")
+        for key in keys:
+            path = _RegistryGetValue(key, "InstallDir")
             if not path:
                 continue
             path = _ConvertToCygpath(path)
