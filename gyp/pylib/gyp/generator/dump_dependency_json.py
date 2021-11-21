@@ -15,7 +15,7 @@ generator_wants_static_library_dependencies_adjusted = False
 
 generator_filelist_paths = {}
 
-generator_default_variables = {dirname: "dir" for dirname in [
+generator_default_variables = {dirname: "dir" for dirname in (
     "INTERMEDIATE_DIR",
     "SHARED_INTERMEDIATE_DIR",
     "PRODUCT_DIR",
