@@ -1328,7 +1328,12 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
             includes = config.get("include_dirs")
             if includes:
                 includes = [Sourceify(self.Absolutify(i)) for i in includes]
-            self.WriteList(includes, "INCS_%s" % configname, prefix="-I", quoter=EscapeShellArgument)
+            self.WriteList(
+                includes,
+                "INCS_%s" % configname,
+                prefix="-I",
+                quoter=EscapeShellArgument
+            )
 
         compilable = list(filter(Compilable, sources))
         objs = [self.Objectify(self.Absolutify(Target(c))) for c in compilable]
