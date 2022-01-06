@@ -1,5 +1,7 @@
 # Force npm to use global installed node-gyp
 
+**Note: These instructions only work with npm 6 or older. For a solution that works with npm 8 (or older), see [Updating-npm-bundled-node-gyp.md](Updating-npm-bundled-node-gyp.md).**
+
 [Many issues](https://github.com/nodejs/node-gyp/labels/ERR%21%20node-gyp%20-v%20%3C%3D%20v5.1.0) are opened by users who are
 not running a [current version of node-gyp](https://github.com/nodejs/node-gyp/releases).
 
