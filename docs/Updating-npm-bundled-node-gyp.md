@@ -2,7 +2,7 @@
 
 **Note: These instructions are (only) tested and known to work with npm 8 and older.**
 
-**Note: These instructions will be undone if you reinstall or upgrade npm or node! For a more permanent (and simpler) solution, see [Force-npm-to-use-global-node-gyp.md](https://github.com/nodejs/node-gyp/blob/master/docs/Force-npm-to-use-global-node-gyp.md). (npm 6 or older only!)**
+**Note: These instructions will be undone if you reinstall or upgrade npm or node! For a more permanent (and simpler) solution, see [Force-npm-to-use-global-node-gyp.md](Force-npm-to-use-global-node-gyp.md). (npm 6 or older only!)**
 
 [Many issues](https://github.com/nodejs/node-gyp/labels/ERR%21%20node-gyp%20-v%20%3C%3D%20v5.1.0) are opened by users who are
 not running a [current version of node-gyp](https://github.com/nodejs/node-gyp/releases).
