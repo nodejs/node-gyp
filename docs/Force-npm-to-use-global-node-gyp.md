@@ -5,7 +5,7 @@
 [Many issues](https://github.com/nodejs/node-gyp/labels/ERR%21%20node-gyp%20-v%20%3C%3D%20v5.1.0) are opened by users who are
 not running a [current version of node-gyp](https://github.com/nodejs/node-gyp/releases).
 
-`npm` bundles its own, internal, copy of `node-gyp` located at `npm/node_modules` (referred as npm's own ones). So npm's own node modules are separated from *global* ones. Therefor this internal copy of `node-gyp` is independent from any globally installed copy of `node-gyp` that
+npm bundles its own, internal, copy of node-gyp located at `npm/node_modules`, within npm's private dependencies which are separate from *globally* accessible packages. Therefore this internal copy of node-gyp is independent from any globally installed copy of node-gyp that
 may have been installed via `npm install -g node-gyp`.
 
 So npm's internal copy of node-gyp **isn't** stored inside *global* `node_modules` and thus isn't available for use as a standalone package. npm uses it's *internal* copy of `node-gyp` to automatically build native addons.
