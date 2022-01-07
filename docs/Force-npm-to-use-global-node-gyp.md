@@ -8,7 +8,7 @@ not running a [current version of node-gyp](https://github.com/nodejs/node-gyp/r
 `npm` bundles its own, internal, copy of `node-gyp` located at `npm/node_modules` (referred as npm's own ones). So npm's own node modules are separated from *global* ones. Therefor this internal copy of `node-gyp` is independent from any globally installed copy of `node-gyp` that
 may have been installed via `npm install -g node-gyp`.
 
-So npm's internal copy of node-gyp **isn't** stored inside *global* `node_modules` and thus isn't available for use as a standalone package. Npm uses it's *internal* copy of `node-gyp` to automatically build native addons.
+So npm's internal copy of node-gyp **isn't** stored inside *global* `node_modules` and thus isn't available for use as a standalone package. npm uses it's *internal* copy of `node-gyp` to automatically build native addons.
 
 When you install a _new_ version of node-gyp outside of npm, it'll go into your *global* `node_modules`, but not under the `npm/node_modules` (where internal copy of node-gyp is stored). So it will get into your `$PATH` and you will be able to use this globally installed version (**but not internal node-gyp of npm**) as any other globally installed package.
 
