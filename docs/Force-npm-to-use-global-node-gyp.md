@@ -12,7 +12,7 @@ So npm's internal copy of node-gyp **isn't** stored inside *global* `node_module
 
 When you install a _new_ version of node-gyp outside of npm, it'll go into your *global* `node_modules`, but not under the `npm/node_modules` (where internal copy of node-gyp is stored). So it will get into your `$PATH` and you will be able to use this globally installed version (**but not internal node-gyp of npm**) as any other globally installed package.
 
-The catch is that `npm` **won't** use global version unless you tell it to, it'll keep on using the **internal one**. You need to instruct it to by setting the `node_gyp` config variable (which goes into your `~/.npmrc`). You do this by running the `npm config set` command as below. Then npm will use the command in the path you supply whenever it needs to build a native addon.
+The catch is that npm **won't** use global version unless you tell it to, it'll keep on using the **internal one**. You need to instruct it to by setting the `node_gyp` config variable (which goes into your `~/.npmrc`). You do this by running the `npm config set` command as below. Then npm will use the command in the path you supply whenever it needs to build a native addon.
 
 **Important**: You also need to remember to unset this when you upgrade npm with a newer version of node-gyp, or you have to manually keep your globally installed node-gyp to date. See "Undo" below.
 
