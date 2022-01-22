@@ -31,7 +31,7 @@ Depending on your operating system, you will need to install:
 
 ### On Unix
 
-   * Python v3.6, v3.7, v3.8, or v3.9
+   * Python v3.6, v3.7, v3.8, v3.9 or 3.10
    * `make`
    * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
 
