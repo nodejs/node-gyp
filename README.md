@@ -39,7 +39,7 @@ Depending on your operating system, you will need to install:
 
 **ATTENTION**: If your Mac has been _upgraded_ to macOS Catalina (10.15), please read [macOS_Catalina.md](macOS_Catalina.md).
 
-   * Python v3.6, v3.7, v3.8, or v3.9
+   * Python v3.6, v3.7, v3.8, v3.9 or 3.10
    * [Xcode](https://developer.apple.com/xcode/download/)
      * You also need to install the `XCode Command Line Tools` by running `xcode-select --install`. Alternatively, if you already have the full Xcode installed, you can find them under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`. This step will install `clang`, `clang++`, and `make`.
 
