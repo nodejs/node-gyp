@@ -31,12 +31,12 @@ Unix is easy. Just run the following command.
 
 If your npm is version ___7 or 8___, do:
 ```bash
-$ npm explore npm/node_modules/@npmcli/run-script -g -- npm_config_global=false npm install node-gyp@latest
+$ npm explore npm/node_modules/@npmcli/run-script -g --npm_config_global=false npm install node-gyp@latest
 ```
 
 Else if your npm is version ___less than 7___, do:
 ```bash
-$ npm explore npm/node_modules/npm-lifecycle -g -- npm install node-gyp@latest
+$ npm explore npm/node_modules/npm-lifecycle -g --npm install node-gyp@latest
 ```
 
 If the command fails with a permissions error, please try `sudo` and then the command.
