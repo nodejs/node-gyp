@@ -103,6 +103,11 @@
           '-Wl,-bimport:<(node_exp_file)'
         ],
       }],
+      [ 'OS=="os400"', {
+        'ldflags': [
+          '-Wl,-bimport:<(node_exp_file)'
+        ],
+      }],
       [ 'OS=="zos"', {
         'cflags': [
           '-q64',
