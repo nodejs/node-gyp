@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.11.0](https://www.github.com/nodejs/gyp-next/compare/v0.10.1...v0.11.0) (2022-03-04)
+
+
+### Features
+
+* Add proper support for IBM i ([#140](https://www.github.com/nodejs/gyp-next/issues/140)) ([fdda4a3](https://www.github.com/nodejs/gyp-next/commit/fdda4a3038b8a7042ad960ce7a223687c24a21b1))
+
+### [0.10.1](https://www.github.com/nodejs/gyp-next/compare/v0.10.0...v0.10.1) (2021-11-24)
+
+
+### Bug Fixes
+
+* **make:** only generate makefile for multiple toolsets if requested ([#133](https://www.github.com/nodejs/gyp-next/issues/133)) ([f463a77](https://www.github.com/nodejs/gyp-next/commit/f463a77705973289ea38fec1b244c922ac438e26))
+
 ## [0.10.0](https://www.github.com/nodejs/gyp-next/compare/v0.9.6...v0.10.0) (2021-08-26)
 
 
