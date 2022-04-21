@@ -23,7 +23,7 @@
   "main": "./lib/node-gyp.js",
   "dependencies": {
     "env-paths": "^2.2.0",
-    "glob": "^7.1.4",
+    "glob": "^8.0.0",
     "graceful-fs": "^4.2.6",
     "make-fetch-happen": "^10.0.3",
     "nopt": "^5.0.0",
