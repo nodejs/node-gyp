@@ -411,6 +411,43 @@ test('VS2019 Community with C++ workload', function (t) {
   finder.findVisualStudio()
 })
 
+test('VS2022 Preview with C++ workload', function (t) {
+  t.plan(2)
+
+  const msBuildPath = process.arch === 'arm64'
+    ? 'C:\\Program Files\\Microsoft Visual Studio\\2022\\' +
+      'Community\\MSBuild\\Current\\Bin\\arm64\\MSBuild.exe'
+    : 'C:\\Program Files\\Microsoft Visual Studio\\2022\\' +
+      'Community\\MSBuild\\Current\\Bin\\MSBuild.exe'
+
+  const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
+    t.strictEqual(err, null)
+    t.deepEqual(info, {
+      msBuild: msBuildPath,
+      path:
+        'C:\\Program Files\\Microsoft Visual Studio\\2022\\Community',
+      sdk: '10.0.22621.0',
+      toolset: 'v143',
+      version: '17.4.33213.308',
+      versionMajor: 17,
+      versionMinor: 4,
+      versionYear: 2022
+    })
+  })
+
+  poison(finder, 'regSearchKeys')
+  finder.msBuildPathExists = (path) => {
+    return true
+  }
+  finder.findVisualStudio2017OrNewer = (cb) => {
+    const file = path.join(__dirname, 'fixtures',
+      'VS_2022_Community_workload.txt')
+    const data = fs.readFileSync(file)
+    finder.parseData(null, data, '', cb)
+  }
+  finder.findVisualStudio()
+})
+
 function allVsVersions (t, finder) {
   finder.findVisualStudio2017OrNewer = (cb) => {
     const data0 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
@@ -427,8 +464,10 @@ function allVsVersions (t, finder) {
       'VS_2019_BuildTools_minimal.txt')))
     const data6 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
       'VS_2019_Community_workload.txt')))
+    const data7 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
+      'VS_2022_Community_workload.txt')))
     const data = JSON.stringify(data0.concat(data1, data2, data3, data4,
-      data5, data6))
+      data5, data6, data7))
     finder.parseData(null, data, '', cb)
   }
   finder.regSearchKeys = (keys, value, addOpts, cb) => {
@@ -570,6 +609,22 @@ test('look for VS2019 by installation path', function (t) {
   finder.findVisualStudio()
 })
 
+test('look for VS2022 by version number', function (t) {
+  t.plan(2)
+
+  const finder = new TestVisualStudioFinder(semverV1, '2022', (err, info) => {
+    t.strictEqual(err, null)
+    t.deepEqual(info.versionYear, 2022)
+  })
+
+  finder.msBuildPathExists = (path) => {
+    return true
+  }
+
+  allVsVersions(t, finder)
+  finder.findVisualStudio()
+})
+
 test('msvs_version match should be case insensitive', function (t) {
   t.plan(2)
 
@@ -590,8 +645,12 @@ test('latest version should be found by default', function (t) {
 
   const finder = new TestVisualStudioFinder(semverV1, null, (err, info) => {
     t.strictEqual(err, null)
-    t.deepEqual(info.versionYear, 2019)
+    t.deepEqual(info.versionYear, 2022)
   })
+
+  finder.msBuildPathExists = (path) => {
+    return true
+  }
 
   allVsVersions(t, finder)
   finder.findVisualStudio()
