@@ -89,7 +89,7 @@ searching will be done.
 
 ### Build for Third Party Node.js Runtimes
 
-When building modules for thid party Node.js runtimes like Electron, which have
+When building modules for third party Node.js runtimes like Electron, which have
 different build configurations from the official Node.js distribution, you
 should use `--dist-url` or `--nodedir` flags to specify the headers of the
 runtime to build for.
