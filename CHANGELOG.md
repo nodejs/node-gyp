@@ -1,5 +1,29 @@
 # Changelog
 
+### [9.0.1](https://www.github.com/nodejs/node-gyp/compare/v9.0.0...v9.0.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* extend tap timeout length to allow for slow CI ([6f74c76](https://www.github.com/nodejs/node-gyp/commit/6f74c762fe3c19bdd20245cb5c02e2dfa65d9451))
+* new ca & server certs, bundle in .js file and unpack for testing ([147e3d3](https://www.github.com/nodejs/node-gyp/commit/147e3d34f44a97deb7aa507207680cf0f4e662a2))
+* typo on readme ([bf81cd4](https://www.github.com/nodejs/node-gyp/commit/bf81cd452b931dd4dfa82762c23dd530a075d992))
+
+
+### Tests
+
+* Upgrade GitHub Actions ([#2623](https://www.github.com/nodejs/node-gyp/issues/2623)) ([245cd5b](https://www.github.com/nodejs/node-gyp/commit/245cd5bbe4441d4f05e88f2fa20a86425419b6af))
+
+
+### Doc
+
+* update docs/README.md with latest version number ([62d2815](https://www.github.com/nodejs/node-gyp/commit/62d28151bf8266a34e1bcceeb25b4e6e2ae5ca5d))
+
+
+### Core
+
+* update due to rename of primary branch ([ca1f068](https://www.github.com/nodejs/node-gyp/commit/ca1f0681a5567ca8cd51acebccd37a633f19bc6a))
+
 ## [9.0.0](https://www.github.com/nodejs/node-gyp/compare/v8.4.1...v9.0.0) (2022-02-24)
 
 
