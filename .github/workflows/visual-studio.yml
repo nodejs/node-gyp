@@ -21,7 +21,7 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install --no-progress
-          npm audit fix --force
+          # npm audit fix --force
       - name: Set Windows environment
         if: startsWith(matrix.os, 'windows')
         run: |
