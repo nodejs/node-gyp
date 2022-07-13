@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       max-parallel: 15
       matrix:
-        node: [14.x, 16.x, 18x]
+        node: [14.x, 16.x, 18.x]
         python: ["3.6", "3.8", "3.10"]
         os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
