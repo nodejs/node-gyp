@@ -1,13 +1,13 @@
 # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
 
-name: Tests on Windows
+name: visual-studio
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 jobs:
-  Tests:
+  visual-studio:
     strategy:
       fail-fast: false
       max-parallel: 8
