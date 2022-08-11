@@ -68,7 +68,7 @@ version `node-gyp` should use in one of the following ways:
 1. by setting the `--python` command-line option, e.g.:
 
 ``` bash
-node-gyp <command> --python /path/to/executable/python
+node-gyp <command> --python=/path/to/executable/python
 ```
 
 2. If `node-gyp` is called by way of `npm`, *and* you have multiple versions of
