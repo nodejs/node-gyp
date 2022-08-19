@@ -979,8 +979,9 @@ def ExpandVariables(input, phase, variables, build_file):
                     p_stdout = p_stdout.decode("utf-8")
                     p_stderr = p_stderr.decode("utf-8")
 
-                    if p.wait() != 0 or p_stderr:
+                    if p_stderr:
                         sys.stderr.write(p_stderr)
+                    if p.wait() != 0:
                         # Simulate check_call behavior, since check_call only exists
                         # in python 2.5 and later.
                         raise GypError(
