@@ -1,6 +1,6 @@
 # Updating the npm-bundled version of node-gyp
 
-**Note: These instructions are (only) tested and known to work with npm 8 and older.**
+**Note: These instructions are (only) tested and known to work with npm9 and older.**
 
 **Note: These instructions will be undone if you reinstall or upgrade npm or node! For a more permanent (and simpler) solution, see [Force-npm-to-use-global-node-gyp.md](Force-npm-to-use-global-node-gyp.md). (npm 6 or older only!)**
 
@@ -29,7 +29,7 @@ npm --version
 
 Unix is easy. Just run the following command.
 
-If your npm is version ___7 or 8___, do:
+If your npm is version ___7 or greater___, do:
 ```bash
 $ npm explore npm/node_modules/@npmcli/run-script -g -- npm_config_global=false npm install node-gyp@latest
 ```
@@ -56,7 +56,7 @@ Now `cd` to the directory that `node.exe` is contained in e.g.:
 $ cd "C:\Program Files\nodejs"
 ```
 
-If your npm version is ___7 or 8___, do:
+If your npm version is ___7 or greater___, do:
 ```bash
 cd node_modules\npm\node_modules\@npmcli\run-script
 ```
