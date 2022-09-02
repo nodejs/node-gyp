@@ -31,21 +31,23 @@ Depending on your operating system, you will need to install:
 
 ### On Unix
 
-   * Python v3.6, v3.7, v3.8, or v3.9
+   * Python v3.7, v3.8, v3.9, or v3.10
    * `make`
    * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
 
 ### On macOS
 
-**ATTENTION**: If your Mac has been _upgraded_ to macOS Catalina (10.15), please read [macOS_Catalina.md](macOS_Catalina.md).
+**ATTENTION**: If your Mac has been _upgraded_ to macOS Catalina (10.15) or higher, please read [macOS_Catalina.md](macOS_Catalina.md).
 
-   * Python v3.6, v3.7, v3.8, or v3.9
-   * [Xcode](https://developer.apple.com/xcode/download/)
-     * You also need to install the `XCode Command Line Tools` by running `xcode-select --install`. Alternatively, if you already have the full Xcode installed, you can find them under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`. This step will install `clang`, `clang++`, and `make`.
+   * Python v3.7, v3.8, v3.9, or v3.10
+   * `XCode Command Line Tools` which will install `clang`, `clang++`, and `make`.
+     * Install the `XCode Command Line Tools` standalone by running `xcode-select --install`. -- OR --
+     * Alternatively, if you already have the [full Xcode installed](https://developer.apple.com/xcode/download/), you can install the Command Line Tools under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`.
+
 
 ### On Windows
 
-Install the current version of Python from the [Microsoft Store package](https://docs.python.org/3/using/windows.html#the-microsoft-store-package).
+Install the current version of Python from the [Microsoft Store package](https://www.microsoft.com/en-us/p/python-310/9pjpw5ldxlz5).
 
 Install tools and configuration manually:
    * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
@@ -59,8 +61,8 @@ Install tools and configuration manually:
 
 ### Configuring Python Dependency
 
-`node-gyp` requires that you have installed a compatible version of Python, one of: v3.6, v3.7,
-v3.8, or v3.9. If you have multiple Python versions installed, you can identify which Python
+`node-gyp` requires that you have installed a compatible version of Python, one of: v3.7, v3.8,
+v3.9, or v3.10. If you have multiple Python versions installed, you can identify which Python
 version `node-gyp` should use in one of the following ways:
 
 1. by setting the `--python` command-line option, e.g.:
@@ -84,6 +86,22 @@ then that version will be used, if it is a compatible version.
 Python executable, it will be used instead of any of the other configured or
 builtin Python search paths. If it's not a compatible version, no further
 searching will be done.
+
+### Build for Third Party Node.js Runtimes
+
+When building modules for third party Node.js runtimes like Electron, which have
+different build configurations from the official Node.js distribution, you
+should use `--dist-url` or `--nodedir` flags to specify the headers of the
+runtime to build for.
+
+Also when `--dist-url` or `--nodedir` flags are passed, node-gyp will use the
+`config.gypi` shipped in the headers distribution to generate build
+configurations, which is different from the default mode that would use the
+`process.config` object of the running Node.js instance.
+
+Some old versions of Electron shipped malformed `config.gypi` in their headers
+distributions, and you might need to pass `--force-process-config` to node-gyp
+to work around configuration errors.
 
 ## How to Use
 
@@ -152,7 +170,7 @@ Some additional resources for Node.js native addons and writing `gyp` configurat
  * ["Hello World" node addon example](https://github.com/nodejs/node/tree/master/test/addons/hello-world)
  * [gyp user documentation](https://gyp.gsrc.io/docs/UserDocumentation.md)
  * [gyp input format reference](https://gyp.gsrc.io/docs/InputFormatReference.md)
- * [*"binding.gyp" files out in the wild* wiki page](./docs/"binding.gyp"-files-out-in-the-wild.md)
+ * [*"binding.gyp" files out in the wild* wiki page](./docs/binding.gyp-files-in-the-wild.md)
 
 ## Commands
 
@@ -198,6 +216,7 @@ Some additional resources for Node.js native addons and writing `gyp` configurat
 | `--python=$path`                  | Set path to the Python binary
 | `--msvs_version=$version`         | Set Visual Studio version (Windows only)
 | `--solution=$solution`            | Set Visual Studio Solution version (Windows only)
+| `--force-process-config`          | Force using runtime's `process.config` object to generate `config.gypi` file
 
 ## Configuration
 

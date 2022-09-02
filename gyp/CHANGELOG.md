@@ -1,5 +1,50 @@
 # Changelog
 
+## [0.10.0](https://www.github.com/nodejs/gyp-next/compare/v0.9.6...v0.10.0) (2021-08-26)
+
+
+### Features
+
+* **msvs:** add support for Visual Studio 2022 ([#124](https://www.github.com/nodejs/gyp-next/issues/124)) ([4bd9215](https://www.github.com/nodejs/gyp-next/commit/4bd9215c44d300f06e916aec1d6327c22b78272d))
+
+### [0.9.6](https://www.github.com/nodejs/gyp-next/compare/v0.9.5...v0.9.6) (2021-08-23)
+
+
+### Bug Fixes
+
+* align flake8 test ([#122](https://www.github.com/nodejs/gyp-next/issues/122)) ([f1faa8d](https://www.github.com/nodejs/gyp-next/commit/f1faa8d3081e1a47e917ff910892f00dff16cf8a))
+* **msvs:** fix paths again in action command arguments ([#121](https://www.github.com/nodejs/gyp-next/issues/121)) ([7159dfb](https://www.github.com/nodejs/gyp-next/commit/7159dfbc5758c9ec717e215f2c36daf482c846a1))
+
+### [0.9.5](https://www.github.com/nodejs/gyp-next/compare/v0.9.4...v0.9.5) (2021-08-18)
+
+
+### Bug Fixes
+
+* add python 3.6 to node-gyp integration test ([3462d4c](https://www.github.com/nodejs/gyp-next/commit/3462d4ce3c31cce747513dc7ca9760c81d57c60e))
+* revert for windows compatibility ([d078e7d](https://www.github.com/nodejs/gyp-next/commit/d078e7d7ae080ddae243188f6415f940376a7368))
+* support msvs_quote_cmd in ninja generator ([#117](https://www.github.com/nodejs/gyp-next/issues/117)) ([46486ac](https://www.github.com/nodejs/gyp-next/commit/46486ac6e9329529d51061e006a5b39631e46729))
+
+### [0.9.4](https://www.github.com/nodejs/gyp-next/compare/v0.9.3...v0.9.4) (2021-08-09)
+
+
+### Bug Fixes
+
+* .S is an extension for asm file on Windows ([#115](https://www.github.com/nodejs/gyp-next/issues/115)) ([d2fad44](https://www.github.com/nodejs/gyp-next/commit/d2fad44ef3a79ca8900f1307060153ded57053fc))
+
+### [0.9.3](https://www.github.com/nodejs/gyp-next/compare/v0.9.2...v0.9.3) (2021-07-07)
+
+
+### Bug Fixes
+
+* build failure with ninja and Python 3 on Windows ([#113](https://www.github.com/nodejs/gyp-next/issues/113)) ([c172d10](https://www.github.com/nodejs/gyp-next/commit/c172d105deff5db4244e583942215918fa80dd3c))
+
+### [0.9.2](https://www.github.com/nodejs/gyp-next/compare/v0.9.1...v0.9.2) (2021-05-21)
+
+
+### Bug Fixes
+
+* add support of utf8 encoding ([#105](https://www.github.com/nodejs/gyp-next/issues/105)) ([4d0f93c](https://www.github.com/nodejs/gyp-next/commit/4d0f93c249286d1f0c0f665f5fe7346119f98cf1))
+
 ### [0.9.1](https://www.github.com/nodejs/gyp-next/compare/v0.9.0...v0.9.1) (2021-05-14)
 
 

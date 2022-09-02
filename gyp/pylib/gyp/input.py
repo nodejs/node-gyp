@@ -225,7 +225,7 @@ def LoadOneBuildFile(build_file_path, data, aux_data, includes, is_target, check
         return data[build_file_path]
 
     if os.path.exists(build_file_path):
-        build_file_contents = open(build_file_path).read()
+        build_file_contents = open(build_file_path, encoding='utf-8').read()
     else:
         raise GypError(f"{build_file_path} not found (cwd: {os.getcwd()})")
 
@@ -961,13 +961,13 @@ def ExpandVariables(input, phase, variables, build_file):
                     # Fix up command with platform specific workarounds.
                     contents = FixupPlatformCommand(contents)
                     try:
-                        p = subprocess.Popen(
+                        # stderr will be printed no matter what
+                        result = subprocess.run(
                             contents,
-                            shell=use_shell,
                             stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
-                            stdin=subprocess.PIPE,
+                            shell=use_shell,
                             cwd=build_file_dir,
+                            check=False
                         )
                     except Exception as e:
                         raise GypError(
@@ -975,19 +975,12 @@ def ExpandVariables(input, phase, variables, build_file):
                             % (e, contents, build_file)
                         )
 
-                    p_stdout, p_stderr = p.communicate("")
-                    p_stdout = p_stdout.decode("utf-8")
-                    p_stderr = p_stderr.decode("utf-8")
-
-                    if p.wait() != 0 or p_stderr:
-                        sys.stderr.write(p_stderr)
-                        # Simulate check_call behavior, since check_call only exists
-                        # in python 2.5 and later.
+                    if result.returncode > 0:
                         raise GypError(
                             "Call to '%s' returned exit status %d while in %s."
-                            % (contents, p.returncode, build_file)
+                            % (contents, result.returncode, build_file)
                         )
-                    replacement = p_stdout.rstrip()
+                    replacement = result.stdout.decode("utf-8").rstrip()
 
                 cached_command_results[cache_key] = replacement
             else:

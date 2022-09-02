@@ -1,5 +1,14 @@
+# Updating the npm-bundled version of node-gyp
+
+**Note: These instructions are (only) tested and known to work with npm 8 and older.**
+
+**Note: These instructions will be undone if you reinstall or upgrade npm or node! For a more permanent (and simpler) solution, see [Force-npm-to-use-global-node-gyp.md](Force-npm-to-use-global-node-gyp.md). (npm 6 or older only!)**
+
+[Many issues](https://github.com/nodejs/node-gyp/issues?q=label%3A"ERR!+node-gyp+-v+<%3D+v9.x.x") are opened by users who are
+not running a [current version of node-gyp](https://github.com/nodejs/node-gyp/releases).
+
 `npm` bundles its own, internal, copy of `node-gyp`. This internal copy is independent of any globally installed copy of node-gyp that
-you may have installed via `npm install -g node-gyp`.
+may have been installed via `npm install -g node-gyp`.
 
 This means that while `node-gyp` doesn't get installed into your `$PATH` by default, npm still keeps its own copy to invoke when you
 attempt to `npm install` a native add-on.
@@ -20,7 +29,7 @@ npm --version
 
 Unix is easy. Just run the following command.
 
-If your npm is version ___7___, do:
+If your npm is version ___7 or 8___, do:
 ```bash
 $ npm explore npm/node_modules/@npmcli/run-script -g -- npm_config_global=false npm install node-gyp@latest
 ```
@@ -47,7 +56,7 @@ Now `cd` to the directory that `node.exe` is contained in e.g.:
 $ cd "C:\Program Files\nodejs"
 ```
 
-If your npm version is ___7___, do:
+If your npm version is ___7 or 8___, do:
 ```bash
 cd node_modules\npm\node_modules\@npmcli\run-script
 ```
