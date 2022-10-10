@@ -1,9 +1,12 @@
 name: node-gyp integration
-
-on: [push, pull_request]
-
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 jobs:
-  test:
+  integration:
     strategy:
       fail-fast: false
       matrix:
@@ -24,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 14.x
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
       - name: Install dependencies

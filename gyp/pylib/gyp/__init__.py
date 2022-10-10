@@ -15,6 +15,7 @@ import sys
 import traceback
 from gyp.common import GypError
 
+
 # Default debug modes for GYP
 debug = {}
 
@@ -463,8 +464,19 @@ def gyp_main(args):
         metavar="TARGET",
         help="include only TARGET and its deep dependencies",
     )
+    parser.add_argument(
+        "-V",
+        "--version",
+        dest="version",
+        action="store_true",
+        help="Show the version and exit.",
+    )
 
     options, build_files_arg = parser.parse_args(args)
+    if options.version:
+        import pkg_resources
+        print(f"v{pkg_resources.get_distribution('gyp-next').version}")
+        return 0
     build_files = build_files_arg
 
     # Set up the configuration directory (defaults to ~/.gyp)
