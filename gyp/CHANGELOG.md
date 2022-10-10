@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.14.0](https://github.com/nodejs/gyp-next/compare/v0.13.0...v0.14.0) (2022-10-08)
+
+
+### Features
+
+* Add command line argument for `gyp --version` ([#164](https://github.com/nodejs/gyp-next/issues/164)) ([5c9f4d0](https://github.com/nodejs/gyp-next/commit/5c9f4d05678dd855e18ed2327219e5d18e5374db))
+* ninja build for iOS ([#174](https://github.com/nodejs/gyp-next/issues/174)) ([b6f2714](https://github.com/nodejs/gyp-next/commit/b6f271424e0033d7ed54d437706695af2ba7a1bf))
+* **zos:** support IBM Open XL C/C++ & PL/I compilers on z/OS ([#178](https://github.com/nodejs/gyp-next/issues/178)) ([43a7211](https://github.com/nodejs/gyp-next/commit/43a72110ae3fafb13c9625cc7a969624b27cda47))
+
+
+### Bug Fixes
+
+* lock windows env ([#163](https://github.com/nodejs/gyp-next/issues/163)) ([44bd0dd](https://github.com/nodejs/gyp-next/commit/44bd0ddc93ea0b5770a44dd326a2e4ae62c21442))
+* move configuration information into pyproject.toml ([#176](https://github.com/nodejs/gyp-next/issues/176)) ([d69d8ec](https://github.com/nodejs/gyp-next/commit/d69d8ece6dbff7af4f2ea073c9fd170baf8cb7f7))
+* node.js debugger adds stderr (but exit code is 0) -> shouldn't throw ([#179](https://github.com/nodejs/gyp-next/issues/179)) ([1a457d9](https://github.com/nodejs/gyp-next/commit/1a457d9ed08cfd30c9fa551bc5cf0d90fb583787))
+
 ## [0.13.0](https://www.github.com/nodejs/gyp-next/compare/v0.12.1...v0.13.0) (2022-05-11)
 
 
