@@ -1,5 +1,14 @@
 # Changelog
 
+## [9.3.0](https://www.github.com/nodejs/node-gyp/compare/v9.2.0...v9.3.0) (2022-10-10)
+
+
+### Features
+
+* **gyp:** update gyp to v0.14.0 ([#2749](https://www.github.com/nodejs/node-gyp/issues/2749)) ([713b8dc](https://www.github.com/nodejs/node-gyp/commit/713b8dcdbf44532ca9453a127da266386cc737f8))
+* remove support for VS2015 in Node.js >=19 ([#2746](https://www.github.com/nodejs/node-gyp/issues/2746)) ([131d1a4](https://www.github.com/nodejs/node-gyp/commit/131d1a463baf034a04154bcda753a8295f112a34))
+* support IBM Open XL C/C++ on z/OS ([#2743](https://www.github.com/nodejs/node-gyp/issues/2743)) ([7d0c83d](https://www.github.com/nodejs/node-gyp/commit/7d0c83d2a95aca743dff972826d0da26203acfc4))
+
 ## [9.2.0](https://www.github.com/nodejs/node-gyp/compare/v9.1.0...v9.2.0) (2022-10-02)
 
 
