@@ -47,7 +47,7 @@ Depending on your operating system, you will need to install:
 
 ### On Windows
 
-Install the current version of Python from the [Microsoft Store package](https://www.microsoft.com/en-us/p/python-310/9pjpw5ldxlz5).
+Install the latest [compatible version](https://github.com/nodejs/node-gyp#configuring-python-dependency) of Python from the [Microsoft Store package](https://www.microsoft.com/en-us/p/python-310/9pjpw5ldxlz5).
 
 Install tools and configuration manually:
    * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
