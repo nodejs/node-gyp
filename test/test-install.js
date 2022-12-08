@@ -1,19 +1,16 @@
 'use strict'
 
 const { describe, it, after } = require('mocha')
+const { rm } = require('fs/promises')
 const assert = require('assert')
 const path = require('path')
 const os = require('os')
 const util = require('util')
 const { test: { download, install } } = require('../lib/install')
-const rimraf = require('rimraf')
 const gyp = require('../lib/node-gyp')
-const log = require('npmlog')
 const semver = require('semver')
 const stream = require('stream')
 const streamPipeline = util.promisify(stream.pipeline)
-
-log.level = 'error' // we expect a warning
 
 describe('install', function () {
   it('EACCES retry once', async () => {
@@ -65,11 +62,11 @@ describe('install', function () {
     }
 
     after(async () => {
-      await util.promisify(rimraf)(devDir)
+      await rm(devDir, { recursive: true, force: true })
     })
 
     const expectedDir = path.join(devDir, process.version.replace(/^v/, ''))
-    await util.promisify(rimraf)(expectedDir)
+    await rm(expectedDir, { recursive: true, force: true })
 
     await Promise.all([
       install(fs, prog, []),
@@ -95,7 +92,6 @@ describe('install', function () {
     prog.parseArgv([])
     prog.devDir = devDir
     prog.opts.ensure = true
-    log.level = 'warn'
 
     await parallelInstallsTest(this, fs, devDir, prog)
   })
@@ -110,7 +106,6 @@ describe('install', function () {
     prog.parseArgv([])
     prog.devDir = devDir
     prog.opts.ensure = false
-    log.level = 'warn'
 
     await parallelInstallsTest(this, fs, devDir, prog)
   })
@@ -125,7 +120,6 @@ describe('install', function () {
     prog.parseArgv([])
     prog.devDir = devDir
     prog.opts.tarball = path.join(devDir, 'node-headers.tar.gz')
-    log.level = 'warn'
 
     await streamPipeline(
       (await download(prog, `https://nodejs.org/dist/${process.version}/node-${process.version}.tar.gz`)).body,

@@ -2,7 +2,7 @@
 
 const { describe, it, after } = require('mocha')
 const assert = require('assert')
-const fs = require('fs')
+const fs = require('fs/promises')
 const path = require('path')
 const util = require('util')
 const http = require('http')
@@ -10,12 +10,11 @@ const https = require('https')
 const install = require('../lib/install')
 const semver = require('semver')
 const devDir = require('./common').devDir()
-const rimraf = require('rimraf')
 const gyp = require('../lib/node-gyp')
-const log = require('npmlog')
+const log = require('../lib/log')
 const certs = require('./fixtures/certs')
 
-log.level = 'warn'
+log.logger.stream = null
 
 describe('download', function () {
   it('download over http', async function () {
@@ -43,7 +42,7 @@ describe('download', function () {
     const cacontents = certs['ca.crt']
     const cert = certs['server.crt']
     const key = certs['server.key']
-    await fs.promises.writeFile(cafile, cacontents, 'utf8')
+    await fs.writeFile(cafile, cacontents, 'utf8')
     const ca = await install.test.readCAFile(cafile)
 
     assert.strictEqual(ca.length, 1)
@@ -56,7 +55,7 @@ describe('download', function () {
 
     after(async () => {
       await new Promise((resolve) => server.close(resolve))
-      await fs.promises.unlink(cafile)
+      await fs.unlink(cafile)
     })
 
     server.on('clientError', (err) => { throw err })
@@ -149,9 +148,9 @@ describe('download', function () {
   it('check certificate splitting', async function () {
     const cafile = path.join(__dirname, 'fixtures/ca-bundle.crt')
     const cacontents = certs['ca-bundle.crt']
-    await fs.promises.writeFile(cafile, cacontents, 'utf8')
+    await fs.writeFile(cafile, cacontents, 'utf8')
     after(async () => {
-      await fs.promises.unlink(cafile)
+      await fs.unlink(cafile)
     })
     const cas = await install.test.readCAFile(path.join(__dirname, 'fixtures/ca-bundle.crt'))
     assert.strictEqual(cas.length, 2)
@@ -171,7 +170,7 @@ describe('download', function () {
     this.timeout(300000)
 
     const expectedDir = path.join(devDir, process.version.replace(/^v/, ''))
-    await util.promisify(rimraf)(expectedDir)
+    await fs.rm(expectedDir, { recursive: true, force: true })
 
     const prog = gyp()
     prog.parseArgv([])
@@ -179,10 +178,10 @@ describe('download', function () {
     log.level = 'warn'
     await util.promisify(install)(prog, [])
 
-    const data = await fs.promises.readFile(path.join(expectedDir, 'installVersion'), 'utf8')
+    const data = await fs.readFile(path.join(expectedDir, 'installVersion'), 'utf8')
     assert.strictEqual(data, '11\n', 'correct installVersion')
 
-    const list = await fs.promises.readdir(path.join(expectedDir, 'include/node'))
+    const list = await fs.readdir(path.join(expectedDir, 'include/node'))
     assert.ok(list.includes('common.gypi'))
     assert.ok(list.includes('config.gypi'))
     assert.ok(list.includes('node.h'))
@@ -194,7 +193,7 @@ describe('download', function () {
     assert.ok(list.includes('v8.h'))
     assert.ok(list.includes('zlib.h'))
 
-    const lines = (await fs.promises.readFile(path.join(expectedDir, 'include/node/node_version.h'), 'utf8')).split('\n')
+    const lines = (await fs.readFile(path.join(expectedDir, 'include/node/node_version.h'), 'utf8')).split('\n')
 
     // extract the 3 version parts from the defines to build a valid version string and
     // and check them against our current env version
