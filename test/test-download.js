@@ -47,7 +47,7 @@ describe('download', function () {
 
     assert.strictEqual(ca.length, 1)
 
-    const options = { ca: ca, cert: cert, key: key }
+    const options = { ca, cert, key }
     const server = https.createServer(options, (req, res) => {
       assert.strictEqual(req.headers['user-agent'], `node-gyp v42 (node ${process.version})`)
       res.end('ok')

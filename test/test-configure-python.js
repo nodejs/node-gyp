@@ -32,7 +32,7 @@ describe('configure-python', function () {
   it('configure PYTHONPATH with no existing env', function (done) {
     delete process.env.PYTHONPATH
 
-    var prog = gyp()
+    const prog = gyp()
     prog.parseArgv([])
     prog.spawn = function () {
       assert.strictEqual(process.env.PYTHONPATH, EXPECTED_PYPATH)
@@ -43,15 +43,15 @@ describe('configure-python', function () {
   })
 
   it('configure PYTHONPATH with existing env of one dir', function (done) {
-    var existingPath = path.join('a', 'b')
+    const existingPath = path.join('a', 'b')
     process.env.PYTHONPATH = existingPath
 
-    var prog = gyp()
+    const prog = gyp()
     prog.parseArgv([])
     prog.spawn = function () {
       assert.strictEqual(process.env.PYTHONPATH, [EXPECTED_PYPATH, existingPath].join(SEPARATOR))
 
-      var dirs = process.env.PYTHONPATH.split(SEPARATOR)
+      const dirs = process.env.PYTHONPATH.split(SEPARATOR)
       assert.deepStrictEqual(dirs, [EXPECTED_PYPATH, existingPath])
 
       return SPAWN_RESULT(done)
@@ -61,17 +61,17 @@ describe('configure-python', function () {
   })
 
   it('configure PYTHONPATH with existing env of multiple dirs', function (done) {
-    var pythonDir1 = path.join('a', 'b')
-    var pythonDir2 = path.join('b', 'c')
-    var existingPath = [pythonDir1, pythonDir2].join(SEPARATOR)
+    const pythonDir1 = path.join('a', 'b')
+    const pythonDir2 = path.join('b', 'c')
+    const existingPath = [pythonDir1, pythonDir2].join(SEPARATOR)
     process.env.PYTHONPATH = existingPath
 
-    var prog = gyp()
+    const prog = gyp()
     prog.parseArgv([])
     prog.spawn = function () {
       assert.strictEqual(process.env.PYTHONPATH, [EXPECTED_PYPATH, existingPath].join(SEPARATOR))
 
-      var dirs = process.env.PYTHONPATH.split(SEPARATOR)
+      const dirs = process.env.PYTHONPATH.split(SEPARATOR)
       assert.deepStrictEqual(dirs, [EXPECTED_PYPATH, pythonDir1, pythonDir2])
 
       return SPAWN_RESULT(done)

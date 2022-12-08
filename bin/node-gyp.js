@@ -14,11 +14,11 @@ const os = require('os')
  */
 
 const prog = gyp()
-var completed = false
+let completed = false
 prog.parseArgv(process.argv)
 prog.devDir = prog.opts.devdir
 
-var homeDir = os.homedir()
+const homeDir = os.homedir()
 if (prog.devDir) {
   prog.devDir = prog.devDir.replace(/^~/, homeDir)
 } else if (homeDir) {
@@ -48,11 +48,11 @@ log.info('using', 'node@%s | %s | %s', process.versions.node, process.platform, 
  * Change dir if -C/--directory was passed.
  */
 
-var dir = prog.opts.directory
+const dir = prog.opts.directory
 if (dir) {
-  var fs = require('fs')
+  const fs = require('fs')
   try {
-    var stat = fs.statSync(dir)
+    const stat = fs.statSync(dir)
     if (stat.isDirectory()) {
       log.info('chdir', dir)
       process.chdir(dir)
@@ -69,7 +69,7 @@ if (dir) {
 }
 
 function run () {
-  var command = prog.todo.shift()
+  const command = prog.todo.shift()
   if (!command) {
     // done!
     completed = true
@@ -86,7 +86,7 @@ function run () {
       return process.exit(1)
     }
     if (command.name === 'list') {
-      var versions = arguments[1]
+      const versions = arguments[1]
       if (versions.length > 0) {
         versions.forEach(function (version) {
           console.log(version)
@@ -120,7 +120,7 @@ process.on('uncaughtException', function (err) {
 
 function errorMessage () {
   // copied from npm's lib/utils/error-handler.js
-  var os = require('os')
+  const os = require('os')
   log.error('System', os.type() + ' ' + os.release())
   log.error('command', process.argv
     .map(JSON.stringify).join(' '))
