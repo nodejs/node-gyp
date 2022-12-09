@@ -25,28 +25,34 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Use Python ${{ matrix.python }}
+        id: setup-python
+        continue-on-error: true
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
         env:
           PYTHON_VERSION: ${{ matrix.python }}  # Why do this?
       - name: Install Dependencies
+        if: steps.setup-python.outcome == 'success'
         run: |
           npm install --no-progress
           pip install flake8 pytest
       - name: Set Windows environment
-        if: startsWith(matrix.os, 'windows')
+        if: startsWith(matrix.os, 'windows') && steps.setup-python.outcome == 'success'
         run: |
           echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Lint Python
-        if: startsWith(matrix.os, 'ubuntu')
+        if: startsWith(matrix.os, 'ubuntu') && steps.setup-python.outcome == 'success'
         run: flake8 . --ignore=E203,W503  --max-complexity=101 --max-line-length=88 --show-source --statistics
       - name: Run Python tests
+        if: steps.setup-python.outcome == 'success'
         run: python -m pytest
       # - name: Run doctests with pytest
       #   run: python -m pytest --doctest-modules
       - name: Environment Information
+        if: steps.setup-python.outcome == 'success'
         run: npx envinfo
       - name: Run Node tests
+        if: steps.setup-python.outcome == 'success'
         run: npm test
