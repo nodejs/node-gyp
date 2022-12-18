@@ -10,13 +10,7 @@ const configure = requireInject('../lib/configure', {
     openSync: function () { return 0 },
     closeSync: function () { },
     writeFile: function (file, data, cb) { cb() },
-    stat: function (file, cb) { cb(null, {}) },
-    mkdir: function (dir, options, cb) { cb() },
-    promises: {
-      writeFile: function (file, data) { return Promise.resolve(null) }
-    },
-    unlink: function (path, cb) { cb() },
-    symlink: function (target, path, cb) { cb() }
+    stat: function (file, cb) { cb(null, {}) }
   }
 })
 
