@@ -3015,6 +3015,9 @@ def _GetMSBuildConfigurationDetails(spec, build_file):
         character_set = msbuild_attributes.get("CharacterSet")
         config_type = msbuild_attributes.get("ConfigurationType")
         _AddConditionalProperty(properties, condition, "ConfigurationType", config_type)
+        spectre_mitigation = settings.get("SpectreMitigation")
+        if spectre_mitigation:
+            _AddConditionalProperty(properties, condition, "SpectreMitigation", spectre_mitigation)
         if config_type == "Driver":
             _AddConditionalProperty(properties, condition, "DriverType", "WDM")
             _AddConditionalProperty(
@@ -3351,6 +3354,8 @@ def _FinalizeMSBuildSettings(spec, configuration):
     include_dirs, midl_include_dirs, resource_include_dirs = _GetIncludeDirs(
         configuration
     )
+    if "/Qspectre" in msbuild_settings["ClCompile"]["AdditionalOptions"]:
+        configuration["SpectreMitigation"] = "Spectre"
     libraries = _GetLibraries(spec)
     library_dirs = _GetLibraryDirs(configuration)
     out_file, _, msbuild_tool = _GetOutputFilePathAndTool(spec, msbuild=True)
