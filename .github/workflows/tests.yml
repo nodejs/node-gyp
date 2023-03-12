@@ -8,6 +8,12 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
+  Lint_Python:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: pip install --user ruff
+    - run: ruff --format=github --select="E,F,PLC,PLE,UP,W,YTT" --ignore="S101,UP031" --target-version=py37 .
   Tests:
     strategy:
       fail-fast: false
@@ -33,15 +39,12 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install --no-progress
-          pip install flake8 pytest
+          pip install pytest
       - name: Set Windows environment
         if: startsWith(matrix.os, 'windows')
         run: |
           echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
-      - name: Lint Python
-        if: startsWith(matrix.os, 'ubuntu')
-        run: flake8 . --ignore=E203,W503  --max-complexity=101 --max-line-length=88 --show-source --statistics
       - name: Run Python tests
         run: python -m pytest
       # - name: Run doctests with pytest
