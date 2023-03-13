@@ -6,10 +6,10 @@ Please look thru your error log for the string `gyp info using node-gyp@` and if
 
 Please be aware that the package [`node-sass` is deprecated](https://github.com/sass/node-sass#node-sass) so you should actively seek alternatives.  You can try:
 ```
-npm install --global node-sass@latest
-# or ...
 npm uninstall node-sass
 npm install sass --save
+# or ...
+npm install --global node-sass@latest
 ```
 But in any case, please avoid opening new `node-sass` issues on this repo because we [cannot help much](https://github.com/nodejs/node-gyp/issues?q=is%3Aissue+label%3A%22Node+Sass+--%3E+Dart+Sass%22+).
 
