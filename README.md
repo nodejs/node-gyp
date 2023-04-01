@@ -53,7 +53,7 @@ Install tools and configuration manually:
    * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
    (using "Visual C++ build tools" workload) or [Visual Studio Community](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community)
    (using the "Desktop development with C++" workload)
-   * Launch cmd, `npm config set msvs_version <VS Studio version>`, e.g. `npm config set msvs_version 2022`
+   * Launch cmd, `npm config set msvs_version 2022` (or other supported version year)
 
    If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
 
