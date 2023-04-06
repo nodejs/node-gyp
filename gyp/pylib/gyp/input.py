@@ -225,7 +225,7 @@ def LoadOneBuildFile(build_file_path, data, aux_data, includes, is_target, check
         return data[build_file_path]
 
     if os.path.exists(build_file_path):
-        build_file_contents = open(build_file_path, encoding='utf-8').read()
+        build_file_contents = open(build_file_path, encoding="utf-8").read()
     else:
         raise GypError(f"{build_file_path} not found (cwd: {os.getcwd()})")
 
@@ -870,10 +870,7 @@ def ExpandVariables(input, phase, variables, build_file):
         # This works around actions/rules which have more inputs than will
         # fit on the command line.
         if file_list:
-            if type(contents) is list:
-                contents_list = contents
-            else:
-                contents_list = contents.split(" ")
+            contents_list = contents if type(contents) is list else contents.split(" ")
             replacement = contents_list[0]
             if os.path.isabs(replacement):
                 raise GypError('| cannot handle absolute paths, got "%s"' % replacement)
@@ -1630,15 +1627,14 @@ def RemoveSelfDependencies(targets):
             dependencies = target_dict.get(dependency_key, [])
             if dependencies:
                 for t in dependencies:
-                    if t == target_name:
-                        if (
-                            targets[t]
-                            .get("variables", {})
-                            .get("prune_self_dependency", 0)
-                        ):
-                            target_dict[dependency_key] = Filter(
-                                dependencies, target_name
-                            )
+                    if t == target_name and (
+                        targets[t]
+                        .get("variables", {})
+                        .get("prune_self_dependency", 0)
+                    ):
+                        target_dict[dependency_key] = Filter(
+                            dependencies, target_name
+                        )
 
 
 def RemoveLinkDependenciesFromNoneTargets(targets):
@@ -2238,10 +2234,7 @@ def MergeLists(to, fro, to_file, fro_file, is_paths=False, append=True):
         singleton = False
         if type(item) in (str, int):
             # The cheap and easy case.
-            if is_paths:
-                to_item = MakePathRelative(to_file, fro_file, item)
-            else:
-                to_item = item
+            to_item = MakePathRelative(to_file, fro_file, item) if is_paths else item
 
             if not (type(item) is str and item.startswith("-")):
                 # Any string that doesn't begin with a "-" is a singleton - it can
@@ -2467,10 +2460,7 @@ def SetUpConfigurations(target, target_dict):
         new_configuration_dict = {}
         for (key, target_val) in target_dict.items():
             key_ext = key[-1:]
-            if key_ext in key_suffixes:
-                key_base = key[:-1]
-            else:
-                key_base = key
+            key_base = key[:-1] if key_ext in key_suffixes else key
             if key_base not in non_configuration_keys:
                 new_configuration_dict[key] = gyp.simple_copy.deepcopy(target_val)
 
@@ -2482,7 +2472,7 @@ def SetUpConfigurations(target, target_dict):
         merged_configurations[configuration] = new_configuration_dict
 
     # Put the new configurations back into the target dict as a configuration.
-    for configuration in merged_configurations.keys():
+    for configuration in merged_configurations:
         target_dict["configurations"][configuration] = merged_configurations[
             configuration
         ]
@@ -2499,19 +2489,16 @@ def SetUpConfigurations(target, target_dict):
     delete_keys = []
     for key in target_dict:
         key_ext = key[-1:]
-        if key_ext in key_suffixes:
-            key_base = key[:-1]
-        else:
-            key_base = key
+        key_base = key[:-1] if key_ext in key_suffixes else key
         if key_base not in non_configuration_keys:
             delete_keys.append(key)
     for key in delete_keys:
         del target_dict[key]
 
     # Check the configurations to see if they contain invalid keys.
-    for configuration in target_dict["configurations"].keys():
+    for configuration in target_dict["configurations"]:
         configuration_dict = target_dict["configurations"][configuration]
-        for key in configuration_dict.keys():
+        for key in configuration_dict:
             if key in invalid_configuration_keys:
                 raise GypError(
                     "%s not allowed in the %s configuration, found in "

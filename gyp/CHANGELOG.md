@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.15.0](https://github.com/nodejs/gyp-next/compare/v0.14.1...v0.15.0) (2023-03-30)
+
+
+### Features
+
+* **msvs:** add SpectreMitigation attribute ([#190](https://github.com/nodejs/gyp-next/issues/190)) ([853e464](https://github.com/nodejs/gyp-next/commit/853e4643b6737224a5aa0720a4108461a0230991))
+
+## [0.14.1](https://github.com/nodejs/gyp-next/compare/v0.14.0...v0.14.1) (2023-02-19)
+
+
+### Bug Fixes
+
+* flake8 extended-ignore ([#186](https://github.com/nodejs/gyp-next/issues/186)) ([c38493c](https://github.com/nodejs/gyp-next/commit/c38493c2556aa63b6dc40ab585c18aef5ca270d3))
+* No build_type in default_variables ([#183](https://github.com/nodejs/gyp-next/issues/183)) ([ac262fe](https://github.com/nodejs/gyp-next/commit/ac262fe82453c4e8dc47529338d157eb0b5ec0fb))
+
+
+### Documentation
+
+* README.md: Add pipx installation and run instructions ([#165](https://github.com/nodejs/gyp-next/issues/165)) ([4d28b15](https://github.com/nodejs/gyp-next/commit/4d28b155568dc35f11c7f86124d1dd42ba428bed))
+
 ## [0.14.0](https://github.com/nodejs/gyp-next/compare/v0.13.0...v0.14.0) (2022-10-08)
 
 

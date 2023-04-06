@@ -164,7 +164,7 @@ def _FixPath(path, separator="\\"):
         fixpath_prefix
         and path
         and not os.path.isabs(path)
-        and not path[0] == "$"
+        and path[0] != "$"
         and not _IsWindowsAbsPath(path)
     ):
         path = os.path.join(fixpath_prefix, path)
@@ -283,7 +283,7 @@ def _ToolSetOrAppend(tools, tool_name, setting, value, only_if_unset=False):
     if not tools.get(tool_name):
         tools[tool_name] = dict()
     tool = tools[tool_name]
-    if "CompileAsWinRT" == setting:
+    if setting == "CompileAsWinRT":
         return
     if tool.get(setting):
         if only_if_unset:
@@ -412,10 +412,7 @@ def _BuildCommandLineForRuleRaw(
         return input_dir_preamble + cmd
     else:
         # Convert cat --> type to mimic unix.
-        if cmd[0] == "cat":
-            command = ["type"]
-        else:
-            command = [cmd[0].replace("/", "\\")]
+        command = ["type"] if cmd[0] == "cat" else [cmd[0].replace("/", "\\")]
         # Add call before command to ensure that commands can be tied together one
         # after the other without aborting in Incredibuild, since IB makes a bat
         # file out of the raw command string, and some commands (like python) are
@@ -1384,10 +1381,7 @@ def _GetDefines(config):
   """
     defines = []
     for d in config.get("defines", []):
-        if type(d) == list:
-            fd = "=".join([str(dpart) for dpart in d])
-        else:
-            fd = str(d)
+        fd = "=".join([str(dpart) for dpart in d]) if isinstance(d, list) else str(d)
         defines.append(fd)
     return defines
 
@@ -1598,10 +1592,7 @@ def _IdlFilesHandledNonNatively(spec, sources):
         if rule["extension"] == "idl" and int(rule.get("msvs_external_rule", 0)):
             using_idl = True
             break
-    if using_idl:
-        excluded_idl = [i for i in sources if i.endswith(".idl")]
-    else:
-        excluded_idl = []
+    excluded_idl = [i for i in sources if i.endswith(".idl")] if using_idl else []
     return excluded_idl
 
 
@@ -3015,16 +3006,19 @@ def _GetMSBuildConfigurationDetails(spec, build_file):
         character_set = msbuild_attributes.get("CharacterSet")
         config_type = msbuild_attributes.get("ConfigurationType")
         _AddConditionalProperty(properties, condition, "ConfigurationType", config_type)
+        spectre_mitigation = msbuild_attributes.get('SpectreMitigation')
+        if spectre_mitigation:
+            _AddConditionalProperty(properties, condition, "SpectreMitigation",
+                                    spectre_mitigation)
         if config_type == "Driver":
             _AddConditionalProperty(properties, condition, "DriverType", "WDM")
             _AddConditionalProperty(
                 properties, condition, "TargetVersion", _ConfigTargetVersion(settings)
             )
-        if character_set:
-            if "msvs_enable_winrt" not in spec:
-                _AddConditionalProperty(
-                    properties, condition, "CharacterSet", character_set
-                )
+        if character_set and "msvs_enable_winrt" not in spec:
+            _AddConditionalProperty(
+                properties, condition, "CharacterSet", character_set
+            )
     return _GetMSBuildPropertyGroup(spec, "Configuration", properties)
 
 
@@ -3104,6 +3098,8 @@ def _ConvertMSVSBuildAttributes(spec, config, build_file):
             msbuild_attributes[a] = _ConvertMSVSCharacterSet(msvs_attributes[a])
         elif a == "ConfigurationType":
             msbuild_attributes[a] = _ConvertMSVSConfigurationType(msvs_attributes[a])
+        elif a == "SpectreMitigation":
+            msbuild_attributes[a] = msvs_attributes[a]
         else:
             print("Warning: Do not know how to convert MSVS attribute " + a)
     return msbuild_attributes
@@ -3326,15 +3322,14 @@ def _GetMSBuildToolSettingsSections(spec, configurations):
         for tool_name, tool_settings in sorted(msbuild_settings.items()):
             # Skip the tool named '' which is a holder of global settings handled
             # by _GetMSBuildConfigurationGlobalProperties.
-            if tool_name:
-                if tool_settings:
-                    tool = [tool_name]
-                    for name, value in sorted(tool_settings.items()):
-                        formatted_value = _GetValueFormattedForMSBuild(
-                            tool_name, name, value
-                        )
-                        tool.append([name, formatted_value])
-                    group.append(tool)
+            if tool_name and tool_settings:
+                tool = [tool_name]
+                for name, value in sorted(tool_settings.items()):
+                    formatted_value = _GetValueFormattedForMSBuild(
+                        tool_name, name, value
+                    )
+                    tool.append([name, formatted_value])
+                group.append(tool)
         groups.append(group)
     return groups
 
@@ -3462,10 +3457,7 @@ def _GetValueFormattedForMSBuild(tool_name, name, value):
             "Link": ["AdditionalOptions"],
             "Lib": ["AdditionalOptions"],
         }
-        if tool_name in exceptions and name in exceptions[tool_name]:
-            char = " "
-        else:
-            char = ";"
+        char = " " if name in exceptions.get(tool_name, []) else ";"
         formatted_value = char.join(
             [MSVSSettings.ConvertVCMacrosToMSBuild(i) for i in value]
         )

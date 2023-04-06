@@ -929,10 +929,7 @@ def WriteTarget(
         product_prefix = spec.get("product_prefix", default_product_prefix)
         product_name = spec.get("product_name", default_product_name)
         product_ext = spec.get("product_extension")
-        if product_ext:
-            product_ext = "." + product_ext
-        else:
-            product_ext = default_product_ext
+        product_ext = "." + product_ext if product_ext else default_product_ext
 
         SetTargetProperty(output, cmake_target_name, "PREFIX", product_prefix)
         SetTargetProperty(

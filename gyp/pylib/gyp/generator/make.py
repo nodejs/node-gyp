@@ -681,10 +681,7 @@ COMPILABLE_EXTENSIONS = {
 
 def Compilable(filename):
     """Return true if the file is compilable (should be in OBJS)."""
-    for res in (filename.endswith(e) for e in COMPILABLE_EXTENSIONS):
-        if res:
-            return True
-    return False
+    return any(res for res in (filename.endswith(e) for e in COMPILABLE_EXTENSIONS))
 
 
 def Linkable(filename):
@@ -778,7 +775,7 @@ class MakefileWriter:
         self.suffix_rules_objdir2 = {}
 
         # Generate suffix rules for all compilable extensions.
-        for ext in COMPILABLE_EXTENSIONS.keys():
+        for ext in COMPILABLE_EXTENSIONS:
             # Suffix rules for source folder.
             self.suffix_rules_srcdir.update(
                 {

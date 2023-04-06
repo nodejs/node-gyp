@@ -1815,10 +1815,7 @@ class NinjaWriter:
             "executable": default_variables["EXECUTABLE_SUFFIX"],
         }
         extension = spec.get("product_extension")
-        if extension:
-            extension = "." + extension
-        else:
-            extension = DEFAULT_EXTENSION.get(type, "")
+        extension = "." + extension if extension else DEFAULT_EXTENSION.get(type, "")
 
         if "product_name" in spec:
             # If we were given an explicit name, use that.

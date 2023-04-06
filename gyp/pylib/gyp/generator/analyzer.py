@@ -433,7 +433,7 @@ def _GetUnqualifiedToTargetMapping(all_targets, to_find):
     if not to_find:
         return {}, []
     to_find = set(to_find)
-    for target_name in all_targets.keys():
+    for target_name in all_targets:
         extracted = gyp.common.ParseQualifiedTarget(target_name)
         if len(extracted) > 1 and extracted[1] in to_find:
             to_find.remove(extracted[1])

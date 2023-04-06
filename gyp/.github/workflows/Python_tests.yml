@@ -13,10 +13,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-      max-parallel: 8
+      max-parallel: 6
       matrix:
         os: [macos-latest, ubuntu-latest] # , windows-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11-dev"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12-dev"]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
@@ -30,7 +30,9 @@ jobs:
       - run: ./gyp -V && ./gyp --version && gyp -V && gyp --version
       - name: Lint with flake8
         run: flake8 . --ignore=E203,W503  --max-complexity=101 --max-line-length=88 --show-source --statistics
-      - name: Test with pytest
+      - name: Lint with ruff  # See pyproject.toml for settings
+        run: flake8 .
+      - name: Test with pytest  # See pyproject.toml for settings
         run: pytest
       # - name: Run doctests with pytest
       #   run: pytest --doctest-modules

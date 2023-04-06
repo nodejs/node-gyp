@@ -2355,9 +2355,8 @@ class XCTarget(XCRemoteObject):
         # property was supplied, set "productName" if it is not present.  Also set
         # the "PRODUCT_NAME" build setting in each configuration, but only if
         # the setting is not present in any build configuration.
-        if "name" in self._properties:
-            if "productName" not in self._properties:
-                self.SetProperty("productName", self._properties["name"])
+        if "name" in self._properties and "productName" not in self._properties:
+            self.SetProperty("productName", self._properties["name"])
 
         if "productName" in self._properties:
             if "buildConfigurationList" in self._properties:
@@ -2551,9 +2550,8 @@ class PBXNativeTarget(XCTarget):
                     == "com.apple.product-type-bundle.unit.test"
                     or self._properties["productType"]
                     == "com.apple.product-type-bundle.ui-testing"
-                ):
-                    if force_extension is None:
-                        force_extension = suffix[1:]
+                ) and force_extension is None:
+                    force_extension = suffix[1:]
 
                 if force_extension is not None:
                     # If it's a wrapper (bundle), set WRAPPER_EXTENSION.
@@ -2636,10 +2634,13 @@ class PBXNativeTarget(XCTarget):
             # frameworks phases, if any.
             insert_at = len(self._properties["buildPhases"])
             for index, phase in enumerate(self._properties["buildPhases"]):
-                if (
-                    isinstance(phase, PBXResourcesBuildPhase)
-                    or isinstance(phase, PBXSourcesBuildPhase)
-                    or isinstance(phase, PBXFrameworksBuildPhase)
+                if isinstance(
+                    phase,
+                    (
+                        PBXResourcesBuildPhase,
+                        PBXSourcesBuildPhase,
+                        PBXFrameworksBuildPhase,
+                    ),
                 ):
                     insert_at = index
                     break
@@ -2658,9 +2659,7 @@ class PBXNativeTarget(XCTarget):
             # phases, if any.
             insert_at = len(self._properties["buildPhases"])
             for index, phase in enumerate(self._properties["buildPhases"]):
-                if isinstance(phase, PBXSourcesBuildPhase) or isinstance(
-                    phase, PBXFrameworksBuildPhase
-                ):
+                if isinstance(phase, (PBXSourcesBuildPhase, PBXFrameworksBuildPhase)):
                     insert_at = index
                     break
 
@@ -2770,7 +2769,7 @@ class PBXProject(XCContainerPortal):
         self.path = path
         self._other_pbxprojects = {}
         # super
-        XCContainerPortal.__init__(self, properties, id, parent)
+        return XCContainerPortal.__init__(self, properties, id, parent)
 
     def Name(self):
         name = self.path

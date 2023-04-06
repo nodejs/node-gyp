@@ -34,7 +34,7 @@ generator_default_variables = {
 
 
 def IsMac(params):
-    return "mac" == gyp.common.GetFlavor(params)
+    return gyp.common.GetFlavor(params) == "mac"
 
 
 def CalculateVariables(default_variables, params):
