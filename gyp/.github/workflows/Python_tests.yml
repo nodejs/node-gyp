@@ -31,7 +31,7 @@ jobs:
       - name: Lint with flake8
         run: flake8 . --ignore=E203,W503  --max-complexity=101 --max-line-length=88 --show-source --statistics
       - name: Lint with ruff  # See pyproject.toml for settings
-        run: flake8 .
+        run: ruff .
       - name: Test with pytest  # See pyproject.toml for settings
         run: pytest
       # - name: Run doctests with pytest
