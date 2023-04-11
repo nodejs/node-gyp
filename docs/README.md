@@ -11,6 +11,7 @@ npm install sass --save
 # or ...
 npm install --global node-sass@latest
 ```
+`node-sass` projects _may_ work by downgrading to Node.js v14 but [that release is end-of-life](https://github.com/nodejs/release#release-schedule).
 But in any case, please avoid opening new `node-sass` issues on this repo because we [cannot help much](https://github.com/nodejs/node-gyp/issues?q=is%3Aissue+label%3A%22Node+Sass+--%3E+Dart+Sass%22+).
 
 ## Issues finding the installed Visual Studio
