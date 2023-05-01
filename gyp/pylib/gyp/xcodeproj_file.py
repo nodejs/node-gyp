@@ -2769,7 +2769,7 @@ class PBXProject(XCContainerPortal):
         self.path = path
         self._other_pbxprojects = {}
         # super
-        XCContainerPortal.__init__(self, properties, id, parent)
+        return XCContainerPortal.__init__(self, properties, id, parent)
 
     def Name(self):
         name = self.path
