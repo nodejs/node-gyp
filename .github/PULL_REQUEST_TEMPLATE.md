@@ -1,7 +1,7 @@
 <!--
 Thank you for your pull request. Please review the below requirements.
 
-Contributor guide: https://github.com/nodejs/node/blob/master/CONTRIBUTING.md
+Contributor guide: https://github.com/nodejs/node/blob/main/CONTRIBUTING.md
 -->
 
 ##### Checklist
