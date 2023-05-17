@@ -25,7 +25,7 @@
     "env-paths": "^2.2.0",
     "glob": "^7.1.4",
     "graceful-fs": "^4.2.6",
-    "make-fetch-happen": "^11.0.3",
+    "make-fetch-happen": "^10.0.3",
     "nopt": "^6.0.0",
     "npmlog": "^6.0.0",
     "rimraf": "^3.0.2",
