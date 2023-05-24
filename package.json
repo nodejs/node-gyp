@@ -46,6 +46,6 @@
   },
   "scripts": {
     "lint": "standard */*.js test/**/*.js",
-    "test": "npm run lint && mocha test/test-download.js test/test-*"
+    "test": "npm run lint && mocha --reporter=test/reporter.js test/test-download.js test/test-*"
   }
 }
