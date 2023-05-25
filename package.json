@@ -12,7 +12,7 @@
     "gyp"
   ],
   "version": "9.3.1",
-  "installVersion": 9,
+  "installVersion": 10,
   "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)",
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   "main": "./lib/node-gyp.js",
   "dependencies": {
     "env-paths": "^2.2.0",
+    "exponential-backoff": "^3.1.1",
     "glob": "^7.1.4",
     "graceful-fs": "^4.2.6",
     "make-fetch-happen": "^11.0.3",
@@ -45,6 +46,6 @@
   },
   "scripts": {
     "lint": "standard */*.js test/**/*.js",
-    "test": "npm run lint && tap --timeout=600 test/test-*"
+    "test": "npm run lint && tap --timeout=1200 test/test-*"
   }
 }

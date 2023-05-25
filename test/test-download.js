@@ -188,7 +188,7 @@ test('download headers (actual)', async (t) => {
   await util.promisify(install)(prog, [])
 
   const data = await fs.promises.readFile(path.join(expectedDir, 'installVersion'), 'utf8')
-  t.strictEqual(data, '9\n', 'correct installVersion')
+  t.strictEqual(data, '10\n', 'correct installVersion')
 
   const list = await fs.promises.readdir(path.join(expectedDir, 'include/node'))
   t.ok(list.includes('common.gypi'))
