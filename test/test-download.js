@@ -180,7 +180,7 @@ describe('download', function () {
     await util.promisify(install)(prog, [])
 
     const data = await fs.promises.readFile(path.join(expectedDir, 'installVersion'), 'utf8')
-    assert.strictEqual(data, '10\n', 'correct installVersion')
+    assert.strictEqual(data, '11\n', 'correct installVersion')
 
     const list = await fs.promises.readdir(path.join(expectedDir, 'include/node'))
     assert.ok(list.includes('common.gypi'))
