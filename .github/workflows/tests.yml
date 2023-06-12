@@ -20,7 +20,7 @@ jobs:
       max-parallel: 15
       matrix:
         node: [16.x, 18.x, 20.x]
-        python: ["3.9", "3.11"]
+        python: ["3.8", "3.11"]
         os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
