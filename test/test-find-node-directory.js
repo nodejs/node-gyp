@@ -13,8 +13,8 @@ describe('find-node-directory', function () {
   // in a build tree where npm is installed in
   // .... /deps/npm
   it('test find-node-directory - node install', function () {
-    for (var next = 0; next < platforms.length; next++) {
-      var processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
+    for (let next = 0; next < platforms.length; next++) {
+      const processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
       assert.strictEqual(
         findNodeDirectory('/x/deps/npm/node_modules/node-gyp/lib', processObj),
         path.join('/x'))
@@ -27,8 +27,8 @@ describe('find-node-directory', function () {
   // .... /lib/node_modules/npm or .../node_modules/npm
   // depending on the patform
   it('test find-node-directory - node build', function () {
-    for (var next = 0; next < platforms.length; next++) {
-      var processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
+    for (let next = 0; next < platforms.length; next++) {
+      const processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
       if (platforms[next] === 'win32') {
         assert.strictEqual(
           findNodeDirectory('/y/node_modules/npm/node_modules/node-gyp/lib',
@@ -44,8 +44,8 @@ describe('find-node-directory', function () {
   // we should find the directory based on the execPath
   // for node and match because it was in the bin directory
   it('test find-node-directory - node in bin directory', function () {
-    for (var next = 0; next < platforms.length; next++) {
-      var processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
+    for (let next = 0; next < platforms.length; next++) {
+      const processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
       assert.strictEqual(
         findNodeDirectory('/nothere/npm/node_modules/node-gyp/lib', processObj),
         path.join('/x/y'))
@@ -55,8 +55,8 @@ describe('find-node-directory', function () {
   // we should find the directory based on the execPath
   // for node and match because it was in the Release directory
   it('test find-node-directory - node in build release dir', function () {
-    for (var next = 0; next < platforms.length; next++) {
-      var processObj
+    for (let next = 0; next < platforms.length; next++) {
+      let processObj
       if (platforms[next] === 'win32') {
         processObj = { execPath: '/x/y/Release/node', platform: platforms[next] }
       } else {
@@ -75,8 +75,8 @@ describe('find-node-directory', function () {
   // we should find the directory based on the execPath
   // for node and match because it was in the Debug directory
   it('test find-node-directory - node in Debug release dir', function () {
-    for (var next = 0; next < platforms.length; next++) {
-      var processObj
+    for (let next = 0; next < platforms.length; next++) {
+      let processObj
       if (platforms[next] === 'win32') {
         processObj = { execPath: '/a/b/Debug/node', platform: platforms[next] }
       } else {
@@ -92,8 +92,8 @@ describe('find-node-directory', function () {
   // we should not find it as it will not match based on the execPath nor
   // the directory from which the script is running
   it('test find-node-directory - not found', function () {
-    for (var next = 0; next < platforms.length; next++) {
-      var processObj = { execPath: '/x/y/z/y', platform: next }
+    for (let next = 0; next < platforms.length; next++) {
+      const processObj = { execPath: '/x/y/z/y', platform: next }
       assert.strictEqual(findNodeDirectory('/a/b/c/d', processObj), '')
     }
   })
@@ -105,8 +105,8 @@ describe('find-node-directory', function () {
   // same test as above but make sure additional directory entries
   // don't cause an issue
   it('test find-node-directory - node install', function () {
-    for (var next = 0; next < platforms.length; next++) {
-      var processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
+    for (let next = 0; next < platforms.length; next++) {
+      const processObj = { execPath: '/x/y/bin/node', platform: platforms[next] }
       assert.strictEqual(
         findNodeDirectory('/x/y/z/a/b/c/deps/npm/node_modules/node-gyp/lib',
           processObj), path.join('/x/y/z/a/b/c'))

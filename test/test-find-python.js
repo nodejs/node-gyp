@@ -8,13 +8,11 @@ const findPython = require('../lib/find-python')
 const execFile = require('child_process').execFile
 const PythonFinder = findPython.test.PythonFinder
 
-require('npmlog').level = 'warn'
-
 describe('find-python', function () {
   it('find python', function () {
     findPython.test.findPython(null, function (err, found) {
       assert.strictEqual(err, null)
-      var proc = execFile(found, ['-V'], function (err, stdout, stderr) {
+      const proc = execFile(found, ['-V'], function (err, stdout, stderr) {
         assert.strictEqual(err, null)
         assert.ok(/Python 3/.test(stdout))
         assert.strictEqual(stderr, '')
@@ -29,7 +27,7 @@ describe('find-python', function () {
       console.error(Error(`Property ${property} should not have been accessed.`))
       process.abort()
     }
-    var descriptor = {
+    const descriptor = {
       configurable: false,
       enumerable: false,
       get: fail,
@@ -42,18 +40,10 @@ describe('find-python', function () {
     PythonFinder.apply(this, arguments)
   }
   TestPythonFinder.prototype = Object.create(PythonFinder.prototype)
-  // Silence npmlog - remove for debugging
-  TestPythonFinder.prototype.log = {
-    silly: () => {},
-    verbose: () => {},
-    info: () => {},
-    warn: () => {},
-    error: () => {}
-  }
   delete TestPythonFinder.prototype.env.NODE_GYP_FORCE_PYTHON
 
   it('find python - python', function () {
-    var f = new TestPythonFinder('python', done)
+    const f = new TestPythonFinder('python', done)
     f.execFile = function (program, args, opts, cb) {
       f.execFile = function (program, args, opts, cb) {
         poison(f, 'execFile')
@@ -75,7 +65,7 @@ describe('find-python', function () {
   })
 
   it('find python - python too old', function () {
-    var f = new TestPythonFinder(null, done)
+    const f = new TestPythonFinder(null, done)
     f.execFile = function (program, args, opts, cb) {
       if (/sys\.executable/.test(args[args.length - 1])) {
         cb(null, '/path/python')
@@ -94,7 +84,7 @@ describe('find-python', function () {
   })
 
   it('find python - no python', function () {
-    var f = new TestPythonFinder(null, done)
+    const f = new TestPythonFinder(null, done)
     f.execFile = function (program, args, opts, cb) {
       if (/sys\.executable/.test(args[args.length - 1])) {
         cb(new Error('not found'))
@@ -113,7 +103,7 @@ describe('find-python', function () {
   })
 
   it('find python - no python2, no python, unix', function () {
-    var f = new TestPythonFinder(null, done)
+    const f = new TestPythonFinder(null, done)
     f.checkPyLauncher = assert.fail
     f.win = false
 
@@ -133,7 +123,7 @@ describe('find-python', function () {
   })
 
   it('find python - no python, use python launcher', function () {
-    var f = new TestPythonFinder(null, done)
+    const f = new TestPythonFinder(null, done)
     f.win = true
 
     f.execFile = function (program, args, opts, cb) {
@@ -165,7 +155,7 @@ describe('find-python', function () {
   })
 
   it('find python - no python, no python launcher, good guess', function () {
-    var f = new TestPythonFinder(null, done)
+    const f = new TestPythonFinder(null, done)
     f.win = true
     const expectedProgram = f.winDefaultLocations[0]
 
@@ -191,7 +181,7 @@ describe('find-python', function () {
   })
 
   it('find python - no python, no python launcher, bad guess', function () {
-    var f = new TestPythonFinder(null, done)
+    const f = new TestPythonFinder(null, done)
     f.win = true
 
     f.execFile = function (program, args, opts, cb) {

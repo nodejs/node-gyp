@@ -6,7 +6,7 @@ const processRelease = require('../lib/process-release')
 
 describe('process-release', function () {
   it('test process release - process.version = 0.8.20', function () {
-    var release = processRelease([], { opts: {} }, 'v0.8.20', null)
+    const release = processRelease([], { opts: {} }, 'v0.8.20', null)
 
     assert.strictEqual(release.semver.version, '0.8.20')
     delete release.semver
@@ -25,7 +25,7 @@ describe('process-release', function () {
   })
 
   it('test process release - process.version = 0.10.21', function () {
-    var release = processRelease([], { opts: {} }, 'v0.10.21', null)
+    const release = processRelease([], { opts: {} }, 'v0.10.21', null)
 
     assert.strictEqual(release.semver.version, '0.10.21')
     delete release.semver
@@ -45,7 +45,7 @@ describe('process-release', function () {
 
   // prior to -headers.tar.gz
   it('test process release - process.version = 0.12.9', function () {
-    var release = processRelease([], { opts: {} }, 'v0.12.9', null)
+    const release = processRelease([], { opts: {} }, 'v0.12.9', null)
 
     assert.strictEqual(release.semver.version, '0.12.9')
     delete release.semver
@@ -65,7 +65,7 @@ describe('process-release', function () {
 
   // prior to -headers.tar.gz
   it('test process release - process.version = 0.10.41', function () {
-    var release = processRelease([], { opts: {} }, 'v0.10.41', null)
+    const release = processRelease([], { opts: {} }, 'v0.10.41', null)
 
     assert.strictEqual(release.semver.version, '0.10.41')
     delete release.semver
@@ -85,7 +85,7 @@ describe('process-release', function () {
 
   // has -headers.tar.gz
   it('test process release - process.release ~ node@0.10.42', function () {
-    var release = processRelease([], { opts: {} }, 'v0.10.42', null)
+    const release = processRelease([], { opts: {} }, 'v0.10.42', null)
 
     assert.strictEqual(release.semver.version, '0.10.42')
     delete release.semver
@@ -105,7 +105,7 @@ describe('process-release', function () {
 
   // has -headers.tar.gz
   it('test process release - process.release ~ node@0.12.10', function () {
-    var release = processRelease([], { opts: {} }, 'v0.12.10', null)
+    const release = processRelease([], { opts: {} }, 'v0.12.10', null)
 
     assert.strictEqual(release.semver.version, '0.12.10')
     delete release.semver
@@ -124,7 +124,7 @@ describe('process-release', function () {
   })
 
   it('test process release - process.release ~ node@4.1.23', function () {
-    var release = processRelease([], { opts: {} }, 'v4.1.23', {
+    const release = processRelease([], { opts: {} }, 'v4.1.23', {
       name: 'node',
       headersUrl: 'https://nodejs.org/dist/v4.1.23/node-v4.1.23-headers.tar.gz'
     })
@@ -146,7 +146,7 @@ describe('process-release', function () {
   })
 
   it('test process release - process.release ~ node@4.1.23 / corp build', function () {
-    var release = processRelease([], { opts: {} }, 'v4.1.23', {
+    const release = processRelease([], { opts: {} }, 'v4.1.23', {
       name: 'node',
       headersUrl: 'https://some.custom.location/node-v4.1.23-headers.tar.gz'
     })
@@ -168,7 +168,7 @@ describe('process-release', function () {
   })
 
   it('test process release - process.release ~ node@12.8.0 Windows', function () {
-    var release = processRelease([], { opts: {} }, 'v12.8.0', {
+    const release = processRelease([], { opts: {} }, 'v12.8.0', {
       name: 'node',
       sourceUrl: 'https://nodejs.org/download/release/v12.8.0/node-v12.8.0.tar.gz',
       headersUrl: 'https://nodejs.org/download/release/v12.8.0/node-v12.8.0-headers.tar.gz',
@@ -192,7 +192,7 @@ describe('process-release', function () {
   })
 
   it('test process release - process.release ~ node@12.8.0 Windows ARM64', function () {
-    var release = processRelease([], { opts: {} }, 'v12.8.0', {
+    const release = processRelease([], { opts: {} }, 'v12.8.0', {
       name: 'node',
       sourceUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/node-v12.8.0.tar.gz',
       headersUrl: 'https://unofficial-builds.nodejs.org/download/release/v12.8.0/node-v12.8.0-headers.tar.gz',
@@ -216,7 +216,7 @@ describe('process-release', function () {
   })
 
   it('test process release - process.release ~ node@4.1.23 --target=0.10.40', function () {
-    var release = processRelease([], { opts: { target: '0.10.40' } }, 'v4.1.23', {
+    const release = processRelease([], { opts: { target: '0.10.40' } }, 'v4.1.23', {
       name: 'node',
       headersUrl: 'https://nodejs.org/dist/v4.1.23/node-v4.1.23-headers.tar.gz'
     })
@@ -238,7 +238,7 @@ describe('process-release', function () {
   })
 
   it('test process release - process.release ~ node@4.1.23 --dist-url=https://foo.bar/baz', function () {
-    var release = processRelease([], { opts: { 'dist-url': 'https://foo.bar/baz' } }, 'v4.1.23', {
+    const release = processRelease([], { opts: { 'dist-url': 'https://foo.bar/baz' } }, 'v4.1.23', {
       name: 'node',
       headersUrl: 'https://nodejs.org/dist/v4.1.23/node-v4.1.23-headers.tar.gz'
     })
@@ -260,7 +260,7 @@ describe('process-release', function () {
   })
 
   it('test process release - process.release ~ frankenstein@4.1.23', function () {
-    var release = processRelease([], { opts: {} }, 'v4.1.23', {
+    const release = processRelease([], { opts: {} }, 'v4.1.23', {
       name: 'frankenstein',
       headersUrl: 'https://frankensteinjs.org/dist/v4.1.23/frankenstein-v4.1.23-headers.tar.gz'
     })
@@ -282,7 +282,7 @@ describe('process-release', function () {
   })
 
   it('test process release - process.release ~ frankenstein@4.1.23 --dist-url=http://foo.bar/baz/', function () {
-    var release = processRelease([], { opts: { 'dist-url': 'http://foo.bar/baz/' } }, 'v4.1.23', {
+    const release = processRelease([], { opts: { 'dist-url': 'http://foo.bar/baz/' } }, 'v4.1.23', {
       name: 'frankenstein',
       headersUrl: 'https://frankensteinjs.org/dist/v4.1.23/frankenstein-v4.1.23.tar.gz'
     })
@@ -304,7 +304,7 @@ describe('process-release', function () {
   })
 
   it('test process release - process.release ~ node@4.0.0-rc.4', function () {
-    var release = processRelease([], { opts: {} }, 'v4.0.0-rc.4', {
+    const release = processRelease([], { opts: {} }, 'v4.0.0-rc.4', {
       name: 'node',
       headersUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/node-v4.0.0-rc.4-headers.tar.gz'
     })
@@ -328,7 +328,7 @@ describe('process-release', function () {
   it('test process release - process.release ~ node@4.0.0-rc.4 passed as argv[0]', function () {
   // note the missing 'v' on the arg, it should normalise when checking
     // whether we're on the default or not
-    var release = processRelease(['4.0.0-rc.4'], { opts: {} }, 'v4.0.0-rc.4', {
+    const release = processRelease(['4.0.0-rc.4'], { opts: {} }, 'v4.0.0-rc.4', {
       name: 'node',
       headersUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/node-v4.0.0-rc.4-headers.tar.gz'
     })
@@ -352,7 +352,7 @@ describe('process-release', function () {
   it('test process release - process.release ~ node@4.0.0-rc.4 - bogus string passed as argv[0]', function () {
   // additional arguments can be passed in on the commandline that should be ignored if they
     // are not specifying a valid version @ position 0
-    var release = processRelease(['this is no version!'], { opts: {} }, 'v4.0.0-rc.4', {
+    const release = processRelease(['this is no version!'], { opts: {} }, 'v4.0.0-rc.4', {
       name: 'node',
       headersUrl: 'https://nodejs.org/download/rc/v4.0.0-rc.4/node-v4.0.0-rc.4-headers.tar.gz'
     })
@@ -376,7 +376,7 @@ describe('process-release', function () {
   it('test process release - NODEJS_ORG_MIRROR', function () {
     process.env.NODEJS_ORG_MIRROR = 'http://foo.bar'
 
-    var release = processRelease([], { opts: {} }, 'v4.1.23', {
+    const release = processRelease([], { opts: {} }, 'v4.1.23', {
       name: 'node',
       headersUrl: 'https://nodejs.org/dist/v4.1.23/node-v4.1.23-headers.tar.gz'
     })

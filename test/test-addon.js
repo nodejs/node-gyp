@@ -15,24 +15,24 @@ function runHello (hostProcess) {
   if (!hostProcess) {
     hostProcess = process.execPath
   }
-  var testCode = "console.log(require('hello_world').hello())"
+  const testCode = "console.log(require('hello_world').hello())"
   return execFileSync(hostProcess, ['-e', testCode], { cwd: __dirname }).toString()
 }
 
 function getEncoding () {
-  var code = 'import locale;print(locale.getdefaultlocale()[1])'
+  const code = 'import locale;print(locale.getdefaultlocale()[1])'
   return execFileSync('python', ['-c', code]).toString().trim()
 }
 
 function checkCharmapValid () {
-  var data
+  let data
   try {
     data = execFileSync('python', ['fixtures/test-charmap.py'],
       { cwd: __dirname })
   } catch (err) {
     return false
   }
-  var lines = data.toString().trim().split('\n')
+  const lines = data.toString().trim().split('\n')
   return lines.pop() === 'True'
 }
 
@@ -41,10 +41,10 @@ describe('addon', function () {
 
   it('build simple addon', function (done) {
     // Set the loglevel otherwise the output disappears when run via 'npm test'
-    var cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
-    var proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
-      var logLines = stderr.toString().trim().split(/\r?\n/)
-      var lastLine = logLines[logLines.length - 1]
+    const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
+    const proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
+      const logLines = stderr.toString().trim().split(/\r?\n/)
+      const lastLine = logLines[logLines.length - 1]
       assert.strictEqual(err, null)
       assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
       assert.strictEqual(runHello().trim(), 'world')
@@ -59,13 +59,13 @@ describe('addon', function () {
       return this.skip('python console app can\'t encode non-ascii character.')
     }
 
-    var testDirNames = {
+    const testDirNames = {
       cp936: '文件夹',
       cp1252: 'Latīna',
       cp932: 'フォルダ'
     }
     // Select non-ascii characters by current encoding
-    var testDirName = testDirNames[getEncoding()]
+    const testDirName = testDirNames[getEncoding()]
     // If encoding is UTF-8 or other then no need to test
     if (!testDirName) {
       return this.skip('no need to test')
@@ -73,17 +73,17 @@ describe('addon', function () {
 
     this.timeout(300000)
 
-    var data
-    var configPath = path.join(addonPath, 'build', 'config.gypi')
+    let data
+    const configPath = path.join(addonPath, 'build', 'config.gypi')
     try {
       data = fs.readFileSync(configPath, 'utf8')
     } catch (err) {
       assert.fail(err)
       return
     }
-    var config = JSON.parse(data.replace(/#.+\n/, ''))
-    var nodeDir = config.variables.nodedir
-    var testNodeDir = path.join(addonPath, testDirName)
+    const config = JSON.parse(data.replace(/#.+\n/, ''))
+    const nodeDir = config.variables.nodedir
+    const testNodeDir = path.join(addonPath, testDirName)
     // Create symbol link to path with non-ascii characters
     try {
       fs.symlinkSync(nodeDir, testNodeDir, 'dir')
@@ -99,7 +99,7 @@ describe('addon', function () {
       }
     }
 
-    var cmd = [
+    const cmd = [
       nodeGyp,
       'rebuild',
       '-C',
@@ -107,15 +107,15 @@ describe('addon', function () {
       '--loglevel=verbose',
       '-nodedir=' + testNodeDir
     ]
-    var proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
+    const proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
       try {
         fs.unlink(testNodeDir)
       } catch (err) {
         assert.fail(err)
       }
 
-      var logLines = stderr.toString().trim().split(/\r?\n/)
-      var lastLine = logLines[logLines.length - 1]
+      const logLines = stderr.toString().trim().split(/\r?\n/)
+      const lastLine = logLines[logLines.length - 1]
       assert.strictEqual(err, null)
       assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
       assert.strictEqual(runHello().trim(), 'world')
@@ -133,13 +133,13 @@ describe('addon', function () {
 
     this.timeout(300000)
 
-    var notNodePath = path.join(os.tmpdir(), 'notnode' + path.extname(process.execPath))
+    const notNodePath = path.join(os.tmpdir(), 'notnode' + path.extname(process.execPath))
     fs.copyFileSync(process.execPath, notNodePath)
 
-    var cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
-    var proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
-      var logLines = stderr.toString().trim().split(/\r?\n/)
-      var lastLine = logLines[logLines.length - 1]
+    const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
+    const proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
+      const logLines = stderr.toString().trim().split(/\r?\n/)
+      const lastLine = logLines[logLines.length - 1]
       assert.strictEqual(err, null)
       assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
       assert.strictEqual(runHello(notNodePath).trim(), 'world')

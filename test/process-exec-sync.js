@@ -12,7 +12,7 @@ function startsWith (str, search, pos) {
 }
 
 function processExecSync (file, args, options) {
-  var child, error, timeout, tmpdir, command
+  let error, command
   command = makeCommand(file, args)
 
   /*
@@ -22,10 +22,10 @@ function processExecSync (file, args, options) {
 
   options = options || {}
   // init timeout
-  timeout = Date.now() + options.timeout
+  const timeout = Date.now() + options.timeout
   // init tmpdir
-  var osTempBase = '/tmp'
-  var os = determineOS()
+  let osTempBase = '/tmp'
+  const os = determineOS()
   osTempBase = '/tmp'
 
   if (process.env.TMP) {
@@ -36,7 +36,7 @@ function processExecSync (file, args, options) {
     osTempBase += '/'
   }
 
-  tmpdir = osTempBase + 'processExecSync.' + Date.now() + Math.random()
+  const tmpdir = osTempBase + 'processExecSync.' + Date.now() + Math.random()
   fs.mkdirSync(tmpdir)
 
   // init command
@@ -49,13 +49,13 @@ function processExecSync (file, args, options) {
   }
 
   // init child
-  child = childProcess.exec(command, options)
+  const child = childProcess.exec(command, options)
 
-  var maxTry = 100000 // increases the test time by 6 seconds on win-2016-node-0.10
-  var tryCount = 0
+  const maxTry = 100000 // increases the test time by 6 seconds on win-2016-node-0.10
+  let tryCount = 0
   while (tryCount < maxTry) {
     try {
-      var x = fs.readFileSync(tmpdir + '/status')
+      const x = fs.readFileSync(tmpdir + '/status')
       if (x.toString() === '0') {
         break
       }
@@ -87,10 +87,10 @@ function processExecSync (file, args, options) {
 }
 
 function makeCommand (file, args) {
-  var command, quote
+  let command, quote
   command = file
   if (args.length > 0) {
-    for (var i in args) {
+    for (const i in args) {
       command = command + ' '
       if (args[i][0] === '-') {
         command = command + args[i]
@@ -112,8 +112,8 @@ function makeCommand (file, args) {
 }
 
 function determineOS () {
-  var os = ''
-  var tmpVar = ''
+  let os = ''
+  let tmpVar = ''
   if (process.env.OSTYPE) {
     tmpVar = process.env.OSTYPE
   } else if (process.env.OS) {

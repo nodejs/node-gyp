@@ -16,7 +16,7 @@ function poison (object, property) {
     console.error(Error(`Property ${property} should not have been accessed.`))
     process.abort()
   }
-  var descriptor = {
+  const descriptor = {
     configurable: false,
     enumerable: false,
     get: fail,
@@ -27,14 +27,6 @@ function poison (object, property) {
 
 function TestVisualStudioFinder () { VisualStudioFinder.apply(this, arguments) }
 TestVisualStudioFinder.prototype = Object.create(VisualStudioFinder.prototype)
-// Silence npmlog - remove for debugging
-TestVisualStudioFinder.prototype.log = {
-  silly: () => {},
-  verbose: () => {},
-  info: () => {},
-  warn: () => {},
-  error: () => {}
-}
 
 describe('find-visualstudio', function () {
   it('VS2013', function () {
@@ -56,7 +48,7 @@ describe('find-visualstudio', function () {
       finder.parseData(new Error(), '', '', cb)
     }
     finder.regSearchKeys = (keys, value, addOpts, cb) => {
-      for (var i = 0; i < keys.length; ++i) {
+      for (let i = 0; i < keys.length; ++i) {
         const fullName = `${keys[i]}\\${value}`
         switch (fullName) {
           case 'HKLM\\Software\\Microsoft\\VisualStudio\\SxS\\VC7\\14.0':
@@ -93,7 +85,7 @@ describe('find-visualstudio', function () {
       finder.parseData(null, data, '', cb)
     }
     finder.regSearchKeys = (keys, value, addOpts, cb) => {
-      for (var i = 0; i < keys.length; ++i) {
+      for (let i = 0; i < keys.length; ++i) {
         const fullName = `${keys[i]}\\${value}`
         switch (fullName) {
           case 'HKLM\\Software\\Microsoft\\VisualStudio\\SxS\\VC7\\14.0':
@@ -127,7 +119,7 @@ describe('find-visualstudio', function () {
       finder.parseData(new Error(), '', '', cb)
     }
     finder.regSearchKeys = (keys, value, addOpts, cb) => {
-      for (var i = 0; i < keys.length; ++i) {
+      for (let i = 0; i < keys.length; ++i) {
         const fullName = `${keys[i]}\\${value}`
         switch (fullName) {
           case 'HKLM\\Software\\Microsoft\\VisualStudio\\SxS\\VC7\\14.0':
@@ -439,7 +431,7 @@ describe('find-visualstudio', function () {
       finder.parseData(null, data, '', cb)
     }
     finder.regSearchKeys = (keys, value, addOpts, cb) => {
-      for (var i = 0; i < keys.length; ++i) {
+      for (let i = 0; i < keys.length; ++i) {
         const fullName = `${keys[i]}\\${value}`
         switch (fullName) {
           case 'HKLM\\Software\\Microsoft\\VisualStudio\\SxS\\VC7\\14.0':
