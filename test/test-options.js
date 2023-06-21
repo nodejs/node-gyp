@@ -38,15 +38,13 @@ describe('options', function () {
 
     assert.strictEqual(g.opts['force-process-config'], 'true')
   })
-})
 
-test('options with msvs_version', (t) => {
-  t.plan(1)
+  it('options with msvs_version', () => {
+    process.env.npm_config_msvs_version = '2017'
 
-  process.env.npm_config_msvs_version = '2017'
+    const g = gyp()
+    g.parseArgv(['rebuild']) // Also sets opts.argv.
 
-  const g = gyp()
-  g.parseArgv(['rebuild']) // Also sets opts.argv.
-
-  t.equal(g.opts['msvs-version'], '2017')
+    assert.strictEqual(g.opts['msvs-version'], '2017')
+  })
 })
