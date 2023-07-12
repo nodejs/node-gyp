@@ -51,7 +51,7 @@ Install the current version of Python from the [Microsoft Store package](https:/
 
 Install tools and configuration manually:
    * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
-   (using "Desktop development with C++" workload) or [Visual Studio Community](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community)
+   (using "Visual C++ build tools" if using a version older than VS2019, otherwise use "Desktop development with C++" workload) or [Visual Studio Community](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community)
    (using the "Desktop development with C++" workload)
 
    If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
