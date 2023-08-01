@@ -1991,7 +1991,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
                 and "product_dir" not in spec
                 and self.toolset == "target"
             ):
-                # On mac, products are created in install_path immediately.
+                # On macOS, products are created in install_path immediately.
                 assert install_path == self.output, f"{install_path} != {self.output}"
 
             # Point the target alias to the final binary output.

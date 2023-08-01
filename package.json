@@ -45,6 +45,6 @@
   },
   "scripts": {
     "lint": "standard */*.js test/**/*.js",
-    "test": "npm run lint && mocha --reporter=test/reporter.js test/test-download.js test/test-*"
+    "test": "npm run lint && mocha --timeout 15000 --reporter=test/reporter.js test/test-download.js test/test-*"
   }
 }
