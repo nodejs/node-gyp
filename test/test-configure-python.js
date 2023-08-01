@@ -16,9 +16,7 @@ const configure = requireInject('../lib/configure', {
     mkdir: function (dir, options, cb) { cb() },
     promises: {
       writeFile: function (file, data) { return Promise.resolve(null) }
-    },
-    unlink: function (path, cb) { cb() },
-    symlink: function (target, path, cb) { cb() }
+    }
   }
 })
 
