@@ -230,7 +230,7 @@ def LoadOneBuildFile(build_file_path, data, aux_data, includes,
       # node-gyp produces ebcdic files, do not use that mode.
       build_file_contents = open(build_file_path, 'r').read()
     else:
-      build_file_contents = open(build_file_path, 'rU').read()
+      build_file_contents = open(build_file_path, 'r').read()
   else:
     raise GypError("%s not found (cwd: %s)" % (build_file_path, os.getcwd()))
 
