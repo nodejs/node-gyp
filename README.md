@@ -47,7 +47,7 @@ Depending on your operating system, you will need to install:
 ### On Windows
 
 Install the current [version of Python](https://devguide.python.org/versions/) from the
-[Microsoft Store package](https://apps.microsoft.com/store/search/python).
+[Microsoft Store](https://apps.microsoft.com/store/search?publisher=Python+Software+Foundation).
 
 Install tools and configuration manually:
    * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
