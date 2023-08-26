@@ -39,8 +39,8 @@ Depending on your operating system, you will need to install:
 ### On macOS
 
    * [A supported version of Python](https://devguide.python.org/versions/)
-   * `XCode Command Line Tools` which will install `clang`, `clang++`, and `make`.
-     * Install the `XCode Command Line Tools` standalone by running `xcode-select --install`. -- OR --
+   * `Xcode Command Line Tools` which will install `clang`, `clang++`, and `make`.
+     * Install the `Xcode Command Line Tools` standalone by running `xcode-select --install`. -- OR --
      * Alternatively, if you already have the [full Xcode installed](https://developer.apple.com/xcode/download/), you can install the Command Line Tools under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`.
 
 
