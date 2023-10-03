@@ -42,7 +42,7 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install --no-progress
-          pip install pytest
+          pip install --upgrade packaging pytest
       - name: Set Windows environment
         if: startsWith(matrix.os, 'windows')
         run: |
