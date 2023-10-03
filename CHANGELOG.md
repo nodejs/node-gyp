@@ -98,6 +98,7 @@
 ### Core
 
 * update due to rename of primary branch ([ca1f068](https://www.github.com/nodejs/node-gyp/commit/ca1f0681a5567ca8cd51acebccd37a633f19bc6a))
+* Add Python symlink to path (for non-Windows OSes only) ([#2362](https://github.com/nodejs/node-gyp/pull/2362)) ([b9ddcd5](https://github.com/nodejs/node-gyp/commit/b9ddcd5bbd93b05b03674836b6ebdae2c2e74c8c))
 
 
 ### Tests
