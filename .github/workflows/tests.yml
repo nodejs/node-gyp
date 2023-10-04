@@ -48,6 +48,7 @@ jobs:
         run: |
           echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
+          echo 'PYTHONIOENCODING=utf-8' >> $Env:GITHUB_ENV
       - name: Run Python tests
         run: python -m pytest
       # - name: Run doctests with pytest
