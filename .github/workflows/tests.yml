@@ -40,7 +40,7 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install --no-progress
-          pip install pytest
+          python -m pip install pytest packaging
       - name: Set Windows environment
         if: startsWith(matrix.os, 'windows')
         run: |
@@ -52,5 +52,11 @@ jobs:
       #   run: python -m pytest --doctest-modules
       - name: Environment Information
         run: npx envinfo
-      - name: Run Node tests
-        run: npm test
+      - name: Run Node tests (macOS or Linux)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: npm test --python="${pythonLocation}/python"
+      - name: Run tests (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: npm run test --python="${env:pythonLocation}\\python.exe"

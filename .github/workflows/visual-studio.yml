@@ -22,12 +22,13 @@ jobs:
         run: |
           npm install --no-progress
           # npm audit fix --force
+          python -m pip install packaging
       - name: Set Windows environment
-        if: startsWith(matrix.os, 'windows')
         run: |
           echo 'GYP_MSVS_VERSION=${{ matrix.msvs-version }}' >> $Env:GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Environment Information
         run: npx envinfo
       - name: Run Node tests
-        run: npm test
+        shell: pwsh
+        run: npm run test --python="${env:pythonLocation}\\python.exe"
