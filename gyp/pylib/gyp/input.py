@@ -16,7 +16,7 @@ import subprocess
 import sys
 import threading
 import traceback
-from packaging.version import Version
+from packaging.version import parse as version_parse
 from gyp.common import GypError
 from gyp.common import OrderedSet
 
@@ -1183,7 +1183,7 @@ def EvalSingleCondition(cond_expr, true_dict, false_dict, phase, variables, buil
         else:
             ast_code = compile(cond_expr_expanded, "<string>", "eval")
             cached_conditions_asts[cond_expr_expanded] = ast_code
-        env = {"__builtins__": {}, "v": Version}
+        env = {"__builtins__": {}, "v": version_parse}
         if eval(ast_code, env, variables):
             return true_dict
         return false_dict
