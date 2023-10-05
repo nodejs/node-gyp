@@ -31,4 +31,4 @@ jobs:
         run: npx envinfo
       - name: Run Node tests
         shell: pwsh
-        run: npm run test --python="${env:pythonLocation}\\python.exe"
+        run: npm run test --python="${env:pythonLocation}\\python.exe" --msvs-version="${{ matrix.msvs-version }}"
