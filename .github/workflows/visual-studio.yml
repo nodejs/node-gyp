@@ -24,14 +24,11 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install --no-progress
-          # npm audit fix --force
           python -m pip install packaging
-      - name: Set Windows environment
-        run: |
-          echo 'GYP_MSVS_VERSION=${{ matrix.msvs-version }}' >> $Env:GITHUB_ENV
-          echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Environment Information
         run: npx envinfo
       - name: Run Node tests
         shell: pwsh
-        run: npm run test --python="${env:pythonLocation}\\python.exe" --msvs-version="${{ matrix.msvs-version }}"
+        run: |
+          $pythonLocation = (Get-Command python).Source
+          npm run test --python="${pythonLocation}\\python.exe" --msvs-version="${{ matrix.msvs-version }}"
