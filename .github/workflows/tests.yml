@@ -41,6 +41,11 @@ jobs:
         run: |
           npm install --no-progress
           python -m pip install pytest packaging
+      - name: Set Windows environment
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
+          echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Run Python tests
         run: python -m pytest
       # - name: Run doctests with pytest
