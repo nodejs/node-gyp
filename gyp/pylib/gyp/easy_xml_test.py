@@ -76,6 +76,7 @@ class TestSequenceFunctions(unittest.TestCase):
             '\'Debug|Win32\'" Label="Configuration">'
             "<ConfigurationType>Application</ConfigurationType>"
             "<CharacterSet>Unicode</CharacterSet>"
+            "<VCToolsVersion>14.36.32532</VCToolsVersion>"
             "</PropertyGroup>"
             "</Project>"
         )
@@ -99,6 +100,7 @@ class TestSequenceFunctions(unittest.TestCase):
                     },
                     ["ConfigurationType", "Application"],
                     ["CharacterSet", "Unicode"],
+                    ["VCToolsVersion", "14.36.32532"],
                 ],
             ]
         )
