@@ -47,7 +47,7 @@ Depending on your operating system, you will need to install:
 ### On Windows
 
 Install the current [version of Python](https://devguide.python.org/versions/) from the
-[Microsoft Store](https://apps.microsoft.com/store/search?publisher=Python+Software+Foundation).
+[Microsoft Store](https://apps.microsoft.com/store/search?publisher=Python+Software+Foundation). v3.11 or lower. Since v3.12 [breaks on windows](https://github.com/nodejs/node-gyp/issues/2869). 
 
 Install tools and configuration manually:
    * Install Visual C++ Build Environment: [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
