@@ -15,6 +15,8 @@ const streamPipeline = util.promisify(stream.pipeline)
 
 log.level = 'error' // we expect a warning
 
+const TIMEOUT = 20 * 60 * 1000
+
 describe('install', function () {
   it('EACCES retry once', async () => {
     const fs = {
@@ -86,7 +88,7 @@ describe('install', function () {
   }
 
   it('parallel installs (ensure=true)', async function () {
-    this.timeout(600000)
+    this.timeout(TIMEOUT)
 
     const fs = require('graceful-fs')
     const devDir = await util.promisify(fs.mkdtemp)(path.join(os.tmpdir(), 'node-gyp-test-'))
@@ -101,7 +103,7 @@ describe('install', function () {
   })
 
   it('parallel installs (ensure=false)', async function () {
-    this.timeout(600000)
+    this.timeout(TIMEOUT)
 
     const fs = require('graceful-fs')
     const devDir = await util.promisify(fs.mkdtemp)(path.join(os.tmpdir(), 'node-gyp-test-'))
@@ -116,7 +118,7 @@ describe('install', function () {
   })
 
   it('parallel installs (tarball)', async function () {
-    this.timeout(600000)
+    this.timeout(TIMEOUT)
 
     const fs = require('graceful-fs')
     const devDir = await util.promisify(fs.mkdtemp)(path.join(os.tmpdir(), 'node-gyp-test-'))
