@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.1](https://github.com/nodejs/gyp-next/compare/v0.16.0...v0.16.1) (2023-10-25)
+
+
+### Bug Fixes
+
+* add quotes for command in msvs generator ([#217](https://github.com/nodejs/gyp-next/issues/217)) ([d3b7bcd](https://github.com/nodejs/gyp-next/commit/d3b7bcdec90d6c1b1affc15ece706e63007b7264))
+
 ## [0.16.0](https://github.com/nodejs/gyp-next/compare/v0.15.1...v0.16.0) (2023-10-23)
 
 
