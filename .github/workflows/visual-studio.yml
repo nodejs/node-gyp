@@ -3,9 +3,13 @@
 name: visual-studio
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - release/v*
   pull_request:
-    branches: [ main ]
+    branches: 
+      - main
+      - release/v*
 jobs:
   visual-studio:
     strategy:
