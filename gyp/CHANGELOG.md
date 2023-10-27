@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.0](https://github.com/nodejs/gyp-next/compare/v0.15.1...v0.16.0) (2023-10-23)
+
+
+### Features
+
+* add VCToolsVersion for msvs ([#209](https://github.com/nodejs/gyp-next/issues/209)) ([0e35ab8](https://github.com/nodejs/gyp-next/commit/0e35ab812d890fb75cf89a19ea72bc93dd6ba186))
+
 ## [0.15.1](https://github.com/nodejs/gyp-next/compare/v0.15.0...v0.15.1) (2023-09-08)
 
 

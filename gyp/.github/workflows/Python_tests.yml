@@ -18,7 +18,7 @@ jobs:
         os: [macos-latest, ubuntu-latest] # , windows-latest]
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
@@ -30,7 +30,7 @@ jobs:
           pip install --editable ".[dev]"
       - run: ./gyp -V && ./gyp --version && gyp -V && gyp --version
       - name: Lint with ruff  # See pyproject.toml for settings
-        run: ruff --format=github .
+        run: ruff --output-format=github .
       - name: Test with pytest  # See pyproject.toml for settings
         run: pytest
       # - name: Run doctests with pytest

@@ -3004,6 +3004,7 @@ def _GetMSBuildConfigurationDetails(spec, build_file):
         msbuild_attributes = _GetMSBuildAttributes(spec, settings, build_file)
         condition = _GetConfigurationCondition(name, settings, spec)
         character_set = msbuild_attributes.get("CharacterSet")
+        vctools_version = msbuild_attributes.get("VCToolsVersion")
         config_type = msbuild_attributes.get("ConfigurationType")
         _AddConditionalProperty(properties, condition, "ConfigurationType", config_type)
         spectre_mitigation = msbuild_attributes.get('SpectreMitigation')
@@ -3018,6 +3019,10 @@ def _GetMSBuildConfigurationDetails(spec, build_file):
         if character_set and "msvs_enable_winrt" not in spec:
             _AddConditionalProperty(
                 properties, condition, "CharacterSet", character_set
+            )
+        if vctools_version and "msvs_enable_winrt" not in spec:
+            _AddConditionalProperty(
+                properties, condition, "VCToolsVersion", vctools_version
             )
     return _GetMSBuildPropertyGroup(spec, "Configuration", properties)
 
@@ -3099,6 +3104,8 @@ def _ConvertMSVSBuildAttributes(spec, config, build_file):
         elif a == "ConfigurationType":
             msbuild_attributes[a] = _ConvertMSVSConfigurationType(msvs_attributes[a])
         elif a == "SpectreMitigation":
+            msbuild_attributes[a] = msvs_attributes[a]
+        elif a == "VCToolsVersion":
             msbuild_attributes[a] = msvs_attributes[a]
         else:
             print("Warning: Do not know how to convert MSVS attribute " + a)
