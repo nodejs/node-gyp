@@ -24,7 +24,6 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install --no-progress
-          python -m pip install packaging
       - name: Environment Information
         run: npx envinfo
       - name: Run Node tests
