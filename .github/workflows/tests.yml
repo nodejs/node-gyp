@@ -7,6 +7,10 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
 jobs:
   Lint_Python:
     runs-on: ubuntu-latest
