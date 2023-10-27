@@ -9,13 +9,12 @@ const log = require('../lib/log')
 const requireInject = require('require-inject')
 const configure = requireInject('../lib/configure', {
   'graceful-fs': {
-    openSync: function () { return 0 },
-    closeSync: function () { },
-    writeFile: function (file, data, cb) { cb() },
-    stat: function (file, cb) { cb(null, {}) },
-    mkdir: function (dir, options, cb) { cb() },
+    openSync: () => 0,
+    closeSync: () => {},
     promises: {
-      writeFile: function (file, data) { return Promise.resolve(null) }
+      stat: async () => ({}),
+      mkdir: async () => {},
+      writeFile: async () => {}
     }
   }
 })

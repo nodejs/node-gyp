@@ -4,12 +4,10 @@ const { describe, it } = require('mocha')
 const assert = require('assert')
 const path = require('path')
 const fs = require('graceful-fs')
-const childProcess = require('child_process')
+const { execFileSync, execFile } = require('child_process')
 const os = require('os')
 const addonPath = path.resolve(__dirname, 'node_modules', 'hello_world')
 const nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
-const execFileSync = childProcess.execFileSync || require('./process-exec-sync')
-const execFile = childProcess.execFile
 
 function runHello (hostProcess) {
   if (!hostProcess) {

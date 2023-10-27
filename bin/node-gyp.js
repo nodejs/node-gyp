@@ -68,7 +68,7 @@ if (dir) {
   }
 }
 
-function run () {
+async function run () {
   const command = prog.todo.shift()
   if (!command) {
     // done!
@@ -77,30 +77,28 @@ function run () {
     return
   }
 
-  prog.commands[command.name](command.args, function (err) {
-    if (err) {
-      log.error(command.name + ' error')
-      log.error('stack', err.stack)
-      errorMessage()
-      log.error('not ok')
-      return process.exit(1)
-    }
+  try {
+    const args = await prog.commands[command.name](command.args) ?? []
+
     if (command.name === 'list') {
-      const versions = arguments[1]
-      if (versions.length > 0) {
-        versions.forEach(function (version) {
-          console.log(version)
-        })
+      if (args.length) {
+        args.forEach((version) => console.log(version))
       } else {
         console.log('No node development files installed. Use `node-gyp install` to install a version.')
       }
-    } else if (arguments.length >= 2) {
-      console.log.apply(console, [].slice.call(arguments, 1))
+    } else if (args.length >= 1) {
+      console.log(...args.slice(1))
     }
 
     // now run the next command in the queue
-    process.nextTick(run)
-  })
+    return run()
+  } catch (err) {
+    log.error(command.name + ' error')
+    log.error('stack', err.stack)
+    errorMessage()
+    log.error('not ok')
+    return process.exit(1)
+  }
 }
 
 process.on('exit', function (code) {
