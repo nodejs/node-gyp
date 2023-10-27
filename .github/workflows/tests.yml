@@ -15,9 +15,9 @@ jobs:
   Lint_Python:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: pip install --user ruff
-    - run: ruff --format=github --select="E,F,PLC,PLE,UP,W,YTT" --ignore="PLC1901,S101,UP031" --target-version=py37 .
+    - run: ruff --output-format=github --select="E,F,PLC,PLE,UP,W,YTT" --ignore="E721,PLC1901,S101,UP031" --target-version=py38 .
   Tests:
     strategy:
       fail-fast: false
@@ -29,7 +29,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3
         with:
