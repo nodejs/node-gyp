@@ -4,7 +4,6 @@ const { describe, it, after } = require('mocha')
 const assert = require('assert')
 const fs = require('fs/promises')
 const path = require('path')
-const util = require('util')
 const http = require('http')
 const https = require('https')
 const install = require('../lib/install')
@@ -176,7 +175,7 @@ describe('download', function () {
     prog.parseArgv([])
     prog.devDir = devDir
     log.level = 'warn'
-    await util.promisify(install)(prog, [])
+    await install(prog, [])
 
     const data = await fs.readFile(path.join(expectedDir, 'installVersion'), 'utf8')
     assert.strictEqual(data, '11\n', 'correct installVersion')
