@@ -25,7 +25,7 @@ jobs:
       max-parallel: 15
       matrix:
         node: [16.x, 18.x, 20.x]
-        python: ["3.8", "3.11", "3.12"]
+        python: ["3.8", "3.10", "3.12"]
         os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -44,7 +44,7 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install --no-progress
-          python -m pip install pytest
+          pip install pytest
       - name: Set Windows environment
         if: startsWith(matrix.os, 'windows')
         run: |
