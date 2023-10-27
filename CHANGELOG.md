@@ -1,5 +1,35 @@
 # Changelog
 
+### [9.4.1](https://www.github.com/nodejs/node-gyp/compare/v9.4.0...v9.4.1) (2023-10-27)
+
+
+### Bug Fixes
+
+* create Python symlink only during builds, and clean it up after ([#2721](https://www.github.com/nodejs/node-gyp/issues/2721)) ([0f1f667](https://www.github.com/nodejs/node-gyp/commit/0f1f667b737d21905e283df100a2cb639993562a))
+
+
+### Core
+
+* find python checks order changed on windows ([#2872](https://www.github.com/nodejs/node-gyp/issues/2872)) ([b030555](https://www.github.com/nodejs/node-gyp/commit/b030555cdb754d9c23906e7e707115cd077bbf76))
+
+
+### Tests
+
+* increase mocha timeout ([#2887](https://www.github.com/nodejs/node-gyp/issues/2887)) ([445c28f](https://www.github.com/nodejs/node-gyp/commit/445c28fabc5fbdf9c3bb3341fb70660a3530f6ad))
+* update expired certs ([#2908](https://www.github.com/nodejs/node-gyp/issues/2908)) ([5746691](https://www.github.com/nodejs/node-gyp/commit/5746691a36f7b37019d4b8d4e9616aec43d20410))
+
+
+### Doc
+
+* Add note about Python symlinks (PR 2362) to CHANGELOG.md for 9.1.0 ([#2783](https://www.github.com/nodejs/node-gyp/issues/2783)) ([b3d41ae](https://www.github.com/nodejs/node-gyp/commit/b3d41aeb737ddd54cc292f363abc561dcc0a614e))
+* README.md Do not hardcode the supported versions of Python ([#2880](https://www.github.com/nodejs/node-gyp/issues/2880)) ([bb93b94](https://www.github.com/nodejs/node-gyp/commit/bb93b946a9c74934b59164deb52128cf913c97d5))
+* Update windows installation instructions in README.md ([#2882](https://www.github.com/nodejs/node-gyp/issues/2882)) ([c9caa2e](https://www.github.com/nodejs/node-gyp/commit/c9caa2ecf3c7deae68444ce8fabb32d2dca651cd))
+
+
+### Miscellaneous
+
+* GitHub Workflows security hardening ([#2740](https://www.github.com/nodejs/node-gyp/issues/2740)) ([26683e9](https://www.github.com/nodejs/node-gyp/commit/26683e993df038fb94d89f2276f3535e4522d79a))
+
 ## [9.4.0](https://www.github.com/nodejs/node-gyp/compare/v9.3.1...v9.4.0) (2023-06-12)
 
 
