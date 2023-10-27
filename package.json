@@ -21,6 +21,20 @@
   "preferGlobal": true,
   "bin": "./bin/node-gyp.js",
   "main": "./lib/node-gyp.js",
+  "files": [
+    "/bin/",
+    "!/gyp/",
+    "/gyp/data/",
+    "/gyp/pylib/",
+    "/gyp/gyp",
+    "/gyp/gyp_main.py",
+    "/gyp.bat",
+    "/gyp/gyp",
+    "/lib/",
+    "/src/",
+    "/addon.gypi",
+    "macOS_Cataline_acid_test.sh"
+  ],
   "dependencies": {
     "env-paths": "^2.2.0",
     "exponential-backoff": "^3.1.1",
