@@ -11,9 +11,9 @@ jobs:
   Lint_Python:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: pip install --user ruff
-    - run: ruff --format=github --select="E,F,PLC,PLE,UP,W,YTT" --ignore="E721,PLC1901,S101,UP031" --target-version=py38 .
+    - run: ruff --output-format=github --select="E,F,PLC,PLE,UP,W,YTT" --ignore="E721,PLC1901,S101,UP031" --target-version=py38 .
   Tests:
     needs: Lint_Python  # Lint_Python takes ~5 seconds, so wait for it to pass before running the full matrix of tests.
     strategy:
@@ -26,7 +26,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3
         with:
