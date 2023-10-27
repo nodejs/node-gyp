@@ -44,7 +44,7 @@
     "standard": "^17.0.0"
   },
   "scripts": {
-    "lint": "standard */*.js test/**/*.js",
+    "lint": "standard \"*/*.js\" \"test/**/*.js\" \".github/**/*.js\"",
     "test": "npm run lint && mocha --timeout 15000 --reporter=test/reporter.js test/test-download.js test/test-*"
   }
 }
