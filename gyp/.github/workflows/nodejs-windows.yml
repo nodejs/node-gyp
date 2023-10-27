@@ -9,14 +9,14 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
       - name: Clone gyp-next
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: gyp-next
       - name: Clone nodejs/node
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: nodejs/node
           path: node

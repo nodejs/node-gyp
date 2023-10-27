@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gyp-next"
-version = "0.15.1"
+version = "0.16.1"
 authors = [
   { name="Node.js contributors", email="ryzokuken@disroot.org" },
 ]
@@ -12,7 +12,8 @@ description = "A fork of the GYP build system for use in the Node.js projects"
 readme = "README.md"
 license = { file="LICENSE" }
 requires-python = ">=3.8"
-dependencies = ["packaging>=23.1"]
+# The Python module "packaging" is vendored in the "pylib/packaging" directory to support Python >= 3.12.
+# dependencies = ["packaging>=23.1"]  # Uncomment this line if the vendored version is removed.
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
@@ -100,6 +101,7 @@ ignore = [
   "RUF012",
   "UP031",
 ]
+extend-exclude = ["pylib/packaging"]
 line-length = 88
 target-version = "py37"
 
