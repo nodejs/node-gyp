@@ -4,42 +4,33 @@ delete process.env.PYTHON
 
 const { describe, it } = require('mocha')
 const assert = require('assert')
-const { test: { PythonFinder, findPython: testFindPython } } = require('../lib/find-python')
+const PythonFinder = require('../lib/find-python')
 const { execFile } = require('../lib/util')
+const { poison } = require('./common')
+
+class TestPythonFinder extends PythonFinder {
+  constructor (...args) {
+    super(...args)
+    delete this.env.NODE_GYP_FORCE_PYTHON
+  }
+
+  async findPython () {
+    try {
+      return { err: null, python: await super.findPython() }
+    } catch (err) {
+      return { err, python: null }
+    }
+  }
+}
 
 describe('find-python', function () {
   it('find python', async function () {
-    const found = await testFindPython(null)
+    const found = await PythonFinder.findPython(null)
     const [err, stdout, stderr] = await execFile(found, ['-V'], { encoding: 'utf-8' })
     assert.strictEqual(err, null)
     assert.ok(/Python 3/.test(stdout))
     assert.strictEqual(stderr, '')
   })
-
-  function poison (object, property) {
-    function fail () {
-      console.error(Error(`Property ${property} should not have been accessed.`))
-      process.abort()
-    }
-    const descriptor = {
-      configurable: false,
-      enumerable: false,
-      get: fail,
-      set: fail
-    }
-    Object.defineProperty(object, property, descriptor)
-  }
-
-  function TestPythonFinder () { PythonFinder.apply(this, arguments) }
-  TestPythonFinder.prototype = Object.create(PythonFinder.prototype)
-  delete TestPythonFinder.prototype.env.NODE_GYP_FORCE_PYTHON
-  const findPython = async (f) => {
-    try {
-      return { err: null, python: await f.findPython() }
-    } catch (err) {
-      return { err, python: null }
-    }
-  }
 
   it('find python - python', async function () {
     const f = new TestPythonFinder('python')
@@ -55,7 +46,7 @@ describe('find-python', function () {
       return [null, '/path/python']
     }
 
-    const { err, python } = await findPython(f)
+    const { err, python } = await f.findPython()
     assert.strictEqual(err, null)
     assert.strictEqual(python, '/path/python')
   })
@@ -72,7 +63,7 @@ describe('find-python', function () {
       }
     }
 
-    const { err } = await findPython(f)
+    const { err } = await f.findPython()
     assert.ok(/Could not find any Python/.test(err))
     assert.ok(/not supported/i.test(f.errorLog))
   })
@@ -89,7 +80,7 @@ describe('find-python', function () {
       }
     }
 
-    const { err } = await findPython(f)
+    const { err } = await f.findPython()
     assert.ok(/Could not find any Python/.test(err))
     assert.ok(/not in PATH/.test(f.errorLog))
   })
@@ -107,7 +98,7 @@ describe('find-python', function () {
       }
     }
 
-    const { err } = await findPython(f)
+    const { err } = await f.findPython()
     assert.ok(/Could not find any Python/.test(err))
     assert.ok(/not in PATH/.test(f.errorLog))
   })
@@ -136,7 +127,7 @@ describe('find-python', function () {
         assert.fail()
       }
     }
-    const { err, python } = await findPython(f)
+    const { err, python } = await f.findPython()
     assert.strictEqual(err, null)
     assert.strictEqual(python, 'Z:\\snake.exe')
   })
@@ -159,7 +150,7 @@ describe('find-python', function () {
         assert.fail()
       }
     }
-    const { err, python } = await findPython(f)
+    const { err, python } = await f.findPython()
     assert.strictEqual(err, null)
     assert.ok(python === expectedProgram)
   })
@@ -177,7 +168,7 @@ describe('find-python', function () {
         assert.fail()
       }
     }
-    const { err } = await findPython(f)
+    const { err } = await f.findPython()
     assert.ok(/Could not find any Python/.test(err))
     assert.ok(/not in PATH/.test(f.errorLog))
   })
