@@ -1,5 +1,24 @@
 # Changelog
 
+### [9.4.1](https://www.github.com/nodejs/node-gyp/compare/v9.4.0...v9.4.1) (2023-10-27)
+
+
+### Bug Fixes
+
+* Revert "update make-fetch-happen to 11.0.3 ([#2796](https://www.github.com/nodejs/node-gyp/issues/2796))" ([82c2d64](https://www.github.com/nodejs/node-gyp/commit/82c2d64ca8288853c79c6c42b9e49a64ebd21d86))
+
+
+### Tests
+
+* update expired certs ([#2908](https://www.github.com/nodejs/node-gyp/issues/2908)) ([cd1b637](https://www.github.com/nodejs/node-gyp/commit/cd1b637aa4e5d97302d673a789cfee3c44f74aa3))
+
+
+### Miscellaneous
+
+* add release branches as ci targets ([b68da05](https://www.github.com/nodejs/node-gyp/commit/b68da055ed48c58c6cd614232f0e5bfa96ef7b7b))
+* add release-please to v9 branch ([5a65d03](https://www.github.com/nodejs/node-gyp/commit/5a65d03728b4b42b90912169917ba50be179463f))
+* increase parallel install timeouts ([fd77b34](https://www.github.com/nodejs/node-gyp/commit/fd77b346a9b5cf7a0bddc237ad71b45deb5d31ea))
+
 ## [9.4.0](https://www.github.com/nodejs/node-gyp/compare/v9.3.1...v9.4.0) (2023-06-12)
 
 
