@@ -1,6 +1,6 @@
 # `node-gyp` - Node.js native addon build tool
 
-[![Build Status](https://github.com/nodejs/node-gyp/workflows/Tests/badge.svg?branch=master)](https://github.com/nodejs/node-gyp/actions?query=workflow%3ATests+branch%3Amaster)
+[![Build Status](https://github.com/nodejs/node-gyp/workflows/Tests/badge.svg?branch=main)](https://github.com/nodejs/node-gyp/actions?query=workflow%3ATests+branch%3Amain)
 ![npm](https://img.shields.io/npm/dm/node-gyp)
 
 `node-gyp` is a cross-platform command-line tool written in Node.js for
@@ -172,7 +172,7 @@ The **[docs](./docs/)** directory contains additional documentation on specific 
 Some additional resources for Node.js native addons and writing `gyp` configuration files:
 
  * ["Going Native" a nodeschool.io tutorial](http://nodeschool.io/#goingnative)
- * ["Hello World" node addon example](https://github.com/nodejs/node/tree/master/test/addons/hello-world)
+ * ["Hello World" node addon example](https://github.com/nodejs/node/tree/main/test/addons/hello-world)
  * [gyp user documentation](https://gyp.gsrc.io/docs/UserDocumentation.md)
  * [gyp input format reference](https://gyp.gsrc.io/docs/InputFormatReference.md)
  * [*"binding.gyp" files out in the wild* wiki page](./docs/binding.gyp-files-in-the-wild.md)
