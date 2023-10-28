@@ -62,17 +62,22 @@ jobs:
     - name: Install Dependencies
       run: npm install --no-progress
     - name: Pack
+      id: pack
+      env:
+        NODE_GYP_TEMP_DIR: '${{ runner.temp }}/node-gyp'
       run: |
-        DIR=${{ runner.temp }}/node-gyp
-        mkdir -p $DIR
+        mkdir -p $NODE_GYP_TEMP_DIR
         npm pack
-        tar xzf *.tgz -C $DIR --strip-components=1
-        cp -r test/ $DIR/test/
+        tar xzf *.tgz -C $NODE_GYP_TEMP_DIR --strip-components=1
+        cp -r test/ $NODE_GYP_TEMP_DIR/test/
+        echo "dir=$NODE_GYP_TEMP_DIR" >> "$GITHUB_OUTPUT"
     - name: Test
+      working-directory: ${{ steps.pack.outputs.dir }}
+      env:
+        FULL_TEST: '1'
       run: |
         npm install --no-progress
         npm test
-      working-directory: ${{ runner.temp }}/node-gyp
   Tests:
     needs: Lint_Python  # Lint_Python takes ~5 seconds, so wait for it to pass before running the full matrix of tests.
     strategy:
