@@ -4,66 +4,66 @@ const { describe, it } = require('mocha')
 const assert = require('assert')
 const path = require('path')
 const fs = require('graceful-fs')
-const { execFileSync, execFile } = require('child_process')
 const os = require('os')
+const cp = require('child_process')
+const util = require('../lib/util')
+
 const addonPath = path.resolve(__dirname, 'node_modules', 'hello_world')
 const nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
 
-function runHello (hostProcess) {
-  if (!hostProcess) {
-    hostProcess = process.execPath
-  }
+const execFileSync = (...args) => cp.execFileSync(...args).toString().trim()
+
+const execFile = async (cmd) => {
+  const [err,, stderr] = await util.execFile(process.execPath, cmd, {
+    env: { ...process.env, NODE_GYP_NULL_LOGGER: undefined },
+    encoding: 'utf-8'
+  })
+  return [err, stderr.toString().trim().split(/\r?\n/)]
+}
+
+function runHello (hostProcess = process.execPath) {
   const testCode = "console.log(require('hello_world').hello())"
-  return execFileSync(hostProcess, ['-e', testCode], { cwd: __dirname }).toString()
+  return execFileSync(hostProcess, ['-e', testCode], { cwd: __dirname })
 }
 
 function getEncoding () {
   const code = 'import locale;print(locale.getdefaultlocale()[1])'
-  return execFileSync('python', ['-c', code]).toString().trim()
+  return execFileSync('python', ['-c', code])
 }
 
 function checkCharmapValid () {
-  let data
   try {
-    data = execFileSync('python', ['fixtures/test-charmap.py'],
-      { cwd: __dirname })
-  } catch (err) {
+    const data = execFileSync('python', ['fixtures/test-charmap.py'], { cwd: __dirname })
+    return data.split('\n').pop() === 'True'
+  } catch {
     return false
   }
-  const lines = data.toString().trim().split('\n')
-  return lines.pop() === 'True'
 }
 
 describe('addon', function () {
   this.timeout(300000)
 
-  it('build simple addon', function (done) {
+  it('build simple addon', async function () {
     // Set the loglevel otherwise the output disappears when run via 'npm test'
     const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
-    const proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
-      const logLines = stderr.toString().trim().split(/\r?\n/)
-      const lastLine = logLines[logLines.length - 1]
-      assert.strictEqual(err, null)
-      assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
-      assert.strictEqual(runHello().trim(), 'world')
-      done()
-    })
-    proc.stdout.setEncoding('utf-8')
-    proc.stderr.setEncoding('utf-8')
+    const [err, logLines] = await execFile(cmd)
+    const lastLine = logLines[logLines.length - 1]
+    assert.strictEqual(err, null)
+    assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
+    assert.strictEqual(runHello(), 'world')
   })
 
-  it('build simple addon in path with non-ascii characters', function (done) {
+  it('build simple addon in path with non-ascii characters', async function () {
     if (!checkCharmapValid()) {
       return this.skip('python console app can\'t encode non-ascii character.')
     }
 
-    const testDirNames = {
+    // Select non-ascii characters by current encoding
+    const testDirName = {
       cp936: '文件夹',
       cp1252: 'Latīna',
       cp932: 'フォルダ'
-    }
-    // Select non-ascii characters by current encoding
-    const testDirName = testDirNames[getEncoding()]
+    }[getEncoding()]
     // If encoding is UTF-8 or other then no need to test
     if (!testDirName) {
       return this.skip('no need to test')
@@ -105,46 +105,30 @@ describe('addon', function () {
       '--loglevel=verbose',
       '-nodedir=' + testNodeDir
     ]
-    const proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
-      try {
-        fs.unlink(testNodeDir)
-      } catch (err) {
-        assert.fail(err)
-      }
-
-      const logLines = stderr.toString().trim().split(/\r?\n/)
-      const lastLine = logLines[logLines.length - 1]
-      assert.strictEqual(err, null)
-      assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
-      assert.strictEqual(runHello().trim(), 'world')
-      done()
-    })
-    proc.stdout.setEncoding('utf-8')
-    proc.stderr.setEncoding('utf-8')
+    const [err, logLines] = await execFile(cmd)
+    try {
+      fs.unlink(testNodeDir)
+    } catch (err) {
+      assert.fail(err)
+    }
+    const lastLine = logLines[logLines.length - 1]
+    assert.strictEqual(err, null)
+    assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
+    assert.strictEqual(runHello(), 'world')
   })
 
-  it('addon works with renamed host executable', function (done) {
-    // No `fs.copyFileSync` before node8.
-    if (process.version.substr(1).split('.')[0] < 8) {
-      return this.skip('skipping test for old node version')
-    }
-
+  it('addon works with renamed host executable', async function () {
     this.timeout(300000)
 
     const notNodePath = path.join(os.tmpdir(), 'notnode' + path.extname(process.execPath))
     fs.copyFileSync(process.execPath, notNodePath)
 
     const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
-    const proc = execFile(process.execPath, cmd, function (err, stdout, stderr) {
-      const logLines = stderr.toString().trim().split(/\r?\n/)
-      const lastLine = logLines[logLines.length - 1]
-      assert.strictEqual(err, null)
-      assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
-      assert.strictEqual(runHello(notNodePath).trim(), 'world')
-      fs.unlinkSync(notNodePath)
-      done()
-    })
-    proc.stdout.setEncoding('utf-8')
-    proc.stderr.setEncoding('utf-8')
+    const [err, logLines] = await execFile(cmd)
+    const lastLine = logLines[logLines.length - 1]
+    assert.strictEqual(err, null)
+    assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
+    assert.strictEqual(runHello(notNodePath), 'world')
+    fs.unlinkSync(notNodePath)
   })
 })

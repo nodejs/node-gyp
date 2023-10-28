@@ -4,8 +4,7 @@ const path = require('path')
 const { describe, it } = require('mocha')
 const assert = require('assert')
 const gyp = require('../lib/node-gyp')
-const createConfigGypi = require('../lib/create-config-gypi')
-const { parseConfigGypi, getCurrentConfigGypi } = createConfigGypi.test
+const { parseConfigGypi, getCurrentConfigGypi } = require('../lib/create-config-gypi')
 
 describe('create-config-gypi', function () {
   it('config.gypi with no options', async function () {

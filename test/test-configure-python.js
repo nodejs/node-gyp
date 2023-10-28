@@ -3,10 +3,10 @@
 const { describe, it } = require('mocha')
 const assert = require('assert')
 const path = require('path')
-const devDir = require('./common').devDir()
+const { devDir } = require('./common')
 const gyp = require('../lib/node-gyp')
-const log = require('../lib/log')
 const requireInject = require('require-inject')
+
 const configure = requireInject('../lib/configure', {
   'graceful-fs': {
     openSync: () => 0,
@@ -18,8 +18,6 @@ const configure = requireInject('../lib/configure', {
     }
   }
 })
-
-log.logger.stream = null
 
 const EXPECTED_PYPATH = path.join(__dirname, '..', 'gyp', 'pylib')
 const SEPARATOR = process.platform === 'win32' ? ';' : ':'

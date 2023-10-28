@@ -7,13 +7,10 @@ const path = require('path')
 const http = require('http')
 const https = require('https')
 const install = require('../lib/install')
-const semver = require('semver')
-const devDir = require('./common').devDir()
+const { download, readCAFile } = require('../lib/download')
+const { FULL_TEST, devDir } = require('./common')
 const gyp = require('../lib/node-gyp')
-const log = require('../lib/log')
 const certs = require('./fixtures/certs')
-
-log.logger.stream = null
 
 describe('download', function () {
   it('download over http', async function () {
@@ -32,7 +29,7 @@ describe('download', function () {
       version: '42'
     }
     const url = `http://${host}:${port}`
-    const res = await install.test.download(gyp, url)
+    const res = await download(gyp, url)
     assert.strictEqual(await res.text(), 'ok')
   })
 
@@ -42,7 +39,7 @@ describe('download', function () {
     const cert = certs['server.crt']
     const key = certs['server.key']
     await fs.writeFile(cafile, cacontents, 'utf8')
-    const ca = await install.test.readCAFile(cafile)
+    const ca = await readCAFile(cafile)
 
     assert.strictEqual(ca.length, 1)
 
@@ -67,7 +64,7 @@ describe('download', function () {
       version: '42'
     }
     const url = `https://${host}:${port}`
-    const res = await install.test.download(gyp, url)
+    const res = await download(gyp, url)
     assert.strictEqual(await res.text(), 'ok')
   })
 
@@ -98,7 +95,7 @@ describe('download', function () {
       version: '42'
     }
     const url = `http://${host}:${port}`
-    const res = await install.test.download(gyp, url)
+    const res = await download(gyp, url)
     assert.strictEqual(await res.text(), 'proxy ok')
   })
 
@@ -129,7 +126,7 @@ describe('download', function () {
       version: '42'
     }
     const url = `http://${host}:${port}`
-    const res = await install.test.download(gyp, url)
+    const res = await download(gyp, url)
     assert.strictEqual(await res.text(), 'ok')
   })
 
@@ -138,7 +135,7 @@ describe('download', function () {
       opts: { cafile: 'no.such.file' }
     }
     try {
-      await install.test.download(gyp, {}, 'http://bad/')
+      await download(gyp, {}, 'http://bad/')
     } catch (e) {
       assert.ok(/no.such.file/.test(e.message))
     }
@@ -151,7 +148,7 @@ describe('download', function () {
     after(async () => {
       await fs.unlink(cafile)
     })
-    const cas = await install.test.readCAFile(path.join(__dirname, 'fixtures/ca-bundle.crt'))
+    const cas = await readCAFile(path.join(__dirname, 'fixtures/ca-bundle.crt'))
     assert.strictEqual(cas.length, 2)
     assert.notStrictEqual(cas[0], cas[1])
   })
@@ -159,10 +156,7 @@ describe('download', function () {
   // only run this test if we are running a version of Node with predictable version path behavior
 
   it('download headers (actual)', async function () {
-    if (process.env.FAST_TEST ||
-        process.release.name !== 'node' ||
-        semver.prerelease(process.version) !== null ||
-        semver.satisfies(process.version, '<10')) {
+    if (!FULL_TEST) {
       return this.skip('Skipping actual download of headers due to test environment configuration')
     }
 
@@ -174,7 +168,6 @@ describe('download', function () {
     const prog = gyp()
     prog.parseArgv([])
     prog.devDir = devDir
-    log.level = 'warn'
     await install(prog, [])
 
     const data = await fs.readFile(path.join(expectedDir, 'installVersion'), 'utf8')
