@@ -1,0 +1,8 @@
+/.github/
+/docs/
+/gyp/.github/
+/gyp/tools/
+/gyp/*.md
+/gyp/AUTHORS
+/test/
+*.tgz

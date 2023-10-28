@@ -48,6 +48,29 @@ jobs:
         # TODO: move this to its own action
         npm install @npmcli/arborist@7 semver@7 --no-save
         node .github/scripts/check-engines.js
+  Pack_Test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20.x
+    - name: Update npm
+      run: npm install npm@latest -g
+    - name: Install Dependencies
+      run: npm install --no-progress
+    - name: Pack
+      run: |
+        DIR=${{ runner.temp }}/node-gyp
+        mkdir -p $DIR
+        npm pack
+        tar xzf *.tgz -C $DIR --strip-components=1
+        cp -r test/ $DIR/test/
+    - name: Test
+      run: npm test
+      working-directory: ${{ runner.temp }}/node-gyp
   Tests:
     needs: Lint_Python  # Lint_Python takes ~5 seconds, so wait for it to pass before running the full matrix of tests.
     strategy:
