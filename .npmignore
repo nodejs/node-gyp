@@ -1,8 +1,9 @@
 /.github/
 /docs/
 /gyp/.github/
-/gyp/tools/
 /gyp/*.md
 /gyp/AUTHORS
+/gyp/tools/
+/node-gyp-*.tgz
 /test/
-*.tgz
+/update-gyp.py

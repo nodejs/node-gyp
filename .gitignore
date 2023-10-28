@@ -5,3 +5,4 @@ test/.node-gyp
 .ncu
 .nyc_output
 package-lock.json
+node-gyp-*.tgz
