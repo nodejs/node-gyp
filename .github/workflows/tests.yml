@@ -69,7 +69,9 @@ jobs:
         tar xzf *.tgz -C $DIR --strip-components=1
         cp -r test/ $DIR/test/
     - name: Test
-      run: npm test
+      run: |
+        npm install --no-progress
+        npm test
       working-directory: ${{ runner.temp }}/node-gyp
   Tests:
     needs: Lint_Python  # Lint_Python takes ~5 seconds, so wait for it to pass before running the full matrix of tests.
