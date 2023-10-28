@@ -1,8 +1,8 @@
+.ncu
+.nyc_output
 *.swp
 gyp/test
 node_modules
-test/.node-gyp
-.ncu
-.nyc_output
-package-lock.json
 node-gyp-*.tgz
+package-lock.json
+test/.node-gyp
