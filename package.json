@@ -24,7 +24,7 @@
   "dependencies": {
     "env-paths": "^2.2.0",
     "exponential-backoff": "^3.1.1",
-    "glob": "^8.0.3",
+    "glob": "^10.3.10",
     "graceful-fs": "^4.2.6",
     "make-fetch-happen": "^11.0.3",
     "nopt": "^7.0.0",
