@@ -58,13 +58,12 @@ describe('addon', function () {
       return this.skip('python console app can\'t encode non-ascii character.')
     }
 
-    const testDirNames = {
+    // Select non-ascii characters by current encoding
+    const testDirName = {
       cp936: '文件夹',
       cp1252: 'Latīna',
       cp932: 'フォルダ'
-    }
-    // Select non-ascii characters by current encoding
-    const testDirName = testDirNames[getEncoding()]
+    }[getEncoding()]
     // If encoding is UTF-8 or other then no need to test
     if (!testDirName) {
       return this.skip('no need to test')

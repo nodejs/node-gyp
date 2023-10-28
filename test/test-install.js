@@ -8,7 +8,7 @@ const path = require('path')
 const os = require('os')
 const { pipeline: streamPipeline } = require('stream/promises')
 const requireInject = require('require-inject')
-const { skip } = require('./common')
+const { FULL_TEST } = require('./common')
 const gyp = require('../lib/node-gyp')
 const { test: { download, install } } = require('../lib/install')
 
@@ -68,9 +68,10 @@ describe('install', function () {
 
     const runIt = (name, fn) => {
       // only run these tests if we are running a version of Node with predictable version path behavior
-      if (skip) {
+      if (!FULL_TEST) {
         return it.skip('Skipping parallel installs test due to test environment configuration')
       }
+
       return it(name, async function () {
         this.timeout(600000)
         await fn.call(this)

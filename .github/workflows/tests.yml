@@ -92,10 +92,10 @@ jobs:
         shell: bash
         run: npm test --python="${pythonLocation}/python"
         env:
-          FAST_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '0' || '1' }}
+          FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}
       - name: Run tests (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: npm run test --python="${env:pythonLocation}\\python.exe"
         env:
-          FAST_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '0' || '1' }}
+          FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}

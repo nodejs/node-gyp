@@ -7,11 +7,9 @@ const path = require('path')
 const http = require('http')
 const https = require('https')
 const install = require('../lib/install')
-const { skip, ...common } = require('./common')
+const { FULL_TEST, devDir } = require('./common')
 const gyp = require('../lib/node-gyp')
 const certs = require('./fixtures/certs')
-
-const devDir = common.devDir()
 
 describe('download', function () {
   it('download over http', async function () {
@@ -157,7 +155,7 @@ describe('download', function () {
   // only run this test if we are running a version of Node with predictable version path behavior
 
   it('download headers (actual)', async function () {
-    if (skip) {
+    if (!FULL_TEST) {
       return this.skip('Skipping actual download of headers due to test environment configuration')
     }
 
