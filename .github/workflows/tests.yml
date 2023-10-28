@@ -56,8 +56,10 @@ jobs:
       matrix:
         node: [16.x, 18.x, 20.x]
         python: ["3.8", "3.10", "3.12"]
-        os: [macos-latest, ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+        os: [macos, ubuntu, windows]
+    # This helps sort test runs in order of most likely to fail together
+    name: 'Test: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}'
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -76,7 +78,7 @@ jobs:
           npm install --no-progress
           pip install pytest
       - name: Set Windows environment
-        if: startsWith(matrix.os, 'windows')
+        if: matrix.os == 'windows'
         run: |
           echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
