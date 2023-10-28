@@ -26,7 +26,7 @@
     "exponential-backoff": "^3.1.1",
     "glob": "^10.3.10",
     "graceful-fs": "^4.2.6",
-    "make-fetch-happen": "^11.0.3",
+    "make-fetch-happen": "^13.0.0",
     "nopt": "^7.0.0",
     "proc-log": "^3.0.0",
     "semver": "^7.3.5",
