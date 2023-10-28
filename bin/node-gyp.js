@@ -32,9 +32,9 @@ if (prog.devDir) {
 
 if (prog.todo.length === 0) {
   if (~process.argv.indexOf('-v') || ~process.argv.indexOf('--version')) {
-    console.log('v%s', prog.version)
+    log.stdout('v%s', prog.version)
   } else {
-    console.log('%s', prog.usage())
+    log.stdout('%s', prog.usage())
   }
   process.exit(0)
 }
@@ -82,12 +82,12 @@ async function run () {
 
     if (command.name === 'list') {
       if (args.length) {
-        args.forEach((version) => console.log(version))
+        args.forEach((version) => log.stdout(version))
       } else {
-        console.log('No node development files installed. Use `node-gyp install` to install a version.')
+        log.stdout('No node development files installed. Use `node-gyp install` to install a version.')
       }
     } else if (args.length >= 1) {
-      console.log(...args.slice(1))
+      log.stdout(...args.slice(1))
     }
 
     // now run the next command in the queue

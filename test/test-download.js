@@ -7,13 +7,11 @@ const path = require('path')
 const http = require('http')
 const https = require('https')
 const install = require('../lib/install')
-const semver = require('semver')
-const devDir = require('./common').devDir()
+const { skip, ...common } = require('./common')
 const gyp = require('../lib/node-gyp')
-const log = require('../lib/log')
 const certs = require('./fixtures/certs')
 
-log.logger.stream = null
+const devDir = common.devDir()
 
 describe('download', function () {
   it('download over http', async function () {
@@ -159,10 +157,7 @@ describe('download', function () {
   // only run this test if we are running a version of Node with predictable version path behavior
 
   it('download headers (actual)', async function () {
-    if (process.env.FAST_TEST ||
-        process.release.name !== 'node' ||
-        semver.prerelease(process.version) !== null ||
-        semver.satisfies(process.version, '<10')) {
+    if (skip) {
       return this.skip('Skipping actual download of headers due to test environment configuration')
     }
 
@@ -174,7 +169,6 @@ describe('download', function () {
     const prog = gyp()
     prog.parseArgv([])
     prog.devDir = devDir
-    log.level = 'warn'
     await install(prog, [])
 
     const data = await fs.readFile(path.join(expectedDir, 'installVersion'), 'utf8')

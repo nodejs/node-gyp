@@ -45,6 +45,6 @@
   },
   "scripts": {
     "lint": "standard \"*/*.js\" \"test/**/*.js\" \".github/**/*.js\"",
-    "test": "npm run lint && mocha --timeout 15000 --reporter=test/reporter.js test/test-download.js test/test-*"
+    "test": "NODE_GYP_NULL_LOGGER=true mocha --timeout 15000 test/test-download.js test/test-*"
   }
 }
