@@ -25,7 +25,7 @@ jobs:
       max-parallel: 15
       matrix:
         node: [16.x, 18.x, 20.x]
-        python: ["3.8", "3.11"]
+        python: ["3.8", "3.10", "3.12"]
         os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -56,5 +56,11 @@ jobs:
       #   run: python -m pytest --doctest-modules
       - name: Environment Information
         run: npx envinfo
-      - name: Run Node tests
-        run: npm test
+      - name: Run Node tests (macOS or Linux)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: npm test --python="${pythonLocation}/python"
+      - name: Run tests (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: npm run test --python="${env:pythonLocation}\\python.exe"

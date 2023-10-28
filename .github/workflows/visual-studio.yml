@@ -16,22 +16,22 @@ jobs:
       fail-fast: false
       max-parallel: 8
       matrix:
-        os: [windows-latest]
-        msvs-version: [2016, 2019, 2022]  # https://github.com/actions/virtual-environments/tree/main/images/win
+        include:
+          - os: windows-2019
+            msvs-verison: 2019
+          - os: windows-2022
+            msvs-version: 2022
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Dependencies
         run: |
           npm install --no-progress
-          # npm audit fix --force
-      - name: Set Windows environment
-        if: startsWith(matrix.os, 'windows')
-        run: |
-          echo 'GYP_MSVS_VERSION=${{ matrix.msvs-version }}' >> $Env:GITHUB_ENV
-          echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Environment Information
         run: npx envinfo
       - name: Run Node tests
-        run: npm test
+        shell: pwsh
+        run: |
+          $pythonLocation = (Get-Command python).Source
+          npm run test --python="${pythonLocation}" --msvs-version="${{ matrix.msvs-version }}"
