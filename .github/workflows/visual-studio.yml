@@ -26,10 +26,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Install Dependencies
-        run: |
-          npm install --no-progress
-      - name: Environment Information
-        run: npx envinfo
+        run: npm install
       - name: Run Node tests
         shell: pwsh
         run: |

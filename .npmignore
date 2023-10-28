@@ -1,0 +1,15 @@
+.ncu
+.nyc_output
+*.swp
+/.github/
+/docs/
+/gyp/.github/
+/gyp/*.md
+/gyp/AUTHORS
+/gyp/test
+/gyp/tools/
+/node-gyp-*.tgz
+/test/
+/test/.node-gyp
+/update-gyp.py
+node-gyp-*.tgz
