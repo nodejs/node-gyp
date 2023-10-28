@@ -54,11 +54,10 @@ jobs:
       fail-fast: false
       max-parallel: 15
       matrix:
-        node: [16.x, 18.x, 20.x]
-        python: ["3.8", "3.10", "3.12"]
         os: [macos, ubuntu, windows]
-    # This helps sort test runs in order of most likely to fail together
-    name: 'Test: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}'
+        python: ["3.8", "3.10", "3.12"]
+        node: [16.x, 18.x, 20.x]
+    name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Checkout Repository
