@@ -10,7 +10,8 @@ const { pipeline: streamPipeline } = require('stream/promises')
 const requireInject = require('require-inject')
 const { FULL_TEST } = require('./common')
 const gyp = require('../lib/node-gyp')
-const { test: { download, install } } = require('../lib/install')
+const install = require('../lib/install')
+const { download } = require('../lib/download')
 
 describe('install', function () {
   it('EACCES retry once', async () => {
@@ -26,7 +27,7 @@ describe('install', function () {
           }
         }
       }
-    }).test.install
+    })
     const Gyp = {
       devDir: __dirname,
       opts: {

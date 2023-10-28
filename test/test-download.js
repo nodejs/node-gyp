@@ -7,6 +7,7 @@ const path = require('path')
 const http = require('http')
 const https = require('https')
 const install = require('../lib/install')
+const { download, readCAFile } = require('../lib/download')
 const { FULL_TEST, devDir } = require('./common')
 const gyp = require('../lib/node-gyp')
 const certs = require('./fixtures/certs')
@@ -28,7 +29,7 @@ describe('download', function () {
       version: '42'
     }
     const url = `http://${host}:${port}`
-    const res = await install.test.download(gyp, url)
+    const res = await download(gyp, url)
     assert.strictEqual(await res.text(), 'ok')
   })
 
@@ -38,7 +39,7 @@ describe('download', function () {
     const cert = certs['server.crt']
     const key = certs['server.key']
     await fs.writeFile(cafile, cacontents, 'utf8')
-    const ca = await install.test.readCAFile(cafile)
+    const ca = await readCAFile(cafile)
 
     assert.strictEqual(ca.length, 1)
 
@@ -63,7 +64,7 @@ describe('download', function () {
       version: '42'
     }
     const url = `https://${host}:${port}`
-    const res = await install.test.download(gyp, url)
+    const res = await download(gyp, url)
     assert.strictEqual(await res.text(), 'ok')
   })
 
@@ -94,7 +95,7 @@ describe('download', function () {
       version: '42'
     }
     const url = `http://${host}:${port}`
-    const res = await install.test.download(gyp, url)
+    const res = await download(gyp, url)
     assert.strictEqual(await res.text(), 'proxy ok')
   })
 
@@ -125,7 +126,7 @@ describe('download', function () {
       version: '42'
     }
     const url = `http://${host}:${port}`
-    const res = await install.test.download(gyp, url)
+    const res = await download(gyp, url)
     assert.strictEqual(await res.text(), 'ok')
   })
 
@@ -134,7 +135,7 @@ describe('download', function () {
       opts: { cafile: 'no.such.file' }
     }
     try {
-      await install.test.download(gyp, {}, 'http://bad/')
+      await download(gyp, {}, 'http://bad/')
     } catch (e) {
       assert.ok(/no.such.file/.test(e.message))
     }
@@ -147,7 +148,7 @@ describe('download', function () {
     after(async () => {
       await fs.unlink(cafile)
     })
-    const cas = await install.test.readCAFile(path.join(__dirname, 'fixtures/ca-bundle.crt'))
+    const cas = await readCAFile(path.join(__dirname, 'fixtures/ca-bundle.crt'))
     assert.strictEqual(cas.length, 2)
     assert.notStrictEqual(cas[0], cas[1])
   })
