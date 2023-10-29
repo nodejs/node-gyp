@@ -22,3 +22,12 @@ module.exports.FULL_TEST =
   process.env.FULL_TEST === '1' &&
   process.release.name === 'node' &&
   semver.prerelease(process.version) === null
+
+module.exports.platformTimeout = (def, obj) => {
+  for (const [key, value] of Object.entries(obj)) {
+    if (process.platform === key) {
+      return value * 60 * 1000
+    }
+  }
+  return def * 60 * 1000
+}

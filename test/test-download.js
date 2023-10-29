@@ -8,7 +8,7 @@ const http = require('http')
 const https = require('https')
 const install = require('../lib/install')
 const { download, readCAFile } = require('../lib/download')
-const { FULL_TEST, devDir } = require('./common')
+const { FULL_TEST, devDir, platformTimeout } = require('./common')
 const gyp = require('../lib/node-gyp')
 const certs = require('./fixtures/certs')
 
@@ -160,7 +160,7 @@ describe('download', function () {
       return this.skip('Skipping actual download of headers due to test environment configuration')
     }
 
-    this.timeout(300000)
+    this.timeout(platformTimeout(1, { win32: 5 }))
 
     const expectedDir = path.join(devDir, process.version.replace(/^v/, ''))
     await fs.rm(expectedDir, { recursive: true, force: true })

@@ -7,6 +7,7 @@ const fs = require('graceful-fs')
 const os = require('os')
 const cp = require('child_process')
 const util = require('../lib/util')
+const { platformTimeout } = require('./common')
 
 const addonPath = path.resolve(__dirname, 'node_modules', 'hello_world')
 const nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
@@ -41,9 +42,9 @@ function checkCharmapValid () {
 }
 
 describe('addon', function () {
-  this.timeout(300000)
-
   it('build simple addon', async function () {
+    this.timeout(platformTimeout(1, { win32: 5 }))
+
     // Set the loglevel otherwise the output disappears when run via 'npm test'
     const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
     const [err, logLines] = await execFile(cmd)
@@ -69,15 +70,14 @@ describe('addon', function () {
       return this.skip('no need to test')
     }
 
-    this.timeout(300000)
+    this.timeout(platformTimeout(1, { win32: 5 }))
 
     let data
     const configPath = path.join(addonPath, 'build', 'config.gypi')
     try {
       data = fs.readFileSync(configPath, 'utf8')
     } catch (err) {
-      assert.fail(err)
-      return
+      return assert.fail(err)
     }
     const config = JSON.parse(data.replace(/#.+\n/, ''))
     const nodeDir = config.variables.nodedir
@@ -89,11 +89,9 @@ describe('addon', function () {
       switch (err.code) {
         case 'EEXIST': break
         case 'EPERM':
-          assert.fail(err, null, 'Please try to running console as an administrator')
-          return
+          return assert.fail(err, null, 'Please try to running console as an administrator')
         default:
-          assert.fail(err)
-          return
+          return assert.fail(err)
       }
     }
 
@@ -118,7 +116,7 @@ describe('addon', function () {
   })
 
   it('addon works with renamed host executable', async function () {
-    this.timeout(300000)
+    this.timeout(platformTimeout(1, { win32: 5 }))
 
     const notNodePath = path.join(os.tmpdir(), 'notnode' + path.extname(process.execPath))
     fs.copyFileSync(process.execPath, notNodePath)

@@ -8,7 +8,7 @@ const path = require('path')
 const os = require('os')
 const { pipeline: streamPipeline } = require('stream/promises')
 const requireInject = require('require-inject')
-const { FULL_TEST } = require('./common')
+const { FULL_TEST, platformTimeout } = require('./common')
 const gyp = require('../lib/node-gyp')
 const install = require('../lib/install')
 const { download } = require('../lib/download')
@@ -74,7 +74,7 @@ describe('install', function () {
       }
 
       return it(name, async function () {
-        this.timeout(600000)
+        this.timeout(platformTimeout(1, { win32: 20 }))
         const start = Date.now()
         await fn.call(this)
         const expectedDir = path.join(prog.devDir, process.version.replace(/^v/, ''))
