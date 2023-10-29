@@ -75,21 +75,14 @@ describe('install', function () {
 
       return it(name, async function () {
         this.timeout(600000)
+        const start = Date.now()
         await fn.call(this)
         const expectedDir = path.join(prog.devDir, process.version.replace(/^v/, ''))
         await rm(expectedDir, { recursive: true, force: true })
-        await Promise.all([
-          install(prog, []),
-          install(prog, []),
-          install(prog, []),
-          install(prog, []),
-          install(prog, []),
-          install(prog, []),
-          install(prog, []),
-          install(prog, []),
-          install(prog, []),
-          install(prog, [])
-        ])
+        await Promise.all(new Array(10).fill(0).map(async (_, i) => {
+          await install(prog,[])
+          console.log(`${' '.repeat(8)}${name} ${(i + 1).toString().padEnd(2, ' ')} (${Date.now() - start}ms)`)
+        }))
       })
     }
 
