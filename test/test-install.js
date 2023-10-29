@@ -80,7 +80,7 @@ describe('install', function () {
         const expectedDir = path.join(prog.devDir, process.version.replace(/^v/, ''))
         await rm(expectedDir, { recursive: true, force: true })
         await Promise.all(new Array(10).fill(0).map(async (_, i) => {
-          await install(prog,[])
+          await install(prog, [])
           console.log(`${' '.repeat(8)}${name} ${(i + 1).toString().padEnd(2, ' ')} (${Date.now() - start}ms)`)
         }))
       })
