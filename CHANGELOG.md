@@ -1,5 +1,19 @@
 # Changelog
 
+### [10.0.1](https://www.github.com/nodejs/node-gyp/compare/v10.0.0...v10.0.1) (2023-11-02)
+
+
+### Bug Fixes
+
+* use local `util` for `findAccessibleSync()` ([b39e681](https://www.github.com/nodejs/node-gyp/commit/b39e6819aa9e2c45107d6e60a4913ca036ebfbfd))
+
+
+### Miscellaneous
+
+* add parallel test logging ([7de1f5f](https://www.github.com/nodejs/node-gyp/commit/7de1f5f32d550d26d48fe4f76aed5866744edcba))
+* lint fixes ([4e0ed99](https://www.github.com/nodejs/node-gyp/commit/4e0ed992566f43abc6e988af091ad07fde04acbf))
+* use platform specific timeouts in tests ([a68586a](https://www.github.com/nodejs/node-gyp/commit/a68586a67d0af238300662cc062422b42820044d))
+
 ## [10.0.0](https://www.github.com/nodejs/node-gyp/compare/v9.4.0...v10.0.0) (2023-10-28)
 
 
