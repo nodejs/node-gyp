@@ -13,7 +13,7 @@ jobs:
     permissions:
       contents: write # to create release commit (google-github-actions/release-please-action)
       pull-requests: write # to create release PR (google-github-actions/release-please-action)
-
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
     - uses: google-github-actions/release-please-action@v2
@@ -64,5 +64,5 @@ jobs:
   test:
     name: Release Test
     needs: [ release-please ]
-    if: needs.release-please.outputs.pr
+    if: needs.release-please.outputs.pr || startsWith(github.head_ref, 'release-v')
     uses: ./.github/workflows/tests.yml
