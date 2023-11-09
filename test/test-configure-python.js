@@ -3,7 +3,7 @@
 const { describe, it } = require('mocha')
 const assert = require('assert')
 const path = require('path')
-const { devDir } = require('./common')
+const { devDir: getDevDir } = require('./common')
 const gyp = require('../lib/node-gyp')
 const requireInject = require('require-inject')
 
@@ -23,7 +23,9 @@ const EXPECTED_PYPATH = path.join(__dirname, '..', 'gyp', 'pylib')
 const SEPARATOR = process.platform === 'win32' ? ';' : ':'
 const SPAWN_RESULT = cb => ({ on: function () { cb() } })
 
-describe('configure-python', function () {
+describe('configure-python', async function () {
+  const devDir = await getDevDir()
+
   it('configure PYTHONPATH with no existing env', function (done) {
     delete process.env.PYTHONPATH
 
@@ -51,7 +53,7 @@ describe('configure-python', function () {
 
       return SPAWN_RESULT(done)
     }
-    prog.devDir = devDir
+    prog.devDir = devDir()
     configure(prog, [], assert.fail)
   })
 
@@ -71,7 +73,7 @@ describe('configure-python', function () {
 
       return SPAWN_RESULT(done)
     }
-    prog.devDir = devDir
+    prog.devDir = devDir()
     configure(prog, [], assert.fail)
   })
 })
