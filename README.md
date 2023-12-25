@@ -11,9 +11,8 @@ addons.
 
 Note that `node-gyp` is _not_ used to build Node.js itself.
 
-Multiple target versions of Node.js are supported (i.e. `0.8`, ..., `4`, `5`, `6`,
-etc.), regardless of what version of Node.js is actually installed on your system
-(`node-gyp` downloads the necessary development files or headers for the target version).
+All current and LTS target versions of Node.js are supported. Depending on what version of Node.js is actually installed on your system
+`node-gyp` downloads the necessary development files or headers for the target version. List of stable Node.js versions can be found on [Node.js website](https://nodejs.org/en/about/previous-releases).
 
 ## Features
 
