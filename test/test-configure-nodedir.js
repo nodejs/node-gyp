@@ -3,6 +3,7 @@
 const { describe, it } = require('mocha')
 const assert = require('assert')
 const path = require('path')
+const os = require('os')
 const gyp = require('../lib/node-gyp')
 const requireInject = require('require-inject')
 const semver = require('semver')
@@ -43,6 +44,17 @@ const configure2 = requireInject('../lib/configure', {
 
 const SPAWN_RESULT = cb => ({ on: function () { cb() } })
 
+const driveLetter = os.platform() === 'win32' ? `${process.cwd().split(path.sep)[0]}` : ''
+function checkTargetPath (target, value) {
+  let targetPath = path.join(path.sep, target, 'include',
+    'node', 'common.gypi')
+  if (process.platform === 'win32') {
+    targetPath = driveLetter + targetPath
+  }
+
+  return targetPath.localeCompare(value) === 0
+}
+
 describe('configure-nodedir', function () {
   it('configure nodedir with node-gyp command line', function (done) {
     const prog = gyp()
@@ -50,8 +62,7 @@ describe('configure-nodedir', function () {
 
     prog.spawn = function (program, args) {
       for (let i = 0; i < args.length; i++) {
-        if (path.join(path.sep, 'usr', 'include', 'node',
-          'common.gypi').localeCompare(args[i]) === 0) {
+        if (checkTargetPath('usr', args[i])) {
           return SPAWN_RESULT(done)
         }
       };
@@ -68,8 +79,7 @@ describe('configure-nodedir', function () {
       prog.spawn = function (program, args) {
         for (let i = 0; i < args.length; i++) {
           const nodedir = process.config.variables.node_prefix
-          if (path.join(path.sep, nodedir, 'include', 'node',
-            'common.gypi').localeCompare(args[i]) === 0) {
+          if (checkTargetPath(nodedir, args[i])) {
             return SPAWN_RESULT(done)
           }
         };
@@ -85,8 +95,7 @@ describe('configure-nodedir', function () {
       prog.spawn = function (program, args) {
         for (let i = 0; i < args.length; i++) {
           const nodedir = process.config.variables.node_prefix
-          if (path.join(path.sep, nodedir, 'include', 'node',
-            'common.gypi').localeCompare(args[i]) === 0) {
+          if (checkTargetPath(nodedir, args[i])) {
             assert.fail()
           }
         };
@@ -102,8 +111,7 @@ describe('configure-nodedir', function () {
       prog.spawn = function (program, args) {
         for (let i = 0; i < args.length; i++) {
           const nodedir = process.config.variables.node_prefix
-          if (path.join(path.sep, nodedir, 'include', 'node',
-            'common.gypi').localeCompare(args[i]) === 0) {
+          if (checkTargetPath(nodedir, args[i])) {
             assert.fail()
           }
         };
