@@ -46,7 +46,7 @@ const SPAWN_RESULT = cb => ({ on: function () { cb() } })
 describe('configure-nodedir', function () {
   it('configure nodedir with node-gyp command line', function (done) {
     const prog = gyp()
-    prog.parseArgv(['dummy_prog', 'dummy_script', '--nodedir=/usr'])
+    prog.parseArgv(['dummy_prog', 'dummy_script', '--nodedir=' + path.sep + 'usr'])
 
     prog.spawn = function (program, args) {
       for (let i = 0; i < args.length; i++) {
