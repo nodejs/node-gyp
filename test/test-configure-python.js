@@ -11,6 +11,7 @@ const configure = requireInject('../lib/configure', {
   'graceful-fs': {
     openSync: () => 0,
     closeSync: () => {},
+    existsSync: () => {},
     promises: {
       stat: async () => ({}),
       mkdir: async () => {},
