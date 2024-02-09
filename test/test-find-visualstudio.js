@@ -22,9 +22,18 @@ class TestVisualStudioFinder extends VisualStudioFinder {
 }
 
 describe('find-visualstudio', function () {
+  this.beforeAll(function () {
+    // Condition to skip the test suite
+    if (process.env.SystemRoot === undefined) {
+      process.env.SystemRoot = '/'
+    }
+  })
+
   it('VS2013', async function () {
     const finder = new TestVisualStudioFinder(semverV1, null)
-
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
     finder.findVisualStudio2017OrNewer = async () => {
       return finder.parseData(new Error(), '', '')
     }
@@ -69,10 +78,15 @@ describe('find-visualstudio', function () {
       patch: 0
     }, null)
 
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
+
     finder.findVisualStudio2017OrNewer = async () => {
       const file = path.join(__dirname, 'fixtures', 'VS_2017_Unusable.txt')
       const data = fs.readFileSync(file)
-      return finder.parseData(null, data, '')
+      const vsInfo = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(vsInfo)
     }
     finder.regSearchKeys = async (keys, value, addOpts) => {
       for (let i = 0; i < keys.length; ++i) {
@@ -95,6 +109,10 @@ describe('find-visualstudio', function () {
 
   it('VS2015', async function () {
     const finder = new TestVisualStudioFinder(semverV1, null)
+
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
 
     finder.findVisualStudio2017OrNewer = async () => {
       return finder.parseData(new Error(), '', '')
@@ -132,52 +150,49 @@ describe('find-visualstudio', function () {
   it('error from PowerShell', async function () {
     const finder = new TestVisualStudioFinder(semverV1, null, null)
 
-    finder.parseData(new Error(), '', '', (info) => {
-      assert.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
-      assert.ok(!info, 'no data')
-    })
+    const vsInfo = finder.parseData(new Error('Error msg'), '', '')
+    assert.ok(/use PowerShell/i.test(finder.errorLog[0]), `expect error, output: ${finder.errorLog[0]}`)
+    assert.ok(/error msg/i.test(finder.errorLog[0]), `expect error, output: ${finder.errorLog[0]}`)
+    assert.equal(vsInfo, null)
   })
 
   it('empty output from PowerShell', async function () {
     const finder = new TestVisualStudioFinder(semverV1, null, null)
 
-    finder.parseData(null, '', '', (info) => {
-      assert.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
-      assert.ok(!info, 'no data')
-    })
+    const vsInfo = finder.parseData(null, '', '', { checkIsArray: true })
+    assert.ok(/use PowerShell/i.test(finder.errorLog[0]), `expect error, output: ${finder.errorLog[0]}`)
+    assert.equal(vsInfo, null)
   })
 
   it('output from PowerShell not JSON', async function () {
     const finder = new TestVisualStudioFinder(semverV1, null, null)
 
-    finder.parseData(null, 'AAAABBBB', '', (info) => {
-      assert.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
-      assert.ok(!info, 'no data')
-    })
+    const vsInfo = finder.parseData(null, 'AAAABBBB', '', { checkIsArray: true })
+    assert.ok(/use PowerShell/i.test(finder.errorLog[0]), `expect error, output: ${finder.errorLog[0]}`)
+    assert.equal(vsInfo, null)
   })
 
   it('wrong JSON from PowerShell', async function () {
     const finder = new TestVisualStudioFinder(semverV1, null, null)
 
-    finder.parseData(null, '{}', '', (info) => {
-      assert.ok(/use PowerShell/i.test(finder.errorLog[0]), 'expect error')
-      assert.ok(!info, 'no data')
-    })
+    const vsInfo = finder.parseData(null, '{}', '', { checkIsArray: true })
+    assert.ok(/use PowerShell/i.test(finder.errorLog[0]), `expect error, output: ${finder.errorLog[0]}`)
+    assert.ok(/expected array/i.test(finder.errorLog[0]), `expect error, output: ${finder.errorLog[0]}`)
+    assert.equal(vsInfo, null)
   })
 
   it('empty JSON from PowerShell', async function () {
     const finder = new TestVisualStudioFinder(semverV1, null, null)
 
-    finder.parseData(null, '[]', '', (info) => {
-      assert.ok(/find .* Visual Studio/i.test(finder.errorLog[0]), 'expect error')
-      assert.ok(!info, 'no data')
-    })
+    const vsInfo = finder.parseData(null, '[]', '', { checkIsArray: true })
+    assert.equal(finder.errorLog.length, 0)
+    assert.equal(vsInfo.length, 0)
   })
 
   it('future version', async function () {
     const finder = new TestVisualStudioFinder(semverV1, null, null)
 
-    finder.parseData(null, JSON.stringify([{
+    const vsInfo = finder.parseData(null, JSON.stringify([{
       packages: [
         'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
         'Microsoft.VisualStudio.Component.Windows10SDK.17763',
@@ -185,11 +200,9 @@ describe('find-visualstudio', function () {
       ],
       path: 'C:\\VS',
       version: '9999.9999.9999.9999'
-    }]), '', (info) => {
-      assert.ok(/unknown version/i.test(finder.errorLog[0]), 'expect error')
-      assert.ok(/find .* Visual Studio/i.test(finder.errorLog[1]), 'expect error')
-      assert.ok(!info, 'no data')
-    })
+    }]), '', { checkIsArray: true })
+    assert.equal(finder.errorLog.length, 0)
+    assert.equal(vsInfo[0].packages.length, 3)
   })
 
   it('single unusable VS2017', async function () {
@@ -197,22 +210,27 @@ describe('find-visualstudio', function () {
 
     const file = path.join(__dirname, 'fixtures', 'VS_2017_Unusable.txt')
     const data = fs.readFileSync(file)
-    finder.parseData(null, data, '', (info) => {
-      assert.ok(/checking/i.test(finder.errorLog[0]), 'expect error')
-      assert.ok(/find .* Visual Studio/i.test(finder.errorLog[2]), 'expect error')
-      assert.ok(!info, 'no data')
-    })
+    const vsInfo = finder.parseData(null, data, '', { checkIsArray: true })
+    assert.equal(finder.errorLog.length, 0)
+    assert.equal(vsInfo.length, 1)
+    assert.equal(vsInfo[0].InstallationPath, undefined)
+    assert.notEqual(vsInfo[0].path, undefined)
+    assert.ok(vsInfo[0].packages.length > 1)
   })
 
   it('minimal VS2017 Build Tools', async function () {
     const finder = new TestVisualStudioFinder(semverV1, null)
 
     poison(finder, 'regSearchKeys')
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
     finder.findVisualStudio2017OrNewer = async () => {
       const file = path.join(__dirname, 'fixtures',
         'VS_2017_BuildTools_minimal.txt')
       const data = fs.readFileSync(file)
-      return finder.parseData(null, data, '')
+      const vsInfo = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(vsInfo)
     }
     const { err, info } = await finder.findVisualStudio()
     assert.strictEqual(err, null)
@@ -234,11 +252,15 @@ describe('find-visualstudio', function () {
     const finder = new TestVisualStudioFinder(semverV1, null)
 
     poison(finder, 'regSearchKeys')
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
     finder.findVisualStudio2017OrNewer = async () => {
       const file = path.join(__dirname, 'fixtures',
         'VS_2017_Community_workload.txt')
       const data = fs.readFileSync(file)
-      return finder.parseData(null, data, '')
+      const vsInfo = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(vsInfo)
     }
     const { err, info } = await finder.findVisualStudio()
     assert.strictEqual(err, null)
@@ -260,10 +282,14 @@ describe('find-visualstudio', function () {
     const finder = new TestVisualStudioFinder(semverV1, null)
 
     poison(finder, 'regSearchKeys')
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
     finder.findVisualStudio2017OrNewer = async () => {
       const file = path.join(__dirname, 'fixtures', 'VS_2017_Express.txt')
       const data = fs.readFileSync(file)
-      return finder.parseData(null, data, '')
+      const vsInfo = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(vsInfo)
     }
     const { err, info } = await finder.findVisualStudio()
     assert.strictEqual(err, null)
@@ -285,11 +311,15 @@ describe('find-visualstudio', function () {
     const finder = new TestVisualStudioFinder(semverV1, null)
 
     poison(finder, 'regSearchKeys')
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
     finder.findVisualStudio2017OrNewer = async () => {
       const file = path.join(__dirname, 'fixtures',
         'VS_2019_Preview.txt')
       const data = fs.readFileSync(file)
-      return finder.parseData(null, data, '')
+      const vsInfo = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(vsInfo)
     }
     const { err, info } = await finder.findVisualStudio()
     assert.strictEqual(err, null)
@@ -311,11 +341,15 @@ describe('find-visualstudio', function () {
     const finder = new TestVisualStudioFinder(semverV1, null)
 
     poison(finder, 'regSearchKeys')
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
     finder.findVisualStudio2017OrNewer = async () => {
       const file = path.join(__dirname, 'fixtures',
         'VS_2019_BuildTools_minimal.txt')
       const data = fs.readFileSync(file)
-      return finder.parseData(null, data, '')
+      const vsInfo = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(vsInfo)
     }
     const { err, info } = await finder.findVisualStudio()
     assert.strictEqual(err, null)
@@ -337,11 +371,15 @@ describe('find-visualstudio', function () {
     const finder = new TestVisualStudioFinder(semverV1, null)
 
     poison(finder, 'regSearchKeys')
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
     finder.findVisualStudio2017OrNewer = async () => {
       const file = path.join(__dirname, 'fixtures',
         'VS_2019_Community_workload.txt')
       const data = fs.readFileSync(file)
-      return finder.parseData(null, data, '')
+      const vsInfo = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(vsInfo)
     }
     const { err, info } = await finder.findVisualStudio()
     assert.strictEqual(err, null)
@@ -372,11 +410,15 @@ describe('find-visualstudio', function () {
     finder.msBuildPathExists = (path) => {
       return true
     }
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
     finder.findVisualStudio2017OrNewer = async () => {
       const file = path.join(__dirname, 'fixtures',
         'VS_2022_Community_workload.txt')
       const data = fs.readFileSync(file)
-      return finder.parseData(null, data, '')
+      const vsInfo = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(vsInfo)
     }
     const { err, info } = await finder.findVisualStudio()
     assert.strictEqual(err, null)
@@ -393,7 +435,97 @@ describe('find-visualstudio', function () {
     })
   })
 
+  it('VSSetup: VS2022 with C++ workload without SDK', async function () {
+    const finder = new TestVisualStudioFinder(semverV1, null)
+    finder.msBuildPathExists = (path) => {
+      return true
+    }
+    finder.findVisualStudio2017OrNewer = async () => {
+      return null
+    }
+    finder.findOldVS = async (info) => {
+      return null
+    }
+    setupExecFixture(finder, 'VSSetup_VS_2022_workload_missing_sdk.txt')
+    const { err, info } = await finder.findVisualStudio()
+    assert.match(err.message, /could not find/i)
+    assert.strictEqual(info, null)
+  })
+
+  it('VSSetup: VS2019 with C++ workload', async function () {
+    await verifyVSSetupData('VSSetup_VS_2019_Professional_workload.txt', 'Professional', 2019,
+      '10.0.19041.0', 'v142', '16.11.34407.143', 'Program Files (x86)')
+  })
+
+  it('VSSetup: VS2022 with C++ workload', async function () {
+    await verifyVSSetupData('VSSetup_VS_2022_workload.txt', 'Enterprise', 2022,
+      '10.0.22000.0', 'v143', '17.8.34330.188', 'Program Files')
+  })
+
+  it('VSSetup: VS2022 and VS2019 with C++ workload', async function () {
+    await verifyVSSetupData('VSSetup_VS_2022_VS2019_workload.txt', 'Enterprise', 2022,
+      '10.0.22000.0', 'v143', '17.8.34330.188', 'Program Files')
+  })
+
+  it('VSSetup: VS2022 with multiple installations', async function () {
+    await verifyVSSetupData('VSSetup_VS_2022_multiple_install.txt', 'Enterprise', 2022,
+      '10.0.22000.0', 'v143', '17.8.34330.188', 'Program Files')
+  })
+
+  async function verifyVSSetupData (fixtureName, vsType, vsYear, sdkVersion, toolsetVersion, vsVersion, expectedProgramFilesPath) {
+    const msBuildPath = process.arch === 'arm64'
+      ? `C:\\${expectedProgramFilesPath}\\Microsoft Visual Studio\\${vsYear}\\` +
+        `${vsType}\\MSBuild\\Current\\Bin\\arm64\\MSBuild.exe`
+      : `C:\\${expectedProgramFilesPath}\\Microsoft Visual Studio\\${vsYear}\\` +
+        `${vsType}\\MSBuild\\Current\\Bin\\MSBuild.exe`
+
+    const finder = new TestVisualStudioFinder(semverV1, null)
+
+    poison(finder, 'regSearchKeys')
+    const expectedVSPath = `C:\\${expectedProgramFilesPath}\\Microsoft Visual Studio\\${vsYear}\\${vsType}`
+    finder.msBuildPathExists = (path) => {
+      if (path.startsWith(expectedVSPath) && path.endsWith('MSBuild.exe')) {
+        return true
+      }
+      return false
+    }
+    finder.findVisualStudio2017OrNewer = async () => {
+      throw new Error("findVisualStudio2017OrNewer shouldn't be called")
+    }
+    setupExecFixture(finder, fixtureName)
+    const { err, info } = await finder.findVisualStudio()
+    assert.strictEqual(err, null)
+    const vsVersionTokens = vsVersion.split('.')
+    assert.deepStrictEqual(info, {
+      msBuild: msBuildPath,
+      path:
+        `C:\\${expectedProgramFilesPath}\\Microsoft Visual Studio\\${vsYear}\\${vsType}`,
+      sdk: sdkVersion,
+      toolset: toolsetVersion,
+      version: vsVersion,
+      versionMajor: parseInt(vsVersionTokens[0]),
+      versionMinor: parseInt(vsVersionTokens[1]),
+      versionYear: vsYear
+    })
+  }
+
+  function setupExecFixture (finder, fixtureName) {
+    finder.execFile = async (exec, args) => {
+      if (args.length > 2 && args[2].includes('Get-Module')) {
+        return [null, '1.0.0', '']
+      } else if (args.length > 2 && args.at(-1).includes('Get-VSSetupInstance')) {
+        const file = path.join(__dirname, 'fixtures', fixtureName)
+        return [null, fs.readFileSync(file), '']
+      }
+      return [new Error(), '', '']
+    }
+  }
+
   function allVsVersions (finder) {
+    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
+      return null
+    }
+
     finder.findVisualStudio2017OrNewer = async () => {
       const data0 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
         'VS_2017_Unusable.txt')))
@@ -413,7 +545,8 @@ describe('find-visualstudio', function () {
         'VS_2022_Community_workload.txt')))
       const data = JSON.stringify(data0.concat(data1, data2, data3, data4,
         data5, data6, data7))
-      return finder.parseData(null, data, '')
+      const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(parsedData)
     }
     finder.regSearchKeys = async (keys, value, addOpts) => {
       for (let i = 0; i < keys.length; ++i) {
