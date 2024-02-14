@@ -17,8 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: google-github-actions/release-please-action@v4
-      id: release    
-      target-branch: dev-2871      
+      id: release
         # Standard Conventional Commits: `feat` and `fix`
         # node-gyp subdirectories: `bin`, `gyp`, `lib`, `src`, `test`
         # node-gyp subcommands: `build`, `clean`, `configure`, `install`, `list`, `rebuild`, `remove`
