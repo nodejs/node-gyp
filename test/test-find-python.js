@@ -7,6 +7,9 @@ const assert = require('assert')
 const PythonFinder = require('../lib/find-python')
 const { execFile } = require('../lib/util')
 const { poison } = require('./common')
+const fs = require('fs')
+const path = require('path')
+const os = require('os')
 
 class TestPythonFinder extends PythonFinder {
   constructor (...args) {
@@ -30,6 +33,18 @@ describe('find-python', function () {
     assert.strictEqual(err, null)
     assert.ok(/Python 3/.test(stdout))
     assert.strictEqual(stderr, '')
+  })
+
+  it('find python - encoding', async function () {
+    const found = await PythonFinder.findPython(null)
+    const testFolderPath = fs.mkdtempSync(path.join(os.tmpdir(), 'test-ü-'))
+    const testFilePath = path.join(testFolderPath, 'python.exe')
+    fs.copyFileSync(found, testFilePath)
+
+    const foundTest = await PythonFinder.findPython(testFilePath)
+    fs.unlinkSync(testFilePath)
+    fs.rmdirSync(testFolderPath)
+    assert.strictEqual(foundTest, testFilePath)
   })
 
   it('find python - python', async function () {
