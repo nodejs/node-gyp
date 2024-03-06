@@ -1,5 +1,32 @@
 # Changelog
 
+## [10.1.0](https://www.github.com/nodejs/node-gyp/compare/v10.0.1...v10.1.0) (2024-03-06)
+
+
+### Features
+
+* improve visual studio detection ([#2957](https://www.github.com/nodejs/node-gyp/issues/2957)) ([109e3d4](https://www.github.com/nodejs/node-gyp/commit/109e3d4245504a7b75c99f578e1203c0ef4b518e))
+
+
+### Miscellaneous
+
+* only run release please on push ([cff9ac2](https://www.github.com/nodejs/node-gyp/commit/cff9ac2c3083769a383e00bc60b91562f03116e3))
+
+
+### Doc
+
+* npm is currently v10 ([#2970](https://www.github.com/nodejs/node-gyp/issues/2970)) ([7705a22](https://www.github.com/nodejs/node-gyp/commit/7705a22f31a62076e9f8429780a459f4ad71ea4c))
+* remove outdated Node versions from readme ([#2955](https://www.github.com/nodejs/node-gyp/issues/2955)) ([ae8478e](https://www.github.com/nodejs/node-gyp/commit/ae8478ec32d9b2fa71b591ac22cdf867ef2e9a7d))
+* remove outdated update engines.node reference in 10.0.0 changelog ([b42e796](https://www.github.com/nodejs/node-gyp/commit/b42e7966177f006f3d1aab1d27885d8372c8ed01))
+
+
+### Core
+
+* add support for locally installed headers ([#2964](https://www.github.com/nodejs/node-gyp/issues/2964)) ([3298731](https://www.github.com/nodejs/node-gyp/commit/329873141f0d3e3787d3c006801431da04e4ed0c))
+* **deps:** bump actions/setup-python from 4 to 5 ([#2960](https://www.github.com/nodejs/node-gyp/issues/2960)) ([3f0df7e](https://www.github.com/nodejs/node-gyp/commit/3f0df7e9334e49e8c7f6fdbbb9e1e6c5a8cca53b))
+* **deps:** bump google-github-actions/release-please-action ([#2961](https://www.github.com/nodejs/node-gyp/issues/2961)) ([b1f1808](https://www.github.com/nodejs/node-gyp/commit/b1f1808bfff0d51e6d3eb696ab6a5b89b7b9630c))
+* update supported vs versions ([#2959](https://www.github.com/nodejs/node-gyp/issues/2959)) ([391cc5b](https://www.github.com/nodejs/node-gyp/commit/391cc5b9b25cffe0cb2edcba3583414a771b4a15))
+
 ### [10.0.1](https://www.github.com/nodejs/node-gyp/compare/v10.0.0...v10.0.1) (2023-11-02)
 
 
