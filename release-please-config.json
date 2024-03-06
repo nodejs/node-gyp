@@ -1,7 +1,6 @@
 {
     "packages": {
         ".": {
-            "last-release-sha": "da19158e7a02c574d4f6d3d367ee264cb08d47ec",
             "include-component-in-tag": false,
             "release-type": "node",
             "changelog-sections": [
