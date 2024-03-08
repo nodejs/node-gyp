@@ -14,7 +14,7 @@ This means that while `node-gyp` doesn't get installed into your `$PATH` by defa
 attempt to `npm install` a native add-on.
 
 Sometimes, you may need to update npm's internal node-gyp to a newer version than what is installed. A simple `npm install -g node-gyp`
-_won't_ do the trick since npm will still continue to use its internal copy over the global one.
+_won't_ do the trick since npm will continue to use its internal copy over the global one.
 
 So instead:
 
@@ -29,7 +29,7 @@ npm --version
 
 Unix is easy. Just run the following command.
 
-If your npm is version ___7 or 8___, do:
+If your npm is version ___7 or higher___, do:
 ```bash
 $ npm explore npm/node_modules/@npmcli/run-script -g -- npm_config_global=false npm install node-gyp@latest
 ```
@@ -43,10 +43,9 @@ If the command fails with a permissions error, please try `sudo` and then the co
 
 ## Windows
 
-Windows is a bit trickier, since `npm` might be installed to the "Program Files" directory, which needs admin privileges in order to
-modify on current Windows. Therefore, run the following commands __inside a `cmd.exe` started with "Run as Administrator"__:
+Windows is a bit trickier, since `npm` might be installed in the "Program Files" directory, which needs admin privileges to modify current Windows. Therefore, run the following commands __inside a `cmd.exe` started with "Run as Administrator"__:
 
-First we need to find the location of `node`. If you don't already know the location that `node.exe` got installed to, then run:
+First, we need to find the location of `node`. If you don't already know the location that `node.exe` got installed to, then run:
 ```bash
 $ where node
 ```
@@ -56,7 +55,7 @@ Now `cd` to the directory that `node.exe` is contained in e.g.:
 $ cd "C:\Program Files\nodejs"
 ```
 
-If your npm version is ___7 or 8___, do:
+If your npm version is ___7 or higher___, do:
 ```bash
 cd node_modules\npm\node_modules\@npmcli\run-script
 ```

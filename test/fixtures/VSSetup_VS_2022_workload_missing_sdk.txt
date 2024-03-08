@@ -1,0 +1,152 @@
+{
+    "InstanceId":  "621862c0",
+    "InstallationName":  "VisualStudio/17.8.3+34330.188",
+    "InstallationPath":  "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise",
+    "InstallationVersion":  {
+                                "Major":  17,
+                                "Minor":  8,
+                                "Build":  34330,
+                                "Revision":  188,
+                                "MajorRevision":  0,
+                                "MinorRevision":  188
+                            },
+    "InstallDate":  "\/Date(1703254955000)\/",
+    "State":  4294967295,
+    "DisplayName":  "Visual Studio Enterprise 2022",
+    "Description":  "Scalable, end-to-end solution for teams of any size",
+    "ProductPath":  "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\Common7\\IDE\\devenv.exe",
+    "Product":  {
+                    "Id":  "Microsoft.VisualStudio.Product.Enterprise",
+                    "Version":  {
+                                    "Major":  17,
+                                    "Minor":  8,
+                                    "Build":  34330,
+                                    "Revision":  188,
+                                    "MajorRevision":  0,
+                                    "MinorRevision":  188
+                                },
+                    "Chip":  "x64",
+                    "Branch":  null,
+                    "Type":  "Product",
+                    "IsExtension":  false,
+                    "UniqueId":  "Microsoft.VisualStudio.Product.Enterprise,version=17.8.34330.188,chip=x64"
+                },
+    "Packages":  [
+                     {
+                         "Id":  "Microsoft.VisualStudio.Product.Enterprise",
+                         "Version":  "17.8.34330.188",
+                         "Chip":  "x64",
+                         "Branch":  null,
+                         "Type":  "Product",
+                         "IsExtension":  false,
+                         "UniqueId":  "Microsoft.VisualStudio.Product.Enterprise,version=17.8.34330.188,chip=x64"
+                     },
+                     {
+                         "Id":  "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
+                         "Version":  "17.8.34129.139",
+                         "Chip":  null,
+                         "Branch":  null,
+                         "Type":  "Component",
+                         "IsExtension":  false,
+                         "UniqueId":  "Microsoft.VisualStudio.Component.VC.Tools.x86.x64,version=17.8.34129.139"
+                     },
+                 ],
+    "Properties":  [
+                       {
+                           "Key":  "CampaignId",
+                           "Value":  ""
+                       },
+                       {
+                           "Key":  "SetupEngineFilePath",
+                           "Value":  "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\setup.exe"
+                       },
+                       {
+                           "Key":  "Nickname",
+                           "Value":  ""
+                       },
+                       {
+                           "Key":  "ChannelManifestId",
+                           "Value":  "VisualStudio.17.Release/17.8.3+34330.188"
+                       }
+                   ],
+    "Errors":  null,
+    "EnginePath":  "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\resources\\app\\ServiceHub\\Services\\Microsoft.VisualStudio.Setup.Service",
+    "IsComplete":  true,
+    "IsLaunchable":  true,
+    "CatalogInfo":  [
+                        {
+                            "Key":  "Id",
+                            "Value":  "VisualStudio/17.8.3+34330.188"
+                        },
+                        {
+                            "Key":  "BuildBranch",
+                            "Value":  "d17.8"
+                        },
+                        {
+                            "Key":  "BuildVersion",
+                            "Value":  "17.8.34330.188"
+                        },
+                        {
+                            "Key":  "LocalBuild",
+                            "Value":  "build-lab"
+                        },
+                        {
+                            "Key":  "ManifestName",
+                            "Value":  "VisualStudio"
+                        },
+                        {
+                            "Key":  "ManifestType",
+                            "Value":  "installer"
+                        },
+                        {
+                            "Key":  "ProductDisplayVersion",
+                            "Value":  "17.8.3"
+                        },
+                        {
+                            "Key":  "ProductLine",
+                            "Value":  "Dev17"
+                        },
+                        {
+                            "Key":  "ProductLineVersion",
+                            "Value":  "2022"
+                        },
+                        {
+                            "Key":  "ProductMilestone",
+                            "Value":  "RTW"
+                        },
+                        {
+                            "Key":  "ProductMilestoneIsPreRelease",
+                            "Value":  "False"
+                        },
+                        {
+                            "Key":  "ProductName",
+                            "Value":  "Visual Studio"
+                        },
+                        {
+                            "Key":  "ProductPatchVersion",
+                            "Value":  "3"
+                        },
+                        {
+                            "Key":  "ProductPreReleaseMilestoneSuffix",
+                            "Value":  "1.0"
+                        },
+                        {
+                            "Key":  "ProductSemanticVersion",
+                            "Value":  "17.8.3+34330.188"
+                        },
+                        {
+                            "Key":  "RequiredEngineVersion",
+                            "Value":  "3.8.2112.61926"
+                        }
+                    ],
+    "IsPrerelease":  false,
+    "PSPath":  "Microsoft.PowerShell.Core\\FileSystem::C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise",
+    "UpdateDate":  "2023-12-22T14:22:35.1818213Z",
+    "ResolvedInstallationPath":  "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise",
+    "ChannelId":  "VisualStudio.17.Release",
+    "InstalledChannelId":  "VisualStudio.17.Release",
+    "ChannelUri":  "https://aka.ms/vs/17/release/channel",
+    "InstalledChannelUri":  "https://aka.ms/vs/17/release/channel",
+    "ReleaseNotes":  "https://docs.microsoft.com/en-us/visualstudio/releases/2022/release-notes-v17.8#17.8.3",
+    "ThirdPartyNotices":  "https://go.microsoft.com/fwlink/?LinkId=661288"
+}

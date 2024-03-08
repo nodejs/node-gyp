@@ -57,6 +57,9 @@ Install tools and configuration manually:
 
    To use the native ARM64 C++ compiler on Windows on ARM, ensure that you have Visual Studio 2022 [17.4 or later](https://devblogs.microsoft.com/visualstudio/arm64-visual-studio-is-officially-here/) installed.
 
+It's advised to install following Powershell module: [VSSetup](https://github.com/microsoft/vssetup.powershell) using `Install-Module VSSetup -Scope CurrentUser`.
+This will make Visual Studio detection logic to use more flexible and accessible method, avoiding Powershell's `ConstrainedLanguage` mode.
+
 ### Configuring Python Dependency
 
 `node-gyp` requires that you have installed a [supported version of Python](https://devguide.python.org/versions/).
