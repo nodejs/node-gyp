@@ -2,7 +2,7 @@
 
 delete process.env.PYTHON
 
-const { describe, it } = require('mocha')
+const { describe, it, after } = require('mocha')
 const assert = require('assert')
 const PythonFinder = require('../lib/find-python')
 const { execFile } = require('../lib/util')
@@ -39,12 +39,26 @@ describe('find-python', function () {
     const found = await PythonFinder.findPython(null)
     const testFolderPath = fs.mkdtempSync(path.join(os.tmpdir(), 'test-ü-'))
     const testFilePath = path.join(testFolderPath, 'python.exe')
-    fs.copyFileSync(found, testFilePath)
+    after(function () {
+      try {
+        fs.unlinkSync(testFilePath)
+        fs.rmdirSync(testFolderPath)
+      } catch {}
+    })
 
-    const foundTest = await PythonFinder.findPython(testFilePath)
-    fs.unlinkSync(testFilePath)
-    fs.rmdirSync(testFolderPath)
-    assert.strictEqual(foundTest, testFilePath)
+    try {
+      fs.symlinkSync(found, testFilePath)
+    } catch (err) {
+      switch (err.code) {
+        case 'EPERM':
+          return assert.fail(err, null, 'Please try to run console as an administrator')
+        default:
+          return assert.fail(err)
+      }
+    }
+
+    const finder = new PythonFinder(testFilePath)
+    await assert.doesNotReject(finder.checkCommand(testFilePath))
   })
 
   it('find python - python', async function () {
