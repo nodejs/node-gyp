@@ -1,11 +1,11 @@
-:robot: I have created a release *beep* *boop*
+:Patooworld: I have created a release *beep* *boop*
 ---
 
 
 ## [11.0.0](https://github.com/PATOOWORLD-ELEVATION/node-gyp/compare/v10.0.1...v11.0.0) (2024-03-09)
 
 
-###   BREAKING CHANGES
+### Â  BREAKING CHANGES
 
 * use .npmignore file to limit which files are published ([#2921](https://github.com/PATOOWORLD-ELEVATION/node-gyp/issues/2921))
 * the `Gyp` class exported is now created using ECMAScript classes and therefore might have small differences to classes that were previously created with `util.inherits`.
