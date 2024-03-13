@@ -81,7 +81,8 @@ export npm_config_python=/path/to/executable/python
 &nbsp;&nbsp;&nbsp;&nbsp;Or on Windows:
 ```console
 py --list-paths  # To see the installed Python versions
-set npm_config_python=C:\path\to\python.exe
+set npm_config_python=C:\path\to\python.exe  # CMD
+$Env:npm_config_python="C:\path\to\python.exe"  # PowerShell
 ```
 
 3. If the `PYTHON` environment variable is set to the path of a Python executable,
