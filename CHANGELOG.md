@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.0.1](https://github.com/PATOOWORLD-ELEVATION/node-gyp/compare/v11.0.0...v11.0.1) (2024-03-14)
+
+
+### Core
+
+* print Python executable path using UTF-8 ([#2995](https://github.com/PATOOWORLD-ELEVATION/node-gyp/issues/2995)) ([c472912](https://github.com/PATOOWORLD-ELEVATION/node-gyp/commit/c4729129daa9bb5204246b857826fb391ac961e1))
+
 ## [11.0.0](https://github.com/PATOOWORLD-ELEVATION/node-gyp/compare/v10.0.1...v11.0.0) (2024-03-09)
 
 
