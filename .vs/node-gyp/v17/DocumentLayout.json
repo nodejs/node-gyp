@@ -1,12 +1,62 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\SAMUELCHIBUNNA\\source\\repos\\PATOOWORLD-ELEVATION\\node-gyp\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\SAMUELCHIBUNNA\\source\\repos\\PATOOWORLD-ELEVATION\\node-gyp\\addon.gypi||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:addon.gypi||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\SAMUELCHIBUNNA\\source\\repos\\PATOOWORLD-ELEVATION\\node-gyp\\.release-please-manifest.json||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.release-please-manifest.json||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "addon.gypi",
+              "DocumentMoniker": "C:\\Users\\SAMUELCHIBUNNA\\source\\repos\\PATOOWORLD-ELEVATION\\node-gyp\\addon.gypi",
+              "RelativeDocumentMoniker": "addon.gypi",
+              "ToolTip": "C:\\Users\\SAMUELCHIBUNNA\\source\\repos\\PATOOWORLD-ELEVATION\\node-gyp\\addon.gypi",
+              "RelativeToolTip": "addon.gypi",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-03-16T14:38:04.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": ".release-please-manifest.json",
+              "DocumentMoniker": "C:\\Users\\SAMUELCHIBUNNA\\source\\repos\\PATOOWORLD-ELEVATION\\node-gyp\\.release-please-manifest.json",
+              "RelativeDocumentMoniker": ".release-please-manifest.json",
+              "ToolTip": "C:\\Users\\SAMUELCHIBUNNA\\source\\repos\\PATOOWORLD-ELEVATION\\node-gyp\\.release-please-manifest.json",
+              "RelativeToolTip": ".release-please-manifest.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-03-16T14:37:59.844Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
