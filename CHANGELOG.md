@@ -1,5 +1,34 @@
 # Changelog
 
+## [10.1.0](https://github.com/nodejs/node-gyp/compare/v10.0.1...v10.1.0) (2024-03-13)
+
+
+### Features
+
+* improve visual studio detection ([#2957](https://github.com/nodejs/node-gyp/issues/2957)) ([109e3d4](https://github.com/nodejs/node-gyp/commit/109e3d4245504a7b75c99f578e1203c0ef4b518e))
+
+
+### Core
+
+* add support for locally installed headers ([#2964](https://github.com/nodejs/node-gyp/issues/2964)) ([3298731](https://github.com/nodejs/node-gyp/commit/329873141f0d3e3787d3c006801431da04e4ed0c))
+* **deps:** bump actions/setup-python from 4 to 5 ([#2960](https://github.com/nodejs/node-gyp/issues/2960)) ([3f0df7e](https://github.com/nodejs/node-gyp/commit/3f0df7e9334e49e8c7f6fdbbb9e1e6c5a8cca53b))
+* **deps:** bump google-github-actions/release-please-action ([#2961](https://github.com/nodejs/node-gyp/issues/2961)) ([b1f1808](https://github.com/nodejs/node-gyp/commit/b1f1808bfff0d51e6d3eb696ab6a5b89b7b9630c))
+* print Python executable path using UTF-8 ([#2995](https://github.com/nodejs/node-gyp/issues/2995)) ([c472912](https://github.com/nodejs/node-gyp/commit/c4729129daa9bb5204246b857826fb391ac961e1))
+* update supported vs versions ([#2959](https://github.com/nodejs/node-gyp/issues/2959)) ([391cc5b](https://github.com/nodejs/node-gyp/commit/391cc5b9b25cffe0cb2edcba3583414a771b4a15))
+
+
+### Doc
+
+* npm is currently v10 ([#2970](https://github.com/nodejs/node-gyp/issues/2970)) ([7705a22](https://github.com/nodejs/node-gyp/commit/7705a22f31a62076e9f8429780a459f4ad71ea4c))
+* remove outdated Node versions from readme ([#2955](https://github.com/nodejs/node-gyp/issues/2955)) ([ae8478e](https://github.com/nodejs/node-gyp/commit/ae8478ec32d9b2fa71b591ac22cdf867ef2e9a7d))
+* remove outdated update engines.node reference in 10.0.0 changelog ([b42e796](https://github.com/nodejs/node-gyp/commit/b42e7966177f006f3d1aab1d27885d8372c8ed01))
+
+
+### Miscellaneous
+
+* only run release please on push ([cff9ac2](https://github.com/nodejs/node-gyp/commit/cff9ac2c3083769a383e00bc60b91562f03116e3))
+* upgrade release please action from v2 to v4 ([#2982](https://github.com/nodejs/node-gyp/issues/2982)) ([0035d8e](https://github.com/nodejs/node-gyp/commit/0035d8e9dc98b94f0bc8cd9023a6fa635003703e))
+
 ### [10.0.1](https://www.github.com/nodejs/node-gyp/compare/v10.0.0...v10.0.1) (2023-11-02)
 
 
