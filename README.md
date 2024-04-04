@@ -48,6 +48,11 @@ Depending on your operating system, you will need to install:
 Install the current [version of Python](https://devguide.python.org/versions/) from the
 [Microsoft Store](https://apps.microsoft.com/store/search?publisher=Python+Software+Foundation).
 
+Install tools with [Chocolatey](https://chocolatey.org):
+```console
+choco install python visualstudio2022-workload-vctools -y
+```
+
 Install tools and configuration manually:
    * Install Visual C++ Build Environment: For Visual Studio 2019 or later, use the `Desktop development with C++` workload from [Visual Studio Community](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community).  For a version older than Visual Studio 2019, install [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools) with the `Visual C++ build tools` option.
 
