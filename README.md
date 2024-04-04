@@ -49,7 +49,7 @@ Install the current [version of Python](https://devguide.python.org/versions/) f
 [Microsoft Store](https://apps.microsoft.com/store/search?publisher=Python+Software+Foundation).
 
 Install tools with [Chocolatey](https://chocolatey.org):
-```console
+``` bash
 choco install python visualstudio2022-workload-vctools -y
 ```
 
