@@ -16,14 +16,14 @@ All current and LTS target versions of Node.js are supported. Depending on what 
 
 ## Features
 
- * The same build commands work on any of the supported platforms
- * Supports the targeting of different versions of Node.js
+- The same build commands work on any of the supported platforms
+- Supports the targeting of different versions of Node.js
 
 ## Installation
 
 You can install `node-gyp` using `npm`:
 
-``` bash
+```bash
 npm install -g node-gyp
 ```
 
@@ -31,31 +31,37 @@ Depending on your operating system, you will need to install:
 
 ### On Unix
 
-   * [A supported version of Python](https://devguide.python.org/versions/)
-   * `make`
-   * A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
+- [A supported version of Python](https://devguide.python.org/versions/)
+- `make`
+- A proper C/C++ compiler toolchain, like [GCC](https://gcc.gnu.org)
 
 ### On macOS
 
-   * [A supported version of Python](https://devguide.python.org/versions/)
-   * `Xcode Command Line Tools` which will install `clang`, `clang++`, and `make`.
-     * Install the `Xcode Command Line Tools` standalone by running `xcode-select --install`. -- OR --
-     * Alternatively, if you already have the [full Xcode installed](https://developer.apple.com/xcode/download/), you can install the Command Line Tools under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`.
-
+- [A supported version of Python](https://devguide.python.org/versions/)
+- `Xcode Command Line Tools` which will install `clang`, `clang++`, and `make`.
+  - Install the `Xcode Command Line Tools` standalone by running `xcode-select --install`. -- OR --
+  - Alternatively, if you already have the [full Xcode installed](https://developer.apple.com/xcode/download/), you can install the Command Line Tools under the menu `Xcode -> Open Developer Tool -> More Developer Tools...`.
 
 ### On Windows
 
 Install the current [version of Python](https://devguide.python.org/versions/) from the
 [Microsoft Store](https://apps.microsoft.com/store/search?publisher=Python+Software+Foundation).
 
+Install tools with [Chocolatey](https://chocolatey.org):
+
+```console
+choco install python visualstudio2022-workload-vctools -y
+```
+
 Install tools and configuration manually:
-   * Install Visual C++ Build Environment: For Visual Studio 2019 or later, use the `Desktop development with C++` workload from [Visual Studio Community](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community).  For a version older than Visual Studio 2019, install [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools) with the `Visual C++ build tools` option.
 
-   If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
+- Install Visual C++ Build Environment: For Visual Studio 2019 or later, use the `Desktop development with C++` workload from [Visual Studio Community](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community). For a version older than Visual Studio 2019, install [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools) with the `Visual C++ build tools` option.
 
-   To target native ARM64 Node.js on Windows on ARM, add the components "Visual C++ compilers and libraries for ARM64" and "Visual C++ ATL for ARM64".
+If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
 
-   To use the native ARM64 C++ compiler on Windows on ARM, ensure that you have Visual Studio 2022 [17.4 or later](https://devblogs.microsoft.com/visualstudio/arm64-visual-studio-is-officially-here/) installed.
+To target native ARM64 Node.js on Windows on ARM, add the components "Visual C++ compilers and libraries for ARM64" and "Visual C++ ATL for ARM64".
+
+To use the native ARM64 C++ compiler on Windows on ARM, ensure that you have Visual Studio 2022 [17.4 or later](https://devblogs.microsoft.com/visualstudio/arm64-visual-studio-is-officially-here/) installed.
 
 It's advised to install following Powershell module: [VSSetup](https://github.com/microsoft/vssetup.powershell) using `Install-Module VSSetup -Scope CurrentUser`.
 This will make Visual Studio detection logic to use more flexible and accessible method, avoiding Powershell's `ConstrainedLanguage` mode.
@@ -68,17 +74,20 @@ If you have multiple versions of Python installed, you can identify which versio
 
 1. by setting the `--python` command-line option, e.g.:
 
-``` bash
+```bash
 node-gyp <command> --python /path/to/executable/python
 ```
 
-2. If `node-gyp` is called by way of `npm`, *and* you have multiple versions of
-Python installed, then you can set the `npm_config_python` environment variable
-to the appropriate path:
-``` bash
+2. If `node-gyp` is called by way of `npm`, _and_ you have multiple versions of
+   Python installed, then you can set the `npm_config_python` environment variable
+   to the appropriate path:
+
+```bash
 export npm_config_python=/path/to/executable/python
 ```
+
 &nbsp;&nbsp;&nbsp;&nbsp;Or on Windows:
+
 ```console
 py --list-paths  # To see the installed Python versions
 set npm_config_python=C:\path\to\python.exe  # CMD
@@ -86,12 +95,12 @@ $Env:npm_config_python="C:\path\to\python.exe"  # PowerShell
 ```
 
 3. If the `PYTHON` environment variable is set to the path of a Python executable,
-then that version will be used if it is a supported version.
+   then that version will be used if it is a supported version.
 
 4. If the `NODE_GYP_FORCE_PYTHON` environment variable is set to the path of a
-Python executable, it will be used instead of any of the other configured or
-built-in Python search paths. If it's not a compatible version, no further
-searching will be done.
+   Python executable, it will be used instead of any of the other configured or
+   built-in Python search paths. If it's not a compatible version, no further
+   searching will be done.
 
 ### Build for Third Party Node.js Runtimes
 
@@ -113,30 +122,31 @@ to work around configuration errors.
 
 To compile your native addon first go to its root directory:
 
-``` bash
+```bash
 cd my_node_addon
 ```
 
 The next step is to generate the appropriate project build files for the current
 platform. Use `configure` for that:
 
-``` bash
+```bash
 node-gyp configure
 ```
 
 Auto-detection fails for Visual C++ Build Tools 2015, so `--msvs_version=2015`
 needs to be added (not needed when run by npm as configured above):
-``` bash
+
+```bash
 node-gyp configure --msvs_version=2015
 ```
 
-__Note__: The `configure` step looks for a `binding.gyp` file in the current
+**Note**: The `configure` step looks for a `binding.gyp` file in the current
 directory to process. See below for instructions on creating a `binding.gyp` file.
 
 Now you will have either a `Makefile` (on Unix platforms) or a `vcxproj` file
 (on Windows) in the `build/` directory. Next, invoke the `build` command:
 
-``` bash
+```bash
 node-gyp build
 ```
 
@@ -144,7 +154,7 @@ Now you have your compiled `.node` bindings file! The compiled bindings end up
 in `build/Debug/` or `build/Release/`, depending on the build mode. At this point,
 you can require the `.node` file with Node.js and run your tests!
 
-__Note:__ To create a _Debug_ build of the bindings file, pass the `--debug` (or
+**Note:** To create a _Debug_ build of the bindings file, pass the `--debug` (or
 `-d`) switch when running either the `configure`, `build` or `rebuild` commands.
 
 ## The `binding.gyp` file
@@ -172,57 +182,56 @@ The **[docs](./docs/)** directory contains additional documentation on specific 
 
 Some additional resources for Node.js native addons and writing `gyp` configuration files:
 
- * ["Going Native" a nodeschool.io tutorial](http://nodeschool.io/#goingnative)
- * ["Hello World" node addon example](https://github.com/nodejs/node/tree/main/test/addons/hello-world)
- * [gyp user documentation](https://gyp.gsrc.io/docs/UserDocumentation.md)
- * [gyp input format reference](https://gyp.gsrc.io/docs/InputFormatReference.md)
- * [*"binding.gyp" files out in the wild* wiki page](./docs/binding.gyp-files-in-the-wild.md)
+- ["Going Native" a nodeschool.io tutorial](http://nodeschool.io/#goingnative)
+- ["Hello World" node addon example](https://github.com/nodejs/node/tree/main/test/addons/hello-world)
+- [gyp user documentation](https://gyp.gsrc.io/docs/UserDocumentation.md)
+- [gyp input format reference](https://gyp.gsrc.io/docs/InputFormatReference.md)
+- [_"binding.gyp" files out in the wild_ wiki page](./docs/binding.gyp-files-in-the-wild.md)
 
 ## Commands
 
 `node-gyp` responds to the following commands:
 
-| **Command**   | **Description**
-|:--------------|:---------------------------------------------------------------
-| `help`        | Shows the help dialog
-| `build`       | Invokes `make`/`msbuild.exe` and builds the native addon
-| `clean`       | Removes the `build` directory if it exists
-| `configure`   | Generates project build files for the current platform
-| `rebuild`     | Runs `clean`, `configure` and `build` all in a row
-| `install`     | Installs Node.js header files for the given version
-| `list`        | Lists the currently installed Node.js header versions
-| `remove`      | Removes the Node.js header files for the given version
-
+| **Command** | **Description**                                          |
+| :---------- | :------------------------------------------------------- |
+| `help`      | Shows the help dialog                                    |
+| `build`     | Invokes `make`/`msbuild.exe` and builds the native addon |
+| `clean`     | Removes the `build` directory if it exists               |
+| `configure` | Generates project build files for the current platform   |
+| `rebuild`   | Runs `clean`, `configure` and `build` all in a row       |
+| `install`   | Installs Node.js header files for the given version      |
+| `list`      | Lists the currently installed Node.js header versions    |
+| `remove`    | Removes the Node.js header files for the given version   |
 
 ## Command Options
 
 `node-gyp` accepts the following command options:
 
-| **Command**                       | **Description**
-|:----------------------------------|:------------------------------------------
-| `-j n`, `--jobs n`                | Run `make` in parallel. The value `max` will use all available CPU cores
-| `--target=v6.2.1`                 | Node.js version to build for (default is `process.version`)
-| `--silly`, `--loglevel=silly`     | Log all progress to console
-| `--verbose`, `--loglevel=verbose` | Log most progress to console
-| `--silent`, `--loglevel=silent`   | Don't log anything to console
-| `debug`, `--debug`                | Make Debug build (default is `Release`)
-| `--release`, `--no-debug`         | Make Release build
-| `-C $dir`, `--directory=$dir`     | Run command in different directory
-| `--make=$make`                    | Override `make` command (e.g. `gmake`)
-| `--thin=yes`                      | Enable thin static libraries
-| `--arch=$arch`                    | Set target architecture (e.g. ia32)
-| `--tarball=$path`                 | Get headers from a local tarball
-| `--devdir=$path`                  | SDK download directory (default is OS cache directory)
-| `--ensure`                        | Don't reinstall headers if already present
-| `--dist-url=$url`                 | Download header tarball from custom URL
-| `--proxy=$url`                    | Set HTTP(S) proxy for downloading header tarball
-| `--noproxy=$urls`                 | Set urls to ignore proxies when downloading header tarball
-| `--cafile=$cafile`                | Override default CA chain (to download tarball)
-| `--nodedir=$path`                 | Set the path to the node source code
-| `--python=$path`                  | Set path to the Python binary
-| `--msvs_version=$version`         | Set Visual Studio version (Windows only)
-| `--solution=$solution`            | Set Visual Studio Solution version (Windows only)
-| `--force-process-config`          | Force using runtime's `process.config` object to generate `config.gypi` file
+| **Command**                       | **Description**                                                              |
+| :-------------------------------- | :--------------------------------------------------------------------------- |
+| `-j n`, `--jobs n`                | Run `make` in parallel. The value `max` will use all available CPU cores     |
+| `--target=v6.2.1`                 | Node.js version to build for (default is `process.version`)                  |
+| `--silly`, `--loglevel=silly`     | Log all progress to console                                                  |
+| `--verbose`, `--loglevel=verbose` | Log most progress to console                                                 |
+| `--silent`, `--loglevel=silent`   | Don't log anything to console                                                |
+| `debug`, `--debug`                | Make Debug build (default is `Release`)                                      |
+| `--release`, `--no-debug`         | Make Release build                                                           |
+| `-C $dir`, `--directory=$dir`     | Run command in different directory                                           |
+| `--make=$make`                    | Override `make` command (e.g. `gmake`)                                       |
+| `--thin=yes`                      | Enable thin static libraries                                                 |
+| `--arch=$arch`                    | Set target architecture (e.g. ia32)                                          |
+| `--tarball=$path`                 | Get headers from a local tarball                                             |
+| `--devdir=$path`                  | SDK download directory (default is OS cache directory)                       |
+| `--ensure`                        | Don't reinstall headers if already present                                   |
+| `--dist-url=$url`                 | Download header tarball from custom URL                                      |
+| `--proxy=$url`                    | Set HTTP(S) proxy for downloading header tarball                             |
+| `--noproxy=$urls`                 | Set urls to ignore proxies when downloading header tarball                   |
+| `--cafile=$cafile`                | Override default CA chain (to download tarball)                              |
+| `--nodedir=$path`                 | Set the path to the node source code                                         |
+| `--python=$path`                  | Set path to the Python binary                                                |
+| `--msvs_version=$version`         | Set Visual Studio version (Windows only)                                     |
+| `--solution=$solution`            | Set Visual Studio Solution version (Windows only)                            |
+| `--force-process-config`          | Force using runtime's `process.config` object to generate `config.gypi` file |
 
 ## Configuration
 
