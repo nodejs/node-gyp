@@ -84,7 +84,7 @@ jobs:
         FULL_TEST: '1'
       run: |
         npm install
-        # npm test  # Why is this running Windows tests on macOS?!?
+        npm test
 
   tests:
     # lint-python takes ~5 seconds, so wait for it to pass before running the full matrix of tests.
