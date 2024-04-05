@@ -117,22 +117,10 @@ jobs:
         run: |
           npm install
           pip install pytest
-      - name: Set Windows Env
-        if: runner.os == 'Windows'
-        run: |
-          echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
-          echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Run Python Tests
         run: python -m pytest
       - name: Run Tests (macOS or Linux)
-        if: runner.os != 'Windows'
         shell: bash
         run: npm test --python="${pythonLocation}/python"
-        env:
-          FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}
-      - name: Run Tests (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: npm run test --python="${env:pythonLocation}\\python.exe"
         env:
           FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}
