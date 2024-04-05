@@ -21,6 +21,9 @@ All current and LTS target versions of Node.js are supported. Depending on what 
 
 ## Installation
 
+> [!Important]
+> Python >= v3.12 requires `node-gyp` >= v10
+
 You can install `node-gyp` using `npm`:
 
 ``` bash
