@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v4
     - run: |
         pip install --user ruff
-        ruff --output-format=github --select="E,F,PLC,PLE,UP,W,YTT" --ignore="E721,PLC1901,S101,UP031" --target-version=py38 .
+        python3 -m ruff --output-format=github --select="E,F,PLC,PLE,UP,W,YTT" --ignore="E721,PLC1901,S101,UP031" --target-version=py38 .
   
   lint-js:
     name: Lint JS
