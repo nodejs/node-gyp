@@ -48,10 +48,16 @@ Depending on your operating system, you will need to install:
 
 ### On Windows
 
-Install the current [version of Python](https://devguide.python.org/versions/) from the
-[Microsoft Store](https://apps.microsoft.com/store/search?publisher=Python+Software+Foundation).
+Install tools with [Chocolatey](https://chocolatey.org):
+``` bash
+choco install python visualstudio2022-workload-vctools -y
+```
 
-Install tools and configuration manually:
+Or install and configure Python and Visual Studio tools manually:
+
+  * Install the current [version of Python](https://devguide.python.org/versions/) from the
+  [Microsoft Store](https://apps.microsoft.com/store/search?publisher=Python+Software+Foundation).
+
    * Install Visual C++ Build Environment: For Visual Studio 2019 or later, use the `Desktop development with C++` workload from [Visual Studio Community](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community).  For a version older than Visual Studio 2019, install [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools) with the `Visual C++ build tools` option.
 
    If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
