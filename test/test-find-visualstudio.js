@@ -21,12 +21,13 @@ class TestVisualStudioFinder extends VisualStudioFinder {
   }
 }
 
-// Only run "Find Visual Studio" tests on Windows.
-if  (process.platform !== 'win32') {
-  return
-}
+const shouldSkip = process.platform !== 'win32'
 
 describe('find-visualstudio', function () {
+  if (shouldSkip) {
+    return
+  }
+
   this.beforeAll(function () {
     // Condition to skip the test suite
     if (process.env.SystemRoot === undefined) {
