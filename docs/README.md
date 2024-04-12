@@ -18,7 +18,8 @@ But in any case, please avoid opening new `node-sass` issues on this repo becaus
 
 * mapbox/node-pre-gyp#657
 
-Support in the `abi_crosswalk.json` file ends at Node.js v17 which is end-of-life.
+Support in the `abi_crosswalk.json` file ends at Node.js v17 but [that release is end-of-life](https://github.com/nodejs/release#release-schedule).
+But in any case, please avoid opening new `node-pre-gyp` issues on this repo because we [cannot help much](https://github.com/nodejs/node-gyp/issues?q=is%3Aissue+label%3A%22node-pre-gyp+is+unmaintained%22).
 
 Unsupported __WORKAROUND__ for versions of Node.js > v17
 ```
