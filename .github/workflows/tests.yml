@@ -93,11 +93,15 @@ jobs:
       fail-fast: false
       max-parallel: 15
       matrix:
-        os: [macos, ubuntu, windows]
+        os: [macos-latest, ubuntu-latest, windows-latest]
         python: ["3.8", "3.10", "3.12"]
         node: [16.x, 18.x, 20.x]
+        include:  # `npm test` is running Windows find-visualstudio tests on an M1 Mac!!!
+          - os: macos-14
+            python: "3.12"
+            node: 20.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -116,20 +120,20 @@ jobs:
           npm install
           pip install pytest
       - name: Set Windows Env
-        if: runner.os == 'Windows'
+        if: startsWith(matrix.os, 'windows')
         run: |
           echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Run Python Tests
         run: python -m pytest
       - name: Run Tests (macOS or Linux)
-        if: runner.os != 'Windows'
+        if: "!startsWith(matrix.os, 'windows')"
         shell: bash
         run: npm test --python="${pythonLocation}/python"
         env:
           FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}
       - name: Run Tests (Windows)
-        if: runner.os == 'Windows'
+        if: startsWith(matrix.os, 'windows')
         shell: pwsh
         run: npm run test --python="${env:pythonLocation}\\python.exe"
         env:
