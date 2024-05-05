@@ -1,0 +1,23 @@
+{
+    "anon-user": {
+        "name": "anon-user",
+        "type": "anon-user",
+        "disabled": true
+    },
+    "api-key": {
+        "name": "api-key",
+        "type": "api-key",
+        "disabled": true
+    },
+    "local-userpass": {
+        "name": "local-userpass",
+        "type": "local-userpass",
+        "disabled": false,
+        "config": {
+            "autoConfirm": true,
+            "resetFunctionName": "resetFunc",
+            "runConfirmationFunction": false,
+            "runResetFunction": true
+        }
+    }
+}

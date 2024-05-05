@@ -1,0 +1,8 @@
+{
+    "app_id": "application-1-attnqps",
+    "config_version": 20210101,
+    "name": "Application-1",
+    "provider_region": "aws-us-east-1",
+    "deployment_model": "GLOBAL",
+    "environment": "production"
+}

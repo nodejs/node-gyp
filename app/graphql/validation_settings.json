@@ -1,0 +1,6 @@
+{
+    "read_validation_action": "ERROR",
+    "read_validation_level": "STRICT",
+    "write_validation_action": "ERROR",
+    "write_validation_level": "STRICT"
+}
