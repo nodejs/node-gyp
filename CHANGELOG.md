@@ -12,7 +12,7 @@
 
 * add support for locally installed headers ([#2964](https://github.com/nodejs/node-gyp/issues/2964)) ([3298731](https://github.com/nodejs/node-gyp/commit/329873141f0d3e3787d3c006801431da04e4ed0c))
 * **deps:** bump actions/setup-python from 4 to 5 ([#2960](https://github.com/nodejs/node-gyp/issues/2960)) ([3f0df7e](https://github.com/nodejs/node-gyp/commit/3f0df7e9334e49e8c7f6fdbbb9e1e6c5a8cca53b))
-* **deps:** bump google-github-actions/release-please-action ([#2961](https://github.com/nodejs/node-gyp/issues/2961)) ([b1f1808](https://github.com/nodejs/node-gyp/commit/b1f1808bfff0d51e6d3eb696ab6a5b89b7b9630c))
+* **deps:** bump googleapis/release-please-action ([#2961](https://github.com/nodejs/node-gyp/issues/2961)) ([b1f1808](https://github.com/nodejs/node-gyp/commit/b1f1808bfff0d51e6d3eb696ab6a5b89b7b9630c))
 * print Python executable path using UTF-8 ([#2995](https://github.com/nodejs/node-gyp/issues/2995)) ([c472912](https://github.com/nodejs/node-gyp/commit/c4729129daa9bb5204246b857826fb391ac961e1))
 * update supported vs versions ([#2959](https://github.com/nodejs/node-gyp/issues/2959)) ([391cc5b](https://github.com/nodejs/node-gyp/commit/391cc5b9b25cffe0cb2edcba3583414a771b4a15))
 
