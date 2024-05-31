@@ -39,6 +39,7 @@ To add to this page, just add the link to the project's `binding.gyp` file below
  * [node-osmium](https://github.com/osmcode/node-osmium/blob/master/binding.gyp)
  * [node-osrm](https://github.com/DennisOSRM/node-osrm)
  * [node-oracle](https://github.com/joeferner/node-oracle/blob/master/binding.gyp)
+ * [node-oracledb](https://github.com/oracle/node-oracledb/blob/main/binding.gyp)
  * [node-process-list](https://github.com/ReklatsMasters/node-process-list/blob/master/binding.gyp)
  * [node-nanomsg](https://github.com/nickdesaulniers/node-nanomsg/blob/master/binding.gyp)
  * [Ghostscript4JS](https://github.com/NickNaso/ghostscript4js/blob/master/binding.gyp)
