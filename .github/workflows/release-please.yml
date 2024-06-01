@@ -11,12 +11,12 @@ jobs:
     outputs:
       pr: ${{ steps.release.outputs.pr }}
     permissions:
-      contents: write # to create release commit (google-github-actions/release-please-action)
-      pull-requests: write # to create release PR (google-github-actions/release-please-action)
+      contents: write # to create release commit (googleapis/release-please-action)
+      pull-requests: write # to create release PR (googleapis/release-please-action)
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-    - uses: google-github-actions/release-please-action@v4
+    - uses: googleapis/release-please-action@v4
       id: release
         # Standard Conventional Commits: `feat` and `fix`
         # node-gyp subdirectories: `bin`, `gyp`, `lib`, `src`, `test`
