@@ -115,6 +115,7 @@ jobs:
           python-version: ${{ matrix.python }}
         env:
           PYTHON_VERSION: ${{ matrix.python }}  # Why do this?
+      - uses: seanmiddleditch/gha-setup-ninja@v4
       - name: Install Dependencies
         run: |
           npm install
