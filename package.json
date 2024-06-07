@@ -37,8 +37,11 @@
     "node": "^16.14.0 || >=18.0.0"
   },
   "devDependencies": {
+    "@emnapi/core": "^1.2.0",
+    "@emnapi/runtime": "^1.2.0",
     "bindings": "^1.5.0",
     "cross-env": "^7.0.3",
+    "emnapi": "^1.2.0",
     "mocha": "^10.2.0",
     "nan": "^2.14.2",
     "require-inject": "^1.4.4",
