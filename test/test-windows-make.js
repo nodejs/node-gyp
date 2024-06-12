@@ -55,11 +55,23 @@ function getEnv (target) {
     env.CXX_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang++'))
     env.CFLAGS = '--target=wasm32'
   } else if (target === 'win-clang') {
-    env.AR_target = 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\Llvm\\x64\\bin\\llvm-ar.exe'
-    env.CC_target = 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe'
-    env.CXX_target = 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\Llvm\\x64\\bin\\clang++.exe'
+    let vsdir = 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise'
+    if (!gracefulFs.existsSync(vsdir)) {
+      vsdir = 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Community'
+    }
+    const llvmBin = 'VC\\Tools\\Llvm\\x64\\bin'
+    env.AR_target = path.join(vsdir, llvmBin, 'llvm-ar.exe')
+    env.CC_target = path.join(vsdir, llvmBin, 'clang.exe')
+    env.CXX_target = path.join(vsdir, llvmBin, 'clang++.exe')
+    env.CFLAGS = '--target=wasm32'
   }
   return env
+}
+
+function quote (path) {
+  if (path.includes(' ')) {
+    return `"${path}"`
+  }
 }
 
 describe('windows-cross-compile', function () {
@@ -67,9 +79,15 @@ describe('windows-cross-compile', function () {
     if (process.platform !== 'win32') {
       return this.skip('This test is only for windows')
     }
-    if (!gracefulFs.existsSync('C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe')) {
+    const env = getEnv('win-clang')
+    if (!gracefulFs.existsSync(env.CC_target)) {
       return this.skip('Visual Studio Clang is not installed')
     }
+
+    // handle bash whitespace
+    env.AR_target = quote(env.AR_target)
+    env.CC_target = quote(env.CC_target)
+    env.CXX_target = quote(env.CXX_target)
     this.timeout(platformTimeout(1, { win32: 5 }))
 
     const cmd = [
@@ -77,9 +95,11 @@ describe('windows-cross-compile', function () {
       'rebuild',
       '-C', addonPath,
       '--loglevel=verbose',
-      '--', '-f', 'make-linux'
+      `--nodedir=${addonPath}`,
+      '--arch=wasm32',
+      '--', '-f', 'make'
     ]
-    const [err, logLines] = await execFile(cmd, getEnv('win-clang'))
+    const [err, logLines] = await execFile(cmd, env)
     const lastLine = logLines[logLines.length - 1]
     assert.strictEqual(err, null)
     assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
