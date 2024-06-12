@@ -3,11 +3,12 @@
 const { describe, it } = require('mocha')
 const assert = require('assert')
 const path = require('path')
+const gracefulFs = require('graceful-fs')
 const cp = require('child_process')
 const util = require('../lib/util')
 const { platformTimeout } = require('./common')
 
-const wasmAddonPath = path.resolve(__dirname, 'node_modules', 'hello_wasm')
+const addonPath = path.resolve(__dirname, 'node_modules', 'hello_napi')
 const nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
 
 const execFileSync = (...args) => cp.execFileSync(...args).toString().trim()
@@ -24,8 +25,8 @@ const execFile = async (cmd, env) => {
   return [err, stderr.toString().trim().split(/\r?\n/)]
 }
 
-function runWasm (hostProcess = process.execPath) {
-  const testCode = "console.log(require('hello_wasm').hello())"
+function runHello (hostProcess = process.execPath) {
+  const testCode = "console.log(require('hello_napi').hello())"
   return execFileSync(hostProcess, ['--experimental-wasi-unstable-preview1', '-e', testCode], { cwd: __dirname })
 }
 
@@ -33,7 +34,7 @@ function executable (name) {
   return name + (process.platform === 'win32' ? '.exe' : '')
 }
 
-function getWasmEnv (target) {
+function getEnv (target) {
   const env = {
     GYP_CROSSCOMPILE: '1',
     AR_host: 'ar',
@@ -53,74 +54,35 @@ function getWasmEnv (target) {
     env.CC_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang'))
     env.CXX_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang++'))
     env.CFLAGS = '--target=wasm32'
+  } else if (target === 'win-clang') {
+    env.AR_target = 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\Llvm\\x64\\bin\\llvm-ar.exe'
+    env.CC_target = 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe'
+    env.CXX_target = 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\Llvm\\x64\\bin\\clang++.exe'
   }
   return env
 }
 
-describe('wasm', function () {
-  it('build simple node-api addon to wasm (wasm32-emscripten)', async function () {
-    if (!process.env.EMSDK) {
-      return this.skip('emsdk not found')
+describe('windows-cross-compile', function () {
+  it('build simple node-api addon', async function () {
+    if (process.platform !== 'win32') {
+      return this.skip('This test is only for windows')
+    }
+    if (!gracefulFs.existsSync('C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe')) {
+      return this.skip('Visual Studio Clang is not installed')
     }
     this.timeout(platformTimeout(1, { win32: 5 }))
 
     const cmd = [
       nodeGyp,
       'rebuild',
-      '-C', wasmAddonPath,
+      '-C', addonPath,
       '--loglevel=verbose',
-      '--arch=wasm32',
-      `--nodedir=${path.dirname(require.resolve('emnapi'))}`,
-      '--', '-f', 'make'
+      '--', '-f', 'make-linux'
     ]
-    const [err, logLines] = await execFile(cmd, getWasmEnv('emscripten'))
+    const [err, logLines] = await execFile(cmd, getEnv('win-clang'))
     const lastLine = logLines[logLines.length - 1]
     assert.strictEqual(err, null)
     assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
-    assert.strictEqual(runWasm(), 'world')
-  })
-
-  it('build simple node-api addon to wasm (wasm32-wasip1)', async function () {
-    if (!process.env.WASI_SDK_PATH) {
-      return this.skip('wasi-sdk not found')
-    }
-    this.timeout(platformTimeout(1, { win32: 5 }))
-
-    const cmd = [
-      nodeGyp,
-      'rebuild',
-      '-C', wasmAddonPath,
-      '--loglevel=verbose',
-      '--arch=wasm32',
-      `--nodedir=${path.dirname(require.resolve('emnapi'))}`,
-      '--', '-f', 'make'
-    ]
-    const [err, logLines] = await execFile(cmd, getWasmEnv('wasi'))
-    const lastLine = logLines[logLines.length - 1]
-    assert.strictEqual(err, null)
-    assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
-    assert.strictEqual(runWasm(), 'world')
-  })
-
-  it('build simple node-api addon to wasm (wasm32-unknown-unknown)', async function () {
-    if (!process.env.WASI_SDK_PATH) {
-      return this.skip('wasi-sdk not found')
-    }
-    this.timeout(platformTimeout(1, { win32: 5 }))
-
-    const cmd = [
-      nodeGyp,
-      'rebuild',
-      '-C', wasmAddonPath,
-      '--loglevel=verbose',
-      '--arch=wasm32',
-      `--nodedir=${path.dirname(require.resolve('emnapi'))}`,
-      '--', '-f', 'make'
-    ]
-    const [err, logLines] = await execFile(cmd, getWasmEnv('wasm'))
-    const lastLine = logLines[logLines.length - 1]
-    assert.strictEqual(err, null)
-    assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
-    assert.strictEqual(runWasm(), 'world')
+    assert.strictEqual(runHello(), 'world')
   })
 })

@@ -102,12 +102,6 @@ jobs:
             node: 20.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
-    env:
-      WASI_VERSION: '22'
-      WASI_VERSION_FULL: '22.0'
-      WASI_SDK_PATH: 'wasi-sdk-22.0'
-      EM_VERSION: '3.1.52'
-      EM_CACHE_FOLDER: 'emsdk-cache'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -122,24 +116,6 @@ jobs:
         env:
           PYTHON_VERSION: ${{ matrix.python }}  # Why do this?
       - uses: seanmiddleditch/gha-setup-ninja@v4
-      - uses: mymindstorm/setup-emsdk@v14
-        with:
-          version: ${{ env.EM_VERSION }}
-          actions-cache-folder: ${{ env.EM_CACHE_FOLDER }}
-      - name: Install wasi-sdk (macOS or Linux)
-        shell: bash
-        if: ${{ !startsWith(matrix.os, 'windows') }}
-        run: |
-          wget -q https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${WASI_VERSION}/wasi-sdk-${WASI_VERSION_FULL}-${{ startsWith(matrix.os, 'macos') && 'macos' || 'linux' }}.tar.gz
-          mkdir -p $WASI_SDK_PATH
-          tar zxvf wasi-sdk-${WASI_VERSION_FULL}-${{ startsWith(matrix.os, 'macos') && 'macos' || 'linux' }}.tar.gz -C $WASI_SDK_PATH --strip 1
-      - name: Install wasi-sdk (Windows)
-        shell: pwsh
-        if: ${{ startsWith(matrix.os, 'windows') }}
-        run: |
-          Start-BitsTransfer -Source https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${env:WASI_VERSION}/wasi-sdk-${env:WASI_VERSION_FULL}.m-mingw.tar.gz
-          New-Item -ItemType Directory -Path ${env:WASI_SDK_PATH}
-          tar -zxvf wasi-sdk-${env:WASI_VERSION_FULL}.m-mingw.tar.gz -C ${env:WASI_SDK_PATH} --strip 1
       - name: Install Dependencies
         run: |
           npm install
@@ -150,7 +126,7 @@ jobs:
           echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Run Python Tests
-        run: python -m pytest --ignore=${{ env.EM_CACHE_FOLDER }}
+        run: python -m pytest
       - name: Run Tests (macOS or Linux)
         if: "!startsWith(matrix.os, 'windows')"
         shell: bash
