@@ -135,7 +135,7 @@ jobs:
           FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}
       - name: Run Tests (Windows)
         if: startsWith(matrix.os, 'windows')
-        shell: pwsh
-        run: npm run test --python="${env:pythonLocation}\\python.exe"
+        shell: bash # Building wasm on Windows requires using make generator, it only works in bash
+        run: npm run test --python="${pythonLocation}\\python.exe"
         env:
           FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}

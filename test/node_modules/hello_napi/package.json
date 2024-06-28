@@ -1,0 +1,11 @@
+{
+  "name": "hello_napi",
+  "version": "0.0.0",
+  "description": "Node.js Addons Example #2",
+  "main": "hello.js",
+  "private": true,
+  "scripts": {
+    "test": "node hello.js"
+  },
+  "gypfile": true
+}
