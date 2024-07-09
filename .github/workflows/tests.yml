@@ -19,8 +19,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: pip install --user ruff
-    - run: ruff --output-format=github --select="E,F,PLC,PLE,UP,W,YTT" --ignore="E721,PLC1901,S101,UP031" --target-version=py38 .
-  
+    - run: ruff check --output-format=github --select="E,F,PLC,PLE,UP,W,YTT" --ignore="E721,PLC1901,S101,UP031" --target-version=py38 .
+
   lint-js:
     name: Lint JS
     runs-on: ubuntu-latest
@@ -88,7 +88,7 @@ jobs:
 
   tests:
     # lint-python takes ~5 seconds, so wait for it to pass before running the full matrix of tests.
-    needs: [lint-python] 
+    needs: [lint-python]
     strategy:
       fail-fast: false
       max-parallel: 15
