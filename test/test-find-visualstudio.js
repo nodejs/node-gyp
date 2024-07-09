@@ -782,4 +782,29 @@ describe('find-visualstudio', function () {
     assert.ok(/find .* Visual Studio/i.test(err), 'expect error')
     assert.ok(!info, 'no data')
   })
+
+  it('run on a portable VS Command Prompt with sufficient environs', async function () {
+    process.env.VCINSTALLDIR = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC'
+    process.env.VSCMD_VER = '16.0'
+    process.env.WindowsSDKVersion = '10.0.17763.0'
+
+    const finder = new TestVisualStudioFinder(semverV1, null)
+
+    allVsVersions(finder)
+    const { err, info } = await finder.findVisualStudio()
+    assert.strictEqual(err, null)
+    assert.deepStrictEqual(info, {
+      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
+        'Community\\MSBuild\\Current\\Bin\\MSBuild.exe',
+      path:
+        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community',
+      sdk: '10.0.17763.0',
+      toolset: 'v142',
+      // Assume version in the environ is correct.
+      version: '16.0',
+      versionMajor: 16,
+      versionMinor: 0,
+      versionYear: 2019
+    })
+  })
 })
