@@ -27,10 +27,10 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-    - name: Use Node.js 20.x
+    - name: Use Node.js 22.x
       uses: actions/setup-node@v4
       with:
-        node-version: 20.x
+        node-version: 22.x
     - name: Install Dependencies
       run: npm install
     - name: Lint
@@ -42,10 +42,10 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-    - name: Use Node.js 20.x
+    - name: Use Node.js 22.x
       uses: actions/setup-node@v4
       with:
-        node-version: 20.x
+        node-version: 22.x
     - name: Install Dependencies
       run: npm install
     - name: Check Engines
@@ -60,10 +60,10 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-    - name: Use Node.js 20.x
+    - name: Use Node.js 22.x
       uses: actions/setup-node@v4
       with:
-        node-version: 20.x
+        node-version: 22.x
     - name: Update npm
       run: npm install npm@latest -g
     - name: Install Dependencies
@@ -95,11 +95,11 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
         python: ["3.8", "3.10", "3.12"]
-        node: [16.x, 18.x, 20.x]
-        include:  # `npm test` is running Windows find-visualstudio tests on an M1 Mac!!!
-          - os: macos-14
+        node: [18.x, 20.x, 22.x]
+        include:  # `npm test` runs Windows find-visualstudio tests on an Intel Mac!!!
+          - os: macos-13
             python: "3.12"
-            node: 20.x
+            node: 22.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
     steps:
@@ -132,10 +132,10 @@ jobs:
         shell: bash
         run: npm test --python="${pythonLocation}/python"
         env:
-          FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '22.x' && matrix.python == '3.12') && '1' || '0' }}
       - name: Run Tests (Windows)
         if: startsWith(matrix.os, 'windows')
         shell: bash # Building wasm on Windows requires using make generator, it only works in bash
         run: npm run test --python="${pythonLocation}\\python.exe"
         env:
-          FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '22.x' && matrix.python == '3.12') && '1' || '0' }}
