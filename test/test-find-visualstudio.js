@@ -464,7 +464,7 @@ describe('find-visualstudio', function () {
 
   it('VS2022 Build Tools with ARM64 MSVC only', async function () {
     if (process.arch !== 'arm64') {
-      return;
+      return
     }
 
     const msBuildPath = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\' +
