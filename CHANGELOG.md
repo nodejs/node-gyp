@@ -1,5 +1,23 @@
 # Changelog
 
+## [10.3.0](https://github.com/nodejs/node-gyp/compare/v10.2.0...v10.3.0) (2024-11-29)
+
+
+### Features
+
+* prohibit compiling with ClangCL on Windows ([#3098](https://github.com/nodejs/node-gyp/issues/3098)) ([88260bf](https://github.com/nodejs/node-gyp/commit/88260bf86aeb4c39959b78104a5edc3dc88d3aef))
+
+
+### Bug Fixes
+
+* **ci:** use correct release-please-action domain after organization url was changed ([#3032](https://github.com/nodejs/node-gyp/issues/3032)) ([d1ed3d4](https://github.com/nodejs/node-gyp/commit/d1ed3d4dc3a53b8ccab4093d002e43945bbece0e))
+
+
+### Miscellaneous
+
+* add links to Code of Conduct from root file ([#2196](https://github.com/nodejs/node-gyp/issues/2196)) ([d22e2eb](https://github.com/nodejs/node-gyp/commit/d22e2eb080807c6290533a67249c343a7605a989))
+* publish to npm with release-please ([#3051](https://github.com/nodejs/node-gyp/issues/3051)) ([8319847](https://github.com/nodejs/node-gyp/commit/831984736393a3ea8417efec5255f95d53a70785))
+
 ## [10.2.0](https://github.com/nodejs/node-gyp/compare/v10.1.0...v10.2.0) (2024-07-09)
 
 
