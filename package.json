@@ -27,7 +27,7 @@
     "glob": "^10.3.10",
     "graceful-fs": "^4.2.6",
     "make-fetch-happen": "^14.0.3",
-    "nopt": "^7.0.0",
+    "nopt": "^8.0.0",
     "proc-log": "^4.1.0",
     "semver": "^7.3.5",
     "tar": "^6.2.1",
