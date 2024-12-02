@@ -28,7 +28,7 @@
     "graceful-fs": "^4.2.6",
     "make-fetch-happen": "^14.0.3",
     "nopt": "^8.0.0",
-    "proc-log": "^4.1.0",
+    "proc-log": "^5.0.0",
     "semver": "^7.3.5",
     "tar": "^6.2.1",
     "which": "^4.0.0"
