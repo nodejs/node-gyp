@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.3.1](https://github.com/nodejs/node-gyp/compare/v10.3.0...v10.3.1) (2024-12-02)
+
+
+### Miscellaneous
+
+* fix npm-publish dependencies and add provenance ([#3099](https://github.com/nodejs/node-gyp/issues/3099)) ([6dded88](https://github.com/nodejs/node-gyp/commit/6dded88065872a32f44114e60731ba4b701ec057))
+
 ## [10.3.0](https://github.com/nodejs/node-gyp/compare/v10.2.0...v10.3.0) (2024-11-29)
 
 
