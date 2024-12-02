@@ -4,45 +4,40 @@ on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   release-please:
     outputs:
-      pr: ${{ steps.release.outputs.pr }}
+      release_created:  ${{ steps.release.outputs.release_created }}
     permissions:
       contents: write # to create release commit (googleapis/release-please-action)
       pull-requests: write # to create release PR (googleapis/release-please-action)
-    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-    - uses: googleapis/release-please-action@v4
-      id: release
-        # Standard Conventional Commits: `feat` and `fix`
-        # node-gyp subdirectories: `bin`, `gyp`, `lib`, `src`, `test`
-        # node-gyp subcommands: `build`, `clean`, `configure`, `install`, `list`, `rebuild`, `remove`
-        # Core abstract category: `deps`
-        # Languages/platforms: `python`, `lin`, `linux`, `mac`, `macos`, `win`, `window`, `zos`
-        # Documentation: `doc`, `docs`, `readme`
-        # Standard Conventional Commits: `chore` (under "Miscellaneous")
-        # Miscellaneous abstract categories: `refactor`, `ci`, `meta`
-
-  test:
-    name: Release Test
-    needs: [ release-please ]
-    if: needs.release-please.outputs.pr || startsWith(github.head_ref, 'release-please--')
-    uses: ./.github/workflows/tests.yml
+      - uses: googleapis/release-please-action@v4
+        id: release
+          # Standard Conventional Commits: `feat` and `fix`
+          # node-gyp subdirectories: `bin`, `gyp`, `lib`, `src`, `test`
+          # node-gyp subcommands: `build`, `clean`, `configure`, `install`, `list`, `rebuild`, `remove`
+          # Core abstract category: `deps`
+          # Languages/platforms: `python`, `lin`, `linux`, `mac`, `macos`, `win`, `window`, `zos`
+          # Documentation: `doc`, `docs`, `readme`
+          # Standard Conventional Commits: `chore` (under "Miscellaneous")
+          # Miscellaneous abstract categories: `refactor`, `ci`, `meta`
 
   npm-publish:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # to generate npm provenance statements
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
           registry-url: 'https://registry.npmjs.org'
-      - run: npm publish --access public
+      - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
