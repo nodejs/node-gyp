@@ -1,5 +1,21 @@
 # Changelog
 
+## [11.0.0](https://github.com/nodejs/node-gyp/compare/v10.3.1...v11.0.0) (2024-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop node 16 support ([#3102](https://github.com/nodejs/node-gyp/issues/3102))
+
+### Features
+
+* drop node 16 support ([#3102](https://github.com/nodejs/node-gyp/issues/3102)) ([0e6b6f8](https://github.com/nodejs/node-gyp/commit/0e6b6f8bea615cf031d76ecff9102a38e5474c72))
+
+
+### Miscellaneous
+
+* migrate from standard to neostandard ([#3103](https://github.com/nodejs/node-gyp/issues/3103)) ([a130178](https://github.com/nodejs/node-gyp/commit/a13017807d0ae7da8fa076b0bcf23153af7c60a6))
+
 ## [10.3.1](https://github.com/nodejs/node-gyp/compare/v10.3.0...v10.3.1) (2024-12-02)
 
 
