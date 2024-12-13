@@ -19,8 +19,22 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: pip install --user ruff
-    # Excluding `/gyp` directory as it is been checked in https://github.com/nodejs/gyp-next/ already
+    # `/gyp` directory is run in the next job.
     - run: ruff check --output-format=github --extend-exclude=gyp --select="E,F,PLC,PLE,UP,W,YTT" --ignore="E721,PLC1901,S101,UP031" --target-version=py38 .
+
+  lint-gyp:
+    name: Lint Gyp
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      working-directory: ./gyp
+      run: |
+        python -m pip install --upgrade pip setuptools
+        pip install --editable ".[dev]"
+    - name: Lint with ruff  # See gyp/pyproject.toml for settings
+      working-directory: ./gyp
+      run: ruff check --output-format=github .
 
   lint-js:
     name: Lint JS
