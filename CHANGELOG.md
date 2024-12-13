@@ -1,5 +1,13 @@
 # Changelog
 
+## [11.0.1](https://github.com/nodejs/node-gyp/compare/v11.0.0...v11.0.1) (2024-12-13)
+
+
+### Bug Fixes
+
+* Find VC.Tools.ARM64 on arm64 machine ([#3075](https://github.com/nodejs/node-gyp/issues/3075)) ([b899fae](https://github.com/nodejs/node-gyp/commit/b899faed56270d3d8496da7576b5750b264c2c21))
+* try libnode.dll first in load_exe_hook ([#2834](https://github.com/nodejs/node-gyp/issues/2834)) ([b9d10a5](https://github.com/nodejs/node-gyp/commit/b9d10a5a37081e2a731937e43eca52c83609e7f5))
+
 ## [11.0.0](https://github.com/nodejs/node-gyp/compare/v10.3.1...v11.0.0) (2024-12-03)
 
 
