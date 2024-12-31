@@ -20,7 +20,7 @@ jobs:
     - uses: actions/checkout@v4
     - run: pipx install ruff
     - run: ruff check --output-format=github --select="E,F,PLC,PLE,UP,W,YTT"
-             --ignore="E721,PLC1901,S101,UP031" --target-version=py39 .
+             --ignore="E721,PLC0206,PLC1901,S101,UP031" --target-version=py39 .
 
   lint-js:
     name: Lint JS
