@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: pip install --user ruff
-    # Excluding `/gyp` directory as it is been checked in https://github.com/nodejs/gyp-next/ already
-    - run: ruff check --output-format=github --extend-exclude=gyp --select="E,F,PLC,PLE,UP,W,YTT" --ignore="E721,PLC1901,S101,UP031" --target-version=py38 .
+    - uses: astral-sh/ruff-action@v3
+      with:
+        args: "check --select=E,F,PLC,PLE,UP,W,YTT --ignore=E721,PLC0206,PLC1901,S101,UP031 --target-version=py39"
 
   lint-js:
     name: Lint JS
