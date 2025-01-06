@@ -92,14 +92,17 @@ jobs:
     needs: [lint-python]
     strategy:
       fail-fast: false
-      max-parallel: 15
+      max-parallel: 11
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        python: ["3.8", "3.10", "3.12"]
+        python: ["3.9", "3.11", "3.13"]
         node: [18.x, 20.x, 22.x]
-        include:  # `npm test` runs Windows find-visualstudio tests on an Intel Mac!!!
+        include:
           - os: macos-13
-            python: "3.12"
+            python: "3.13"
+            node: 22.x
+          - os: windows-2025
+            python: "3.13"
             node: 22.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
@@ -133,10 +136,10 @@ jobs:
         shell: bash
         run: npm test --python="${pythonLocation}/python"
         env:
-          FULL_TEST: ${{ (matrix.node == '22.x' && matrix.python == '3.12') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '22.x' && matrix.python == '3.13') && '1' || '0' }}
       - name: Run Tests (Windows)
         if: startsWith(matrix.os, 'windows')
         shell: bash # Building wasm on Windows requires using make generator, it only works in bash
         run: npm run test --python="${pythonLocation}\\python.exe"
         env:
-          FULL_TEST: ${{ (matrix.node == '22.x' && matrix.python == '3.12') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '22.x' && matrix.python == '3.13') && '1' || '0' }}

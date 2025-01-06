@@ -21,6 +21,8 @@ jobs:
             msvs-verison: 2019
           - os: windows-2022
             msvs-version: 2022
+          - os: windows-2025
+            msvs-version: 2025
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
