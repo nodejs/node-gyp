@@ -94,16 +94,19 @@ jobs:
       fail-fast: false
       max-parallel: 11
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest]
         python: ["3.9", "3.11", "3.13"]
-        node: [18.x, 20.x, 22.x]
+        node: [18.x, 20.x, 22.x, 23.x]
         include:
           - os: macos-13
             python: "3.13"
-            node: 22.x
+            node: 23.x
+          - os: ubuntu-24.04-arm 
+            python: "3.13"
+            node: 23.x
           - os: windows-2025
             python: "3.13"
-            node: 22.x
+            node: 23.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
     steps:
@@ -119,13 +122,13 @@ jobs:
           python-version: ${{ matrix.python }}
         env:
           PYTHON_VERSION: ${{ matrix.python }}  # Why do this?
-      - uses: seanmiddleditch/gha-setup-ninja@v5
+      - uses: seanmiddleditch/gha-setup-ninja@v6
       - name: Install Dependencies
         run: |
           npm install
           pip install pytest
       - name: Set Windows Env
-        if: startsWith(matrix.os, 'windows')
+        if: runner.os == 'Windows'
         run: |
           echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
