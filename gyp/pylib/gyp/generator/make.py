@@ -1738,8 +1738,7 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
                         # into the link command, so we need lots of escaping.
                         ldflags.append(r"-Wl,-rpath=\$$ORIGIN/")
                         ldflags.append(r"-Wl,-rpath-link=\$(builddir)/")
-                library_dirs = config.get("library_dirs", [])
-                if library_dirs:
+                if library_dirs := config.get("library_dirs", []):
                     library_dirs = [Sourceify(self.Absolutify(i)) for i in library_dirs]
                 ldflags += [("-L%s" % library_dir) for library_dir in library_dirs]
                 self.WriteList(ldflags, "LDFLAGS_%s" % configname)
