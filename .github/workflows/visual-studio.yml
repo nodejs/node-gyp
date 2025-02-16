@@ -21,14 +21,18 @@ jobs:
             msvs-verison: 2019
           - os: windows-2022
             msvs-version: 2022
+          - os: windows-2025
+            msvs-version: 2022  # Fix this when Visual Studio 2025 is released
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+      - name: Use Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Install Dependencies
         run: npm install
       - name: Run Node tests
         shell: pwsh
-        run: |
-          $pythonLocation = (Get-Command python).Source
-          npm run test --python="${pythonLocation}" --msvs-version="${{ matrix.msvs-version }}"
+        run: npm run test --python="${env:pythonLocation}\\python.exe" --msvs-version="${{ matrix.msvs-version }}"

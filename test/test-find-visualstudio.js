@@ -462,6 +462,44 @@ describe('find-visualstudio', function () {
     })
   })
 
+  it('VS2022 Build Tools with ARM64 MSVC only', async function () {
+    if (process.arch !== 'arm64') {
+      return
+    }
+
+    const msBuildPath = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\' +
+        'BuildTools\\MSBuild\\Current\\Bin\\arm64\\MSBuild.exe'
+
+    const finder = new TestVisualStudioFinder(semverV1, null)
+
+    poison(finder, 'regSearchKeys')
+    poison(finder, 'findVisualStudio2017')
+    finder.msBuildPathExists = (path) => {
+      return true
+    }
+    finder.findNewVSUsingSetupModule = async () => null
+    finder.findVisualStudio2019OrNewer = async () => {
+      const file = path.join(__dirname, 'fixtures',
+        'VS_2022_BuildTools_arm64_only.txt')
+      const data = fs.readFileSync(file)
+      const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(parsedData, [2019, 2022])
+    }
+    const { err, info } = await finder.findVisualStudio()
+    assert.strictEqual(err, null)
+    assert.deepStrictEqual(info, {
+      msBuild: msBuildPath,
+      path:
+        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools',
+      sdk: '10.0.22621.0',
+      toolset: 'v143',
+      version: '17.11.35222.181',
+      versionMajor: 17,
+      versionMinor: 11,
+      versionYear: 2022
+    })
+  })
+
   it('VSSetup: VS2022 with C++ workload without SDK', async function () {
     const finder = new TestVisualStudioFinder(semverV1, null)
     finder.msBuildPathExists = (path) => {
@@ -781,5 +819,30 @@ describe('find-visualstudio', function () {
     const { err, info } = await finder.findVisualStudio()
     assert.ok(/find .* Visual Studio/i.test(err), 'expect error')
     assert.ok(!info, 'no data')
+  })
+
+  it('run on a portable VS Command Prompt with sufficient environs', async function () {
+    process.env.VCINSTALLDIR = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC'
+    process.env.VSCMD_VER = '16.0'
+    process.env.WindowsSDKVersion = '10.0.17763.0'
+
+    const finder = new TestVisualStudioFinder(semverV1, null)
+
+    allVsVersions(finder)
+    const { err, info } = await finder.findVisualStudio()
+    assert.strictEqual(err, null)
+    assert.deepStrictEqual(info, {
+      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\' +
+        'Community\\MSBuild\\Current\\Bin\\MSBuild.exe',
+      path:
+        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community',
+      sdk: '10.0.17763.0',
+      toolset: 'v142',
+      // Assume version in the environ is correct.
+      version: '16.0',
+      versionMajor: 16,
+      versionMinor: 0,
+      versionYear: 2019
+    })
   })
 })

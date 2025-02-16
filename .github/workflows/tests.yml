@@ -18,19 +18,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: pip install --user ruff
-    - run: ruff --output-format=github --select="E,F,PLC,PLE,UP,W,YTT" --ignore="E721,PLC1901,S101,UP031" --target-version=py38 .
-  
+    - uses: astral-sh/ruff-action@v3
+      with:
+        args: "check --select=E,F,PLC,PLE,UP,W,YTT --ignore=E721,PLC0206,PLC1901,S101,UP031 --target-version=py39"
+
   lint-js:
     name: Lint JS
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-    - name: Use Node.js 20.x
+    - name: Use Node.js 22.x
       uses: actions/setup-node@v4
       with:
-        node-version: 20.x
+        node-version: 22.x
     - name: Install Dependencies
       run: npm install
     - name: Lint
@@ -42,10 +43,10 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-    - name: Use Node.js 20.x
+    - name: Use Node.js 22.x
       uses: actions/setup-node@v4
       with:
-        node-version: 20.x
+        node-version: 22.x
     - name: Install Dependencies
       run: npm install
     - name: Check Engines
@@ -60,10 +61,10 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-    - name: Use Node.js 20.x
+    - name: Use Node.js 22.x
       uses: actions/setup-node@v4
       with:
-        node-version: 20.x
+        node-version: 22.x
     - name: Update npm
       run: npm install npm@latest -g
     - name: Install Dependencies
@@ -88,18 +89,24 @@ jobs:
 
   tests:
     # lint-python takes ~5 seconds, so wait for it to pass before running the full matrix of tests.
-    needs: [lint-python] 
+    needs: [lint-python]
     strategy:
       fail-fast: false
-      max-parallel: 15
+      max-parallel: 11
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        python: ["3.8", "3.10", "3.12"]
-        node: [16.x, 18.x, 20.x]
-        include:  # `npm test` is running Windows find-visualstudio tests on an M1 Mac!!!
-          - os: macos-14
-            python: "3.12"
-            node: 20.x
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        python: ["3.9", "3.11", "3.13"]
+        node: [18.x, 20.x, 22.x, 23.x]
+        include:
+          - os: macos-13
+            python: "3.13"
+            node: 23.x
+          - os: ubuntu-24.04-arm 
+            python: "3.13"
+            node: 23.x
+          - os: windows-2025
+            python: "3.13"
+            node: 23.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
     steps:
@@ -115,26 +122,27 @@ jobs:
           python-version: ${{ matrix.python }}
         env:
           PYTHON_VERSION: ${{ matrix.python }}  # Why do this?
+      - uses: seanmiddleditch/gha-setup-ninja@v6
       - name: Install Dependencies
         run: |
           npm install
           pip install pytest
       - name: Set Windows Env
-        if: startsWith(matrix.os, 'windows')
+        if: runner.os == 'Windows'
         run: |
           echo 'GYP_MSVS_VERSION=2015' >> $Env:GITHUB_ENV
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Run Python Tests
         run: python -m pytest
       - name: Run Tests (macOS or Linux)
-        if: "!startsWith(matrix.os, 'windows')"
+        if: runner.os != 'Windows'
         shell: bash
         run: npm test --python="${pythonLocation}/python"
         env:
-          FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '22.x' && matrix.python == '3.13') && '1' || '0' }}
       - name: Run Tests (Windows)
-        if: startsWith(matrix.os, 'windows')
-        shell: pwsh
-        run: npm run test --python="${env:pythonLocation}\\python.exe"
+        if: runner.os == 'Windows'
+        shell: bash # Building wasm on Windows requires using make generator, it only works in bash
+        run: npm run test --python="${pythonLocation}\\python.exe"
         env:
-          FULL_TEST: ${{ (matrix.node == '20.x' && matrix.python == '3.12') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '22.x' && matrix.python == '3.13') && '1' || '0' }}
