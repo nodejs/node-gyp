@@ -1,0 +1,17 @@
+{
+    "roles": [
+        {
+            "name": "read-not-write",
+            "apply_when": {},
+            "document_filters": {
+                "read": true,
+                "write": false
+            },
+            "insert": true,
+            "delete": true,
+            "search": true,
+            "read": true,
+            "write": false
+        }
+    ]
+}

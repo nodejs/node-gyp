@@ -1,0 +1,12 @@
+{
+    "type": "flexible",
+    "state": "enabled",
+    "development_mode_enabled": false,
+    "service_name": "mongodb-atlas",
+    "database_name": "todo",
+    "client_max_offline_days": 30,
+    "queryable_fields_names": [
+        "_id",
+        "owner_id"
+    ]
+}
