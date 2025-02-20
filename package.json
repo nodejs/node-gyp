@@ -30,7 +30,7 @@
     "proc-log": "^5.0.0",
     "semver": "^7.3.5",
     "tar": "^7.4.3",
-    "tinyglobby": "^0.2.11",
+    "tinyglobby": "^0.2.12",
     "which": "^5.0.0"
   },
   "engines": {
