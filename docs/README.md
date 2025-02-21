@@ -1,4 +1,4 @@
-## Versions of `node-gyp` that are earlier than v10.x.x
+## Versions of `node-gyp` that are earlier than v11.x.x
 
 Please look thru your error log for the string `gyp info using node-gyp@` and if that version number is less than the [current release of node-gyp](https://github.com/nodejs/node-gyp/releases) then __please upgrade__ using [these instructions](https://github.com/nodejs/node-gyp/blob/main/docs/Updating-npm-bundled-node-gyp.md) and then try your command again.
 
@@ -13,19 +13,12 @@ npm install --global node-sass@latest
 ```
 `node-sass` projects _may_ work by downgrading to Node.js v14 but [that release is end-of-life](https://github.com/nodejs/release#release-schedule).
 
-In any case, please avoid opening new `node-sass` issues on this repo because we [cannot help much](https://github.com/nodejs/node-gyp/issues?q=is%3Aissue+label%3A%22Node+Sass+--%3E+Dart+Sass%22+).
+In any case, please avoid opening new `node-sass` issues on this repo because we [cannot help much](https://github.com/nodejs/node-gyp/issues?q=is%3Aissue+label%3A%22Node+Sass+--%3E+Dart+Sass%22).
 
-## `node-pre-gyp` is no longer maintained
+## `ffi-napi` is no longer maintained
 
-* mapbox/node-pre-gyp#657
+* node-ffi-napi/node-ffi-napi#269
 
-Support in the `abi_crosswalk.json` file ends at Node.js v17 but [that release is end-of-life](https://github.com/nodejs/release#release-schedule).
+There are a couple of workarounds (https://koffi.dev or `node-ffi-rs`) on that issue but using `ffi-napi` or its forks has proven problematic on modern versions of operating systems, Node.js, node-gyp, and Python.
 
-In any case, please avoid opening new `node-pre-gyp` issues on this repo because we [cannot help much](https://github.com/nodejs/node-gyp/issues?q=is%3Aissue+label%3A%22node-pre-gyp+is+unmaintained%22).
-
-Unsupported __WORKAROUND__ for versions of Node.js > v17
-```
-npm ci  # mapbox/node-pre-gyp
-npm run update-crosswalk
-# npm audit  # Currently fails on a `Severity: critical` issue
-```
+In any case, please avoid opening new `ffi-napi` issues on this repo because we [cannot help much](https://github.com/nodejs/node-gyp/issues?q=label%3Affi-napi).
