@@ -75,7 +75,8 @@ function quote (path) {
 }
 
 describe('windows-cross-compile', function () {
-  it('build simple node-api addon', async function () {
+  // Visual Studio Clang removed wasm support in the latest VS2022.
+  it.skip('build simple node-api addon', async function () {
     if (process.platform !== 'win32') {
       return this.skip('This test is only for windows')
     }
