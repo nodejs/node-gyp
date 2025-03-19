@@ -127,7 +127,7 @@ jobs:
       - uses: seanmiddleditch/gha-setup-ninja@v6
       - name: Install wasi-sdk (Windows)
         shell: pwsh
-        if: ${{ startsWith(matrix.os, 'windows') }}
+        if: runner.os == 'Windows'
         run: |
           Start-BitsTransfer -Source https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${env:WASI_VERSION}/wasi-sdk-${env:WASI_VERSION_FULL}-x86_64-windows.tar.gz
           New-Item -ItemType Directory -Path ${env:WASI_SDK_PATH}

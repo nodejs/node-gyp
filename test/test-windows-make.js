@@ -80,11 +80,11 @@ function quote (path) {
 describe('windows-cross-compile', function () {
   it('build simple node-api addon', async function () {
     if (process.platform !== 'win32') {
-      return this.skip('This test is only for windows')
+      return this.skip('This test is only for Windows')
     }
     const env = getEnv('wasm')
     if (!gracefulFs.existsSync(env.CC_target)) {
-      return this.skip('Visual Studio Clang is not installed')
+      return this.skip('CC_target does not exist')
     }
 
     // handle bash whitespace
