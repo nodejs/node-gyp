@@ -46,10 +46,12 @@ function getEnv (target) {
     env.CC_target = 'emcc'
     env.CXX_target = 'em++'
   } else if (target === 'wasi') {
+    if (!process.env.WASI_SDK_PATH) return env
     env.AR_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('ar'))
     env.CC_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang'))
     env.CXX_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang++'))
   } else if (target === 'wasm') {
+    if (!process.env.WASI_SDK_PATH) return env
     env.AR_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('ar'))
     env.CC_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang'))
     env.CXX_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang++'))
