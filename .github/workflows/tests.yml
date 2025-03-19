@@ -88,8 +88,6 @@ jobs:
         npm test
 
   tests:
-    # lint-python takes ~5 seconds, so wait for it to pass before running the full matrix of tests.
-    needs: [lint-python]
     strategy:
       fail-fast: false
       max-parallel: 11
@@ -101,7 +99,7 @@ jobs:
           - os: macos-13
             python: "3.13"
             node: 23.x
-          - os: ubuntu-24.04-arm 
+          - os: ubuntu-24.04-arm
             python: "3.13"
             node: 23.x
           - os: windows-2025
