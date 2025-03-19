@@ -1,5 +1,18 @@
 # Changelog
 
+## [11.1.1](https://github.com/nodejs/node-gyp/compare/v11.1.0...v11.1.1) (2025-03-19)
+
+
+### Tests
+
+* fix wasm test on Windows ([#3145](https://github.com/nodejs/node-gyp/issues/3145)) ([ee1d6fd](https://github.com/nodejs/node-gyp/commit/ee1d6fd8d83c9dd3eae7df7ec533bb6b39e1a812))
+
+
+### Miscellaneous
+
+* switch to tinyglobby ([#3133](https://github.com/nodejs/node-gyp/issues/3133)) ([c3b3ab0](https://github.com/nodejs/node-gyp/commit/c3b3ab06ee0f092cd5c0646120d57e56d41b79fc))
+* update tinyglobby ([#3136](https://github.com/nodejs/node-gyp/issues/3136)) ([b21cf87](https://github.com/nodejs/node-gyp/commit/b21cf874f58883f3fd4dd07bec3b584fb07e831d))
+
 ## [11.1.0](https://github.com/nodejs/node-gyp/compare/v11.0.0...v11.1.0) (2025-02-10)
 
 
