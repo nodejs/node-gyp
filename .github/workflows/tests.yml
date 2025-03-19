@@ -88,8 +88,6 @@ jobs:
         npm test
 
   tests:
-    # lint-python takes ~5 seconds, so wait for it to pass before running the full matrix of tests.
-    needs: [lint-python]
     strategy:
       fail-fast: false
       max-parallel: 11
@@ -101,7 +99,7 @@ jobs:
           - os: macos-13
             python: "3.13"
             node: 23.x
-          - os: ubuntu-24.04-arm 
+          - os: ubuntu-24.04-arm
             python: "3.13"
             node: 23.x
           - os: windows-2025
@@ -109,6 +107,10 @@ jobs:
             node: 23.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
+    env:
+      WASI_VERSION: '25'
+      WASI_VERSION_FULL: '25.0'
+      WASI_SDK_PATH: 'wasi-sdk-25.0'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -123,6 +125,13 @@ jobs:
         env:
           PYTHON_VERSION: ${{ matrix.python }}  # Why do this?
       - uses: seanmiddleditch/gha-setup-ninja@v6
+      - name: Install wasi-sdk (Windows)
+        shell: pwsh
+        if: runner.os == 'Windows'
+        run: |
+          Start-BitsTransfer -Source https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${env:WASI_VERSION}/wasi-sdk-${env:WASI_VERSION_FULL}-x86_64-windows.tar.gz
+          New-Item -ItemType Directory -Path ${env:WASI_SDK_PATH}
+          tar -zxvf wasi-sdk-${env:WASI_VERSION_FULL}-x86_64-windows.tar.gz -C ${env:WASI_SDK_PATH} --strip 1
       - name: Install Dependencies
         run: |
           npm install

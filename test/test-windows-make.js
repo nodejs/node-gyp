@@ -46,10 +46,12 @@ function getEnv (target) {
     env.CC_target = 'emcc'
     env.CXX_target = 'em++'
   } else if (target === 'wasi') {
+    if (!process.env.WASI_SDK_PATH) return env
     env.AR_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('ar'))
     env.CC_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang'))
     env.CXX_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang++'))
   } else if (target === 'wasm') {
+    if (!process.env.WASI_SDK_PATH) return env
     env.AR_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('ar'))
     env.CC_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang'))
     env.CXX_target = path.resolve(__dirname, '..', process.env.WASI_SDK_PATH, 'bin', executable('clang++'))
@@ -72,16 +74,17 @@ function quote (path) {
   if (path.includes(' ')) {
     return `"${path}"`
   }
+  return path
 }
 
 describe('windows-cross-compile', function () {
   it('build simple node-api addon', async function () {
     if (process.platform !== 'win32') {
-      return this.skip('This test is only for windows')
+      return this.skip('This test is only for Windows')
     }
-    const env = getEnv('win-clang')
+    const env = getEnv('wasm')
     if (!gracefulFs.existsSync(env.CC_target)) {
-      return this.skip('Visual Studio Clang is not installed')
+      return this.skip('CC_target does not exist')
     }
 
     // handle bash whitespace
