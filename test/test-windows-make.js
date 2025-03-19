@@ -72,6 +72,7 @@ function quote (path) {
   if (path.includes(' ')) {
     return `"${path}"`
   }
+  return path
 }
 
 describe('windows-cross-compile', function () {
@@ -79,7 +80,7 @@ describe('windows-cross-compile', function () {
     if (process.platform !== 'win32') {
       return this.skip('This test is only for windows')
     }
-    const env = getEnv('win-clang')
+    const env = getEnv('wasm')
     if (!gracefulFs.existsSync(env.CC_target)) {
       return this.skip('Visual Studio Clang is not installed')
     }

@@ -109,6 +109,10 @@ jobs:
             node: 23.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
+    env:
+      WASI_VERSION: '25'
+      WASI_VERSION_FULL: '25.0'
+      WASI_SDK_PATH: 'wasi-sdk-25.0'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -123,6 +127,13 @@ jobs:
         env:
           PYTHON_VERSION: ${{ matrix.python }}  # Why do this?
       - uses: seanmiddleditch/gha-setup-ninja@v6
+      - name: Install wasi-sdk (Windows)
+        shell: pwsh
+        if: ${{ startsWith(matrix.os, 'windows') }}
+        run: |
+          Start-BitsTransfer -Source https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${env:WASI_VERSION}/wasi-sdk-${env:WASI_VERSION_FULL}-x86_64-windows.tar.gz
+          New-Item -ItemType Directory -Path ${env:WASI_SDK_PATH}
+          tar -zxvf wasi-sdk-${env:WASI_VERSION_FULL}-x86_64-windows.tar.gz -C ${env:WASI_SDK_PATH} --strip 1
       - name: Install Dependencies
         run: |
           npm install
