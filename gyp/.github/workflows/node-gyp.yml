@@ -10,8 +10,15 @@ jobs:
       fail-fast: false
       matrix:
         node-version: ["22"]
-        os: [macos-13, macos-14, ubuntu-latest, windows-latest]
-        python-version: ["3.8", "3.10", "3.12", "3.13"]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        python-version: ["3.9", "3.11", "3.13"]
+        include:
+          - node-version: "22"
+            os: macos-13
+            python-version: "3.13"
+          - node-version: "22"
+            os: windows-2025
+            python-version: "3.13"
     runs-on: ${{ matrix.os }}
     steps:
       - name: Clone gyp-next
@@ -33,7 +40,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           cd gyp-next
-          python -m pip install --upgrade pip setuptools
+          python -m pip install --upgrade pip
           pip install --editable .
           pip uninstall -y gyp-next
       - name: Install Node.js dependencies
@@ -47,7 +54,6 @@ jobs:
           cp -r gyp-next node-gyp/gyp
       - name: Run tests (macOS or Linux)
         if: runner.os != 'Windows'
-        shell: bash
         run: |
           cd node-gyp
           npm test --python="${pythonLocation}/python"
