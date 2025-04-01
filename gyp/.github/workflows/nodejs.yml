@@ -9,8 +9,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-13, macos-latest, ubuntu-latest, windows-latest]
-        python: ["3.8", "3.10", "3.12", "3.13"]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        python: ["3.9", "3.11", "3.13"]
+        include:
+          - os: macos-13
+            python-version: "3.13"
+          - os: windows-2025
+            python-version: "3.13"
 
     runs-on: ${{ matrix.os }}
     steps:
