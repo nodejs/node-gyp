@@ -163,7 +163,7 @@ describe('download', function () {
     this.timeout(platformTimeout(1, { win32: 5 }))
 
     const expectedDir = path.join(devDir, process.version.replace(/^v/, ''))
-    await fs.rm(expectedDir, { recursive: true, force: true })
+    await fs.rm(expectedDir, { recursive: true, force: true, maxRetries: 3 })
 
     const prog = gyp()
     prog.parseArgv([])
