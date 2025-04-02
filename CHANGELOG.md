@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.2.1](https://github.com/nodejs/node-gyp/compare/v11.2.0...v11.2.1) (2025-04-02)
+
+
+### Miscellaneous
+
+* retry wasi-sdk download in CI ([#3151](https://github.com/nodejs/node-gyp/issues/3151)) ([8f3cd8b](https://github.com/nodejs/node-gyp/commit/8f3cd8b3a157bccd8d7110e7d46a27c2926625cd))
+
 ## [11.2.0](https://github.com/nodejs/node-gyp/compare/v11.1.0...v11.2.0) (2025-04-01)
 
 
