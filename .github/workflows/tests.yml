@@ -129,7 +129,27 @@ jobs:
         shell: pwsh
         if: runner.os == 'Windows'
         run: |
-          Start-BitsTransfer -Source https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${env:WASI_VERSION}/wasi-sdk-${env:WASI_VERSION_FULL}-x86_64-windows.tar.gz
+          $MaxRetries = 3
+          $RetryDelay = 10
+          $Attempt = 0
+          while ($Attempt -lt $MaxRetries) {
+            try {
+              Start-BitsTransfer -Source https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${env:WASI_VERSION}/wasi-sdk-${env:WASI_VERSION_FULL}-x86_64-windows.tar.gz
+              break
+            }
+            catch {
+              Write-Host "Error: $($_.Exception.Message)"
+              $Attempt++
+              if ($Attempt -lt $MaxRetries) {
+                Write-Host "Retrying in $RetryDelay seconds"
+                Start-Sleep -Seconds $RetryDelay
+              }
+              else {
+                Write-Host "Max retries reached. Download failed."
+                exit 1
+              }
+            }
+          }
           New-Item -ItemType Directory -Path ${env:WASI_SDK_PATH}
           tar -zxvf wasi-sdk-${env:WASI_VERSION_FULL}-x86_64-windows.tar.gz -C ${env:WASI_SDK_PATH} --strip 1
       - name: Install Dependencies
