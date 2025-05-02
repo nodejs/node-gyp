@@ -1,6 +1,6 @@
 'use strict'
 
-const { describe, it } = require('mocha')
+const { describe, it } = require('node:test')
 const assert = require('assert')
 const path = require('path')
 const fs = require('graceful-fs')
@@ -42,9 +42,9 @@ function checkCharmapValid () {
 }
 
 describe('addon', function () {
-  it('build simple addon', async function () {
-    this.timeout(platformTimeout(1, { win32: 5 }))
+  const timeout = platformTimeout(1, { win32: 5 })
 
+  it('build simple addon', { timeout }, async function () {
     // Set the loglevel otherwise the output disappears when run via 'npm test'
     const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
     const [err, logLines] = await execFile(cmd)
@@ -54,9 +54,9 @@ describe('addon', function () {
     assert.strictEqual(runHello(), 'world')
   })
 
-  it('build simple addon in path with non-ascii characters', async function () {
+  it('build simple addon in path with non-ascii characters', { timeout }, async function (t) {
     if (!checkCharmapValid()) {
-      return this.skip('python console app can\'t encode non-ascii character.')
+      return t.skip('python console app can\'t encode non-ascii character.')
     }
 
     // Select non-ascii characters by current encoding
@@ -67,10 +67,8 @@ describe('addon', function () {
     }[getEncoding()]
     // If encoding is UTF-8 or other then no need to test
     if (!testDirName) {
-      return this.skip('no need to test')
+      return t.skip('no need to test')
     }
-
-    this.timeout(platformTimeout(1, { win32: 5 }))
 
     let data
     const configPath = path.join(addonPath, 'build', 'config.gypi')
@@ -115,9 +113,7 @@ describe('addon', function () {
     assert.strictEqual(runHello(), 'world')
   })
 
-  it('addon works with renamed host executable', async function () {
-    this.timeout(platformTimeout(1, { win32: 5 }))
-
+  it('addon works with renamed host executable', { timeout }, async function () {
     const notNodePath = path.join(os.tmpdir(), 'notnode' + path.extname(process.execPath))
     fs.copyFileSync(process.execPath, notNodePath)
 

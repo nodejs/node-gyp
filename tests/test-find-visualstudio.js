@@ -1,6 +1,6 @@
 'use strict'
 
-const { describe, it } = require('mocha')
+const { describe, it, before } = require('node:test')
 const assert = require('assert')
 const fs = require('fs')
 const path = require('path')
@@ -22,7 +22,7 @@ class TestVisualStudioFinder extends VisualStudioFinder {
 }
 
 describe('find-visualstudio', function () {
-  this.beforeAll(function () {
+  before(function () {
     // Condition to skip the test suite
     if (process.env.SystemRoot === undefined) {
       process.env.SystemRoot = '/'

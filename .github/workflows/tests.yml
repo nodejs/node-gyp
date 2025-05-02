@@ -77,7 +77,7 @@ jobs:
         mkdir -p $NODE_GYP_TEMP_DIR
         npm pack
         tar xzf *.tgz -C $NODE_GYP_TEMP_DIR --strip-components=1
-        cp -r test/ $NODE_GYP_TEMP_DIR/test/
+        cp -r tests/ $NODE_GYP_TEMP_DIR/test/
         echo "dir=$NODE_GYP_TEMP_DIR" >> "$GITHUB_OUTPUT"
     - name: Test
       working-directory: ${{ steps.pack.outputs.dir }}

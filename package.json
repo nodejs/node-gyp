@@ -40,13 +40,12 @@
     "bindings": "^1.5.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.16.0",
-    "mocha": "^11.0.1",
     "nan": "^2.14.2",
     "neostandard": "^0.11.9",
     "require-inject": "^1.4.4"
   },
   "scripts": {
-    "lint": "eslint \"*/*.js\" \"test/**/*.js\" \".github/**/*.js\"",
-    "test": "cross-env NODE_GYP_NULL_LOGGER=true mocha --timeout 15000 test/test-download.js test/test-*"
+    "lint": "eslint \"*/*.js\" \"tests/**/*.js\" \".github/**/*.js\"",
+    "test": "cross-env NODE_GYP_NULL_LOGGER=true node --test"
   }
 }

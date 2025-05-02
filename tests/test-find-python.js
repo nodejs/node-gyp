@@ -2,7 +2,7 @@
 
 delete process.env.PYTHON
 
-const { describe, it, after } = require('mocha')
+const { describe, it, after } = require('node:test')
 const assert = require('assert')
 const PythonFinder = require('../lib/find-python')
 const { execFile } = require('../lib/util')
