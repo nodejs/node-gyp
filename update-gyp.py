@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import tarfile
 import tempfile
+import time
 import urllib.request
 
 BASE_URL = "https://github.com/nodejs/gyp-next/archive/"
@@ -56,6 +57,7 @@ with tempfile.TemporaryDirectory() as tmp_dir:
                 tar.extractall(path, members, numeric_owner=numeric_owner)
 
             safe_extract(tar_ref, unzip_target)
+            time.sleep(1)
 
         print("Moving to current checkout (" + CHECKOUT_PATH + ")...")
         if os.path.exists(CHECKOUT_GYP_PATH):
@@ -63,6 +65,7 @@ with tempfile.TemporaryDirectory() as tmp_dir:
         shutil.move(
             os.path.join(unzip_target, os.listdir(unzip_target)[0]), CHECKOUT_GYP_PATH
         )
+        time.sleep(1)  # https://github.com/nodejs/node-gyp/issues/3165
 
 if not args.no_commit:
   subprocess.check_output(["git", "add", "gyp"], cwd=CHECKOUT_PATH)
