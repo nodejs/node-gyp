@@ -25,8 +25,7 @@ import tempfile
 
 def main(args):
     executor = MacTool()
-    exit_code = executor.Dispatch(args)
-    if exit_code is not None:
+    if (exit_code := executor.Dispatch(args)) is not None:
         sys.exit(exit_code)
 
 

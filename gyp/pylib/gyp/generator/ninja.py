@@ -263,8 +263,7 @@ class NinjaWriter:
         dir.
         """
 
-        PRODUCT_DIR = "$!PRODUCT_DIR"
-        if PRODUCT_DIR in path:
+        if (PRODUCT_DIR := "$!PRODUCT_DIR") in path:
             if product_dir:
                 path = path.replace(PRODUCT_DIR, product_dir)
             else:
@@ -272,8 +271,7 @@ class NinjaWriter:
                 path = path.replace(PRODUCT_DIR + "\\", "")
                 path = path.replace(PRODUCT_DIR, ".")
 
-        INTERMEDIATE_DIR = "$!INTERMEDIATE_DIR"
-        if INTERMEDIATE_DIR in path:
+        if (INTERMEDIATE_DIR := "$!INTERMEDIATE_DIR") in path:
             int_dir = self.GypPathToUniqueOutput("gen")
             # GypPathToUniqueOutput generates a path relative to the product dir,
             # so insert product_dir in front if it is provided.
@@ -2075,16 +2073,14 @@ def OpenOutput(path, mode="w"):
 
 
 def CommandWithWrapper(cmd, wrappers, prog):
-    wrapper = wrappers.get(cmd, "")
-    if wrapper:
+    if wrapper := wrappers.get(cmd, ""):
         return wrapper + " " + prog
     return prog
 
 
 def GetDefaultConcurrentLinks():
     """Returns a best-guess for a number of concurrent links."""
-    pool_size = int(os.environ.get("GYP_LINK_CONCURRENCY") or 0)
-    if pool_size:
+    if pool_size := int(os.environ.get("GYP_LINK_CONCURRENCY") or 0):
         return pool_size
 
     if sys.platform in ("win32", "cygwin"):
@@ -2305,8 +2301,7 @@ def GenerateOutputForConfig(target_list, target_dicts, data, params, config_name
             key_prefix = re.sub(r"\.HOST$", ".host", key_prefix)
             wrappers[key_prefix] = os.path.join(build_to_root, value)
 
-    mac_toolchain_dir = generator_flags.get("mac_toolchain_dir", None)
-    if mac_toolchain_dir:
+    if mac_toolchain_dir := generator_flags.get("mac_toolchain_dir", None):
         wrappers["LINK"] = "export DEVELOPER_DIR='%s' &&" % mac_toolchain_dir
 
     if flavor == "win":
