@@ -141,7 +141,7 @@ class MacTool:
         #     CFPropertyListCreateFromXMLData(): Old-style plist parser: missing
         #     semicolon in dictionary.
         # on invalid files. Do the same kind of validation.
-        import CoreFoundation
+        import CoreFoundation  # noqa: PLC0415
 
         with open(source, "rb") as in_file:
             s = in_file.read()

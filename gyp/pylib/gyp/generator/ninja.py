@@ -5,6 +5,7 @@
 
 import collections
 import copy
+import ctypes
 import hashlib
 import json
 import multiprocessing
@@ -1993,7 +1994,7 @@ def CalculateVariables(default_variables, params):
 
         # Copy additional generator configuration data from Xcode, which is shared
         # by the Mac Ninja generator.
-        import gyp.generator.xcode as xcode_generator
+        import gyp.generator.xcode as xcode_generator  # noqa: PLC0415
 
         generator_additional_non_configuration_keys = getattr(
             xcode_generator, "generator_additional_non_configuration_keys", []
@@ -2016,7 +2017,7 @@ def CalculateVariables(default_variables, params):
 
         # Copy additional generator configuration data from VS, which is shared
         # by the Windows Ninja generator.
-        import gyp.generator.msvs as msvs_generator
+        import gyp.generator.msvs as msvs_generator  # noqa: PLC0415
 
         generator_additional_non_configuration_keys = getattr(
             msvs_generator, "generator_additional_non_configuration_keys", []
@@ -2084,8 +2085,6 @@ def GetDefaultConcurrentLinks():
         return pool_size
 
     if sys.platform in ("win32", "cygwin"):
-        import ctypes
-
         class MEMORYSTATUSEX(ctypes.Structure):
             _fields_ = [
                 ("dwLength", ctypes.c_ulong),

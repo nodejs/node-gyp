@@ -583,7 +583,8 @@ def uniquer(seq, idfun=lambda x: x):
 
 
 # Based on http://code.activestate.com/recipes/576694/.
-class OrderedSet(MutableSet):
+class OrderedSet(MutableSet):  # noqa: PLW1641
+    # TODO (cclauss): Fix eq-without-hash ruff rule PLW1641
     def __init__(self, iterable=None):
         self.end = end = []
         end += [None, end, end]  # sentinel node for doubly linked list

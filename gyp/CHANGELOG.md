@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.2](https://github.com/nodejs/gyp-next/compare/v0.20.1...v0.20.2) (2025-06-22)
+
+
+### Bug Fixes
+
+* Python lint import-outside-top-level ruff rule PLC0415 ([#298](https://github.com/nodejs/gyp-next/issues/298)) ([34f4df6](https://github.com/nodejs/gyp-next/commit/34f4df614936ee6a056e47406ebbe7e3c1cb6540))
+
 ## [0.20.1](https://github.com/nodejs/gyp-next/compare/v0.20.0...v0.20.1) (2025-06-06)
 
 

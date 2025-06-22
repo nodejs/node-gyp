@@ -78,7 +78,7 @@ def CalculateVariables(default_variables, params):
 
         # Copy additional generator configuration data from Xcode, which is shared
         # by the Mac Make generator.
-        import gyp.generator.xcode as xcode_generator
+        import gyp.generator.xcode as xcode_generator  # noqa: PLC0415
 
         global generator_additional_non_configuration_keys
         generator_additional_non_configuration_keys = getattr(
