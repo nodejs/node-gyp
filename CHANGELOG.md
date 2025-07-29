@@ -1,5 +1,25 @@
 # Changelog
 
+## [11.3.0](https://github.com/nodejs/node-gyp/compare/v11.2.0...v11.3.0) (2025-07-29)
+
+
+### Features
+
+* update gyp-next to v0.20.2 ([#3169](https://github.com/nodejs/node-gyp/issues/3169)) ([0e65632](https://github.com/nodejs/node-gyp/commit/0e656322c1e94041331ab3b01bf66c2ef9bd6ead))
+
+
+### Bug Fixes
+
+* Correct Visual Studio 2019 test version ([#3153](https://github.com/nodejs/node-gyp/issues/3153)) ([7d883b5](https://github.com/nodejs/node-gyp/commit/7d883b5cf4c26e76065201f85b0be36d5ebdcc0e))
+* Normalize win32 library names ([#3189](https://github.com/nodejs/node-gyp/issues/3189)) ([b81a665](https://github.com/nodejs/node-gyp/commit/b81a665acfb9d88102e8044a8ec8ca74a3e9eccc))
+* use temp dir for tar extraction on all platforms ([#3170](https://github.com/nodejs/node-gyp/issues/3170)) ([b41864f](https://github.com/nodejs/node-gyp/commit/b41864f7c1c60e4a160c1b4dd91558dcaa3f74e4)), closes [#3165](https://github.com/nodejs/node-gyp/issues/3165)
+
+
+### Miscellaneous
+
+* retry wasi-sdk download in CI ([#3151](https://github.com/nodejs/node-gyp/issues/3151)) ([8f3cd8b](https://github.com/nodejs/node-gyp/commit/8f3cd8b3a157bccd8d7110e7d46a27c2926625cd))
+* Windows 2019 has been removed from GitHub Actions ([#3190](https://github.com/nodejs/node-gyp/issues/3190)) ([3df8789](https://github.com/nodejs/node-gyp/commit/3df8789a9aa73c60707eec8f02f4e926491d6102))
+
 ## [11.2.0](https://github.com/nodejs/node-gyp/compare/v11.1.0...v11.2.0) (2025-04-01)
 
 
