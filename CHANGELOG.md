@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.3.1](https://github.com/nodejs/node-gyp/compare/v11.3.0...v11.3.1) (2025-08-13)
+
+
+### Core
+
+* **deps:** bump actions/checkout from 4 to 5 ([#3193](https://github.com/nodejs/node-gyp/issues/3193)) ([27f5505](https://github.com/nodejs/node-gyp/commit/27f5505ec236551081366bf8a9c13ef5d8e468bf))
+
 ## [11.3.0](https://github.com/nodejs/node-gyp/compare/v11.2.0...v11.3.0) (2025-07-29)
 
 
