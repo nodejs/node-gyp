@@ -3,19 +3,19 @@
 const { describe, it } = require('mocha')
 const assert = require('assert')
 const gyp = require('../lib/node-gyp')
+const log = require('../lib/log')
 
 describe('options', function () {
   it('options in environment', () => {
     // `npm test` dumps a ton of npm_config_* variables in the environment.
     Object.keys(process.env)
-      .filter((key) => /^npm_config_/.test(key) || /^npm_package_config_node_gyp_/.test(key))
+      .filter((key) => /^npm_config_/i.test(key) || /^npm_package_config_node_gyp_/i.test(key))
       .forEach((key) => { delete process.env[key] })
 
     // in some platforms, certain keys are stubborn and cannot be removed
     const keys = Object.keys(process.env)
-      .filter((key) => /^npm_config_/.test(key) || /^npm_package_config_node_gyp_/.test(key))
+      .filter((key) => /^npm_config_/i.test(key) || /^npm_package_config_node_gyp_/i.test(key))
       .map((key) => key.substring('npm_config_'.length))
-      .concat('argv', 'x', 'y', 'foo')
 
     // Environment variables with the following prefixes should be added to opts.
     // - `npm_config_` for npm versions before v11.
@@ -25,18 +25,23 @@ describe('options', function () {
     process.env.npm_config_ = '42'
     process.env.npm_package_config_node_gyp_ = '42'
     // Other keys should get added.
+    process.env.npm_package_config_node_gyp_foo = '42'
     process.env.npm_config_x = '42'
     process.env.npm_config_y = '41'
-    process.env.npm_package_config_node_gyp_foo = '42'
     // Package config should take precedence over npm_config_ keys.
     process.env.npm_package_config_node_gyp_y = '42'
-    // Except loglevel.
-    process.env.npm_config_loglevel = 'debug'
+    // loglevel does not get added to opts but will change the logger's level.
+    process.env.npm_config_loglevel = 'silly'
 
     const g = gyp()
+
+    assert.strictEqual(log.logger.level.id, 'info')
+
     g.parseArgv(['rebuild']) // Also sets opts.argv.
 
-    assert.deepStrictEqual(Object.keys(g.opts).sort(), keys.sort())
+    assert.strictEqual(log.logger.level.id, 'silly')
+
+    assert.deepStrictEqual(Object.keys(g.opts).sort(), [...keys, 'argv', 'x', 'y', 'foo'].sort())
     assert.strictEqual(g.opts['x'], '42')
     assert.strictEqual(g.opts['y'], '42')
     assert.strictEqual(g.opts['foo'], '42')
