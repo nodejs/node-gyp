@@ -1,6 +1,6 @@
 'use strict'
 
-const { describe, it } = require('mocha')
+const { describe, it } = require('node:test')
 const assert = require('assert')
 const path = require('path')
 const gracefulFs = require('graceful-fs')
@@ -78,20 +78,19 @@ function quote (path) {
 }
 
 describe('windows-cross-compile', function () {
-  it('build simple node-api addon', async function () {
+  it('build simple node-api addon', { timeout: platformTimeout(1, { win32: 5 }) }, async function (t) {
     if (process.platform !== 'win32') {
-      return this.skip('This test is only for Windows')
+      return t.skip('This test is only for Windows')
     }
     const env = getEnv('wasm')
     if (!gracefulFs.existsSync(env.CC_target)) {
-      return this.skip('CC_target does not exist')
+      return t.skip('CC_target does not exist')
     }
 
     // handle bash whitespace
     env.AR_target = quote(env.AR_target)
     env.CC_target = quote(env.CC_target)
     env.CXX_target = quote(env.CXX_target)
-    this.timeout(platformTimeout(1, { win32: 5 }))
 
     const cmd = [
       nodeGyp,

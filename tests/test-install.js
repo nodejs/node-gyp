@@ -1,6 +1,6 @@
 'use strict'
 
-const { describe, it, afterEach, beforeEach } = require('mocha')
+const { describe, it, afterEach, beforeEach } = require('node:test')
 const { rm, mkdtemp } = require('fs/promises')
 const { createWriteStream } = require('fs')
 const assert = require('assert')
@@ -73,9 +73,8 @@ describe('install', function () {
         return it.skip('Skipping parallel installs test due to test environment configuration')
       }
 
-      return it(name, async function () {
-        this.timeout(platformTimeout(2, { win32: 20 }))
-        await fn.call(this)
+      return it(name, { timeout: platformTimeout(2, { win32: 20 }) }, async function () {
+        await fn()
         const expectedDir = path.join(prog.devDir, process.version.replace(/^v/, ''))
         await rm(expectedDir, { recursive: true, force: true, maxRetries: 3 })
         await Promise.all(new Array(10).fill(0).map(async (_, i) => {

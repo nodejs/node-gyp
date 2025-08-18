@@ -9,7 +9,7 @@
 /gyp/test
 /gyp/tools/
 /node-gyp-*.tgz
-/test/
-/test/.node-gyp
+/tests/
+/tests/.node-gyp
 /update-gyp.py
 node-gyp-*.tgz

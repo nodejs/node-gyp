@@ -1,7 +1,6 @@
 'use strict'
 
-const { describe, it } = require('mocha')
-const assert = require('assert')
+const { describe, it } = require('node:test')
 const path = require('path')
 const os = require('os')
 const gyp = require('../lib/node-gyp')
@@ -46,8 +45,7 @@ const SPAWN_RESULT = cb => ({ on: function () { cb() } })
 
 const driveLetter = os.platform() === 'win32' ? `${process.cwd().split(path.sep)[0]}` : ''
 function checkTargetPath (target, value) {
-  let targetPath = path.join(path.sep, target, 'include',
-    'node', 'common.gypi')
+  let targetPath = path.join(path.sep, target, 'include', 'node', 'common.gypi')
   if (process.platform === 'win32') {
     targetPath = driveLetter + targetPath
   }
@@ -56,68 +54,76 @@ function checkTargetPath (target, value) {
 }
 
 describe('configure-nodedir', function () {
-  it('configure nodedir with node-gyp command line', function (done) {
+  it('configure nodedir with node-gyp command line', async function () {
     const prog = gyp()
     prog.parseArgv(['dummy_prog', 'dummy_script', '--nodedir=' + path.sep + 'usr'])
 
-    prog.spawn = function (program, args) {
-      for (let i = 0; i < args.length; i++) {
-        if (checkTargetPath('usr', args[i])) {
-          return SPAWN_RESULT(done)
+    await new Promise((resolve, reject) => {
+      prog.spawn = function (program, args) {
+        for (let i = 0; i < args.length; i++) {
+          if (checkTargetPath('usr', args[i])) {
+            return SPAWN_RESULT(resolve)
+          }
         }
-      };
-      assert.fail()
-    }
-    configure(prog, [], assert.fail)
+        reject(new Error('Expected nodedir path not found'))
+      }
+      configure(prog, [], reject)
+    })
   })
 
   if (process.config.variables.use_prefix_to_find_headers) {
-    it('use-prefix-to-find-headers build time option - match', function (done) {
+    it('use-prefix-to-find-headers build time option - match', async function () {
       const prog = gyp()
       prog.parseArgv(['dummy_prog', 'dummy_script'])
 
-      prog.spawn = function (program, args) {
-        for (let i = 0; i < args.length; i++) {
+      await new Promise((resolve, reject) => {
+        prog.spawn = function (program, args) {
           const nodedir = process.config.variables.node_prefix
-          if (checkTargetPath(nodedir, args[i])) {
-            return SPAWN_RESULT(done)
+          for (let i = 0; i < args.length; i++) {
+            if (checkTargetPath(nodedir, args[i])) {
+              return SPAWN_RESULT(resolve)
+            }
           }
-        };
-        assert.fail()
-      }
-      configure(prog, [], assert.fail)
+          reject(new Error('Expected nodedir path not found'))
+        }
+        configure(prog, [], reject)
+      })
     })
 
-    it('use-prefix-to-find-headers build time option - no match', function (done) {
+    it('use-prefix-to-find-headers build time option - no match', async function () {
       const prog = gyp()
       prog.parseArgv(['dummy_prog', 'dummy_script'])
 
-      prog.spawn = function (program, args) {
-        for (let i = 0; i < args.length; i++) {
+      await new Promise((resolve, reject) => {
+        prog.spawn = function (program, args) {
           const nodedir = process.config.variables.node_prefix
-          if (checkTargetPath(nodedir, args[i])) {
-            assert.fail()
+          for (let i = 0; i < args.length; i++) {
+            if (checkTargetPath(nodedir, args[i])) {
+              return reject(new Error('Unexpected match found'))
+            }
           }
-        };
-        return SPAWN_RESULT(done)
-      }
-      configure2(prog, [], assert.fail)
+          return SPAWN_RESULT(resolve)
+        }
+        configure2(prog, [], reject)
+      })
     })
 
-    it('use-prefix-to-find-headers build time option, target specified', function (done) {
+    it('use-prefix-to-find-headers build time option, target specified', async function () {
       const prog = gyp()
       prog.parseArgv(['dummy_prog', 'dummy_script', '--target=8.0.0'])
 
-      prog.spawn = function (program, args) {
-        for (let i = 0; i < args.length; i++) {
+      await new Promise((resolve, reject) => {
+        prog.spawn = function (program, args) {
           const nodedir = process.config.variables.node_prefix
-          if (checkTargetPath(nodedir, args[i])) {
-            assert.fail()
+          for (let i = 0; i < args.length; i++) {
+            if (checkTargetPath(nodedir, args[i])) {
+              return reject(new Error('Unexpected match found for target'))
+            }
           }
-        };
-        return SPAWN_RESULT(done)
-      }
-      configure(prog, [], assert.fail)
+          return SPAWN_RESULT(resolve)
+        }
+        configure(prog, [], reject)
+      })
     })
   }
 })

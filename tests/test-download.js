@@ -1,6 +1,6 @@
 'use strict'
 
-const { describe, it, after } = require('mocha')
+const { describe, it, after } = require('node:test')
 const assert = require('assert')
 const fs = require('fs/promises')
 const path = require('path')
@@ -155,12 +155,10 @@ describe('download', function () {
 
   // only run this test if we are running a version of Node with predictable version path behavior
 
-  it('download headers (actual)', async function () {
+  it('download headers (actual)', { timeout: platformTimeout(1, { win32: 5 }) }, async function (t) {
     if (!FULL_TEST) {
-      return this.skip('Skipping actual download of headers due to test environment configuration')
+      return t.skip('Skipping actual download of headers due to test environment configuration')
     }
-
-    this.timeout(platformTimeout(1, { win32: 5 }))
 
     const expectedDir = path.join(devDir, process.version.replace(/^v/, ''))
     await fs.rm(expectedDir, { recursive: true, force: true, maxRetries: 3 })
