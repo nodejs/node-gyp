@@ -1,5 +1,23 @@
 # Changelog
 
+## [11.4.0](https://github.com/nodejs/node-gyp/compare/v11.3.0...v11.4.0) (2025-08-19)
+
+
+### Features
+
+* read from config case-insensitively ([#3198](https://github.com/nodejs/node-gyp/issues/3198)) ([5538e6c](https://github.com/nodejs/node-gyp/commit/5538e6c5d78dffd41e2a588adfa7ea9022150b9d))
+* support reading config from package.json ([#3196](https://github.com/nodejs/node-gyp/issues/3196)) ([1822dff](https://github.com/nodejs/node-gyp/commit/1822dff4f616a30ac3ca72e5946d81389cb8557e)), closes [#3156](https://github.com/nodejs/node-gyp/issues/3156)
+
+
+### Core
+
+* **deps:** bump actions/checkout from 4 to 5 ([#3193](https://github.com/nodejs/node-gyp/issues/3193)) ([27f5505](https://github.com/nodejs/node-gyp/commit/27f5505ec236551081366bf8a9c13ef5d8e468bf))
+
+
+### Miscellaneous
+
+* use npm oicd connection for publishing ([#3197](https://github.com/nodejs/node-gyp/issues/3197)) ([0773615](https://github.com/nodejs/node-gyp/commit/077361502933fcb994ca365c3c07c03177503df2))
+
 ## [11.3.0](https://github.com/nodejs/node-gyp/compare/v11.2.0...v11.3.0) (2025-07-29)
 
 
