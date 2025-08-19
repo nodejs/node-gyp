@@ -34,7 +34,7 @@
     "which": "^5.0.0"
   },
   "engines": {
-    "node": "^18.17.0 || >=20.5.0"
+    "node": "^20.17.0 || >=22.9.0"
   },
   "devDependencies": {
     "bindings": "^1.5.0",
