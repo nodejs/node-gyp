@@ -25,7 +25,7 @@
     "env-paths": "^2.2.0",
     "exponential-backoff": "^3.1.1",
     "graceful-fs": "^4.2.6",
-    "make-fetch-happen": "^14.0.3",
+    "make-fetch-happen": "^15.0.0",
     "nopt": "^8.0.0",
     "proc-log": "^5.0.0",
     "semver": "^7.3.5",
