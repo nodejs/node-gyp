@@ -30,6 +30,9 @@ describe('options', function () {
     process.env.npm_config_y = '41'
     // Package config should take precedence over npm_config_ keys.
     process.env.npm_package_config_node_gyp_y = '42'
+    // All configs should be case-insensitive.
+    process.env.NPM_PACKAGE_CONFIG_NODE_GYP_XX = 'value'
+    process.env.NPM_CONFIG_YY = 'value'
     // loglevel does not get added to opts but will change the logger's level.
     process.env.npm_config_loglevel = 'silly'
 
@@ -41,10 +44,12 @@ describe('options', function () {
 
     assert.strictEqual(log.logger.level.id, 'silly')
 
-    assert.deepStrictEqual(Object.keys(g.opts).sort(), [...keys, 'argv', 'x', 'y', 'foo'].sort())
+    assert.deepStrictEqual(Object.keys(g.opts).sort(), [...keys, 'argv', 'x', 'y', 'foo', 'xx', 'yy'].sort())
     assert.strictEqual(g.opts['x'], '42')
     assert.strictEqual(g.opts['y'], '42')
     assert.strictEqual(g.opts['foo'], '42')
+    assert.strictEqual(g.opts['xx'], 'value')
+    assert.strictEqual(g.opts['yy'], 'value')
   })
 
   it('options with spaces in environment', () => {
