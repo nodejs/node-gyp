@@ -21,6 +21,7 @@ jobs:
     - uses: astral-sh/ruff-action@v3
       with:
         args: "check --select=E,F,PLC,PLE,UP,W,YTT --ignore=E721,PLC0206,PLC0415,PLC1901,S101,UP031 --target-version=py39"
+    - run: ruff format --check --diff
 
   lint-js:
     name: Lint JS
