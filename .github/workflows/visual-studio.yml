@@ -17,8 +17,6 @@ jobs:
       max-parallel: 8
       matrix:
         include:
-          - os: windows-2019
-            msvs-version: 2019
           - os: windows-2022
             msvs-version: 2022
           - os: windows-2025
@@ -26,11 +24,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Use Python 3.12
+        uses: actions/checkout@v5
+      - name: Use Python 3
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.x"
       - name: Install Dependencies
         run: npm install
       - name: Run Node tests

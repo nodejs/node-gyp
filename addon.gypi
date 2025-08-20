@@ -199,7 +199,7 @@
               '-loleaut32.lib',
               '-luuid.lib',
               '-lodbc32.lib',
-              '-lDelayImp.lib',
+              '-ldelayimp.lib',
               '-l"<(node_lib_file)"'
             ],
           }]

@@ -17,17 +17,17 @@ jobs:
     name: Lint Python
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: astral-sh/ruff-action@v3
       with:
-        args: "check --select=E,F,PLC,PLE,UP,W,YTT --ignore=E721,PLC0206,PLC1901,S101,UP031 --target-version=py39"
+        args: "check --select=E,F,PLC,PLE,UP,W,YTT --ignore=E721,PLC0206,PLC0415,PLC1901,S101,UP031 --target-version=py39"
 
   lint-js:
     name: Lint JS
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Use Node.js 22.x
       uses: actions/setup-node@v4
       with:
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Use Node.js 22.x
       uses: actions/setup-node@v4
       with:
@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Use Node.js 22.x
       uses: actions/setup-node@v4
       with:
@@ -113,7 +113,7 @@ jobs:
       WASI_SDK_PATH: 'wasi-sdk-25.0'
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v4
         with:
