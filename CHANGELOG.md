@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.4.1](https://github.com/nodejs/node-gyp/compare/v11.4.0...v11.4.1) (2025-08-20)
+
+
+### Miscellaneous
+
+* **release:** use npm@11 for OIDC publishing ([#3202](https://github.com/nodejs/node-gyp/issues/3202)) ([6b9638a](https://github.com/nodejs/node-gyp/commit/6b9638a0f80352e5bf7c1702e6ef622a6474d44a)), closes [#3201](https://github.com/nodejs/node-gyp/issues/3201)
+
 ## [11.4.0](https://github.com/nodejs/node-gyp/compare/v11.3.0...v11.4.0) (2025-08-19)
 
 
