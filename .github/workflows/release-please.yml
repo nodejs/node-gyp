@@ -41,4 +41,5 @@ jobs:
         with:
           node-version: lts/*
           registry-url: 'https://registry.npmjs.org'
+      - run: npm install npm@11 -g # Use npm@11 to publish with OIDC
       - run: npm publish --provenance --access public
