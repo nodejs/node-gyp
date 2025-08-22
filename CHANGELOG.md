@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.5.0](https://github.com/nodejs/node-gyp/compare/v11.4.1...v11.5.0) (2025-08-22)
+
+
+### Features
+
+* update gyp-next to v0.20.3 ([#3205](https://github.com/nodejs/node-gyp/issues/3205)) ([b0ee8a0](https://github.com/nodejs/node-gyp/commit/b0ee8a04ec2a32282cb9259f142ca622e67a3d36))
+
 ## [11.4.1](https://github.com/nodejs/node-gyp/compare/v11.4.0...v11.4.1) (2025-08-20)
 
 
