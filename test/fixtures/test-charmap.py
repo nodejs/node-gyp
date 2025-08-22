@@ -19,7 +19,7 @@ def main():
 
     textmap = {
         "cp936": "\u4e2d\u6587",
-        "cp1252": "Lat\u012Bna",
+        "cp1252": "Lat\u012bna",
         "cp932": "\u306b\u307b\u3093\u3054",
     }
     if encoding in textmap:
