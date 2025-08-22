@@ -429,7 +429,7 @@ class XCObject:
             hash.update(data)
 
         if seed_hash is None:
-            seed_hash = hashlib.sha1()
+            seed_hash = hashlib.sha256()
 
         hash = seed_hash.copy()
 
@@ -452,8 +452,8 @@ class XCObject:
                 child.ComputeIDs(recursive, overwrite, child_hash)
 
         if overwrite or self.id is None:
-            # Xcode IDs are only 96 bits (24 hex characters), but a SHA-1 digest is
-            # is 160 bits.  Instead of throwing out 64 bits of the digest, xor them
+            # Xcode IDs are only 96 bits (24 hex characters), but a SHA-256 digest is
+            # is 256 bits.  Instead of throwing out bits of the digest, xor them
             # into the portion that gets used.
             assert hash.digest_size % 4 == 0
             digest_int_count = hash.digest_size // 4
