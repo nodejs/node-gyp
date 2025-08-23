@@ -3,6 +3,7 @@
     'node_engine_include_dir%': 'deps/v8/include',
     'node_host_binary%': 'node',
     'node_with_ltcg%': 'true',
+    'os_type%': '<!(node -p "require(\'os\').type()")',
   },
   'target_defaults': {
     'type': 'loadable_module',
@@ -165,22 +166,43 @@
                 ]
               }
             }
+          }],
+          # Detect MSYS2/MinGW vs MSVC based on os.type()
+          [ 'os_type.startswith("MINGW")', {
+            # MSYS2/MinGW/GCC libraries
+            'libraries': [
+              '-lkernel32',
+              '-luser32',
+              '-lgdi32',
+              '-lwinspool',
+              '-lcomdlg32',
+              '-ladvapi32',
+              '-lshell32',
+              '-lole32',
+              '-loleaut32',
+              '-luuid',
+              '-lodbc32',
+              '-lDelayImp',
+              '-lnode',
+            ],
+          }, {
+            # MSVC libraries (Windows_NT)
+            'libraries': [
+              '-lkernel32.lib',
+              '-luser32.lib',
+              '-lgdi32.lib',
+              '-lwinspool.lib',
+              '-lcomdlg32.lib',
+              '-ladvapi32.lib',
+              '-lshell32.lib',
+              '-lole32.lib',
+              '-loleaut32.lib',
+              '-luuid.lib',
+              '-lodbc32.lib',
+              '-ldelayimp.lib',
+              '-l"<(node_lib_file)"'
+            ],
           }]
-        ],
-        'libraries': [
-          '-lkernel32.lib',
-          '-luser32.lib',
-          '-lgdi32.lib',
-          '-lwinspool.lib',
-          '-lcomdlg32.lib',
-          '-ladvapi32.lib',
-          '-lshell32.lib',
-          '-lole32.lib',
-          '-loleaut32.lib',
-          '-luuid.lib',
-          '-lodbc32.lib',
-          '-ldelayimp.lib',
-          '-l"<(node_lib_file)"'
         ],
         'msvs_disabled_warnings': [
           # warning C4251: 'node::ObjectWrap::handle_' : class 'v8::Persistent<T>'

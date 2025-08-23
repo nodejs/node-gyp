@@ -440,27 +440,36 @@ DEPFLAGS = %(makedep_args)s -MF $(depfile).raw
 # Doesn't work with spaces, but that's fine: .d files have spaces in
 # their names replaced with other characters."""
     r"""
-define fixup_dep
-# The depfile may not exist if the input file didn't have any #includes.
-touch $(depfile).raw
+define fixup_dep \
+# The depfile may not exist if the input file didn't have any #includes. \
+touch $(depfile).raw \
 # Fixup path as in (1).""" +
-    (r"""
+    (r""" \
 sed -e "s|^$(notdir $@)|$@|" -re 's/\\\\([^$$])/\/\1/g' $(depfile).raw >> $(depfile)"""
-    if sys.platform == 'win32' else r"""
+    if sys.platform == 'win32' else r""" \
 sed -e "s|^$(notdir $@)|$@|" $(depfile).raw >> $(depfile)""") +
-    r"""
-# Add extra rules as in (2).
-# We remove slashes and replace spaces with new lines;
-# remove blank lines;
-# delete the first line and append a colon to the remaining lines.""" +
-    ("""
-sed -e 's/\\\\\\\\$$//' -e 's/\\\\\\\\/\\//g' -e 'y| |\\n|' $(depfile).raw |\\"""
-    if sys.platform == 'win32' else """
-sed -e 's|\\\\||' -e 'y| |\\n|' $(depfile).raw |\\""") +
-    r"""
-  grep -v '^$$'                             |\
-  sed -e 1d -e 's|$$|:|'                     \
-    >> $(depfile)
+    r""" \
+# Add extra rules as in (2). \
+# Goal: create dummy rules for each dependency listed after the first line's colon. \
+# 1. Join continued lines into one long line ending with the list of dependencies. \
+# 2. Normalize path separators (Windows \ -> /). \
+# 3. Extract dependencies (everything after the first colon). \
+# 4. Replace spaces between dependencies with newlines. \
+# 5. Filter out empty lines. \
+# 6. Append a colon to each dependency line. \
+# NOTE: Using awk might be more robust but introduces another dependency. \
+# Sticking with sed. \
+# Process the raw file to get the list of dependencies, one per line, ending with ':' \
+# Step 1 & 2: Join lines and normalize slashes \
+sed -e ':a; /\\$$/N; s/\\\n//; ta' -e 's/\\/\//g' $(depfile).raw |\
+# Step 3 & 4: Extract deps after colon, split by space, print one per line \
+sed -n -e 's/^[^:]*: *//p' |\
+  tr -s ' ' '\n' |\
+# Step 5: Filter empty lines (e.g., from multiple spaces) \
+      grep -v '^\s*$$' |\
+# Step 6: Add the trailing colon for the dummy rule \
+  sed -e 's/$$/:/' \
+  >> $(depfile) \
 rm $(depfile).raw
 endef
 """
@@ -856,6 +865,49 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
             self.xcode_settings = gyp.xcode_emulation.XcodeSettings(spec)
         else:
             self.xcode_settings = None
+
+        self.abs_node_gyp_dir = None # Initialize
+
+        # Attempt 1: Get from spec variables
+        variables = spec.get('variables', {})
+        node_gyp_dir_from_vars = variables.get('node_gyp_dir')
+        if node_gyp_dir_from_vars:
+            try:
+                # os.path.abspath should hopefully normalize MSYS paths like /home/...
+                # to the E:/... format if run under MSYS Python.
+                normalized_path = os.path.abspath(node_gyp_dir_from_vars)
+                # Ensure it ends with a separator for clean startswith comparison later
+                if not normalized_path.endswith(os.path.sep):
+                    normalized_path += os.path.sep
+                self.abs_node_gyp_dir = normalized_path
+            except Exception as e:
+                print(
+                    f"DEBUG [make.py Write]: Failed to normalize path from "
+                    f"spec variables '{node_gyp_dir_from_vars}': {e}",
+                    file=sys.stderr
+                )
+
+        # Attempt 2: Fallback using __file__ if not found or normalization failed
+        if not self.abs_node_gyp_dir:
+             try:
+                 # __file__ gives path to make.py. Go up 5 levels.
+                 script_path = os.path.abspath(__file__)
+                 calculated_dir = os.path.dirname(
+                     os.path.dirname(
+                         os.path.dirname(
+                             os.path.dirname(
+                                 os.path.dirname(script_path)
+                             )
+                         )
+                     )
+                 )
+                 # Ensure it ends with a separator
+                 if not calculated_dir.endswith(os.path.sep):
+                     calculated_dir += os.path.sep
+                 self.abs_node_gyp_dir = calculated_dir
+             except Exception:
+                 self.abs_node_gyp_dir = None # Ensure it's None if fallback fails
+
 
         deps, link_deps = self.ComputeDeps(spec)
 
@@ -1394,7 +1446,6 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
         part_of_all: flag indicating this target is part of 'all'
         """
 
-        # Write configuration-specific variables for CFLAGS, etc.
         for configname in sorted(configs.keys()):
             config = configs[configname]
             self.WriteList(
@@ -1403,7 +1454,6 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
                 prefix="-D",
                 quoter=EscapeCppDefine,
             )
-
             if self.flavor == "mac":
                 cflags = self.xcode_settings.GetCflags(
                     configname, arch=config.get("xcode_configuration_platform")
@@ -1433,67 +1483,99 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
                 includes = [Sourceify(self.Absolutify(i)) for i in includes]
             self.WriteList(includes, "INCS_%s" % configname, prefix="-I")
 
-        compilable = list(filter(Compilable, sources))
-        objs = [self.Objectify(self.Absolutify(Target(c))) for c in compilable]
-        self.WriteList(objs, "OBJS")
 
-        for obj in objs:
-            assert " " not in obj, "Spaces in object filenames not supported (%s)" % obj
-        self.WriteLn(
-            "# Add to the list of files we specially track dependencies for."
-        )
-        self.WriteLn("all_deps += $(OBJS)")
+        compilable = list(filter(Compilable, sources))
+        objs = [] # Store final object paths (quoted)
+        obj_map_unquoted_to_quoted = {} # Map unquoted paths used by PCH to quoted ones
+        generated_explicit_rule_for = set() # Track sources handled explicitly
+
+
+        for source_path in compilable:
+
+            input_to_objectify = self.Absolutify(Target(source_path))
+
+            obj_path_unquoted = self.Objectify(input_to_objectify)
+
+            quoted_obj_path = QuoteSpaces(obj_path_unquoted)
+
+            objs.append(quoted_obj_path)
+            # Store mapping for PCH
+            obj_map_unquoted_to_quoted[obj_path_unquoted] = quoted_obj_path
+
+            is_abs_source = os.path.isabs(source_path)
+            if is_abs_source:
+                dependency_source_path = QuoteSpaces(replace_sep(source_path))
+                source_ext = os.path.splitext(source_path)[1]
+                compile_cmd = COMPILABLE_EXTENSIONS.get(source_ext)
+                if compile_cmd:
+                   self.WriteLn(
+                       f"{quoted_obj_path}: {dependency_source_path} FORCE_DO_CMD"
+                   )
+                   self.WriteLn(f"\t@$(call do_cmd,{compile_cmd},1)")
+                   self.WriteLn()
+                   generated_explicit_rule_for.add(source_path)
+
+
+
+        self.WriteList(objs, "OBJS") # Write the list of quoted object paths
+        obj_list_str = ' '.join(objs)
+
+        self.WriteLn("# Add to the list of files we specially track dependencies for.")
+        if obj_list_str:
+            self.WriteLn(f"all_deps += {obj_list_str}")
         self.WriteLn()
 
-        # Make sure our dependencies are built first.
-        if deps:
-            self.WriteMakeRule(
-                ["$(OBJS)"],
-                deps,
-                comment="Make sure our dependencies are built before any of us.",
-                order_only=True,
-            )
+        # Dependencies on other targets/actions
+        if obj_list_str:
+            if deps:
+                quoted_deps = [QuoteSpaces(dep) for dep in deps]
+                self.WriteMakeRule(
+                    [obj_list_str],
+                    quoted_deps,
+                    comment="Make sure our dependencies are built before any of us.",
+                    order_only=True
+                )
+            if extra_outputs:
+                 self.WriteMakeRule(
+                     [obj_list_str],
+                     extra_outputs,
+                     comment="Make sure our actions/rules run before any of us.",
+                     order_only=True
+                 )
 
-        # Make sure the actions and rules run first.
-        # If they generate any extra headers etc., the per-.o file dep tracking
-        # will catch the proper rebuilds, so order only is still ok here.
-        if extra_outputs:
-            self.WriteMakeRule(
-                ["$(OBJS)"],
-                extra_outputs,
-                comment="Make sure our actions/rules run before any of us.",
-                order_only=True,
-            )
+        # PCH Dependencies
+        # Pass unquoted keys
+        pchdeps = precompiled_header.GetObjDependencies(
+            compilable, list(obj_map_unquoted_to_quoted.keys())
+        )
+        if pchdeps:
 
-        if pchdeps := precompiled_header.GetObjDependencies(compilable, objs):
             self.WriteLn("# Dependencies from obj files to their precompiled headers")
-            for source, obj, gch in pchdeps:
-                self.WriteLn(f"{obj}: {gch}")
+            for source, obj_unquoted, gch in pchdeps:
+                # Use map to find quoted path
+                matching_quoted_obj = obj_map_unquoted_to_quoted.get(obj_unquoted)
+                if matching_quoted_obj:
+                    self.WriteLn(f"{matching_quoted_obj}: {QuoteSpaces(gch)}")
             self.WriteLn("# End precompiled header dependencies")
 
-        if objs:
-            extra_link_deps.append("$(OBJS)")
-            self.WriteLn(
-                """\
-# CFLAGS et al overrides must be target-local.
-# See "Target-specific Variable Values" in the GNU Make manual."""
+        # Apply Build Flags
+        if obj_list_str:
+            self.WriteLn("# CFLAGS et al overrides must be target-local.")
+            self.WriteLn(f"{obj_list_str}: TOOLSET := $(TOOLSET)")
+            c_flags = (
+                f"$(DEFS_$(BUILDTYPE)) $(INCS_$(BUILDTYPE)) "
+                f"{precompiled_header.GetInclude('c')} "
+                f"$(CFLAGS_$(BUILDTYPE)) $(CFLAGS_C_$(BUILDTYPE))"
             )
-            self.WriteLn("$(OBJS): TOOLSET := $(TOOLSET)")
-            self.WriteLn(
-                "$(OBJS): GYP_CFLAGS := "
-                "$(DEFS_$(BUILDTYPE)) "
-                "$(INCS_$(BUILDTYPE)) "
-                "%s " % precompiled_header.GetInclude("c") + "$(CFLAGS_$(BUILDTYPE)) "
-                "$(CFLAGS_C_$(BUILDTYPE))"
+            self.WriteLn(f"{obj_list_str}: GYP_CFLAGS := {c_flags}")
+
+            cxx_flags = (
+                f"$(DEFS_$(BUILDTYPE)) $(INCS_$(BUILDTYPE)) "
+                f"{precompiled_header.GetInclude('cc')} "
+                f"$(CFLAGS_$(BUILDTYPE)) $(CFLAGS_CC_$(BUILDTYPE))"
             )
-            self.WriteLn(
-                "$(OBJS): GYP_CXXFLAGS := "
-                "$(DEFS_$(BUILDTYPE)) "
-                "$(INCS_$(BUILDTYPE)) "
-                "%s " % precompiled_header.GetInclude("cc") + "$(CFLAGS_$(BUILDTYPE)) "
-                "$(CFLAGS_CC_$(BUILDTYPE))"
-            )
-            if self.flavor == "mac":
+            self.WriteLn(f"{obj_list_str}: GYP_CXXFLAGS := {cxx_flags}")
+            if self.flavor == "mac": # Add Mac flags if needed
                 self.WriteLn(
                     "$(OBJS): GYP_OBJCFLAGS := "
                     "$(DEFS_$(BUILDTYPE)) "
@@ -1515,9 +1597,35 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
 
         self.WritePchTargets(precompiled_header.GetPchBuildCommands())
 
-        # If there are any object files in our input file list, link them into our
-        # output.
-        extra_link_deps += [source for source in sources if Linkable(source)]
+        # Add objects to link dependencies
+        if objs:
+            extra_link_deps.extend(objs)
+        linkable_input_sources = [QuoteSpaces(s) for s in sources if Linkable(s)]
+        if linkable_input_sources:
+            extra_link_deps.extend(linkable_input_sources)
+
+        # Suffix Rules for sources NOT handled explicitly
+        sources_needing_suffix_rules = [
+            s for s in sources
+            if Compilable(s) and s not in generated_explicit_rule_for
+        ]
+        if sources_needing_suffix_rules:
+             self.WriteLn("# Suffix rules, putting all outputs into $(obj).")
+             extensions = sorted(
+                 {os.path.splitext(s)[1] for s in sources_needing_suffix_rules},
+                 key=str.lower
+             )
+             for ext in extensions:
+                 if ext in self.suffix_rules_srcdir:
+                     self.WriteLn(self.suffix_rules_srcdir[ext])
+             self.WriteLn(SHARED_HEADER_SUFFIX_RULES_COMMENT2)
+             for ext in extensions:
+                 if ext in self.suffix_rules_objdir1:
+                     self.WriteLn(self.suffix_rules_objdir1[ext])
+             for ext in extensions:
+                 if ext in self.suffix_rules_objdir2:
+                     self.WriteLn(self.suffix_rules_objdir2[ext])
+             self.WriteLn("# End of this set of suffix rules")
 
         self.WriteLn()
 
@@ -2073,9 +2181,19 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
         but in a pretty-printed style.
         """
         values = ""
+        processed_values = []
         if value_list:
-            value_list = [replace_sep(quoter(prefix + value)) for value in value_list]
-            values = " \\\n\t" + " \\\n\t".join(value_list)
+            for value in value_list:
+                prefixed_value = prefix + value
+                processed = None
+                if (variable == 'LIBS' and
+                    value.startswith('-l"') and value.endswith('"')):
+                     processed = value
+                else:
+                    quoted_value = quoter(prefixed_value)
+                    processed = replace_sep(quoted_value)
+                processed_values.append(processed)
+            values = " \\\n\t" + " \\\n\t".join(processed_values)
         self.fp.write(f"{variable} :={values}\n\n")
 
     def WriteDoCmd(
@@ -2303,14 +2421,55 @@ $(obj).$(TOOLSET)/$(TARGET)/%%.o: $(obj)/%%%s FORCE_DO_CMD
             # it does not -- the backslash is written to the env as literal character.
             # So don't escape spaces in |env[k]|.
             self.WriteLn(f"{QuoteSpaces(target)}: export {k} := {v}")
-
     def Objectify(self, path):
-        """Convert a path to its output directory form."""
-        if "$(" in path:
-            path = path.replace("$(obj)/", "$(obj).%s/$(TARGET)/" % self.toolset)
-        if "$(obj)" not in path:
-            path = f"$(obj).{self.toolset}/$(TARGET)/{path}"
-        return path
+                """Convert a path to its output directory form."""
+
+                path_segment = path # Start with the original path segment
+
+                is_abs_path = os.path.isabs(path)
+                is_in_node_gyp_dir = False
+                # Ensure self.abs_node_gyp_dir was successfully set in Write()
+                if (is_abs_path and self.abs_node_gyp_dir and
+                    path.startswith(self.abs_node_gyp_dir)):
+                     is_in_node_gyp_dir = True
+
+
+                if is_in_node_gyp_dir:
+                     try:
+                         # Calculate path relative to abs_node_gyp_dir itself.
+                         # Use node_gyp_dir as base
+                         base_for_relpath = self.abs_node_gyp_dir
+                         rel_path = os.path.relpath(path, base_for_relpath)
+                         # Ensure forward slashes for Makefile compatibility
+                         rel_path_unix = rel_path.replace('\\', '/')
+                         # Use the relative path segment instead!
+                         path_segment = rel_path_unix
+                     except ValueError as e:
+                         print(
+                             f"DEBUG [make.py Objectify]: os.path.relpath failed: {e}. "
+                             f"Using original absolute path segment.",
+                             file=sys.stderr
+                         )
+
+                # Initialize final path with the (potentially modified) segment
+                final_path = path_segment
+
+                # Check 1: Handle paths already containing variables like $(obj)/
+                if "$(" in path_segment:
+                    if path_segment.startswith("$(obj)/"):
+                         final_path = path_segment.replace(
+                             "$(obj)/",
+                             f"$(obj).{self.toolset}/$(TARGET)/",
+                             1                          )
+                    # else: path remains path_segment if it has $(...) but not
+                    # $(obj)/ start
+                # Check 2: Prepend prefix if path segment doesn't contain $(obj)
+                elif "$(obj)" not in path_segment:
+                    prefix = f"$(obj).{self.toolset}/$(TARGET)/"
+                    # PREPEND PREFIX
+                    final_path = prefix + path_segment
+
+                return final_path
 
     def Pchify(self, path, lang):
         """Convert a prefix header path to its output directory form."""
