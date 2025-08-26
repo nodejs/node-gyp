@@ -195,7 +195,7 @@
           '_FILE_OFFSET_BITS=64'
         ],
       }],
-      [ 'OS in "freebsd openbsd netbsd solaris android" or \
+      [ 'OS in "freebsd openbsd netbsd solaris android openharmony" or \
          (OS=="linux" and target_arch!="ia32")', {
         'cflags': [ '-fPIC' ],
       }],
