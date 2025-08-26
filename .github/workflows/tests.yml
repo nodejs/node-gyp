@@ -94,7 +94,7 @@ jobs:
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
         python: ["3.9", "3.11", "3.13"]
-        node: [18.x, 20.x, 22.x, 24.x]
+        node: [20.x, 22.x, 24.x]
         include:
           - os: macos-13
             python: "3.13"
