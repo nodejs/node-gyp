@@ -1,5 +1,18 @@
 # Changelog
 
+## [11.4.2](https://github.com/nodejs/node-gyp/compare/v11.4.1...v11.4.2) (2025-08-26)
+
+
+### Bug Fixes
+
+* add adaptation for OpenHarmony platform ([#3207](https://github.com/nodejs/node-gyp/issues/3207)) ([b406532](https://github.com/nodejs/node-gyp/commit/b406532c77659c441c845708ec3ecdf09f013a3b))
+
+### Miscellaneous
+
+* update gyp-next to v0.20.4 ([#3208](https://github.com/nodejs/node-gyp/issues/3208)) ([adc61b1](https://github.com/nodejs/node-gyp/commit/adc61b1458315d9648591e74bf16bbe39511401e))
+* **ci:** Update Node.js version matrix in `tests.yml` ([#3209](https://github.com/nodejs/node-gyp/issues/3209)) ([a4e1da6](https://github.com/nodejs/node-gyp/commit/a4e1da6683a37fde565e1ea50f1fa86fa99a83c7))
+* ruff format Python code ([#3203](https://github.com/nodejs/node-gyp/issues/3203)) ([cb30a53](https://github.com/nodejs/node-gyp/commit/cb30a538eadf49ca0310980ffb0bfdb8fcebf0a4))
+
 ## [11.4.1](https://github.com/nodejs/node-gyp/compare/v11.4.0...v11.4.1) (2025-08-20)
 
 
