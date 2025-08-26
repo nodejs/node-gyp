@@ -17,7 +17,7 @@ jobs:
         os: [macos-13, macos-latest, ubuntu-latest] # , windows-latest]
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
@@ -31,6 +31,7 @@ jobs:
       - run: ./gyp -V && ./gyp --version && gyp -V && gyp --version
       - name: Lint with ruff  # See pyproject.toml for settings
         uses: astral-sh/ruff-action@v3
+      - run: ruff format --check --diff
       - name: Test with pytest  # See pyproject.toml for settings
         run: pytest
       # - name: Run doctests with pytest

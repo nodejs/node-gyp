@@ -24,7 +24,7 @@ jobs:
     if: ${{ needs.release-please.outputs.release_created }}  # only publish on release
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Build a binary wheel and a source tarball
       run: pipx run build
     - name: Store the distribution packages
@@ -48,7 +48,7 @@ jobs:
       id-token: write # IMPORTANT: mandatory for trusted publishing
     steps:
     - name: Download all the dists
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: python-package-distributions
         path: dist/
@@ -68,12 +68,12 @@ jobs:
       id-token: write # IMPORTANT: mandatory for sigstore
     steps:
     - name: Download all the dists
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: python-package-distributions
         path: dist/
     - name: Sign the dists with Sigstore
-      uses: sigstore/gh-action-sigstore-python@v3.0.0
+      uses: sigstore/gh-action-sigstore-python@v3.0.1
       with:
         inputs: >-
           ./dist/*.tar.gz
