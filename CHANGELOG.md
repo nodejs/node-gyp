@@ -1,5 +1,14 @@
 # Changelog
 
+## [11.4.3](https://github.com/nodejs/node-gyp/compare/v11.4.2...v11.4.3) (2025-09-08)
+
+
+### Core
+
+* **deps:** bump actions/github-script from 7 to 8 ([#3213](https://github.com/nodejs/node-gyp/issues/3213)) ([c6b968c](https://github.com/nodejs/node-gyp/commit/c6b968caf7f4e22687fc10716162675b1411f713))
+* **deps:** bump actions/setup-node from 4 to 5 ([#3211](https://github.com/nodejs/node-gyp/issues/3211)) ([921c04d](https://github.com/nodejs/node-gyp/commit/921c04d142549f172d3aeae4097c9e0af05599dd))
+* **deps:** bump actions/setup-python from 5 to 6 ([#3210](https://github.com/nodejs/node-gyp/issues/3210)) ([6b70b05](https://github.com/nodejs/node-gyp/commit/6b70b05ed21cb977214348c97c2b97515c0d08f3))
+
 ## [11.4.2](https://github.com/nodejs/node-gyp/compare/v11.4.1...v11.4.2) (2025-08-26)
 
 
