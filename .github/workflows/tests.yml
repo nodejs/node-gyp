@@ -93,18 +93,22 @@ jobs:
       fail-fast: false
       max-parallel: 11
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
-        python: ["3.9", "3.11", "3.13"]
+        # Windows on Python 3.14 is blocked by nodejs/node#59983
+        os: [macos-latest, ubuntu-latest]
+        python: ["3.10", "3.12", "3.14"]
         node: [20.x, 22.x, 24.x]
         include:
-          - os: macos-13
-            python: "3.13"
+          - os: windows-latest
+            python: "3.13"  # Windows on Python 3.13 instead of 3.14
             node: 24.x
-          - os: ubuntu-24.04-arm
-            python: "3.13"
+          - os: macos-15-intel  # macOS on Intel
+            python: "3.14"
             node: 24.x
-          - os: windows-2025
-            python: "3.13"
+          - os: ubuntu-24.04-arm  # Ubuntu on ARM
+            python: "3.14"
+            node: 24.x
+          - os: windows-11-arm  # Windows on ARM
+            python: "3.13"  # Windows on Python 3.13 instead of 3.14
             node: 24.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
@@ -123,6 +127,7 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
+          allow-prereleases: true
         env:
           PYTHON_VERSION: ${{ matrix.python }}  # Why do this?
       - uses: seanmiddleditch/gha-setup-ninja@v6
@@ -169,10 +174,10 @@ jobs:
         shell: bash
         run: npm test --python="${pythonLocation}/python"
         env:
-          FULL_TEST: ${{ (matrix.node == '22.x' && matrix.python == '3.13') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '24.x' && matrix.python == '3.14') && '1' || '0' }}
       - name: Run Tests (Windows)
         if: runner.os == 'Windows'
         shell: bash # Building wasm on Windows requires using make generator, it only works in bash
         run: npm run test --python="${pythonLocation}\\python.exe"
         env:
-          FULL_TEST: ${{ (matrix.node == '22.x' && matrix.python == '3.13') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '24.x' && matrix.python == '3.13') && '1' || '0' }}
