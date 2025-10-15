@@ -1,5 +1,25 @@
 # Changelog
 
+## [11.5.0](https://github.com/nodejs/node-gyp/compare/v11.4.2...v11.5.0) (2025-10-15)
+
+
+### Features
+
+* update gyp-next to v0.20.5 ([#3222](https://github.com/nodejs/node-gyp/issues/3222)) ([848e950](https://github.com/nodejs/node-gyp/commit/848e950833b90f0b25f346710ee42e9be4797604))
+
+
+### Bug Fixes
+
+* **ci:** Run Visual Studio test on Windows 11 on ARM ([#3217](https://github.com/nodejs/node-gyp/issues/3217)) ([8bd3f63](https://github.com/nodejs/node-gyp/commit/8bd3f6354b8bd43262a4d99d58a568beab0459e8))
+* **ci:** Test on Python 3.14 release candidate 3 on Linux and macOS ([#3216](https://github.com/nodejs/node-gyp/issues/3216)) ([085b445](https://github.com/nodejs/node-gyp/commit/085b445d1c00f8f1fc6a6ff80d8a93c6643f11ee))
+
+
+### Core
+
+* **deps:** bump actions/github-script from 7 to 8 ([#3213](https://github.com/nodejs/node-gyp/issues/3213)) ([c6b968c](https://github.com/nodejs/node-gyp/commit/c6b968caf7f4e22687fc10716162675b1411f713))
+* **deps:** bump actions/setup-node from 4 to 5 ([#3211](https://github.com/nodejs/node-gyp/issues/3211)) ([921c04d](https://github.com/nodejs/node-gyp/commit/921c04d142549f172d3aeae4097c9e0af05599dd))
+* **deps:** bump actions/setup-python from 5 to 6 ([#3210](https://github.com/nodejs/node-gyp/issues/3210)) ([6b70b05](https://github.com/nodejs/node-gyp/commit/6b70b05ed21cb977214348c97c2b97515c0d08f3))
+
 ## [11.4.2](https://github.com/nodejs/node-gyp/compare/v11.4.1...v11.4.2) (2025-08-26)
 
 
