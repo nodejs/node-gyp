@@ -38,11 +38,11 @@
   },
   "devDependencies": {
     "bindings": "^1.5.0",
-    "cross-env": "^7.0.3",
-    "eslint": "^9.16.0",
-    "mocha": "^11.0.1",
-    "nan": "^2.14.2",
-    "neostandard": "^0.11.9",
+    "cross-env": "^10.1.0",
+    "eslint": "^9.39.1",
+    "mocha": "^11.7.5",
+    "nan": "^2.23.1",
+    "neostandard": "^0.12.2",
     "require-inject": "^1.4.4"
   },
   "scripts": {
