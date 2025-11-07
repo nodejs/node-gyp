@@ -35,7 +35,7 @@ jobs:
         with:
           repository: nodejs/node-gyp
           path: node-gyp
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: "lts/*"
       - uses: actions/setup-python@v6

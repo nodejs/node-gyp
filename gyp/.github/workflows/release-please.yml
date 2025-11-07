@@ -28,7 +28,7 @@ jobs:
     - name: Build a binary wheel and a source tarball
       run: pipx run build
     - name: Store the distribution packages
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: python-package-distributions
         path: dist/
@@ -48,7 +48,7 @@ jobs:
       id-token: write # IMPORTANT: mandatory for trusted publishing
     steps:
     - name: Download all the dists
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: python-package-distributions
         path: dist/
@@ -68,12 +68,12 @@ jobs:
       id-token: write # IMPORTANT: mandatory for sigstore
     steps:
     - name: Download all the dists
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: python-package-distributions
         path: dist/
     - name: Sign the dists with Sigstore
-      uses: sigstore/gh-action-sigstore-python@v3.0.1
+      uses: sigstore/gh-action-sigstore-python@v3.1.0
       with:
         inputs: >-
           ./dist/*.tar.gz
