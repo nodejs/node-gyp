@@ -1,4 +1,4 @@
-const envPaths = require('env-paths')
+const { default: envPaths } = require('env-paths')
 const semver = require('semver')
 
 module.exports.devDir = envPaths('node-gyp', { suffix: '' }).cache
