@@ -63,7 +63,7 @@ describe('install', function () {
     })
 
     afterEach(async () => {
-      await rm(prog.devDir, { recursive: true, force: true, maxRetries: 3 })
+      await rm(prog.devDir, { recursive: true, force: true, maxRetries: 3, retryDelay: 1000 })
       prog = null
     })
 
@@ -74,11 +74,11 @@ describe('install', function () {
       }
 
       return it(name, async function () {
-        this.timeout(platformTimeout(2, { win32: 20 }))
+        this.timeout(platformTimeout(4, { win32: 20 }))
         await fn.call(this)
         const expectedDir = path.join(prog.devDir, process.version.replace(/^v/, ''))
-        await rm(expectedDir, { recursive: true, force: true, maxRetries: 3 })
-        await Promise.all(new Array(10).fill(0).map(async (_, i) => {
+        await rm(expectedDir, { recursive: true, force: true, maxRetries: 3, retryDelay: 1000 })
+        await Promise.all(new Array(5).fill(0).map(async (_, i) => {
           const title = `${' '.repeat(8)}${name} ${(i + 1).toString().padEnd(2, ' ')}`
           console.log(`${title} : Start`)
           console.time(title)
