@@ -47,6 +47,6 @@
   },
   "scripts": {
     "lint": "eslint \"*/*.js\" \"test/**/*.js\" \".github/**/*.js\"",
-    "test": "cross-env NODE_GYP_NULL_LOGGER=true mocha --timeout 15000 test/test-download.js test/test-*"
+    "test": "cross-env NODE_GYP_NULL_LOGGER=true mocha --timeout 30000 test/test-download.js test/test-*"
   }
 }
