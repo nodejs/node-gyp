@@ -1,5 +1,34 @@
 # Changelog
 
+## [12.0.0](https://github.com/nodejs/node-gyp/compare/v11.5.0...v12.0.0) (2025-11-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* align to npm 11 node engine range
+
+### Features
+
+* align to npm 11 node engine range ([2f85686](https://github.com/nodejs/node-gyp/commit/2f85686bbe745673350a8f9dbb0e86ee0190f213))
+* update gyp-next to v0.21.0 ([c57cd2e](https://github.com/nodejs/node-gyp/commit/c57cd2e86dc57707475b9f7e676e189f064817de))
+
+
+### Core
+
+* **deps:** bump actions/setup-node from 5 to 6 ([ae90e63](https://github.com/nodejs/node-gyp/commit/ae90e632d9fab85f4cd902dc9205ba9dfafaf3bc))
+* **deps:** bump env-paths from 2.2.1 to 3.0.0 ([#3235](https://github.com/nodejs/node-gyp/issues/3235)) ([5fffb2f](https://github.com/nodejs/node-gyp/commit/5fffb2ffee304cc898fdea7a0cd9e41d54c53839))
+* **deps:** bump which from 5.0.0 to 6.0.0 ([#3238](https://github.com/nodejs/node-gyp/issues/3238)) ([eaa8e34](https://github.com/nodejs/node-gyp/commit/eaa8e34cb5a0710bef0602c42e5840b47eb76822))
+* make-fetch-happen@15.0.0 ([e2b9d21](https://github.com/nodejs/node-gyp/commit/e2b9d21bce27c35d18fcb6f8583e386d15ce395c))
+* nopt@9.0.0 ([9bdeaf3](https://github.com/nodejs/node-gyp/commit/9bdeaf307cd7a254946859d306465989fa39dfb2))
+* proc-log@6.0.0 ([dfc68df](https://github.com/nodejs/node-gyp/commit/dfc68dfba3c17deb0bda9a395bb49d8fb9fa5951))
+
+
+### Miscellaneous
+
+* increase test timeouts ([#3237](https://github.com/nodejs/node-gyp/issues/3237)) ([3b41971](https://github.com/nodejs/node-gyp/commit/3b41971e2f6b90e02b1d7df592d403b8dfc8fa4d))
+* setup dependabot for npm ([86d65c7](https://github.com/nodejs/node-gyp/commit/86d65c7874eb41eb49c9b8bbf342becac8e57c6f))
+* update devDependencies ([41b0cea](https://github.com/nodejs/node-gyp/commit/41b0cea2f12342a790580cc8f844f075d49e096c))
+
 ## [11.5.0](https://github.com/nodejs/node-gyp/compare/v11.4.2...v11.5.0) (2025-10-15)
 
 
