@@ -79,7 +79,7 @@ describe('find-visualstudio', function () {
       const file = path.join(__dirname, 'fixtures', 'VS_2017_Unusable.txt')
       const data = fs.readFileSync(file)
       const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
-      return finder.processData(parsedData, [2019, 2022])
+      return finder.processData(parsedData, [2019, 2022, 2026])
     }
     finder.findVisualStudio2017 = async () => {
       const file = path.join(__dirname, 'fixtures', 'VS_2017_Unusable.txt')
@@ -221,7 +221,7 @@ describe('find-visualstudio', function () {
         'VS_2017_BuildTools_minimal.txt')
       const data = fs.readFileSync(file)
       const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
-      return finder.processData(parsedData, [2019, 2022])
+      return finder.processData(parsedData, [2019, 2022, 2026])
     }
     finder.findVisualStudio2017 = async () => {
       const file = path.join(__dirname, 'fixtures',
@@ -256,7 +256,7 @@ describe('find-visualstudio', function () {
         'VS_2017_Community_workload.txt')
       const data = fs.readFileSync(file)
       const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
-      return finder.processData(parsedData, [2019, 2022])
+      return finder.processData(parsedData, [2019, 2022, 2026])
     }
     finder.findVisualStudio2017 = async () => {
       const file = path.join(__dirname, 'fixtures',
@@ -290,7 +290,7 @@ describe('find-visualstudio', function () {
       const file = path.join(__dirname, 'fixtures', 'VS_2017_Express.txt')
       const data = fs.readFileSync(file)
       const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
-      return finder.processData(parsedData, [2019, 2022])
+      return finder.processData(parsedData, [2019, 2022, 2026])
     }
     finder.findVisualStudio2017 = async () => {
       const file = path.join(__dirname, 'fixtures', 'VS_2017_Express.txt')
@@ -324,7 +324,7 @@ describe('find-visualstudio', function () {
         'VS_2019_Preview.txt')
       const data = fs.readFileSync(file)
       const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
-      return finder.processData(parsedData, [2019, 2022])
+      return finder.processData(parsedData, [2019, 2022, 2026])
     }
     finder.findVisualStudio2017 = async () => {
       const file = path.join(__dirname, 'fixtures',
@@ -359,7 +359,7 @@ describe('find-visualstudio', function () {
         'VS_2019_BuildTools_minimal.txt')
       const data = fs.readFileSync(file)
       const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
-      return finder.processData(parsedData, [2019, 2022])
+      return finder.processData(parsedData, [2019, 2022, 2026])
     }
     finder.findVisualStudio2017 = async () => {
       const file = path.join(__dirname, 'fixtures',
@@ -394,7 +394,7 @@ describe('find-visualstudio', function () {
         'VS_2019_Community_workload.txt')
       const data = fs.readFileSync(file)
       const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
-      return finder.processData(parsedData, [2019, 2022])
+      return finder.processData(parsedData, [2019, 2022, 2026])
     }
     finder.findVisualStudio2017 = async () => {
       const file = path.join(__dirname, 'fixtures',
@@ -438,7 +438,7 @@ describe('find-visualstudio', function () {
         'VS_2022_Community_workload.txt')
       const data = fs.readFileSync(file)
       const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
-      return finder.processData(parsedData, [2019, 2022])
+      return finder.processData(parsedData, [2019, 2022, 2026])
     }
     finder.findVisualStudio2017 = async () => {
       const file = path.join(__dirname, 'fixtures',
@@ -459,6 +459,94 @@ describe('find-visualstudio', function () {
       versionMajor: 17,
       versionMinor: 4,
       versionYear: 2022
+    })
+  })
+
+  it('VS2026 Preview with C++ workload', async function () {
+    const msBuildPath = process.arch === 'arm64'
+      ? 'C:\\Program Files\\Microsoft Visual Studio\\18\\' +
+        'Insiders\\MSBuild\\Current\\Bin\\arm64\\MSBuild.exe'
+      : 'C:\\Program Files\\Microsoft Visual Studio\\18\\' +
+        'Insiders\\MSBuild\\Current\\Bin\\MSBuild.exe'
+
+    const finder = new TestVisualStudioFinder(semverV1, null)
+
+    poison(finder, 'regSearchKeys')
+    finder.msBuildPathExists = (path) => {
+      return true
+    }
+    finder.findNewVSUsingSetupModule = async () => null
+    finder.findVisualStudio2019OrNewer = async () => {
+      const file = path.join(__dirname, 'fixtures',
+        'VS_2026_Insiders_workload.txt')
+      const data = fs.readFileSync(file)
+      const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(parsedData, [2019, 2022, 2026])
+    }
+    finder.findVisualStudio2017 = async () => {
+      const file = path.join(__dirname, 'fixtures',
+        'VS_2026_Insiders_workload.txt')
+      const data = fs.readFileSync(file)
+      const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
+      return finder.processData(parsedData, [2017])
+    }
+    const { err, info } = await finder.findVisualStudio()
+    assert.strictEqual(err, null)
+    assert.deepStrictEqual(info, {
+      msBuild: msBuildPath,
+      path:
+        'C:\\Program Files\\Microsoft Visual Studio\\18\\Insiders',
+      sdk: '10.0.26100.0',
+      toolset: 'v145',
+      version: '18.3.11206.111',
+      versionMajor: 18,
+      versionMinor: 3,
+      versionYear: 2026
+    })
+  })
+
+  it('VS2026 Release with C++ workload', async function () {
+    const msBuildPath = process.arch === 'arm64'
+      ? 'C:\\Program Files\\Microsoft Visual Studio\\2026\\' +
+        'Community\\MSBuild\\Current\\Bin\\arm64\\MSBuild.exe'
+      : 'C:\\Program Files\\Microsoft Visual Studio\\2026\\' +
+        'Community\\MSBuild\\Current\\Bin\\MSBuild.exe'
+
+    const finder = new TestVisualStudioFinder(semverV1, null)
+
+    poison(finder, 'regSearchKeys')
+    finder.msBuildPathExists = (path) => {
+      return true
+    }
+    finder.findNewVSUsingSetupModule = async () => null
+    finder.findVisualStudio2019OrNewer = async () => {
+      // Create mock data for release version with 2026 path
+      const releaseData = [{
+        path: 'C:\\Program Files\\Microsoft Visual Studio\\2026\\Community',
+        version: '18.0.1000.100',
+        packages: [
+          'Microsoft.VisualStudio.Product.Community',
+          'Microsoft.VisualStudio.Workload.NativeDesktop',
+          'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
+          'Microsoft.VisualStudio.Component.Windows11SDK.26100'
+        ]
+      }]
+      return finder.processData(releaseData, [2019, 2022, 2026])
+    }
+    finder.findVisualStudio2017 = async () => null
+
+    const { err, info } = await finder.findVisualStudio()
+    assert.strictEqual(err, null)
+    assert.deepStrictEqual(info, {
+      msBuild: msBuildPath,
+      path:
+        'C:\\Program Files\\Microsoft Visual Studio\\2026\\Community',
+      sdk: '10.0.26100.0',
+      toolset: 'v145',
+      version: '18.0.1000.100',
+      versionMajor: 18,
+      versionMinor: 0,
+      versionYear: 2026
     })
   })
 
@@ -483,7 +571,7 @@ describe('find-visualstudio', function () {
         'VS_2022_BuildTools_arm64_only.txt')
       const data = fs.readFileSync(file)
       const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
-      return finder.processData(parsedData, [2019, 2022])
+      return finder.processData(parsedData, [2019, 2022, 2026])
     }
     const { err, info } = await finder.findVisualStudio()
     assert.strictEqual(err, null)
@@ -613,7 +701,7 @@ describe('find-visualstudio', function () {
         'VS_2022_Community_workload.txt')))
       const data = JSON.stringify(data0.concat(data1, data2, data3))
       const parsedData = finder.parseData(null, data, '', { checkIsArray: true })
-      return finder.processData(parsedData, [2019, 2022])
+      return finder.processData(parsedData, [2019, 2022, 2026])
     }
     finder.regSearchKeys = async (keys, value, addOpts) => {
       for (let i = 0; i < keys.length; ++i) {
