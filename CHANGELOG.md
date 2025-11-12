@@ -1,5 +1,13 @@
 # Changelog
 
+## [12.1.0](https://github.com/nodejs/node-gyp/compare/v12.0.0...v12.1.0) (2025-11-12)
+
+
+### Features
+
+* Add support for Visual Studio 2026 (18.x) ([69e5fd2](https://github.com/nodejs/node-gyp/commit/69e5fd2c98ac83dad5200a47515b301ccd80d2d3))
+* Support for Visual Studio 2026 (18.x) ([69e5fd2](https://github.com/nodejs/node-gyp/commit/69e5fd2c98ac83dad5200a47515b301ccd80d2d3))
+
 ## [12.0.0](https://github.com/nodejs/node-gyp/compare/v11.5.0...v12.0.0) (2025-11-10)
 
 
