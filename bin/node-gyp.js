@@ -4,7 +4,7 @@
 
 process.title = 'node-gyp'
 
-const { default: envPaths } = require('env-paths')
+const envPaths = require('env-paths')
 const gyp = require('../')
 const log = require('../lib/log')
 const os = require('os')
