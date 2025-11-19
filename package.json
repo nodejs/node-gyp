@@ -36,6 +36,9 @@
   "engines": {
     "node": "^20.17.0 || >=22.9.0"
   },
+  "overrides": {
+    "glob": "^11.1.0"
+  },
   "devDependencies": {
     "bindings": "^1.5.0",
     "cross-env": "^10.1.0",
