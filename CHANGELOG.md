@@ -1,5 +1,12 @@
 # Changelog
 
+## [12.1.1](https://github.com/nodejs/node-gyp/compare/v12.1.0...v12.1.1) (2025-11-21)
+
+
+### Core
+
+* **deps:** bump actions/checkout from 5 to 6 ([#3248](https://github.com/nodejs/node-gyp/issues/3248)) ([db5385c](https://github.com/nodejs/node-gyp/commit/db5385c5467e5bfb914b9954f0313c46f1f4e10d))
+
 ## [12.1.0](https://github.com/nodejs/node-gyp/compare/v12.0.0...v12.1.0) (2025-11-12)
 
 
