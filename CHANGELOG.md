@@ -1,5 +1,23 @@
 # Changelog
 
+## [12.2.0](https://github.com/nodejs/node-gyp/compare/v12.1.0...v12.2.0) (2026-01-02)
+
+
+### Features
+
+* include built package version in error logs ([#3254](https://github.com/nodejs/node-gyp/issues/3254)) ([ee9cbdd](https://github.com/nodejs/node-gyp/commit/ee9cbdd6e1d40dc7c1cdc5ed6a75432c716eaf3f))
+
+
+### Bug Fixes
+
+* cpu concurrency detection on some platforms ([#3255](https://github.com/nodejs/node-gyp/issues/3255)) ([f15b79a](https://github.com/nodejs/node-gyp/commit/f15b79a03c54cea0f66d940a0d6d839df867a319)), closes [#3191](https://github.com/nodejs/node-gyp/issues/3191)
+* python is no longer a valid npm config setting ([#3258](https://github.com/nodejs/node-gyp/issues/3258)) ([c7c678f](https://github.com/nodejs/node-gyp/commit/c7c678f89837d956194f326b01c5a8eb1d745db3))
+
+
+### Core
+
+* **deps:** bump actions/checkout from 5 to 6 ([#3248](https://github.com/nodejs/node-gyp/issues/3248)) ([db5385c](https://github.com/nodejs/node-gyp/commit/db5385c5467e5bfb914b9954f0313c46f1f4e10d))
+
 ## [12.1.0](https://github.com/nodejs/node-gyp/compare/v12.0.0...v12.1.0) (2025-11-12)
 
 
