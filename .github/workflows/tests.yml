@@ -93,14 +93,10 @@ jobs:
       fail-fast: false
       max-parallel: 11
       matrix:
-        # Windows on Python 3.14 is blocked by nodejs/node#59983
-        os: [macos-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
         python: ["3.10", "3.12", "3.14"]
         node: [20.x, 22.x, 24.x]
         include:
-          - os: windows-latest
-            python: "3.13"  # Windows on Python 3.13 instead of 3.14
-            node: 24.x
           - os: macos-15-intel  # macOS on Intel
             python: "3.14"
             node: 24.x
@@ -108,7 +104,7 @@ jobs:
             python: "3.14"
             node: 24.x
           - os: windows-11-arm  # Windows on ARM
-            python: "3.13"  # Windows on Python 3.13 instead of 3.14
+            python: "3.14"
             node: 24.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
@@ -128,8 +124,6 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           allow-prereleases: true
-        env:
-          PYTHON_VERSION: ${{ matrix.python }}  # Why do this?
       - uses: seanmiddleditch/gha-setup-ninja@v6
       - name: Install wasi-sdk (Windows)
         shell: pwsh
@@ -180,4 +174,4 @@ jobs:
         shell: bash # Building wasm on Windows requires using make generator, it only works in bash
         run: npm run test --python="${pythonLocation}\\python.exe"
         env:
-          FULL_TEST: ${{ (matrix.node == '24.x' && matrix.python == '3.13') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '24.x' && matrix.python == '3.14') && '1' || '0' }}
