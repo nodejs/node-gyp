@@ -124,6 +124,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           allow-prereleases: true
+      - run: py --list-paths || true  # Show all Python paths on Windows
       - uses: seanmiddleditch/gha-setup-ninja@v6
       - name: Install wasi-sdk (Windows)
         shell: pwsh
@@ -163,15 +164,19 @@ jobs:
           echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       - name: Run Python Tests
         run: python -m pytest
-      - name: Run Tests (macOS or Linux)
+      - name: Run Tests (Linux or macOS)
         if: runner.os != 'Windows'
-        shell: bash
-        run: npm test --python="${pythonLocation}/python"
         env:
           FULL_TEST: ${{ (matrix.node == '24.x' && matrix.python == '3.14') && '1' || '0' }}
+          NODE_GYP_FORCE_PYTHON: "${{ env.pythonLocation }}/python"
+        run: npm test
       - name: Run Tests (Windows)
         if: runner.os == 'Windows'
         shell: bash # Building wasm on Windows requires using make generator, it only works in bash
-        run: npm run test --python="${pythonLocation}\\python.exe"
         env:
           FULL_TEST: ${{ (matrix.node == '24.x' && matrix.python == '3.14') && '1' || '0' }}
+          NODE_GYP_FORCE_PYTHON: "${{ env.pythonLocation }}\\python.exe"
+        run: |
+          echo "NODE_GYP_FORCE_PYTHON=${NODE_GYP_FORCE_PYTHON}"
+          npm run test
+
