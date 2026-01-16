@@ -55,8 +55,8 @@ choco install python visualstudio2022-workload-vctools -y
 
 Or install and configure Python and Visual Studio tools manually:
 
-  * Install the current [version of Python](https://devguide.python.org/versions/) from the
-  [Microsoft Store](https://apps.microsoft.com/store/search?publisher=Python+Software+Foundation).
+  * Follow the instructions in [Using Python on Windows](https://docs.python.org/3/using/windows.html) to install
+    the current [version of Python](https://www.python.org/downloads/).
 
    * Install Visual C++ Build Environment: For Visual Studio 2019 or later, use the `Desktop development with C++` workload from [Visual Studio Community](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community).  For a version older than Visual Studio 2019, install [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools) with the `Visual C++ build tools` option.
 
