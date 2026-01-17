@@ -66,8 +66,8 @@ Or install and configure Python and Visual Studio tools manually:
 
    To use the native ARM64 C++ compiler on Windows on ARM, ensure that you have Visual Studio 2022 [17.4 or later](https://devblogs.microsoft.com/visualstudio/arm64-visual-studio-is-officially-here/) installed.
 
-It's advised to install following Powershell module: [VSSetup](https://github.com/microsoft/vssetup.powershell) using `Install-Module VSSetup -Scope CurrentUser`.
-This will make Visual Studio detection logic to use more flexible and accessible method, avoiding Powershell's `ConstrainedLanguage` mode.
+It's advised to install the following PowerShell module: [VSSetup](https://github.com/microsoft/vssetup.powershell) using `Install-Module VSSetup -Scope CurrentUser`.
+This will make Visual Studio detection logic use a more flexible and accessible method, avoiding PowerShell's `ConstrainedLanguage` mode.
 
 ### Configuring Python Dependency
 
@@ -270,8 +270,8 @@ set npm_package_config_node_gyp_devdir=c:\temp\.gyp
 ```
 
 Note that in versions of npm before v11 it was possible to use the prefix `npm_config_` for
-environement variables. This was deprecated in npm@11 and will be removed in npm@12 so it
-is recommened to convert your environment variables to the above format.
+environment variables. This was deprecated in npm@11 and will be removed in npm@12 so it
+is recommended to convert your environment variables to the above format.
 
 ### `npm` configuration for npm versions before v9
 
