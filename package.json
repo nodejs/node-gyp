@@ -42,7 +42,7 @@
     "eslint": "^9.39.1",
     "mocha": "^11.7.5",
     "nan": "^2.23.1",
-    "neostandard": "^0.12.2",
+    "neostandard": "^0.13.0",
     "require-inject": "^1.4.4"
   },
   "scripts": {
