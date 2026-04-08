@@ -1,4 +1,3 @@
-# TODO: Enable os: windows-latest
 # TODO: Enable pytest --doctest-modules
 
 name: Python_tests
@@ -14,11 +13,15 @@ jobs:
       fail-fast: false
       max-parallel: 5
       matrix:
-        os: [macos-15-intel, macos-latest, ubuntu-latest] # , windows-latest]
+        os: [macos-15-intel, macos-latest, ubuntu-latest, windows-latest]
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
         include:
           - os: macos-26
             python-version: 3.x
+          - os: ubuntu-24.04-arm  # Ubuntu on ARM
+            python-version: "3.14"
+          - os: windows-11-arm  # Windows on ARM
+            python-version: "3.14"
     steps:
       - uses: actions/checkout@v6
       - name: Set up Python ${{ matrix.python-version }}
