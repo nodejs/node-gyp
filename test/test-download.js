@@ -153,6 +153,32 @@ describe('download', function () {
     assert.notStrictEqual(cas[0], cas[1])
   })
 
+  it('download will retry on ECONNRESET', async function () {
+    let requestCount = 0
+    const server = http.createServer((req, res) => {
+      requestCount++
+      if (requestCount < 3) {
+        req.socket.destroy()
+        return
+      }
+      res.end('ok')
+    })
+
+    after(() => new Promise((resolve) => server.close(resolve)))
+
+    const host = 'localhost'
+    await new Promise((resolve) => server.listen(0, host, resolve))
+    const { port } = server.address()
+    const gyp = {
+      opts: {},
+      version: '42'
+    }
+    const url = `http://${host}:${port}`
+    const res = await download(gyp, url)
+    assert.strictEqual(await res.text(), 'ok')
+    assert.ok(requestCount >= 2, `expected at least 2 requests but got ${requestCount}`)
+  })
+
   // only run this test if we are running a version of Node with predictable version path behavior
 
   it('download headers (actual)', async function () {
