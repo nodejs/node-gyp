@@ -86,6 +86,8 @@ describe('download', function () {
         serverSocket.pipe(clientSocket)
         clientSocket.pipe(serverSocket)
       })
+      clientSocket.on('error', () => serverSocket.destroy())
+      serverSocket.on('error', () => clientSocket.destroy())
     })
 
     after(() => Promise.all([
@@ -118,7 +120,10 @@ describe('download', function () {
 
     let proxyUsed = false
     const pserver = http.createServer()
-    pserver.on('connect', () => { proxyUsed = true })
+    pserver.on('connect', (_, socket) => {
+      proxyUsed = true
+      socket.destroy()
+    })
 
     after(() => Promise.all([
       new Promise((resolve) => server.close(resolve)),
