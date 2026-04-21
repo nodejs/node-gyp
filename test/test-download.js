@@ -6,6 +6,7 @@ const fs = require('fs/promises')
 const path = require('path')
 const http = require('http')
 const https = require('https')
+const net = require('net')
 const install = require('../lib/install')
 const { download, readCAFile } = require('../lib/download')
 const { FULL_TEST, devDir, platformTimeout } = require('./common')
@@ -69,13 +70,24 @@ describe('download', function () {
   })
 
   it('download over http with proxy', async function () {
-    const server = http.createServer((_, res) => {
+    const server = http.createServer((req, res) => {
+      assert.strictEqual(req.headers['user-agent'], `node-gyp v42 (node ${process.version})`)
       res.end('ok')
     })
 
-    const pserver = http.createServer((req, res) => {
-      assert.strictEqual(req.headers['user-agent'], `node-gyp v42 (node ${process.version})`)
-      res.end('proxy ok')
+    let proxyUsed = false
+    const pserver = http.createServer()
+    pserver.on('connect', (req, clientSocket, head) => {
+      proxyUsed = true
+      const [targetHost, targetPort] = req.url.split(':')
+      const serverSocket = net.connect(targetPort, targetHost, () => {
+        clientSocket.write('HTTP/1.1 200 Connection Established\r\n\r\n')
+        serverSocket.write(head)
+        serverSocket.pipe(clientSocket)
+        clientSocket.pipe(serverSocket)
+      })
+      clientSocket.on('error', () => serverSocket.destroy())
+      serverSocket.on('error', () => clientSocket.destroy())
     })
 
     after(() => Promise.all([
@@ -96,7 +108,56 @@ describe('download', function () {
     }
     const url = `http://${host}:${port}`
     const res = await download(gyp, url)
-    assert.strictEqual(await res.text(), 'proxy ok')
+    assert.strictEqual(await res.text(), 'ok')
+    assert.strictEqual(proxyUsed, true)
+  })
+
+  it('download over https with proxy and custom ca', async function () {
+    const cafile = path.join(__dirname, 'fixtures/ca-proxy.crt')
+    await fs.writeFile(cafile, certs['ca.crt'], 'utf8')
+
+    const server = https.createServer({
+      ca: await readCAFile(cafile),
+      cert: certs['server.crt'],
+      key: certs['server.key']
+    }, (_, res) => res.end('ok'))
+
+    let proxyUsed = false
+    const pserver = http.createServer()
+    pserver.on('connect', (req, clientSocket, head) => {
+      proxyUsed = true
+      const [targetHost, targetPort] = req.url.split(':')
+      const serverSocket = net.connect(targetPort, targetHost, () => {
+        clientSocket.write('HTTP/1.1 200 Connection Established\r\n\r\n')
+        serverSocket.write(head)
+        serverSocket.pipe(clientSocket)
+        clientSocket.pipe(serverSocket)
+      })
+      clientSocket.on('error', () => serverSocket.destroy())
+      serverSocket.on('error', () => clientSocket.destroy())
+    })
+
+    after(async () => {
+      await new Promise((resolve) => server.close(resolve))
+      await new Promise((resolve) => pserver.close(resolve))
+      await fs.unlink(cafile)
+    })
+
+    const host = 'localhost'
+    await new Promise((resolve) => server.listen(0, host, resolve))
+    const { port } = server.address()
+    await new Promise((resolve) => pserver.listen(port + 1, host, resolve))
+    const gyp = {
+      opts: {
+        cafile,
+        proxy: `http://${host}:${port + 1}`,
+        noproxy: 'bad'
+      },
+      version: '42'
+    }
+    const res = await download(gyp, `https://${host}:${port}`)
+    assert.strictEqual(await res.text(), 'ok')
+    assert.strictEqual(proxyUsed, true)
   })
 
   it('download over http with noproxy', async function () {
@@ -105,8 +166,11 @@ describe('download', function () {
       res.end('ok')
     })
 
-    const pserver = http.createServer((_, res) => {
-      res.end('proxy ok')
+    let proxyUsed = false
+    const pserver = http.createServer()
+    pserver.on('connect', (_, socket) => {
+      proxyUsed = true
+      socket.destroy()
     })
 
     after(() => Promise.all([
@@ -128,6 +192,7 @@ describe('download', function () {
     const url = `http://${host}:${port}`
     const res = await download(gyp, url)
     assert.strictEqual(await res.text(), 'ok')
+    assert.strictEqual(proxyUsed, false)
   })
 
   it('download with missing cafile', async function () {

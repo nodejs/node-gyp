@@ -67,7 +67,9 @@ jobs:
       with:
         node-version: 22.x
     - name: Update npm
-      run: npm install npm@latest -g
+      run: |
+        npm install npm@~11.10.0 -g # Workaround for https://github.com/npm/cli/issues/9151
+        npm install npm@latest -g
     - name: Install Dependencies
       run: npm install
     - name: Pack
