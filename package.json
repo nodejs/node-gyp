@@ -30,7 +30,7 @@
     "semver": "^7.3.5",
     "tar": "^7.5.4",
     "tinyglobby": "^0.2.12",
-    "undici": "^6.25.0",
+    "undici": "^8.1.0",
     "which": "^6.0.0"
   },
   "engines": {
