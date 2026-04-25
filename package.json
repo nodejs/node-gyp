@@ -23,7 +23,6 @@
   "main": "./lib/node-gyp.js",
   "dependencies": {
     "env-paths": "^2.2.0",
-    "exponential-backoff": "^3.1.1",
     "graceful-fs": "^4.2.6",
     "nopt": "^9.0.0",
     "proc-log": "^6.0.0",

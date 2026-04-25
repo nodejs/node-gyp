@@ -1,13 +1,14 @@
 'use strict'
 
-const { describe, it } = require('mocha')
+const { describe, it, beforeEach, afterEach } = require('mocha')
 const assert = require('assert')
 const path = require('path')
 const fs = require('graceful-fs')
+const { rm, mkdtemp } = require('fs/promises')
 const os = require('os')
 const cp = require('child_process')
 const util = require('../lib/util')
-const { platformTimeout } = require('./common')
+const { FULL_TEST, platformTimeout } = require('./common')
 
 const addonPath = path.resolve(__dirname, 'node_modules', 'hello_world')
 const nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
@@ -128,5 +129,62 @@ describe('addon', function () {
     assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
     assert.strictEqual(runHello(notNodePath), 'world')
     fs.unlinkSync(notNodePath)
+  })
+
+  describe('parallel', function () {
+    let devDir
+    let addonCopiesDir
+
+    beforeEach(async () => {
+      devDir = await mkdtemp(path.join(os.tmpdir(), 'node-gyp-test-'))
+      addonCopiesDir = await mkdtemp(path.join(os.tmpdir(), 'node-gyp-test-addons-'))
+    })
+
+    afterEach(async () => {
+      await Promise.all([
+        rm(devDir, { recursive: true, force: true, maxRetries: 3, retryDelay: 1000 }),
+        rm(addonCopiesDir, { recursive: true, force: true, maxRetries: 3, retryDelay: 1000 })
+      ])
+      devDir = null
+      addonCopiesDir = null
+    })
+
+    const runIt = (name, fn) => {
+      if (!FULL_TEST) {
+        return it.skip('Skipping parallel rebuild test due to test environment configuration')
+      }
+
+      if (process.platform === 'darwin' && process.arch === 'x64') {
+        return it.skip('Skipping parallel rebuild test on x64 macOS')
+      }
+
+      return it(name, async function () {
+        this.timeout(platformTimeout(4, { win32: 20 }))
+        await fn.call(this)
+      })
+    }
+
+    runIt('parallel rebuild', async function () {
+      // Install dependencies (nan) so copies in temp directories can resolve them
+      const [npmErr] = await util.execFile('npm', ['install', '--ignore-scripts'], { cwd: addonPath, shell: process.platform === 'win32' })
+      assert.strictEqual(npmErr, null)
+
+      const copies = await Promise.all(new Array(5).fill(0).map(async (_, i) => {
+        const copyDir = path.join(addonCopiesDir, `hello_world_${i}`)
+        await fs.promises.cp(addonPath, copyDir, { recursive: true })
+        return copyDir
+      }))
+      await Promise.all(copies.map(async (copyDir, i) => {
+        const cmd = [nodeGyp, 'rebuild', '-C', copyDir, '--loglevel=verbose', `--devdir=${devDir}`]
+        const title = `${' '.repeat(8)}parallel rebuild ${(i + 1).toString().padEnd(2, ' ')}`
+        console.log(`${title} : Start`)
+        console.time(title)
+        const [err, logLines] = await execFile(cmd)
+        console.timeEnd(title)
+        const lastLine = logLines[logLines.length - 1]
+        assert.strictEqual(err, null)
+        assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
+      }))
+    })
   })
 })
