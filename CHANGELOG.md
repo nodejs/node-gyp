@@ -1,5 +1,17 @@
 # Changelog
 
+## [12.3.1](https://github.com/nodejs/node-gyp/compare/v12.3.0...v12.3.1) (2026-04-25)
+
+
+### Bug Fixes
+
+* retry downloads on retryable errors ([#3308](https://github.com/nodejs/node-gyp/issues/3308)) ([0793489](https://github.com/nodejs/node-gyp/commit/0793489b961c2cbf6c6b2182d968d0c262c3b573))
+
+
+### Miscellaneous
+
+* add workflow_dispatch trigger to tests workflow ([#3299](https://github.com/nodejs/node-gyp/issues/3299)) ([b2fcdcd](https://github.com/nodejs/node-gyp/commit/b2fcdcdd6aebdf0ab6d7d296fcabccf188883e01))
+
 ## [12.3.0](https://github.com/nodejs/node-gyp/compare/v12.2.0...v12.3.0) (2026-04-21)
 
 
