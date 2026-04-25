@@ -21,6 +21,22 @@ describe('moveDirectory', function () {
     clearInterval(timer)
   })
 
+  it('moves contents to dest with matching structure', async function () {
+    tmpDir = await fsp.mkdtemp(path.join(os.tmpdir(), 'node-gyp-move-test-'))
+    const srcDir = path.join(tmpDir, 'src')
+    const destDir = path.join(tmpDir, 'dest')
+    await fsp.mkdir(path.join(srcDir, 'subdir'), { recursive: true })
+    await fsp.writeFile(path.join(srcDir, 'a.txt'), 'hello')
+    await fsp.writeFile(path.join(srcDir, 'subdir', 'b.txt'), 'world')
+
+    await moveDirectory(srcDir, destDir)
+
+    const destA = await fsp.readFile(path.join(destDir, 'a.txt'), 'utf8')
+    assert.strictEqual(destA, 'hello')
+    const destB = await fsp.readFile(path.join(destDir, 'subdir', 'b.txt'), 'utf8')
+    assert.strictEqual(destB, 'world')
+  })
+
   it('large file appears atomically (no partial writes visible)', async function () {
     if (!FULL_TEST) {
       return this.skip('Skipping due to test environment configuration')
