@@ -28,7 +28,7 @@ describe('moveDirectory', function () {
 
     this.timeout(platformTimeout(5, { win32: 10 }))
 
-    tmpDir = await fsp.mkdtemp(path.join(os.tmpdir(), 'node-gyp-copy-test-'))
+    tmpDir = await fsp.mkdtemp(path.join(os.tmpdir(), 'node-gyp-move-test-'))
     const srcDir = path.join(tmpDir, 'src')
     const destDir = path.join(tmpDir, 'dest')
     await fsp.mkdir(srcDir)
