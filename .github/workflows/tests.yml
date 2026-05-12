@@ -102,13 +102,13 @@ jobs:
         include:
           - os: macos-15-intel  # macOS on Intel
             python: "3.14"
-            node: 24.x
+            node: 26.x
           - os: ubuntu-24.04-arm  # Ubuntu on ARM
             python: "3.14"
-            node: 24.x
+            node: 26.x
           - os: windows-11-arm  # Windows on ARM
             python: "3.14"
-            node: 24.x
+            node: 26.x
     name: ${{ matrix.os }} - ${{ matrix.python }} - ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
     env:
@@ -171,10 +171,10 @@ jobs:
         shell: bash
         run: npm test --python="${pythonLocation}/python"
         env:
-          FULL_TEST: ${{ (matrix.node == '24.x' && matrix.python == '3.14') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '26.x' && matrix.python == '3.14') && '1' || '0' }}
       - name: Run Tests (Windows)
         if: runner.os == 'Windows'
         shell: bash # Building wasm on Windows requires using make generator, it only works in bash
         run: npm run test --python="${pythonLocation}\\python.exe"
         env:
-          FULL_TEST: ${{ (matrix.node == '24.x' && matrix.python == '3.14') && '1' || '0' }}
+          FULL_TEST: ${{ (matrix.node == '26.x' && matrix.python == '3.14') && '1' || '0' }}
