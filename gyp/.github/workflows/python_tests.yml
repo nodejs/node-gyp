@@ -8,12 +8,13 @@ on:
 
 jobs:
   Python_lint:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - name: Lint with ruff  # See pyproject.toml for settings
         uses: astral-sh/ruff-action@v3
       - run: ruff format --check --diff
+      - uses: wagoid/commitlint-github-action@v6
 
   Python_tests:
     runs-on: ${{ matrix.os }}
