@@ -1,8 +1,67 @@
-.ncu
-.nyc_output
-*.swp
-gyp/test
-node_modules
-node-gyp-*.tgz
-package-lock.json
-test/.node-gyp
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+
+# Environment & secrets
+.env
+.env.*
+.tokens/
+*.token
+credentials*.json
+
+# Databases (large files)
+*.sqlite
+*.sqlite3
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# VSCode multi-root workspace files — per Odin Ruling LocalIDEFiles_PDFDomain 2026-04-23
+*.code-workspace
+
+# MCP server config — may contain literal secrets, per Odin Ruling 2026-04-23
+.mcp.json
+
+# Office temp files
+~$*
+
+# Large binary files
+*.zip
+*.tar.gz
+*.7z
+*.rar
+
+# Brand asset archives — binaries live on disk (SharePoint canonical) but not tracked in git
+# README.md in each archive folder IS tracked (documents the archive rationale)
+02_Archive/deprecated_brand_assets_*/*.png
+02_Archive/deprecated_brand_assets_*/*.gif
+02_Archive/deprecated_brand_assets_*/*.jpg
+02_Archive/deprecated_brand_assets_*/*.jpeg
+02_Archive/deprecated_brand_assets_*/*.pdf
+02_Archive/deprecated_brand_assets_*/*.pptx
+02_Archive/deprecated_brand_assets_*/*.svg
+02_Archive/deprecated_brand_assets_*/*.tif
+
+# Corporate docs live in SharePoint/OneDrive (SP_Corporate), not git
+01_Corporate/
+04_WorkingData/corporate/
+
+# SharePoint shortcut files (canonical home is SharePoint, not git)
+SP_Corp_*.url
+
+# IDE / tool configs
+GitExtensions.settings
