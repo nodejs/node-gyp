@@ -1,0 +1,27 @@
+name: Lint Commits
+
+on:
+  pull_request:
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  lint-pr-first-commit:
+    name: Commit Lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 22.x
+    - run: npm install
+    - name: Lint first PR commit message
+      run: |
+        FIRST=$(git rev-list --reverse ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} | head -1)
+        echo "Base:       ${{ github.event.pull_request.base.sha }}"
+        echo "Head:       ${{ github.event.pull_request.head.sha }}"
+        echo "First PR commit: $FIRST"
+        git log -1 --format=%B "$FIRST" | npx commitlint --verbose
