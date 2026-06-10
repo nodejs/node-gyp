@@ -52,6 +52,25 @@ describe('create-config-gypi', function () {
     assert.strictEqual(config.variables.build_with_electron, undefined)
   })
 
+  it('config.gypi disables LTO for addon builds on Windows', async function () {
+    const nodeDir = path.join(__dirname, 'fixtures', 'win-lto')
+
+    const prog = gyp()
+    prog.parseArgv(['_', '_', `--nodedir=${nodeDir}`])
+
+    const originalPlatform = process.platform
+    Object.defineProperty(process, 'platform', { value: 'win32' })
+    try {
+      const config = await getCurrentConfigGypi({ gyp: prog, nodeDir, vsInfo: {} })
+      // thin LTO leaks clang/lld-only flags into the MSVC addon build, so it
+      // must be disabled regardless of how node itself was built
+      assert.strictEqual(config.variables.enable_lto, 'false')
+      assert.strictEqual(config.variables.enable_thin_lto, 'false')
+    } finally {
+      Object.defineProperty(process, 'platform', { value: originalPlatform })
+    }
+  })
+
   it('config.gypi parsing', function () {
     const str = "# Some comments\n{'variables': {'multiline': 'A'\n'B'}}"
     const config = parseConfigGypi(str)
