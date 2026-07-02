@@ -1,5 +1,17 @@
 # Changelog
 
+## [13.0.1](https://github.com/nodejs/node-gyp/compare/v13.0.0...v13.0.1) (2026-07-02)
+
+
+### Core
+
+* **deps:** bump undici from 6.26.0 to 8.4.1 ([#3330](https://github.com/nodejs/node-gyp/issues/3330)) ([2c95a19](https://github.com/nodejs/node-gyp/commit/2c95a19f54bedf76209e795b146ab44e6fc3f359))
+
+
+### Miscellaneous
+
+* fix windows vs2026 version ([#3338](https://github.com/nodejs/node-gyp/issues/3338)) ([5a835ea](https://github.com/nodejs/node-gyp/commit/5a835eaae4d8b08189debbd2f20e078e7a661b3d))
+
 ## [13.0.0](https://github.com/nodejs/node-gyp/compare/v12.4.0...v13.0.0) (2026-06-10)
 
 
