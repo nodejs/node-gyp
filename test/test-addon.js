@@ -19,7 +19,7 @@ const execFile = async (cmd) => {
     env: { ...process.env, NODE_GYP_NULL_LOGGER: undefined },
     encoding: 'utf-8'
   })
-  return [err, stderr.toString().trim().split(/\r?\n/), stdout.toString().trim()]
+  return [err, stdout.toString().trim(), stderr.toString().trim().split(/\r?\n/)]
 }
 
 function runHello (hostProcess = process.execPath) {
@@ -47,7 +47,7 @@ describe('addon', function () {
 
     // Set the loglevel otherwise the output disappears when run via 'npm test'
     const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
-    const [err, logLines, stdout] = await execFile(cmd)
+    const [err, stdout, logLines] = await execFile(cmd)
     if (err) {
       console.log('-- build stdout (MSBuild/make output) --')
       console.log(stdout)
@@ -109,7 +109,7 @@ describe('addon', function () {
       '--loglevel=verbose',
       '-nodedir=' + testNodeDir
     ]
-    const [err, logLines, stdout] = await execFile(cmd)
+    const [err, stdout, logLines] = await execFile(cmd)
     try {
       fs.unlink(testNodeDir)
     } catch (err) {
@@ -134,7 +134,7 @@ describe('addon', function () {
     fs.copyFileSync(process.execPath, notNodePath)
 
     const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
-    const [err, logLines, stdout] = await execFile(cmd)
+    const [err, stdout, logLines] = await execFile(cmd)
     if (err) {
       console.log('-- build stdout (MSBuild/make output) --')
       console.log(stdout)
