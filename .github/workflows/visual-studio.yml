@@ -20,7 +20,7 @@ jobs:
           - os: windows-2022
             msvs-version: 2022
           - os: windows-2025
-            msvs-version: 2022  # Fix this when Visual Studio 2025 is released
+            msvs-version: 2026
           - os: windows-11-arm
             msvs-version: 2022  # Fix this when Visual Studio 2025 is released
     runs-on: ${{ matrix.os }}
