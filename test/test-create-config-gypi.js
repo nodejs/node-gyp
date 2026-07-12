@@ -76,4 +76,10 @@ describe('create-config-gypi', function () {
     const config = parseConfigGypi(str)
     assert.deepStrictEqual(config, { variables: { multiline: 'AB' } })
   })
+
+  it('config.gypi parsing with double quotes inside single-quoted strings', function () {
+    const str = '{\'variables\': {\'cond\': \'OS=="win"\', \'flags\': \'-DFOO="x"\'}}'
+    const config = parseConfigGypi(str)
+    assert.deepStrictEqual(config, { variables: { cond: 'OS=="win"', flags: '-DFOO="x"' } })
+  })
 })
