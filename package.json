@@ -11,7 +11,7 @@
     "bindings",
     "gyp"
   ],
-  "version": "12.4.0",
+  "version": "13.0.1",
   "installVersion": 11,
   "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)",
   "repository": {
@@ -30,7 +30,7 @@
     "semver": "^7.3.5",
     "tar": "^7.5.4",
     "tinyglobby": "^0.2.12",
-    "undici": "^6.25.0",
+    "undici": "^8.4.1",
     "which": "^7.0.0"
   },
   "engines": {
