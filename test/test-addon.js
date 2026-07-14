@@ -15,11 +15,11 @@ const nodeGyp = path.resolve(__dirname, '..', 'bin', 'node-gyp.js')
 const execFileSync = (...args) => cp.execFileSync(...args).toString().trim()
 
 const execFile = async (cmd) => {
-  const [err,, stderr] = await util.execFile(process.execPath, cmd, {
+  const [err, stdout, stderr] = await util.execFile(process.execPath, cmd, {
     env: { ...process.env, NODE_GYP_NULL_LOGGER: undefined },
     encoding: 'utf-8'
   })
-  return [err, stderr.toString().trim().split(/\r?\n/)]
+  return [err, stdout.toString().trim(), stderr.toString().trim().split(/\r?\n/)]
 }
 
 function runHello (hostProcess = process.execPath) {
@@ -47,7 +47,13 @@ describe('addon', function () {
 
     // Set the loglevel otherwise the output disappears when run via 'npm test'
     const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
-    const [err, logLines] = await execFile(cmd)
+    const [err, stdout, logLines] = await execFile(cmd)
+    if (err) {
+      console.log('-- build stdout (MSBuild/make output) --')
+      console.log(stdout)
+      console.log('-- build stderr (gyp logs) --')
+      console.log(logLines.join('\n'))
+    }
     const lastLine = logLines[logLines.length - 1]
     assert.strictEqual(err, null)
     assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
@@ -103,11 +109,17 @@ describe('addon', function () {
       '--loglevel=verbose',
       '-nodedir=' + testNodeDir
     ]
-    const [err, logLines] = await execFile(cmd)
+    const [err, stdout, logLines] = await execFile(cmd)
     try {
       fs.unlink(testNodeDir)
     } catch (err) {
       assert.fail(err)
+    }
+    if (err) {
+      console.log('-- build stdout (MSBuild/make output) --')
+      console.log(stdout)
+      console.log('-- build stderr (gyp logs) --')
+      console.log(logLines.join('\n'))
     }
     const lastLine = logLines[logLines.length - 1]
     assert.strictEqual(err, null)
@@ -122,7 +134,13 @@ describe('addon', function () {
     fs.copyFileSync(process.execPath, notNodePath)
 
     const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
-    const [err, logLines] = await execFile(cmd)
+    const [err, stdout, logLines] = await execFile(cmd)
+    if (err) {
+      console.log('-- build stdout (MSBuild/make output) --')
+      console.log(stdout)
+      console.log('-- build stderr (gyp logs) --')
+      console.log(logLines.join('\n'))
+    }
     const lastLine = logLines[logLines.length - 1]
     assert.strictEqual(err, null)
     assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
