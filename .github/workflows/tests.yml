@@ -31,7 +31,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v7
     - name: Use Node.js 22.x
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: 22.x
     - name: Install Dependencies
@@ -46,7 +46,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v7
     - name: Use Node.js 22.x
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: 22.x
     - name: Install Dependencies
@@ -65,7 +65,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v7
     - name: Use Node.js 22.x
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: 22.x
     - name: Update npm
@@ -121,7 +121,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v7
       - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
       - name: Use Python ${{ matrix.python }}
