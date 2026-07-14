@@ -77,6 +77,24 @@ describe('download', function () {
 
     let proxyUsed = false
     const pserver = http.createServer()
+    // undici tunnels https requests through the proxy with CONNECT, but forwards
+    // plain http requests to the proxy in absolute-form. Handle both so the test
+    // works regardless of which path undici picks.
+    pserver.on('request', (creq, cres) => {
+      proxyUsed = true
+      const target = new URL(creq.url)
+      const proxyReq = http.request({
+        host: target.hostname,
+        port: target.port,
+        path: target.pathname + target.search,
+        method: creq.method,
+        headers: creq.headers
+      }, (proxyRes) => {
+        cres.writeHead(proxyRes.statusCode, proxyRes.headers)
+        proxyRes.pipe(cres)
+      })
+      creq.pipe(proxyReq)
+    })
     pserver.on('connect', (req, clientSocket, head) => {
       proxyUsed = true
       const [targetHost, targetPort] = req.url.split(':')
