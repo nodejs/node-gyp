@@ -1,5 +1,21 @@
 # Changelog
 
+## [13.0.2](https://github.com/nodejs/node-gyp/compare/v13.0.1...v13.0.2) (2026-07-22)
+
+
+### Core
+
+* **deps:** bump actions/checkout from 6 to 7 ([#3335](https://github.com/nodejs/node-gyp/issues/3335)) ([353050b](https://github.com/nodejs/node-gyp/commit/353050b2fe664e5c6379d32368deab04d2b37021))
+* **deps:** bump actions/setup-node from 6 to 7 ([#3348](https://github.com/nodejs/node-gyp/issues/3348)) ([005a7c5](https://github.com/nodejs/node-gyp/commit/005a7c593a2421dd5dc1db45bbec77a037361044))
+* **deps:** bump actions/setup-python from 6 to 7 ([#3349](https://github.com/nodejs/node-gyp/issues/3349)) ([42367da](https://github.com/nodejs/node-gyp/commit/42367da5a2683115ff538b92caed5c32c322005f))
+* **deps:** bump astral-sh/ruff-action from 4.0.0 to 4.1.0 ([#3342](https://github.com/nodejs/node-gyp/issues/3342)) ([ef586e1](https://github.com/nodejs/node-gyp/commit/ef586e1304b6b05b24ab696b2e849f0c075c3be5))
+
+
+### Tests
+
+* fix undici 8.7.0 compatibility ([#3345](https://github.com/nodejs/node-gyp/issues/3345)) ([a2f8b6a](https://github.com/nodejs/node-gyp/commit/a2f8b6ac88dd8338f14f06ec8351a07028b0a979))
+* log MSBuild output on Windows build failures ([#3328](https://github.com/nodejs/node-gyp/issues/3328)) ([3c38cec](https://github.com/nodejs/node-gyp/commit/3c38cecc770a987ce8ccddbfdfd3a3b646750ee8))
+
 ## [13.0.1](https://github.com/nodejs/node-gyp/compare/v13.0.0...v13.0.1) (2026-07-02)
 
 
