@@ -22,7 +22,8 @@ jobs:
     - uses: astral-sh/ruff-action@v4.1.0
       with:
         args: "check --select=E,F,PLC,PLE,UP,W,YTT --ignore=E721,PLC0206,PLC0415,PLC1901,S101,UP031 --target-version=py39"
-    - run: ruff format --check --diff
+    # Do not ruff format gyp example code in markdown files.
+    - run: ruff format --check --diff --config="extend-exclude=['README.md', 'docs/Linking-to-OpenSSL.md']"
 
   lint-js:
     name: Lint JS
