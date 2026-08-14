@@ -1,0 +1,5 @@
+rules:
+  adhoc-packages:
+    disable: true
+  excessive-permissions:
+    disable: true

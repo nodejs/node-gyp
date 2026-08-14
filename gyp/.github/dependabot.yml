@@ -10,6 +10,8 @@ updates:
           - "*"  # Group all Actions updates into a single larger pull request
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
   - package-ecosystem: "pip"
     directory: "/"
     groups:
@@ -18,3 +20,5 @@ updates:
           - "*"  # Group all pip updates into a single larger pull request
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7

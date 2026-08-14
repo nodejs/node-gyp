@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - uses: actions/github-script@v9
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         id: get-gyp-next-version
         with:
           script: |
@@ -33,11 +33,13 @@ jobs:
           result-encoding: string
 
       - name: Update gyp-next
+        env:
+          GYP_NEXT_VERSION: ${{ steps.get-gyp-next-version.outputs.result }}
         run: |
-          python update-gyp.py --no-commit ${{ steps.get-gyp-next-version.outputs.result }}
+          python update-gyp.py --no-commit ${GYP_NEXT_VERSION}
 
       - name: Open or update PR for the gyp-next update
-        uses: gr2m/create-or-update-pull-request-action@v1
+        uses: gr2m/create-or-update-pull-request-action@483e2e5c8e68c420e72687127cfdc30a45254be7 # v1
         with:
           branch: actions/update-gyp-next
           author: Node.js GitHub Bot <github-bot@iojs.org>

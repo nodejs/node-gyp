@@ -18,8 +18,10 @@ jobs:
     name: Lint Python
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7
-    - uses: astral-sh/ruff-action@v4.1.0
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - uses: astral-sh/ruff-action@278981a28ce3188b1e39527901f38254bf3aac89 # v4.1.0
       with:
         args: "check --select=E,F,PLC,PLE,UP,W,YTT --ignore=E721,PLC0206,PLC0415,PLC1901,S101,UP031 --target-version=py39"
     - run: ruff format --check --diff
@@ -29,9 +31,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
     - name: Use Node.js 22.x
-      uses: actions/setup-node@v7
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: 22.x
     - name: Install Dependencies
@@ -44,9 +48,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
     - name: Use Node.js 22.x
-      uses: actions/setup-node@v7
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: 22.x
     - name: Install Dependencies
@@ -63,9 +69,11 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
     - name: Use Node.js 22.x
-      uses: actions/setup-node@v7
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: 22.x
     - name: Update npm
@@ -119,17 +127,19 @@ jobs:
       WASI_SDK_PATH: 'wasi-sdk-25.0'
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ matrix.node }}
       - name: Use Python ${{ matrix.python }}
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ matrix.python }}
           allow-prereleases: true
-      - uses: seanmiddleditch/gha-setup-ninja@v6
+      - uses: seanmiddleditch/gha-setup-ninja@3b1f8f94a2f8254bd26914c4ab9474d4f0015f67 # v6
       - name: Install wasi-sdk (Windows)
         shell: pwsh
         if: runner.os == 'Windows'
