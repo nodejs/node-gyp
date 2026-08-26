@@ -119,6 +119,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
+      - run: npm install --global npm@12  # Temporary: See #3362
       - name: Use Python ${{ matrix.python }}
         uses: actions/setup-python@v6
         with:
@@ -172,7 +173,7 @@ jobs:
         run: npm test
       - name: Run Tests (Windows)
         if: runner.os == 'Windows'
-        shell: bash # Building wasm on Windows requires using make generator, it only works in bash
+        shell: bash # Building wasm on Windows requires using make generator; it only works in bash
         env:
           FULL_TEST: ${{ (matrix.node == '24.x' && matrix.python == '3.14') && '1' || '0' }}
           NODE_GYP_FORCE_PYTHON: "${{ env.pythonLocation }}\\python.exe"
