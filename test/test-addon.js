@@ -111,7 +111,7 @@ describe('addon', function () {
     ]
     const [err, stdout, logLines] = await execFile(cmd)
     try {
-      fs.unlink(testNodeDir)
+      fs.unlinkSync(testNodeDir)
     } catch (err) {
       assert.fail(err)
     }
