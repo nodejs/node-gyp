@@ -48,7 +48,8 @@ Depending on your operating system, you will need to install:
 
 ### On Windows
 
-Install tools with [Chocolatey](https://chocolatey.org):
+Install tools with [Chocolatey](https://community.chocolatey.org/) using the
+[visualstudio2026-workload-vctools](https://community.chocolatey.org/packages/visualstudio2026-workload-vctools) package:
 ``` bash
 choco install python visualstudio2026-workload-vctools -y
 ```
