@@ -69,4 +69,34 @@ describe('options', function () {
 
     assert.strictEqual(g.opts['msvs-version'], '2017')
   })
+
+  it('--msvs_version on the command line, as the README documents it', () => {
+    // the environment is read after argv, so the previous test would win here
+    delete process.env.npm_config_msvs_version
+
+    const g = gyp()
+    g.parseArgv(['node', 'node-gyp', 'configure', '--msvs_version=2022'])
+
+    assert.strictEqual(g.opts['msvs-version'], '2022')
+    assert.deepStrictEqual(g.opts.argv.remain, ['configure'])
+  })
+
+  it('--msvs_version with a separate value', () => {
+    delete process.env.npm_config_msvs_version
+
+    const g = gyp()
+    g.parseArgv(['node', 'node-gyp', 'configure', '--msvs_version', '2022'])
+
+    assert.strictEqual(g.opts['msvs-version'], '2022')
+    assert.deepStrictEqual(g.opts.argv.remain, ['configure'])
+  })
+
+  it('--msvs-version on the command line', () => {
+    delete process.env.npm_config_msvs_version
+
+    const g = gyp()
+    g.parseArgv(['node', 'node-gyp', 'configure', '--msvs-version=2022'])
+
+    assert.strictEqual(g.opts['msvs-version'], '2022')
+  })
 })
