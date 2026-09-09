@@ -50,7 +50,7 @@ Depending on your operating system, you will need to install:
 
 Install tools with [Chocolatey](https://chocolatey.org):
 ``` bash
-choco install python visualstudio2022-workload-vctools -y
+choco install python visualstudio2026-workload-vctools -y
 ```
 
 Or install and configure Python and Visual Studio tools manually:
