@@ -1,5 +1,24 @@
 # Changelog
 
+## [13.0.3](https://github.com/nodejs/node-gyp/compare/v13.0.2...v13.0.3) (2026-09-10)
+
+
+### Bug Fixes
+
+* accept --msvs_version as the README documents it ([#3364](https://github.com/nodejs/node-gyp/issues/3364)) ([8cca9c9](https://github.com/nodejs/node-gyp/commit/8cca9c9ff1b8a292734fc82c2ae35ba17e20a5ff))
+* add Python 3.15 and update OS versions in tests.yml ([#3369](https://github.com/nodejs/node-gyp/issues/3369)) ([03c7b3b](https://github.com/nodejs/node-gyp/commit/03c7b3b69f15f57a491baf0c406e7e8b9d63b463))
+
+
+### Tests
+
+* fix missing cb in fs.unlink ([#3368](https://github.com/nodejs/node-gyp/issues/3368)) ([e91cd76](https://github.com/nodejs/node-gyp/commit/e91cd76a28b38650fdb4e7a3dd28e53b6f2c464f))
+* fix non-ASCII addon cache path ([#3370](https://github.com/nodejs/node-gyp/issues/3370)) ([e6f699f](https://github.com/nodejs/node-gyp/commit/e6f699f1ed4bf846a5d8275564591cbaf86f75ec))
+
+
+### Doc
+
+* use Visual Studio 2026 in Windows setup instructions ([#3367](https://github.com/nodejs/node-gyp/issues/3367)) ([20bd442](https://github.com/nodejs/node-gyp/commit/20bd442a04627621248fe6b5aa97cd5e88d7f058))
+
 ## [13.0.2](https://github.com/nodejs/node-gyp/compare/v13.0.1...v13.0.2) (2026-08-25)
 
 
