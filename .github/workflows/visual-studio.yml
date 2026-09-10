@@ -14,7 +14,6 @@ jobs:
   visual-studio:
     strategy:
       fail-fast: false
-      max-parallel: 8
       matrix:
         include:
           - os: windows-2022
