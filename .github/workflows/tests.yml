@@ -107,13 +107,13 @@ jobs:
       max-parallel: 11
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        python: ["3.10", "3.12", "3.14"]
+        python: ["3.10", "3.12", "3.14", "3.15"]
         node: [22.x, 24.x, 26.x]
         include:
-          - os: macos-15-intel  # macOS on Intel
+          - os: macos-26-intel  # macOS on Intel
             python: "3.14"
             node: 26.x
-          - os: ubuntu-24.04-arm  # Ubuntu on ARM
+          - os: ubuntu-26.04-arm  # Ubuntu on ARM
             python: "3.14"
             node: 26.x
           - os: windows-11-arm  # Windows on ARM
