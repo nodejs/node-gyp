@@ -3,36 +3,37 @@ on:
   push:
   pull_request:
   workflow_dispatch:
-
+permissions: {}
 jobs:
   nodejs-integration:
     strategy:
       fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        python-version: ["3.10", "3.12", "3.14"]
+        python-version: ["3.11", "3.13", "3.15"]
         include:
-          - os: macos-15-intel  # macOS on Intel
-            python-version: "3.14"
+          - os: macos-26-intel  # macOS on Intel
+            python-version: 3.x
           - os: ubuntu-24.04-arm  # Ubuntu on ARM
-            python-version: "3.14"
+            python-version: 3.x
           - os: windows-11-arm  # Windows on ARM
-            python-version: "3.14"
+            python-version: 3.x
+          - os: windows-2025-vs2026  # Windows with Visual Studio 2026
+            python-version: 3.x
 
     runs-on: ${{ matrix.os }}
     steps:
       - name: Clone gyp-next
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           path: gyp-next
-          persist-credentials: false
       - name: Clone nodejs/node
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: nodejs/node
           path: node
           persist-credentials: false
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
@@ -54,7 +55,7 @@ jobs:
         if: runner.os == 'Windows'
         run: choco install nasm
       - name: Run configure
-        if: runner.os == 'Windows'
+        if: runner.os == 'Windows' && matrix.python-version != '3.15'
         run: |
           cd node
           ./vcbuild.bat nobuild
