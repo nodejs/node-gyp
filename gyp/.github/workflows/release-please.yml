@@ -3,6 +3,8 @@ on:
     branches:
       - main
 
+permissions: {}
+
 name: release-please
 jobs:
   release-please:
@@ -24,7 +26,9 @@ jobs:
     if: ${{ needs.release-please.outputs.release_created }}  # only publish on release
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
     - name: Build a binary wheel and a source tarball
       run: pipx run build
     - name: Store the distribution packages
@@ -73,7 +77,7 @@ jobs:
         name: python-package-distributions
         path: dist/
     - name: Sign the dists with Sigstore
-      uses: sigstore/gh-action-sigstore-python@v3.3.0
+      uses: sigstore/gh-action-sigstore-python@790bc6befb9d733738f18d8f895854b453640ec9 # v3.5.0
       with:
         inputs: >-
           ./dist/*.tar.gz
@@ -81,10 +85,11 @@ jobs:
     - name: Upload artifact signatures to GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
+        NEEDS_RELEASE_PLEASE_OUTPUTS_TAG_NAME: ${{ needs.release-please.outputs.tag_name }}
       # Upload to GitHub Release using the `gh` CLI.
       # `dist/` contains the built packages, and the
       # sigstore-produced signatures and certificates.
       run: >-
         gh release upload
-        ${{ needs.release-please.outputs.tag_name }} dist/**
+        ${NEEDS_RELEASE_PLEASE_OUTPUTS_TAG_NAME} dist/**
         --repo '${{ github.repository }}'
