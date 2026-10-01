@@ -674,9 +674,7 @@ describe('find-visualstudio', function () {
   }
 
   function allVsVersions (finder) {
-    finder.findVisualStudio2017OrNewerUsingSetupModule = async () => {
-      return null
-    }
+    finder.findNewVSUsingSetupModule = async () => null
     finder.findVisualStudio2017 = async () => {
       const data0 = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures',
         'VS_2017_Unusable.txt')))
