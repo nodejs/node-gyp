@@ -36,6 +36,10 @@ describe('options', function () {
     // loglevel does not get added to opts but will change the logger's level.
     process.env.npm_config_loglevel = 'silly'
 
+    // the logger is shared, so reset whatever level earlier tests left behind
+    // (e.g. from an npm_config_loglevel set by the caller of `npm test`)
+    log.logger.level = 'info'
+
     const g = gyp()
 
     assert.strictEqual(log.logger.level.id, 'info')
@@ -98,5 +102,27 @@ describe('options', function () {
     g.parseArgv(['node', 'node-gyp', 'configure', '--msvs-version=2022'])
 
     assert.strictEqual(g.opts['msvs-version'], '2022')
+  })
+
+  it('--loglevel on the command line wins over npm_config_loglevel', () => {
+    process.env.npm_config_loglevel = 'error'
+    log.logger.level = 'info'
+
+    try {
+      const g = gyp()
+      g.parseArgv(['node', 'node-gyp', 'rebuild', '--loglevel=verbose'])
+
+      assert.strictEqual(log.logger.level.id, 'verbose')
+      assert.strictEqual(g.opts.loglevel, undefined)
+
+      gyp().parseArgv(['node', 'node-gyp', 'rebuild', '--silly'])
+      assert.strictEqual(log.logger.level.id, 'silly')
+
+      gyp().parseArgv(['node', 'node-gyp', 'rebuild'])
+      assert.strictEqual(log.logger.level.id, 'error')
+    } finally {
+      delete process.env.npm_config_loglevel
+      log.logger.level = 'info'
+    }
   })
 })
