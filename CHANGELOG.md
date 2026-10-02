@@ -1,5 +1,41 @@
 # Changelog
 
+## [13.1.0](https://github.com/nodejs/node-gyp/compare/v13.0.2...v13.1.0) (2026-10-02)
+
+
+### Features
+
+* update gyp-next to v0.22.3 ([#3361](https://github.com/nodejs/node-gyp/issues/3361)) ([729bfb8](https://github.com/nodejs/node-gyp/commit/729bfb8372e9bfe222d9e26d16cfddf3dcb5926b))
+
+
+### Bug Fixes
+
+* accept --msvs_version as the README documents it ([#3364](https://github.com/nodejs/node-gyp/issues/3364)) ([8cca9c9](https://github.com/nodejs/node-gyp/commit/8cca9c9ff1b8a292734fc82c2ae35ba17e20a5ff))
+* add Python 3.15 and update OS versions in tests.yml ([#3369](https://github.com/nodejs/node-gyp/issues/3369)) ([03c7b3b](https://github.com/nodejs/node-gyp/commit/03c7b3b69f15f57a491baf0c406e7e8b9d63b463))
+* let --loglevel on the command line override npm_config_loglevel ([#3384](https://github.com/nodejs/node-gyp/issues/3384)) ([2275aa9](https://github.com/nodejs/node-gyp/commit/2275aa95e2d7e0c4739219ddaad51e0ce0f7f75a))
+
+
+### Core
+
+* **deps-dev:** bump eslint to 10 and neostandard to 0.14.0-next.1 ([#3374](https://github.com/nodejs/node-gyp/issues/3374)) ([d389298](https://github.com/nodejs/node-gyp/commit/d38929823a9a2f83422386d8d127a036d00b007a))
+
+
+### Tests
+
+* fix missing cb in fs.unlink ([#3368](https://github.com/nodejs/node-gyp/issues/3368)) ([e91cd76](https://github.com/nodejs/node-gyp/commit/e91cd76a28b38650fdb4e7a3dd28e53b6f2c464f))
+* fix non-ASCII addon cache path ([#3370](https://github.com/nodejs/node-gyp/issues/3370)) ([e6f699f](https://github.com/nodejs/node-gyp/commit/e6f699f1ed4bf846a5d8275564591cbaf86f75ec))
+
+
+### Doc
+
+* use Visual Studio 2026 in Windows setup instructions ([#3367](https://github.com/nodejs/node-gyp/issues/3367)) ([20bd442](https://github.com/nodejs/node-gyp/commit/20bd442a04627621248fe6b5aa97cd5e88d7f058))
+
+
+### Miscellaneous
+
+* **deps:** upgrade tar to 7.5.7 to address CVE-2026-24842 ([#3375](https://github.com/nodejs/node-gyp/issues/3375)) ([79048c9](https://github.com/nodejs/node-gyp/commit/79048c9131471b91829d1aa3c9719c951f23eb03))
+* use Visual Studio 2026 on windows-11-arm ([#3380](https://github.com/nodejs/node-gyp/issues/3380)) ([6feed93](https://github.com/nodejs/node-gyp/commit/6feed93e972182109cd5bda658c1b395b6ad45d4))
+
 ## [13.0.2](https://github.com/nodejs/node-gyp/compare/v13.0.1...v13.0.2) (2026-08-25)
 
 
