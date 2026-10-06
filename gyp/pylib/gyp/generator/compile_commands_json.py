@@ -62,7 +62,7 @@ def AddCommandsForTarget(cwd, target, params, per_config_commands):
         defines = ["-D" + s for s in defines]
 
         # TODO(bnoordhuis) Handle generated source files.
-        extensions = (".c", ".cc", ".cpp", ".cxx")
+        extensions = (".c", ".cc", ".cpp", ".cxx", ".m", ".mm")
         sources = [s for s in target.get("sources", []) if s.endswith(extensions)]
 
         def resolve(filename):
@@ -81,7 +81,7 @@ def AddCommandsForTarget(cwd, target, params, per_config_commands):
         commands = per_config_commands.setdefault(configuration_name, [])
         for source in sources:
             file = resolve(source)
-            isc = source.endswith(".c")
+            isc = source.endswith((".c", ".m"))
             cc = "cc" if isc else "c++"
             cflags = cflags_c if isc else cflags_cc
             command = " ".join(
