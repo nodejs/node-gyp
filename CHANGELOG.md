@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.1.1](https://github.com/nodejs/node-gyp/compare/v13.1.0...v13.1.1) (2026-10-14)
+
+
+### Core
+
+* **deps:** bump actions/setup-node from 7.0.0 to 7.1.0 ([#3386](https://github.com/nodejs/node-gyp/issues/3386)) ([c915679](https://github.com/nodejs/node-gyp/commit/c915679036cacf1d6192a78fb41cca5f50eae304))
+
 ## [13.1.0](https://github.com/nodejs/node-gyp/compare/v13.0.2...v13.1.0) (2026-10-02)
 
 
