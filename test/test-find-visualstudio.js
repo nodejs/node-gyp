@@ -954,9 +954,13 @@ describe('find-visualstudio', function () {
 
     const { err, info } = await finder.findVisualStudio()
     assert.strictEqual(err, null)
+    const msBuildDir = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\' +
+      'BuildTools\\MSBuild\\Current\\Bin'
     assert.deepStrictEqual(info, {
-      msBuild: 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\' +
-        'BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe',
+      // getMSBuild() prefers the arm64 copy when the host is arm64 and the file exists
+      msBuild: process.arch === 'arm64'
+        ? msBuildDir + '\\arm64\\MSBuild.exe'
+        : msBuildDir + '\\MSBuild.exe',
       path:
         'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools',
       sdk: '10.0.26100.0',
