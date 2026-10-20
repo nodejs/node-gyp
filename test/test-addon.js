@@ -139,21 +139,26 @@ describe('addon', function () {
   it('addon works with renamed host executable', async function () {
     this.timeout(platformTimeout(1, { win32: 5 }))
 
-    const notNodePath = path.join(os.tmpdir(), 'notnode' + path.extname(process.execPath))
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'node-gyp-notnode-'))
+    const notNodePath = path.join(tempDir, 'notnode' + path.extname(process.execPath))
     fs.copyFileSync(process.execPath, notNodePath)
 
-    const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
-    const [err, stdout, logLines] = await execFile(cmd)
-    if (err) {
-      console.log('-- build stdout (MSBuild/make output) --')
-      console.log(stdout)
-      console.log('-- build stderr (gyp logs) --')
-      console.log(logLines.join('\n'))
+    try {
+      const cmd = [nodeGyp, 'rebuild', '-C', addonPath, '--loglevel=verbose']
+      const [err, stdout, logLines] = await execFile(cmd)
+      if (err) {
+        console.log('-- build stdout (MSBuild/make output) --')
+        console.log(stdout)
+        console.log('-- build stderr (gyp logs) --')
+        console.log(logLines.join('\n'))
+      }
+      const lastLine = logLines[logLines.length - 1]
+      assert.strictEqual(err, null)
+      assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
+      assert.strictEqual(runHello(notNodePath), 'world')
+    } finally {
+      // Windows may keep the just-exited executable locked briefly (EBUSY)
+      fs.rmSync(tempDir, { recursive: true, force: true, maxRetries: 3, retryDelay: 1000 })
     }
-    const lastLine = logLines[logLines.length - 1]
-    assert.strictEqual(err, null)
-    assert.strictEqual(lastLine, 'gyp info ok', 'should end in ok')
-    assert.strictEqual(runHello(notNodePath), 'world')
-    fs.unlinkSync(notNodePath)
   })
 })
