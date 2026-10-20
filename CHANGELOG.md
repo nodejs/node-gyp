@@ -1,5 +1,19 @@
 # Changelog
 
+## [13.1.1](https://github.com/nodejs/node-gyp/compare/v13.1.0...v13.1.1) (2026-10-20)
+
+
+### Core
+
+* **deps-dev:** bump mocha from 11.8.0 to 12.0.3 ([#3385](https://github.com/nodejs/node-gyp/issues/3385)) ([e020cdf](https://github.com/nodejs/node-gyp/commit/e020cdf1d993a35e3a74361f4e4f70598eafadbb))
+* **deps:** bump actions/setup-node from 7.0.0 to 7.1.0 ([#3386](https://github.com/nodejs/node-gyp/issues/3386)) ([c915679](https://github.com/nodejs/node-gyp/commit/c915679036cacf1d6192a78fb41cca5f50eae304))
+
+
+### Tests
+
+* avoid EBUSY removing renamed host executable ([#3381](https://github.com/nodejs/node-gyp/issues/3381)) ([253ed10](https://github.com/nodejs/node-gyp/commit/253ed102f36928cb975e2facb87840dac24e0302))
+* isolate configure-nodedir from npm_config_nodedir ([#3389](https://github.com/nodejs/node-gyp/issues/3389)) ([9503b59](https://github.com/nodejs/node-gyp/commit/9503b590aacb7ff4a194e3ae0c3010ebd0be3a18))
+
 ## [13.1.0](https://github.com/nodejs/node-gyp/compare/v13.0.2...v13.1.0) (2026-10-02)
 
 
