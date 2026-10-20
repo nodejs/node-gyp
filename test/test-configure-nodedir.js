@@ -1,6 +1,6 @@
 'use strict'
 
-const { describe, it } = require('mocha')
+const { describe, it, before, after } = require('mocha')
 const assert = require('assert')
 const path = require('path')
 const os = require('os')
@@ -56,6 +56,26 @@ function checkTargetPath (target, value) {
 }
 
 describe('configure-nodedir', function () {
+  // CI harnesses such as citgm export npm_config_nodedir, which parseArgv lets
+  // override --nodedir, so keep it out of these tests
+  const envKeys = ['npm_config_nodedir', 'npm_package_config_node_gyp_nodedir']
+  const savedEnv = {}
+
+  before(function () {
+    for (const key of envKeys) {
+      savedEnv[key] = process.env[key]
+      delete process.env[key]
+    }
+  })
+
+  after(function () {
+    for (const key of envKeys) {
+      if (savedEnv[key] !== undefined) {
+        process.env[key] = savedEnv[key]
+      }
+    }
+  })
+
   it('configure nodedir with node-gyp command line', function (done) {
     const prog = gyp()
     prog.parseArgv(['dummy_prog', 'dummy_script', '--nodedir=' + path.sep + 'usr'])
@@ -68,7 +88,7 @@ describe('configure-nodedir', function () {
       };
       assert.fail()
     }
-    configure(prog, [], assert.fail)
+    configure(prog, []).catch(done)
   })
 
   if (process.config.variables.use_prefix_to_find_headers) {
@@ -85,7 +105,7 @@ describe('configure-nodedir', function () {
         };
         assert.fail()
       }
-      configure(prog, [], assert.fail)
+      configure(prog, []).catch(done)
     })
 
     it('use-prefix-to-find-headers build time option - no match', function (done) {
@@ -101,7 +121,7 @@ describe('configure-nodedir', function () {
         };
         return SPAWN_RESULT(done)
       }
-      configure2(prog, [], assert.fail)
+      configure2(prog, []).catch(done)
     })
 
     it('use-prefix-to-find-headers build time option, target specified', function (done) {
@@ -117,7 +137,7 @@ describe('configure-nodedir', function () {
         };
         return SPAWN_RESULT(done)
       }
-      configure(prog, [], assert.fail)
+      configure(prog, []).catch(done)
     })
   }
 })
