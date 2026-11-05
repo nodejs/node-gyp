@@ -71,6 +71,55 @@ describe('create-config-gypi', function () {
     }
   })
 
+  it('config.gypi normalizes OS to linux when running on Android (e.g. Termux)', async function () {
+    const prog = gyp()
+    prog.parseArgv([])
+
+    const originalPlatform = process.platform
+    const originalOS = process.config.variables.OS
+    Object.defineProperty(process, 'platform', { value: 'android' })
+    // node built for Android reports OS "android" in process.config
+    let canStubOS = true
+    try {
+      Object.defineProperty(process.config.variables, 'OS', { value: 'android', configurable: true })
+    } catch {
+      // process.config.variables is not extensible on some node builds
+      canStubOS = false
+    }
+    try {
+      const config = await getCurrentConfigGypi({ gyp: prog, vsInfo: {} })
+      // a local addon build on Android is native, not an NDK cross-compile
+      if (canStubOS) {
+        assert.strictEqual(config.variables.OS, 'linux')
+      } else {
+        assert.ok(config.variables)
+      }
+    } finally {
+      if (canStubOS) {
+        Object.defineProperty(process.config.variables, 'OS', { value: originalOS, configurable: true })
+      }
+      Object.defineProperty(process, 'platform', { value: originalPlatform })
+    }
+  })
+
+  it('config.gypi keeps OS from custom headers when using --nodedir on Android', async function () {
+    const nodeDir = path.join(__dirname, 'fixtures', 'nodedir')
+
+    const prog = gyp()
+    prog.parseArgv(['_', '_', `--nodedir=${nodeDir}`])
+
+    const originalPlatform = process.platform
+    Object.defineProperty(process, 'platform', { value: 'android' })
+    try {
+      const config = await getCurrentConfigGypi({ gyp: prog, nodeDir, vsInfo: {} })
+      // explicit custom headers may intentionally target Android via NDK:
+      // OS must come from the custom config.gypi, not process.config
+      assert.strictEqual(config.variables.OS, undefined)
+    } finally {
+      Object.defineProperty(process, 'platform', { value: originalPlatform })
+    }
+  })
+
   it('config.gypi parsing', function () {
     const str = "# Some comments\n{'variables': {'multiline': 'A'\n'B'}}"
     const config = parseConfigGypi(str)
