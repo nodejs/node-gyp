@@ -37,4 +37,4 @@ jobs:
         run: npm install
       - name: Run Node tests
         shell: pwsh
-        run: npm run test --python="${env:pythonLocation}\\python.exe" --msvs-version="${{ matrix.msvs-version }}"
+        run: npm run test --msvs-version="${{ matrix.msvs-version }}"
