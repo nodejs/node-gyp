@@ -5,7 +5,7 @@ const assert = require('assert')
 const fs = require('fs/promises')
 const path = require('path')
 const http = require('http')
-const https = require('https')
+const http2 = require('http2')
 const net = require('net')
 const install = require('../lib/install')
 const { download, readCAFile } = require('../lib/download')
@@ -44,9 +44,12 @@ describe('download', function () {
 
     assert.strictEqual(ca.length, 1)
 
-    const options = { ca, cert, key }
-    const server = https.createServer(options, (req, res) => {
+    // Offers HTTP/2 so the test catches downloads negotiating it
+    const options = { ca, cert, key, allowHTTP1: true }
+    let httpVersion
+    const server = http2.createSecureServer(options, (req, res) => {
       assert.strictEqual(req.headers['user-agent'], `node-gyp v42 (node ${process.version})`)
+      httpVersion = req.httpVersion
       res.end('ok')
     })
 
@@ -67,6 +70,7 @@ describe('download', function () {
     const url = `https://${host}:${port}`
     const res = await download(gyp, url)
     assert.strictEqual(await res.text(), 'ok')
+    assert.strictEqual(httpVersion, '1.1')
   })
 
   it('download over http with proxy', async function () {
@@ -134,11 +138,16 @@ describe('download', function () {
     const cafile = path.join(__dirname, 'fixtures/ca-proxy.crt')
     await fs.writeFile(cafile, certs['ca.crt'], 'utf8')
 
-    const server = https.createServer({
+    let httpVersion
+    const server = http2.createSecureServer({
       ca: await readCAFile(cafile),
       cert: certs['server.crt'],
-      key: certs['server.key']
-    }, (_, res) => res.end('ok'))
+      key: certs['server.key'],
+      allowHTTP1: true
+    }, (req, res) => {
+      httpVersion = req.httpVersion
+      res.end('ok')
+    })
 
     let proxyUsed = false
     const pserver = http.createServer()
@@ -176,6 +185,7 @@ describe('download', function () {
     const res = await download(gyp, `https://${host}:${port}`)
     assert.strictEqual(await res.text(), 'ok')
     assert.strictEqual(proxyUsed, true)
+    assert.strictEqual(httpVersion, '1.1')
   })
 
   it('download over http with noproxy', async function () {
