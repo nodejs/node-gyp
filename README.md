@@ -182,8 +182,8 @@ Some additional resources for Node.js native addons and writing `gyp` configurat
 
  * ["Going Native" a nodeschool.io tutorial](http://nodeschool.io/#goingnative)
  * ["Hello World" node addon example](https://github.com/nodejs/node/tree/main/test/addons/hello-world)
- * [gyp user documentation](https://gyp.gsrc.io/docs/UserDocumentation.md)
- * [gyp input format reference](https://gyp.gsrc.io/docs/InputFormatReference.md)
+ * [gyp user documentation](https://github.com/nodejs/gyp-next/blob/main/docs/UserDocumentation.md)
+ * [gyp input format reference](https://github.com/nodejs/gyp-next/blob/main/docs/InputFormatReference.md)
  * [*"binding.gyp" files out in the wild* wiki page](./docs/binding.gyp-files-in-the-wild.md)
 
 ## Commands
