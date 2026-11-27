@@ -931,4 +931,45 @@ describe('find-visualstudio', function () {
       versionYear: 2019
     })
   })
+
+  it('run on a VS Command Prompt that only exports VisualStudioVersion', async function () {
+    // vcvarsall.bat sets VCINSTALLDIR and VisualStudioVersion, while VSCMD_VER
+    // is only set by VsDevCmd.bat. Some editor integrations only run
+    // vcvarsall.bat, so VSCMD_VER can be missing. See #3276.
+    process.env.VCINSTALLDIR =
+      'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC'
+    delete process.env.VSCMD_VER
+    process.env.VisualStudioVersion = '17.0'
+    process.env.WindowsSDKVersion = '10.0.26100.0'
+
+    const finder = new TestVisualStudioFinder(semverV1, null)
+
+    // Simulate a host where the PowerShell based fallbacks are not usable
+    // (no VSSetup module, Add-Type unavailable), as on the machine in #3276.
+    finder.findNewVSUsingSetupModule = async () => null
+    finder.findNewVS = async () => null
+    finder.findVisualStudio2015 = async () => null
+    finder.findVisualStudio2013 = async () => null
+    finder.msBuildPathExists = () => true
+
+    const { err, info } = await finder.findVisualStudio()
+    assert.strictEqual(err, null)
+    const msBuildDir = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\' +
+      'BuildTools\\MSBuild\\Current\\Bin'
+    assert.deepStrictEqual(info, {
+      // getMSBuild() prefers the arm64 copy when the host is arm64 and the file exists
+      msBuild: process.arch === 'arm64'
+        ? msBuildDir + '\\arm64\\MSBuild.exe'
+        : msBuildDir + '\\MSBuild.exe',
+      path:
+        'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools',
+      sdk: '10.0.26100.0',
+      toolset: 'v143',
+      // VisualStudioVersion only carries the major.minor part.
+      version: '17.0',
+      versionMajor: 17,
+      versionMinor: 0,
+      versionYear: 2022
+    })
+  })
 })
