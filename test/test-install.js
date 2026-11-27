@@ -53,6 +53,43 @@ describe('install', function () {
     }
   })
 
+  it('EACCES retry keeps the requested version', async () => {
+    const argvs = []
+    const mockInstall = requireInject('../lib/install', {
+      'graceful-fs': {
+        promises: {
+          stat (_) {
+            const err = new Error()
+            err.code = 'EACCES'
+            throw err
+          }
+        }
+      }
+    })
+    const Gyp = {
+      devDir: __dirname,
+      opts: {
+        ensure: true
+      },
+      commands: {
+        install: (...args) => {
+          argvs.push(args[0])
+          return mockInstall(Gyp, ...args)
+        },
+        remove: async () => {}
+      }
+    }
+
+    try {
+      await Gyp.commands.install(['99.0.0'])
+    } catch (e) {
+      // the install itself cannot succeed here, only the argv it retries with matters
+    }
+
+    assert.equal(argvs.length, 2)
+    assert.equal(argvs[1][0], '99.0.0')
+  })
+
   describe('parallel', function () {
     let prog
 
