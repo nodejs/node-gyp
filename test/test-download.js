@@ -34,6 +34,50 @@ describe('download', function () {
     assert.strictEqual(await res.text(), 'ok')
   })
 
+  it('download from a custom distribution URL with an auth token', async function () {
+    const server = http.createServer((req, res) => {
+      assert.strictEqual(req.headers.authorization, 'Bearer secret')
+      res.end('ok')
+    })
+
+    after(() => new Promise((resolve) => server.close(resolve)))
+
+    const host = 'localhost'
+    await new Promise((resolve) => server.listen(0, host, resolve))
+    const { port } = server.address()
+    const gyp = {
+      opts: {
+        'dist-url': `http://${host}:${port}/mirror`,
+        'dist-url-auth-token': 'secret'
+      },
+      version: '42'
+    }
+    const res = await download(gyp, `http://${host}:${port}/mirror/v42/headers.tar.gz`)
+    assert.strictEqual(await res.text(), 'ok')
+  })
+
+  it('does not send a distribution auth token to another URL', async function () {
+    const server = http.createServer((req, res) => {
+      assert.strictEqual(req.headers.authorization, undefined)
+      res.end('ok')
+    })
+
+    after(() => new Promise((resolve) => server.close(resolve)))
+
+    const host = 'localhost'
+    await new Promise((resolve) => server.listen(0, host, resolve))
+    const { port } = server.address()
+    const gyp = {
+      opts: {
+        'dist-url': `http://${host}:${port}/mirror`,
+        'dist-url-auth-token': 'secret'
+      },
+      version: '42'
+    }
+    const res = await download(gyp, `http://${host}:${port}/other/file`)
+    assert.strictEqual(await res.text(), 'ok')
+  })
+
   it('download over https with custom ca', async function () {
     const cafile = path.join(__dirname, 'fixtures/ca.crt')
     const cacontents = certs['ca.crt']

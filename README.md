@@ -223,6 +223,7 @@ Some additional resources for Node.js native addons and writing `gyp` configurat
 | `--devdir=$path`                  | SDK download directory (default is OS cache directory)
 | `--ensure`                        | Don't reinstall headers if already present
 | `--dist-url=$url`                 | Download header tarball from custom URL
+| `--dist-url-auth-token=$token`    | Use a Bearer token when downloading from the custom distribution URL
 | `--proxy=$url`                    | Set HTTP(S) proxy for downloading header tarball
 | `--noproxy=$urls`                 | Set urls to ignore proxies when downloading header tarball
 | `--cafile=$cafile`                | Override default CA chain (to download tarball)
